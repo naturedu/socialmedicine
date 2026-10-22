@@ -503,6 +503,7 @@ $('#polClear').addEventListener('click', () => {
 
 /* ============ 4. 方法学 Skill 库 ============ */
 const SKILL_GROUPS = {
+  flagship: { label: '总纲旗舰', en: 'flagship · HiAP & proactive health' },
   hecon: { label: '卫生经济学方法', en: 'health economics skills' },
   theory: { label: '社医理论与定性', en: 'medicine theory skills' },
   policy: { label: '政策评估与因果', en: 'policy & causal skills' },
@@ -512,6 +513,7 @@ const SKILL_GROUPS = {
 };
 
 const SKILLS = [
+  { name: '主动健康与健康融入万策（总纲旗舰）', file: 'active-health-hiap-skill.md', group: 'flagship', tags: ['旗舰', 'HiAP', '主动健康'], desc: '把健康融入万策、带到每一个人心中：主动健康策略 + 健康影响评估（PAF/集中指数）+ 理论·数据·选题·院校五大板块，学科建设总纲。', icon: '旗舰' },
   { name: '卫生经济学评价教程', file: 'health-economics-tutorial-skill.md', group: 'hecon', tags: ['教程', '卫生经济'], desc: 'CEA/CUA 总纲：研究问题、成本测算、QALY、贴现、ICER、不确定性、CHEERS 2022 报告清单，9 步带代码。', icon: '教程' },
   { name: 'DCE 设计助手', file: 'dce-design-assistant-skill.md', group: 'hecon', tags: ['偏好测量', '卫生经济'], desc: '离散选择实验：正交/D-效率设计步骤 + clogit / mixlogit / lclogit2 潜类别分析，Stata 与 R 双轨。', icon: 'DCE' },
   { name: 'Markov 模型助手', file: 'markov-model-skill.md', group: 'hecon', tags: ['卫生经济', '建模'], desc: '队列模拟成本-效果分析：转移矩阵、半周期校正、贴现、ICER、tornado 与 PSA，Stata/R 全程代码。', icon: 'Markov' },
@@ -852,6 +854,44 @@ $('#journalSearch').addEventListener('input', (e) => {
 
 renderJournalCats();
 renderJournals();
+
+/* ============ 6.5 顶刊选刊指南 ============ */
+const TOP_JOURNALS = [
+  { name: 'Science', tier: '综合旗舰 CNS', focus: '多学科旗舰；卫生政策 Research Article 偏好可复算数据、明确政策工具与分配证据', fit: '政策因果评估（DID/ITS/自然实验）、环境-健康治理、疫情与监测类大问题', note: '对「普适性 + 方法扎实」要求极高；样本案例见本仓库 Science 卫生政策 59 篇分析。', url: 'https://www.science.org/' },
+  { name: 'Nature', tier: '综合旗舰 CNS', focus: '多学科旗舰；健康类以机制、大数据与跨学科为主', fit: '基因组监测、健康大数据、生态-健康交叉', note: '编辑初筛严格；重视「为什么现在 + 为什么是 Nature」。', url: 'https://www.nature.com/nature/' },
+  { name: 'Cell', tier: '综合旗舰 CNS', focus: '生命科学旗舰；医学机制与组学', fit: '机制研究；社医卫管方向通常不合适，除非机制+人群证据结合', note: '纯政策评估论文一般另投专刊。', url: 'https://www.cell.com/cell/' },
+  { name: 'Nature Medicine', tier: '医学旗舰', focus: '转化医学与临床前沿；也发人群健康与卫生体系研究', fit: '临床预测模型、真实世界证据、数字健康试验、疫苗与公卫干预', note: '需要临床/人群影响力与转化价值。', url: 'https://www.nature.com/nm/' },
+  { name: 'The New England Journal of Medicine', tier: '医学旗舰', focus: '临床医学最高影响力；卫生政策以 Perspective 与政策研究为主', fit: '政策视角、重大卫生改革评述（研究文章多为临床）', note: '政策实证研究多为小篇幅；原创研究竞争极激烈。', url: 'https://www.nejm.org/' },
+  { name: 'The Lancet', tier: '医学旗舰', focus: '全球健康旗舰；发表大量卫生政策、卫生体系与全球健康研究', fit: '全球健康、卫生体系评价、中国卫生改革、疾病负担', note: 'Lancet 子刊（Public Health、Global Health、Regional Health – Western Pacific）是社医卫管友好选择。', url: 'https://www.thelancet.com/' },
+  { name: 'JAMA 及 JAMA Health Forum', tier: '医学旗舰', focus: 'JAMA 主刊发重磅政策研究；JAMA Health Forum 专注卫生政策', fit: '美国语境政策研究居多；中国政策需强调普适启示；Health Forum 更友好', note: '「JAMA 子刊」里 Health Forum 是卫生政策专刊。', url: 'https://jamanetwork.com/journals/jama' },
+  { name: 'Health Affairs', tier: '卫生政策顶刊', focus: '卫生政策与卫生服务研究旗舰，政策界与学界桥梁', fit: '医保支付改革、药品政策、卫生体系绩效、政策评论', note: '强调政策含义与可读性；短篇与专题特刊多。', url: 'https://www.healthaffairs.org/' },
+  { name: 'Social Science & Medicine', tier: '社会医学旗舰', focus: '社会医学、健康社会学、卫生政策与地理健康', fit: '健康社会决定因素、公平性、患者体验、政策过程研究', note: '方法包容（定量/定性/混合）；卷量大、方向广。', url: 'https://www.sciencedirect.com/journal/social-science-and-medicine' },
+  { name: 'Nature Communications', tier: '跨学科高影响力', focus: '全学科开放获取；接受扎实但不求「轰动」的完整研究', fit: '基因组监测、多源数据建模、行为干预试验、政策评估实证', note: '开放获取有版面费；评审看重方法严谨与可复现。', url: 'https://www.nature.com/ncomms/' },
+  { name: 'Health Economics', tier: '卫生经济旗舰', focus: '卫生经济学理论与应用旗舰', fit: '医保设计、支付方式、卫生服务利用、药物经济学', note: '方法严谨（计量）要求高；与 Journal of Health Economics 并列为卫生经济双旗舰。', url: 'https://onlinelibrary.wiley.com/journal/10991050' },
+  { name: 'Journal of Health Economics', tier: '卫生经济旗舰', focus: '卫生经济学理论前沿与识别策略', fit: '因果识别（DID/IV/RDD）、医生行为、保险市场', note: '对识别策略与理论贡献要求最高。', url: 'https://www.sciencedirect.com/journal/journal-of-health-economics' },
+  { name: 'npj Digital Medicine', tier: '数字健康旗舰', focus: '数字健康与 AI 医学；开放获取', fit: '移动健康干预、医疗 AI 评测、远程监测、LLM 临床应用', note: '需临床/人群证据与伦理治理考量；Nature Portfolio 出品。', url: 'https://www.nature.com/npjdigitalmed/' },
+  { name: 'BMJ 及 BMJ Global Health', tier: '医学与全球健康', focus: 'BMJ 主刊重视「现实可改变」的研究；Global Health 子刊开放获取', fit: '卫生政策、质量改进、全球健康与中低收入国家研究', note: 'BMJ 喜欢对临床/政策有行动含义的研究。', url: 'https://www.bmj.com/' },
+];
+
+function renderTopJournals() {
+  const tiers = [...new Set(TOP_JOURNALS.map((j) => j.tier))];
+  $('#topJournalGrid').innerHTML = tiers.map((tier) => `
+    <div class="top-tier">
+      <h3 class="top-tier-title">${escapeHtml(tier)}</h3>
+      <div class="data-grid">
+        ${TOP_JOURNALS.filter((j) => j.tier === tier).map((j) => `
+          <div class="data-card">
+            <div class="data-card-top"><h3>${escapeHtml(j.name)}</h3></div>
+            <p><strong style="color:var(--accent);">定位：</strong>${escapeHtml(j.focus)}<br>
+               <strong style="color:var(--gold);">契合选题：</strong>${escapeHtml(j.fit)}<br>
+               <span class="hint">${escapeHtml(j.note)}</span></p>
+            <a href="${escapeHtml(j.url)}" target="_blank" rel="noopener">期刊官网 ↗</a>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+renderTopJournals();
 
 /* ============ 工具函数 ============ */
 function escapeHtml(s) {
