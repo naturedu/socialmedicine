@@ -7,6 +7,9 @@
   <meta name="description" content="普贤——社医卫管科研助手：面向社会医学与卫生事业管理/卫生经济学的科研工作台。AI 痕迹检测、独立润色模块、方法学 Skill 库与 50 条方法速查、全球健康数据库、目标期刊查询、披露声明生成。免费开源，文本只在本机处理。" />
   <meta name="theme-color" content="#2b241c" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -23,16 +26,16 @@
         <span class="brand-name">普贤<span class="brand-en">社医卫管科研助手</span></span>
       </a>
       <nav class="site-nav" aria-label="主导航">
-        <a href="#grants">选题基金</a>
-        <a href="#schools">院校</a>
         <a href="#detect">AI检测</a>
         <a href="#polish">润色</a>
         <a href="#methods">方法学</a>
         <a href="#datasources">数据源</a>
+        <a href="#schools">院校</a>
         <a href="#journals">顶刊</a>
         <a href="#topjournals">选刊</a>
         <a href="papers.html">语料库</a>
         <a href="#disclose">披露</a>
+        <a href="#grants">选题基金</a>
       </nav>
     </div>
   </header>
@@ -71,49 +74,6 @@
       </div>
       <div class="leaf leaf-3" aria-hidden="true">
         <svg viewBox="0 0 32 32"><path d="M16 3 C24 7 29 14 28 21 C27 27 22 30 16 29 C10 30 5 27 4 21 C3 14 8 7 16 3 Z" fill="#9cc48a"/><path d="M16 6 C16 12 16 19 16 28" stroke="#6d9b5f" stroke-width="1.6" fill="none"/><path d="M16 12 C12 10 9 8 8 5 M16 20 C20 18 22 15 23 12" stroke="#6d9b5f" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg>
-      </div>
-    </section>
-
-    <!-- 选题与基金 -->
-    <section id="grants" class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>选题与基金（国自然等申报导航）</h2>
-          <p>社医卫管方向常见课题渠道与选题思路。申报要求以当年官方指南为准；本站方法学 Skill 库可直接用于「技术路线与研究方法」部分。</p>
-        </div>
-
-        <div class="data-grid">
-          <div class="data-card">
-            <div class="data-card-top"><span class="mini-tag tag-cn">国家级</span><h3>国家自然科学基金（NSFC）</h3></div>
-            <p>面上 / 青年 / 地区项目为主。社医卫管可投管理科学部（G04 宏观管理与政策、健康管理方向）或医学部（H30 预防医学下属卫生管理与政策）。青年项目男性 ≤35 岁、女性 ≤40 岁（以当年指南为准）。</p>
-            <a href="https://www.nsfc.gov.cn/" target="_blank" rel="noopener">国家自然科学基金委 ↗</a>
-          </div>
-          <div class="data-card">
-            <div class="data-card-top"><span class="mini-tag tag-cn">国家级</span><h3>国家社会科学基金</h3></div>
-            <p>年度项目（重点/一般/青年）、西部项目。社会学、人口学、应用经济（健康经济）、管理学（卫生管理）均可申报；强调理论贡献与现实问题结合。</p>
-            <a href="https://www.nopss.gov.cn/" target="_blank" rel="noopener">全国哲学社会科学工作办公室 ↗</a>
-          </div>
-          <div class="data-card">
-            <div class="data-card-top"><span class="mini-tag tag-cn">部级</span><h3>教育部人文社会科学</h3></div>
-            <p>规划基金 / 青年基金 / 专项。管理学、社会学、交叉学科方向接受卫生政策与健康管理选题；周期短、结项要求相对灵活。</p>
-            <a href="https://www.moe.gov.cn/" target="_blank" rel="noopener">教育部 ↗</a>
-          </div>
-          <div class="data-card">
-            <div class="data-card-top"><span class="mini-tag tag-cn">行业</span><h3>国家卫健委 / 省级课题</h3></div>
-            <p>国家卫生健康委委托课题、省卫健委软科学、省医保局课题、省社科基金。选题贴近政策需求（支付改革、分级诊疗、慢病管理、医保基金监管）。</p>
-            <a href="http://www.nhc.gov.cn/" target="_blank" rel="noopener">国家卫生健康委 ↗</a>
-          </div>
-          <div class="data-card">
-            <div class="data-card-top"><span class="mini-tag tag-cn">校级</span><h3>研究生创新项目</h3></div>
-            <p>各校研究生科研创新基金、学位论文培育项目。适合用 DCE / Markov / DID / Meta 等方法做小切口课题，是国自然的预研。</p>
-            <a href="#methods">用本站方法学选方法 ↓</a>
-          </div>
-          <div class="data-card">
-            <div class="data-card-top"><span class="mini-tag">选题思路</span><h3>选题三步法</h3></div>
-            <p>① 找缺口：读顶刊近三年综述的「future research」；② 定问题：PICO / 组态视角把缺口转成可研究问题；③ 配方法：用 socialmedicineskills 速查手册按数据形态选方法并写技术路线。</p>
-            <a href="skills/socialmedicineskills.md" target="_blank" rel="noopener">打开方法学速查手册 ↗</a>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -314,7 +274,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2>顶刊选刊指南（CNS 与领域旗舰）</h2>
-          <p>按「定位—契合选题—投稿提示」介绍 14 本旗舰期刊：Science / Nature / Cell、Nature Medicine、NEJM、Lancet、JAMA 及 JAMA Health Forum、Health Affairs、Social Science &amp; Medicine、Nature Communications、Health Economics、Journal of Health Economics、npj Digital Medicine、BMJ 系列。<strong>影响因子与分区每年更新，本页不列数值</strong>；投稿前务必核对期刊官网 Aim &amp; Scope、格式与伦理要求。</p>
+          <p>按「定位—契合选题—投稿提示」介绍 20 本旗舰与友好期刊：Science / Nature / Cell、Nature Medicine、NEJM、Lancet、JAMA 及 JAMA Health Forum、Health Affairs、Social Science &amp; Medicine、Nature Communications、Health Economics、Journal of Health Economics、npj Digital Medicine、BMJ 系列，以及 BMC Public Health、International Journal for Equity in Health 等开放获取公卫友好刊。<strong>影响因子与分区每年更新，本页不列数值</strong>；投稿前务必核对期刊官网 Aim &amp; Scope、格式与伦理要求。</p>
         </div>
         <div id="topJournalGrid"></div>
         <p class="hint" style="margin-top:18px;">完整 45+ 期刊（含中文核心）速查见上方「顶刊查询」；卫生政策选题灵感可参考本仓库 Science 卫生政策 59 篇样本分析（资料包已整理为论文成稿）。</p>
@@ -452,6 +412,53 @@
       </div>
     </section>
   </main>
+
+    <!-- 选题与基金 -->
+    <section id="grants" class="section section-alt">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>选题与基金（国自然等申报导航）</h2>
+          <p>社医卫管方向常见课题渠道与选题思路。申报要求以当年官方指南为准；本站方法学 Skill 库可直接用于「技术路线与研究方法」部分。</p>
+        </div>
+
+        <div class="data-grid">
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag tag-cn">国家级</span><h3>国家自然科学基金（NSFC）</h3></div>
+            <p>面上 / 青年 / 地区项目为主。社医卫管可投管理科学部（G04 宏观管理与政策、健康管理方向）或医学部（H30 预防医学下属卫生管理与政策）。青年项目男性 ≤35 岁、女性 ≤40 岁（以当年指南为准）。</p>
+            <a href="https://www.nsfc.gov.cn/" target="_blank" rel="noopener">国家自然科学基金委 ↗</a>
+          </div>
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag tag-cn">国家级</span><h3>国家社会科学基金</h3></div>
+            <p>年度项目（重点/一般/青年）、西部项目。社会学、人口学、应用经济（健康经济）、管理学（卫生管理）均可申报；强调理论贡献与现实问题结合。</p>
+            <a href="https://www.nopss.gov.cn/" target="_blank" rel="noopener">全国哲学社会科学工作办公室 ↗</a>
+          </div>
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag tag-cn">部级</span><h3>教育部人文社会科学</h3></div>
+            <p>规划基金 / 青年基金 / 专项。管理学、社会学、交叉学科方向接受卫生政策与健康管理选题；周期短、结项要求相对灵活。</p>
+            <a href="https://www.moe.gov.cn/" target="_blank" rel="noopener">教育部 ↗</a>
+          </div>
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag tag-cn">行业</span><h3>国家卫健委 / 省级课题</h3></div>
+            <p>国家卫生健康委委托课题、省卫健委软科学、省医保局课题、省社科基金。选题贴近政策需求（支付改革、分级诊疗、慢病管理、医保基金监管）。</p>
+            <a href="http://www.nhc.gov.cn/" target="_blank" rel="noopener">国家卫生健康委 ↗</a>
+          </div>
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag tag-cn">校级</span><h3>研究生创新项目</h3></div>
+            <p>各校研究生科研创新基金、学位论文培育项目。适合用 DCE / Markov / DID / Meta 等方法做小切口课题，是国自然的预研。</p>
+            <a href="#methods">用本站方法学选方法 ↓</a>
+          </div>
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag">选题思路</span><h3>选题三步法</h3></div>
+            <p>① 找缺口：读顶刊近三年综述的「future research」；② 定问题：PICO / 组态视角把缺口转成可研究问题；③ 配方法：用 socialmedicineskills 速查手册按数据形态选方法并写技术路线。</p>
+            <a href="skills/socialmedicineskills.md" target="_blank" rel="noopener">打开方法学速查手册 ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wave-div flip" aria-hidden="true">
+      <svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,28 C240,52 480,8 720,20 C960,32 1200,52 1440,26 L1440,56 L0,56 Z" fill="rgba(180,87,46,.14)"/></svg>
+    </div>
 
   <footer class="site-footer" id="footer">
     <div class="wrap footer-inner">

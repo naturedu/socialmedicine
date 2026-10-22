@@ -871,6 +871,11 @@ const TOP_JOURNALS = [
   { name: 'Journal of Health Economics', tier: '卫生经济旗舰', focus: '卫生经济学理论前沿与识别策略', fit: '因果识别（DID/IV/RDD）、医生行为、保险市场', note: '对识别策略与理论贡献要求最高。', url: 'https://www.sciencedirect.com/journal/journal-of-health-economics' },
   { name: 'npj Digital Medicine', tier: '数字健康旗舰', focus: '数字健康与 AI 医学；开放获取', fit: '移动健康干预、医疗 AI 评测、远程监测、LLM 临床应用', note: '需临床/人群证据与伦理治理考量；Nature Portfolio 出品。', url: 'https://www.nature.com/npjdigitalmed/' },
   { name: 'BMJ 及 BMJ Global Health', tier: '医学与全球健康', focus: 'BMJ 主刊重视「现实可改变」的研究；Global Health 子刊开放获取', fit: '卫生政策、质量改进、全球健康与中低收入国家研究', note: 'BMJ 喜欢对临床/政策有行动含义的研究。', url: 'https://www.bmj.com/' },
+  { name: 'BMC Public Health', tier: '开放获取公卫友好', focus: '公共卫生全领域开放获取大刊，方法包容', fit: '横断面、队列、行为干预、健康不平等、中国人群研究', note: '审稿相对友好、容量大；注意版面费与创新性要求。', url: 'https://bmcpublichealth.biomedcentral.com/' },
+  { name: 'International Journal for Equity in Health', tier: '开放获取公卫友好', focus: '健康公平与健康社会决定因素专刊，开放获取', fit: '健康不平等测量（集中指数/分解）、公平性政策评估、弱势人群', note: '社医卫管「公平性」选题的对口期刊。', url: 'https://equityhealthj.biomedcentral.com/' },
+  { name: 'Globalization and Health', tier: '开放获取公卫友好', focus: '全球化与健康的交叉议题，开放获取', fit: '全球卫生治理、跨国健康影响、卫生外交、贸易与健康', note: '适合把单一国家研究放进全球框架。', url: 'https://globalizationandhealth.biomedcentral.com/' },
+  { name: 'Health Policy and Planning', tier: '开放获取公卫友好', focus: '卫生政策与规划，牛津大学出版社，偏中低收入国家', fit: '卫生体系、政策过程、医保改革实施研究', note: '强调政策相关性与可落地启示。', url: 'https://academic.oup.com/heapol' },
+  { name: 'International Journal of Health Policy and Management', tier: '开放获取公卫友好', focus: '卫生政策与管理，开放获取，审稿周期较快', fit: '卫生治理、政策分析、卫生体系比较、中国医改案例', note: '中国卫生改革研究发表友好。', url: 'https://www.ijhpm.com/' },
 ];
 
 function renderTopJournals() {
