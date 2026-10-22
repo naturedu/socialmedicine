@@ -8,7 +8,7 @@
 - **注册与登录（演示版）**：姓名、邮箱、验证码、机构。验证码为前端模拟，账号保存在浏览器本地；接真实后端需另配邮件服务与数据库。
 - **披露声明生成器**：按工具、环节、参与程度生成中 / 英文披露声明草稿。
 - **CSSCI 论文语料库（中英对照，100 篇）**：`papers.html`。《中国社会科学》《管理世界》《社会科学》2026 年最新三期，中文摘要与英文题名逐条对照，可按「中英对照 / 中文 / English」三态浏览、检索、筛选，一键「送入工作台」直接做中文或英文检测；首页工作台也提供「抽一条中文摘要 / 抽一条英文摘要」的随机取样。语料是检测的**输入素材**，不是范本，不提供全文下载。
-- **可复用 Skill**：`skills/academic-copyediting-skill.md` 是一份可移植的「学术写作规范润色」提示词定义，可喂给任何大语言模型使用；定位为写作质量工具，明确不做检测器规避。
+- **可复用 Skill**：`skills/` 目录下已注册两份可移植 Skill（见下方「可复用 Skills」清单），可喂给任何大语言模型使用，也可直接当操作手册。
 
 ## 本地运行
 
@@ -37,6 +37,15 @@ python build_papers.py            # 读取抓取结果，生成 papers-data.js /
 - 已剔除公告、启事、目录、更正等非论文条目。
 - 字段：`journal / year / issue / authors / affils / title / titleEn / keywords / keywordsEn / abstract / abstractEn / pages / doi / url / cite`，`cite` 为可直接用的 GB/T 7714 著录。
 - **著作权归原刊与作者**，本仓库仅存题录与摘要用于写作检测参照；如需全文请循原刊渠道。
+
+## 可复用 Skills（注册清单）
+
+| Skill | 文件 | 说明 |
+| --- | --- | --- |
+| 学术写作规范润色 | [skills/academic-copyediting-skill.md](skills/academic-copyediting-skill.md) | 中文学术文本标点、句式、冗余与结构规范；写作质量工具，明确不做检测器规避。 |
+| DCE 设计助手 | [skills/dce-design-assistant-skill.md](skills/dce-design-assistant-skill.md) | 离散选择实验全流程：正交/D-效率设计步骤 + 选择集构造 + Stata（clogit / mixlogit / lclogit2）与 R 分析代码，每步「方法 + 代码」。 |
+
+两份 Skill 均为 MIT 许可、可移植的提示词定义；引用格式见各自文件末尾。
 
 ## 定位与边界
 
