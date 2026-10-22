@@ -3,119 +3,133 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>普贤——社医卫管科研助手｜公众号宣传页</title>
+<title>普贤——社医卫管科研助手｜公众号宣传</title>
 <style>
-  /* 公众号文章风格：小字体、小字距、窄栏 */
   body {
-    margin: 0; background: #fff; color: #1a1814;
+    margin: 0; background: #f4efe4; color: #1a1814;
     font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     font-size: 13.5px; letter-spacing: .01em; line-height: 1.8;
   }
-  .wx {
-    max-width: 677px; margin: 0 auto; padding: 28px 18px 48px;
-    background: #fff;
-  }
-  .wx img { max-width: 100%; border-radius: 8px; display: block; margin: 14px auto; }
-  .wx h1 {
-    font-size: 19px; font-weight: 700; text-align: center;
-    margin: 10px 0 6px; letter-spacing: .02em;
-  }
+  .wx { max-width: 677px; margin: 0 auto; padding: 0 0 46px; background: #fcf9f2; }
+  .wx img { max-width: 100%; display: block; }
+
+  /* 头图 */
+  .cover { background: linear-gradient(160deg, #efe3cc 0%, #f8f1e3 55%, #f3e8d3 100%); text-align: center; padding: 42px 22px 34px; }
+  .cover .leaf { color: #6d9b5f; font-size: 15px; letter-spacing: .35em; margin-bottom: 6px; }
+  .cover .en { font-family: "Playfair Display", "Times New Roman", serif; font-size: 30px; font-weight: 700; letter-spacing: .01em; margin: 4px 0 2px; }
+  .cover .en em { font-style: italic; background: linear-gradient(115deg, #b4572e, #c99a4e, #8f4222); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .cover .zh { font-family: "Kaiti SC", "STKaiti", "KaiTi", serif; font-size: 17px; letter-spacing: .22em; color: #4d463c; }
+  .cover h1 { font-size: 21px; letter-spacing: .05em; margin: 14px 0 2px; }
+  .cover .sub { font-size: 12px; color: #8b8478; letter-spacing: .12em; }
+
+  .body { padding: 0 18px; }
+
   .wx h2 {
-    font-size: 15.5px; font-weight: 700; margin: 26px 0 10px;
-    padding-left: 9px; border-left: 3px solid #b4572e; letter-spacing: .02em;
+    font-size: 15px; font-weight: 700; margin: 30px 0 12px; letter-spacing: .03em;
+    display: flex; align-items: center; gap: 8px;
   }
-  .wx h3 { font-size: 14px; font-weight: 700; margin: 18px 0 8px; color: #8f4222; }
-  .wx p { margin: 0 0 12px; text-align: justify; }
-  .wx .slogan {
-    text-align: center; color: #8f4222; font-weight: 700;
-    font-size: 14.5px; letter-spacing: .06em; margin: 8px 0 4px;
+  .wx h2 .n { flex: none; width: 22px; height: 22px; border-radius: 50%; background: #1a1814; color: #fcf9f2; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; }
+  .wx h3 { font-size: 13.5px; font-weight: 700; margin: 16px 0 6px; color: #8f4222; }
+  .wx p { margin: 0 0 10px; text-align: justify; }
+  .wx .lead { color: #4d463c; }
+
+  .card {
+    background: #fff; border: 1px solid #e9e0cc; border-radius: 12px;
+    padding: 13px 15px; margin-bottom: 10px;
   }
-  .wx .slogan-en {
-    text-align: center; color: #1a1814; font-weight: 700;
-    font-family: "Playfair Display", "Times New Roman", serif;
-    font-size: 17px; letter-spacing: .02em; margin: 0 0 14px;
+  .card b { color: #8f4222; }
+  .card .t { font-weight: 700; }
+  .card .d { color: #4d463c; }
+
+  .chip { display: inline-block; background: #f3ecdd; border: 1px solid #e2d8c2; color: #4d463c; border-radius: 999px; padding: 1px 10px; font-size: 11.5px; margin: 0 4px 4px 0; }
+
+  .skill-table { width: 100%; border-collapse: collapse; margin: 10px 0 6px; }
+  .skill-table td { border-bottom: 1px dashed #e9e0cc; padding: 6px 4px; vertical-align: top; }
+  .skill-table td:first-child { white-space: nowrap; font-weight: 700; color: #8f4222; width: 34%; }
+
+  blockquote {
+    margin: 14px 0; padding: 12px 15px; background: #f7f1e5;
+    border-left: 3px solid #b08a3e; border-radius: 8px; color: #4d463c;
   }
-  .wx .sub { text-align: center; color: #8b8478; font-size: 12px; margin-bottom: 22px; }
-  .wx blockquote {
-    margin: 14px 0; padding: 12px 16px; background: #f7f1e5;
-    border-left: 3px solid #b08a3e; border-radius: 6px; color: #4d463c;
+  .divider { text-align: center; color: #b4572e; letter-spacing: .4em; margin: 26px 0; font-size: 11px; }
+  .note { color: #8b8478; font-size: 11.5px; }
+  .shot { border-radius: 10px; overflow: hidden; margin: 12px 0 4px; border: 1px solid #e9e0cc; }
+  .shot-cap { text-align: center; color: #8b8478; font-size: 11.5px; margin-bottom: 14px; }
+
+  .btn {
+    display: block; text-align: center; margin: 24px auto 6px; padding: 10px 0; width: 280px;
+    color: #fff; background: #1a1814; border-radius: 999px; text-decoration: none;
+    font-size: 13px; letter-spacing: .08em;
   }
-  .wx ul { margin: 0 0 12px; padding-left: 20px; }
-  .wx li { margin-bottom: 6px; }
-  .wx .divider { text-align: center; color: #b4572e; margin: 22px 0; letter-spacing: .3em; font-size: 12px; }
-  .wx .note { color: #8b8478; font-size: 12px; }
-  .wx .btn-like {
-    display: block; text-align: center; margin: 20px auto; padding: 9px 0;
-    color: #fff; background: #1a1814; border-radius: 999px;
-    text-decoration: none; font-size: 13px; letter-spacing: .06em; width: 260px;
-  }
-  .wx .kaiti { font-family: "Kaiti SC", "STKaiti", "KaiTi", serif; }
+  .center { text-align: center; }
+  .kaiti { font-family: "Kaiti SC", "STKaiti", "KaiTi", serif; }
 </style>
 </head>
 <body>
 <div class="wx">
 
-  <p class="slogan">就是为了每一个人的健康。</p>
-  <p class="slogan-en">All for the health.</p>
-  <h1>普贤——社医卫管科研助手</h1>
-  <p class="sub">socialmedicine &amp; healtheconomics · 开源 · MIT 许可</p>
+  <!-- 头图 -->
+  <div class="cover">
+    <div class="leaf">❧ ❧ ❧</div>
+    <div class="en">All for the <em>health</em>.</div>
+    <div class="zh">就是为了每一个人的健康。</div>
+    <h1>普贤——社医卫管科研助手</h1>
+    <div class="sub">socialmedicine &amp; healtheconomics · 开源 · MIT</div>
+  </div>
 
-  <p>面向<strong>社会医学与卫生事业管理 / 卫生经济学</strong>研究者的开源科研工作台。像海浪一样温柔：从选题、方法学到投稿，为社会医学与卫生事业管理学科的<strong>建设与发展</strong>，蒸馏出四大板块——<strong>理论方法、数据源、选题、院校</strong>，再配上 AI 检测、润色、顶刊查询与语料库。全部免费开源，文本只在本机处理。</p>
+  <div class="body">
 
-  <img src="shots/hero.png" alt="普贤首页截图" />
+    <p class="lead" style="margin-top:22px;">面向<strong>社会医学与卫生事业管理 / 卫生经济学</strong>研究者的开源科研工作台。像海浪一样温柔：把方法学、数据、选题与院校<strong>蒸馏成四大板块</strong>，配齐 AI 检测、润色、顶刊查询与语料库——为社会医学与卫生事业管理学科的<strong>建设与发展</strong>而做。免费开源，文本只在本机处理。</p>
 
-  <h2>一、四大板块，为学科建设蒸馏</h2>
-  <p><strong>理论方法</strong>：12 份深度 Skill + 54 条方法学速查手册。每份 Skill 都是可移植提示词 + 操作手册，<strong>每一步「方法 + Stata/R 代码」</strong>。</p>
-  <p><strong>数据源</strong>：25 个全球健康数据库导航（GBD、WHO GHO、世界银行 HNP、OECD、CHARLS/CFPS 等）。</p>
-  <p><strong>选题</strong>：国自然、国社科、教育部、卫健委课题申报导航 + 选题三步法。</p>
-  <p><strong>院校</strong>：北大公卫、复旦公卫、人大公管、华科医管、浙大公卫等 12 所院系科普。</p>
+    <h2><span class="n">01</span>四大板块</h2>
+    <div class="card"><span class="t">① 理论方法</span>　<span class="d">12 份深度 Skill + 54 条方法学速查，每步「方法 + Stata/R 代码」</span></div>
+    <div class="card"><span class="t">② 数据源</span>　<span class="d">25 个全球健康数据库导航（GBD、WHO、世界银行、CHARLS 等）</span></div>
+    <div class="card"><span class="t">③ 选题</span>　<span class="d">国自然 / 国社科 / 教育部 / 卫健委课题导航 + 选题三步法</span></div>
+    <div class="card"><span class="t">④ 院校</span>　<span class="d">北大公卫、复旦公卫、华科医管、浙大公卫等 12 所院系科普</span></div>
 
-  <h2>二、12 份深度 Skill（每步方法 + 代码）</h2>
-  <ul>
-    <li><strong>主动健康与健康融入万策（总纲旗舰）</strong>：HiAP 框架、健康影响评估（PAF / 集中指数）、五大板块总纲</li>
-    <li><strong>卫生经济学评价教程</strong>：CEA/CUA 总纲，成本测算、QALY、贴现、ICER、PSA、CHEERS 2022</li>
-    <li><strong>DCE 设计助手</strong>：正交/D-效率设计 + clogit / mixlogit / 潜类别分析</li>
-    <li><strong>Markov 模型助手</strong>：队列模拟成本-效果分析（ICER、tornado、PSA）</li>
-    <li><strong>机器学习助手</strong>：LASSO/弹性网、随机森林、XGBoost、SHAP、TRIPOD</li>
-    <li><strong>DID 双重差分助手</strong>：平行趋势、2×2 DID、多期 csdid、事件研究</li>
-    <li><strong>ITS 间断时间序列助手</strong>：分段回归、Newey-West、反事实图</li>
-    <li><strong>DDD 三重差分助手</strong>：三维交互识别与 DID 分解对照</li>
-    <li><strong>Meta 分析助手</strong>：效应量合并、异质性、森林图、发表偏倚</li>
-    <li><strong>定性方法与结构方程专题</strong>：扎根理论 / SEM / 多层SEM / fsQCA</li>
-    <li><strong>socialmedicineskills 速查手册</strong>：54 个方法，七大类速查</li>
-    <li><strong>学术写作规范润色</strong>：标点、句式、冗余与结构规范</li>
-  </ul>
+    <h2><span class="n">02</span>12 份深度 Skill</h2>
+    <table class="skill-table">
+      <tr><td>总纲旗舰</td><td>主动健康与健康融入万策（HiAP）：健康影响评估、五大板块总纲</td></tr>
+      <tr><td>卫生经济</td><td>评价教程（CEA/CUA）· DCE 设计助手 · Markov 模型助手</td></tr>
+      <tr><td>政策评估</td><td>DID 双重差分 · ITS 间断时间序列 · DDD 三重差分</td></tr>
+      <tr><td>数据预测</td><td>机器学习助手（LASSO / 随机森林 / XGBoost / SHAP）</td></tr>
+      <tr><td>统计综合</td><td>Meta 分析助手 · socialmedicineskills 54 条速查手册</td></tr>
+      <tr><td>定性与结构</td><td>扎根理论 / SEM / 多层 SEM / fsQCA 专题</td></tr>
+      <tr><td>写作</td><td>学术写作规范润色（不做检测器规避）</td></tr>
+    </table>
+    <blockquote>六大产品分组：卫生经济学方法 health economics skills · 社医理论与定性 medicine theory skills · 政策评估与因果 · 数据科学与预测 · 统计与研究设计 · 写作与润色。每个 Skill 能完成的事不同，按需取用。</blockquote>
 
-  <blockquote>六大产品分组：卫生经济学方法（health economics skills）· 社医理论与定性（medicine theory skills）· 政策评估与因果 · 数据科学与预测 · 统计与研究设计 · 写作与润色。每个 Skill 能完成的事不同，按需取用。</blockquote>
+    <h2><span class="n">03</span>其他模块</h2>
+    <h3>AI 检测助手（与润色分开）</h3>
+    <p>6 项指标启发式打分：句长变异系数、套话密度、破折号密度、句首重复率、用词多样性、冒号密度，每一项「你的值 / 参考区间 / 得分」可复核；中英双语、本地处理。润色独立为写作质量模块：标点规范、去冗余、长句提示。</p>
+    <h3>顶刊查询 + 选刊指南</h3>
+    <p>45+ 期刊（含中文核心）按方向筛选；20 本旗舰与友好期刊的「定位—契合选题—投稿提示」介绍。</p>
+    <p>
+      <span class="chip">Science</span><span class="chip">Nature Medicine</span><span class="chip">The Lancet</span><span class="chip">JAMA Health Forum</span><span class="chip">Health Affairs</span><span class="chip">SSM</span><span class="chip">Nature Communications</span><span class="chip">Health Economics</span><span class="chip">npj Digital Medicine</span><span class="chip">BMC Public Health</span><span class="chip">Int J Equity Health</span><span class="chip">IJHPM</span>
+    </p>
+    <h3>CSSCI 语料库 + 披露生成器</h3>
+    <p>《中国社会科学》《管理世界》《社会科学》100 篇中英对照题录与摘要，一键送入工作台；按工具、环节、参与程度生成中 / English 披露草稿。</p>
 
-  <h2>三、其他模块</h2>
-  <h3>AI 检测助手（与润色分开）</h3>
-  <p>6 项指标启发式打分：句长变异系数、套话密度、破折号密度、句首重复率、用词多样性、冒号密度，每一项「你的值 / 参考区间 / 得分」可复核；中英双语，本地处理。<strong>润色独立成写作质量模块</strong>：标点规范、去冗余、长句提示，不针对任何检测器优化。</p>
-  <h3>顶刊查询 + 选刊指南</h3>
-  <p>45+ 期刊（含中文核心）按方向筛选；另有 20 本旗舰与友好期刊的「定位—契合选题—投稿提示」介绍：CNS、Nature Medicine、NEJM、Lancet、JAMA Health Forum、Health Affairs、SSM、Nature Communications、Health Economics、npj Digital Medicine、BMC Public Health、International Journal for Equity in Health 等。</p>
-  <h3>CSSCI 语料库</h3>
-  <p>《中国社会科学》《管理世界》《社会科学》100 篇中英对照题录与摘要，可一键「送入工作台」检测。</p>
-  <h3>披露声明生成器</h3>
-  <p>按工具、环节、参与程度一键生成中 / English 披露草稿。</p>
+    <h2><span class="n">04</span>页面预览</h2>
+    <div class="shot"><img src="shots/hero.png" alt="首页首屏" /></div>
+    <p class="shot-cap">△ 首页首屏：All for the health · 四大板块 · 绿叶海浪主题</p>
+    <div class="shot"><img src="shots/full.png" alt="整页长图" /></div>
+    <p class="shot-cap">△ 整页：方法学 Skill 库 · 数据源 · 院校 · 顶刊 · 选刊 · 披露</p>
 
-  <img src="shots/full.png" alt="普贤整页截图" />
+    <h2><span class="n">05</span>怎么用</h2>
+    <div class="card"><span class="t">在线使用</span>　<span class="d">naturedu.github.io/socialmedicine/（静态站，本地处理）</span></div>
+    <div class="card"><span class="t">喂给大模型</span>　<span class="d">复制 skills/*.md 内容作为提示词，直接获得工作流</span></div>
+    <div class="card"><span class="t">嵌入 DSH</span>　<span class="d">复制为 ~/.agents/skills/&lt;名称&gt;/SKILL.md，进入能力目录直接调用</span></div>
 
-  <h2>四、怎么用</h2>
-  <ul>
-    <li><strong>在线使用</strong>：访问 https://naturedu.github.io/socialmedicine/</li>
-    <li><strong>喂给大模型</strong>：复制对应 skills/*.md 内容作为提示词，直接获得工作流</li>
-    <li><strong>嵌入 DeepSeek Harness</strong>：把 Skill 复制为 ~/.agents/skills/&lt;名称&gt;/SKILL.md，重启后进入能力目录直接调用</li>
-  </ul>
+    <p class="note">说明：截图来自真实页面；公众号发布时请单独上传图片。影响因子与分区每年更新，页面不列数值；方法学教程供研究参考，结论由研究者负责。</p>
 
-  <p class="note">说明：本页截图来自真实页面；公众号发布时请将图片单独上传后替换。影响因子与分区每年更新，页面不列数值，请以最新 JCR / 官方为准；方法学教程供研究参考，结论由研究者负责。</p>
+    <div class="divider">❧ ❧ ❧</div>
+    <p class="center kaiti" style="font-size:15px; letter-spacing:.25em; color:#8f4222;">把健康融入万策，把健康带到每一个人心中。</p>
+    <p class="center note">中文引用：杜思娴. 普贤——社医卫管科研助手 [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.</p>
 
-  <div class="divider">❧ ❧ ❧</div>
+    <a class="btn" href="https://naturedu.github.io/socialmedicine/">进入普贤科研工作台 →</a>
 
-  <p class="kaiti" style="text-align:center;">把健康融入万策，把健康带到每一个人心中。</p>
-  <p class="sub">中文引用：杜思娴. 普贤——社医卫管科研助手 [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.</p>
-
-  <a class="btn-like" href="https://naturedu.github.io/socialmedicine/">进入普贤科研工作台 →</a>
-
+  </div>
 </div>
 </body>
 </html>
