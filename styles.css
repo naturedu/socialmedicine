@@ -227,6 +227,20 @@ legend { font-weight: 600; font-size: 14px; margin-bottom: 10px; color: var(--in
 .metric-table th { background: var(--paper-2); font-weight: 600; }
 .metric-table tr td:last-child { white-space: nowrap; font-weight: 600; }
 
+/* Corpus strip —— 把 CSSCI 语料库接进工作台 */
+.corpus-strip {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line);
+}
+.corpus-strip-label { font-size: 13px; color: var(--ink-faint); margin-right: 2px; }
+.corpus-chip {
+  font-size: 13px; padding: 6px 13px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: transparent; color: var(--ink-soft);
+  text-decoration: none; font-family: var(--sans); line-height: 1.5;
+}
+.corpus-chip:hover { border-color: var(--ink-faint); background: var(--paper-2); color: var(--ink); }
+.corpus-note { margin: 0 0 8px; }
+
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

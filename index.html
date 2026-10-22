@@ -24,6 +24,7 @@
       </a>
       <nav class="site-nav" aria-label="主导航">
         <a href="#workbench">检测润色</a>
+        <a href="papers.html">语料库</a>
         <a href="#account">注册</a>
         <a href="#disclose">披露</a>
         <a href="#footer">引用</a>
@@ -64,6 +65,13 @@
                 <button type="button" id="wbDetect" class="btn btn-primary">检测痕迹</button>
                 <button type="button" id="wbPolish" class="btn btn-primary">简洁化润色</button>
                 <button type="button" id="wbClear" class="btn btn-ghost">清空</button>
+              </div>
+
+              <div class="corpus-strip">
+                <span class="corpus-strip-label">手边没有文本？</span>
+                <button type="button" class="corpus-chip" id="sampleZh">抽一条中文摘要</button>
+                <button type="button" class="corpus-chip" id="sampleEn">抽一条英文摘要</button>
+                <a class="corpus-chip" href="papers.html">浏览 CSSCI 语料库 · 100 篇</a>
               </div>
             </div>
             <div class="card-report" style="border:1px solid var(--line);border-radius:10px;padding:16px;min-height:360px;">
@@ -237,5 +245,6 @@
   </footer>
 
   <script src="app.js"></script>
+  <script src="corpus.js"></script>
 </body>
 </html>
