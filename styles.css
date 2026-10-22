@@ -218,6 +218,15 @@ legend { font-weight: 600; font-size: 14px; margin-bottom: 10px; color: var(--in
 /* Toolkit panels */
 .tool-panel { margin-top: 22px; }
 
+/* Method explainer & metric tables */
+.method-box { margin-top: 22px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); padding: 16px 18px; }
+.method-box summary { cursor: pointer; font-weight: 600; font-size: 15px; color: var(--ink); }
+.method-box .note { font-size: 13.5px; color: var(--ink-soft); margin: 10px 0 0; }
+.metric-table { width: 100%; border-collapse: collapse; margin: 14px 0 8px; font-size: 14px; }
+.metric-table th, .metric-table td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+.metric-table th { background: var(--paper-2); font-weight: 600; }
+.metric-table tr td:last-child { white-space: nowrap; font-weight: 600; }
+
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

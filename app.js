@@ -62,63 +62,7 @@ $('#loginForm').addEventListener('submit', (e) => {
 
 renderAccountStatus();
 
-/* ============ 1. 透明化自检 ============ */
-const usageLabels = {
-  brainstorm: '头脑风暴 / 选题',
-  outline: '拟定大纲',
-  draft: '撰写初稿',
-  rewrite: '改写 / 扩写',
-  polish: '润色 / 校对',
-  translate: '翻译',
-  code: '代码 / 脚本',
-  data: '数据整理 / 分析',
-  image: '生成图片 / 图表',
-};
-
-function computeDisclosureLevel(usages, involvement) {
-  let score = 0;
-  if (usages.includes('draft') || usages.includes('image')) score += 3;
-  if (usages.includes('rewrite') || usages.includes('translate') || usages.includes('code') || usages.includes('data')) score += 2;
-  if (usages.includes('outline') || usages.includes('brainstorm') || usages.includes('polish')) score += 1;
-  if (involvement === 'high') score += 2;
-  else if (involvement === 'mid') score += 1;
-
-  if (score >= 5) return { level: 'high', label: '需充分披露', cls: 'badge-high' };
-  if (score >= 3) return { level: 'mid', label: '建议披露', cls: 'badge-mid' };
-  return { level: 'low', label: '可简要说明', cls: 'badge-low' };
-}
-
-$('#checkForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const usages = $$('input[name="usage"]:checked').map((i) => i.value);
-  const involvement = $('input[name="involvement"]:checked').value;
-  const humanReview = $('#humanReview').checked;
-
-  const body = $('#reportBody');
-  const empty = $('#reportEmpty');
-  empty.hidden = true;
-  body.hidden = false;
-
-  const level = computeDisclosureLevel(usages, involvement);
-  const invLabel = { low: '仅辅助参考', mid: '部分参与', high: '主要参与' }[involvement];
-
-  const lines = usages.length ? usages.map((u) => `<li>${usageLabels[u]}</li>`).join('') : '<li>未选择（视为未使用 AI）</li>';
-
-  body.innerHTML = `
-    <h3>透明化报告</h3>
-    <p><span class="badge ${level.cls}">${level.label}</span></p>
-    <h4>你使用了 AI 的环节</h4>
-    <ul>${lines}</ul>
-    <h4>人工参与程度</h4>
-    <p>${invLabel}${humanReview ? ' · 已做事实核查与人工修订' : ' · 尚未完成人工核查（建议完成后再提交）'}</p>
-    <hr class="rule">
-    <h4>建议向读者 / 编辑说明的内容</h4>
-    <p>在「致谢」「方法」或投稿系统的 AI 使用声明栏中，写明：使用了什么工具、做了哪些事、人工如何把关。上方已为你生成一份可直接使用的披露声明草稿。</p>
-    <p style="color:var(--ink-faint);font-size:13px;">本报告不是 AI 检测结果，不判断文本「是否为 AI 所写」，只帮你整理需要披露的信息。</p>
-  `;
-});
-
-/* ============ 2. 披露声明生成器 ============ */
+/* ============ 1. 披露声明生成器 ============ */
 const sceneEn = {
   '构思与大纲': 'conceptualization and outlining',
   '初稿撰写': 'drafting',
@@ -182,37 +126,7 @@ $$('#discloseTabs .tab').forEach((tab) => {
   });
 });
 
-/* ============ 3. 编辑审阅清单 ============ */
-const STORE_KEY = 'tracehonest-checklist';
-const checklistBoxes = $$('#reviewChecklist input[type="checkbox"]');
-
-function loadChecklist() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || '[]');
-    checklistBoxes.forEach((box) => {
-      const key = box.closest('.checklist-col').querySelector('h3').textContent + '|' + box.nextSibling.textContent.trim();
-      box.checked = saved.includes(key);
-    });
-  } catch (_) {}
-}
-function saveChecklist() {
-  const keys = checklistBoxes.filter((b) => b.checked).map((box) =>
-    box.closest('.checklist-col').querySelector('h3').textContent + '|' + box.nextSibling.textContent.trim());
-  localStorage.setItem(STORE_KEY, JSON.stringify(keys));
-}
-function updateProgress() {
-  const total = checklistBoxes.length;
-  const done = checklistBoxes.filter((b) => b.checked).length;
-  const pct = total ? Math.round((done / total) * 100) : 0;
-  $('#progressText').textContent = `${done} / ${total} 项已完成`;
-  $('#progressPct').textContent = `${pct}%`;
-  $('#progressFill').style.width = `${pct}%`;
-}
-checklistBoxes.forEach((b) => b.addEventListener('change', () => { saveChecklist(); updateProgress(); }));
-loadChecklist();
-updateProgress();
-
-/* ============ 4. 检测与润色工作台（中 / English） ============ */
+/* ============ 2. 检测与润色工作台（中 / English） ============ */
 let wbLang = 'zh';
 
 $$('#langTabs .tab').forEach((tab) => {
@@ -222,19 +136,39 @@ $$('#langTabs .tab').forEach((tab) => {
     tab.setAttribute('aria-selected', 'true');
     wbLang = tab.dataset.lang;
     $('#wbInputLabel').textContent = wbLang === 'zh' ? '原文（中文）' : 'Original text (English)';
-    $('#wbInput').placeholder = wbLang === 'zh' ? '粘贴需要检测或润色的中文文本…' : 'Paste the English text to analyze or polish…';
+    $('#wbInput').placeholder = wbLang === 'zh' ? '粘贴需要检测或润色的文本（建议 300 字以上，结果更稳定）…' : 'Paste the text to analyze or polish (300+ characters recommended)…';
     $('#wbOutput').innerHTML = '<p class="report-empty">粘贴文本后点击「检测痕迹」或「简洁化润色」。</p>';
   });
 });
 
-/* ---- 中文：检测 ---- */
+/* ---- 词表 ---- */
 const zhPhrases = [
   '值得注意的是', '需要指出的是', '需要强调的是', '综上所述', '总而言之', '总的来说',
   '不难发现', '由此可见', '换句话说', '换言之', '一般来说', '众所周知', '首先，', '其次，',
   '再次，', '最后，', '此外，', '与此同时', '值得关注的是', '这意味着', '从这个意义上说',
   '进一步地', '更进一步', '基于上述',
 ];
+const enPhrases = [
+  'It is important to note', 'It is worth noting', 'Moreover', 'Furthermore', 'In addition',
+  'In conclusion', 'Overall', 'Additionally', 'Notably', 'Undoubtedly', 'In summary',
+  'It should be noted', 'As previously mentioned', 'Firstly', 'Secondly', 'Lastly',
+  'delve into', 'tapestry', 'landscape', 'pivotal', 'crucial', 'robust', 'holistic',
+  'seamless', 'leverage', 'utilize', 'facilitate', 'underscores', 'a testament to',
+  "in today's fast-paced world", 'game-changer', 'cutting-edge',
+];
 
+function phraseMatches(text, list) {
+  const lower = text.toLowerCase();
+  const matched = [];
+  let hits = 0;
+  for (const p of list) {
+    const m = lower.split(p.toLowerCase()).length - 1;
+    if (m > 0) { hits += m; matched.push({ p, count: m }); }
+  }
+  return { hits, matched };
+}
+
+/* ---- 中文指标 ---- */
 function zhMetrics(text) {
   const sentences = text.split(/[。！？!?；;\n]+/).map((s) => s.trim()).filter((s) => s.length > 1);
   const lens = sentences.map((s) => s.length);
@@ -246,14 +180,7 @@ function zhMetrics(text) {
   const uniqueRatio = hanzi.length ? new Set(hanzi).size / hanzi.length : 0;
 
   const per1k = (n) => Math.round((n / Math.max(text.length, 1)) * 1000);
-
-  let phraseHits = 0;
-  const phraseTypes = [];
-  for (const p of zhPhrases) {
-    const m = text.split(p).length - 1;
-    if (m > 0) { phraseHits += m; phraseTypes.push(p); }
-  }
-
+  const pm = phraseMatches(text, zhPhrases);
   const dashes = (text.match(/——|—|–/g) || []).length;
   const colons = (text.match(/：|:/g) || []).length;
 
@@ -263,19 +190,10 @@ function zhMetrics(text) {
   const repeatedStarters = starters.filter((st) => starterCounts[st] > 1).length;
   const starterRep = starters.length ? repeatedStarters / starters.length : 0;
 
-  return { total: text.length, sentences: sentences.length, avg, sd, cv, uniqueRatio, phraseHits, phraseTypes, dashes, colons, starterRep, per1k };
+  return { total: text.length, sentences: sentences.length, avg, cv, uniqueRatio, pm, dashes, colons, starterRep, per1k };
 }
 
-/* ---- English：检测 ---- */
-const enPhrases = [
-  'It is important to note', 'It is worth noting', 'Moreover', 'Furthermore', 'In addition',
-  'In conclusion', 'Overall', 'Additionally', 'Notably', 'Undoubtedly', 'In summary',
-  'It should be noted', 'As previously mentioned', 'Firstly', 'Secondly', 'Lastly',
-  'delve into', 'tapestry', 'landscape', 'pivotal', 'crucial', 'robust', 'holistic',
-  'seamless', 'leverage', 'utilize', 'facilitate', 'underscores', 'a testament to',
-  "in today's fast-paced world", 'game-changer', 'cutting-edge',
-];
-
+/* ---- 英文指标 ---- */
 function enMetrics(text) {
   const sentences = text.split(/[.!?\n]+/).map((s) => s.trim()).filter((s) => s.length > 1);
   const lens = sentences.map((s) => s.split(/\s+/).filter(Boolean).length);
@@ -287,15 +205,7 @@ function enMetrics(text) {
   const uniqueRatio = words.length ? new Set(words.map((w) => w.toLowerCase())).size / words.length : 0;
 
   const per1k = (n) => Math.round((n / Math.max(text.length, 1)) * 1000);
-
-  const lower = text.toLowerCase();
-  let phraseHits = 0;
-  const phraseTypes = [];
-  for (const p of enPhrases) {
-    const m = lower.split(p.toLowerCase()).length - 1;
-    if (m > 0) { phraseHits += m; phraseTypes.push(p); }
-  }
-
+  const pm = phraseMatches(text, enPhrases);
   const dashes = (text.match(/—|–/g) || []).length;
   const colons = (text.match(/:/g) || []).length;
 
@@ -305,10 +215,99 @@ function enMetrics(text) {
   const repeatedStarters = starters.filter((st) => starterCounts[st] > 1).length;
   const starterRep = starters.length ? repeatedStarters / starters.length : 0;
 
-  return { total: text.length, words: words.length, sentences: sentences.length, avg, sd, cv, uniqueRatio, phraseHits, phraseTypes, dashes, colons, starterRep, per1k };
+  return { total: text.length, words: words.length, sentences: sentences.length, avg, cv, uniqueRatio, pm, dashes, colons, starterRep, per1k };
 }
 
-/* ---- 中文：润色 ---- */
+/* ---- 打分（zh / en 共用结构） ---- */
+function scoreMetrics(m, lang) {
+  const cvScore = lang === 'zh'
+    ? (m.cv < 0.35 ? 25 : m.cv < 0.5 ? 15 : m.cv < 0.65 ? 5 : 0)
+    : (m.cv < 0.4 ? 25 : m.cv < 0.55 ? 15 : m.cv < 0.7 ? 5 : 0);
+  const phraseDensity = m.per1k(m.pm.hits);
+  const phraseScore = Math.min(30, Math.round(phraseDensity * 12));
+  const dashDensity = m.per1k(m.dashes);
+  const dashScore = Math.min(15, dashDensity * 4);
+  const starterScore = m.starterRep > 0.4 ? 15 : m.starterRep > 0.25 ? 8 : 0;
+  const uniqueScore = lang === 'zh'
+    ? (m.uniqueRatio < 0.32 ? 10 : 0)
+    : (m.uniqueRatio < 0.45 ? 10 : 0);
+  const total = Math.max(0, Math.min(100, cvScore + phraseScore + dashScore + starterScore + uniqueScore));
+  return { cvScore, phraseDensity, phraseScore, dashDensity, dashScore, starterScore, uniqueScore, total };
+}
+
+/* ---- 检测按钮 ---- */
+$('#wbDetect').addEventListener('click', () => {
+  const raw = $('#wbInput').value;
+  const out = $('#wbOutput');
+  if (raw.trim().length < 60) {
+    out.innerHTML = wbLang === 'zh'
+      ? '<p class="report-empty">文本太短，难以给出有意义的提示。请粘贴至少 60 字（建议 300 字以上）。</p>'
+      : '<p class="report-empty">The text is too short for a meaningful reading. Please paste at least 80 characters (300+ recommended).</p>';
+    return;
+  }
+
+  if (wbLang === 'zh') {
+    const m = zhMetrics(raw);
+    const s = scoreMetrics(m, 'zh');
+    let band, cls, explain;
+    if (s.total >= 60) { band = '偏高'; cls = 'badge-high'; explain = '多项特征接近典型 AI 生成文本。请注意：这仍是概率提示，不构成认定。'; }
+    else if (s.total >= 30) { band = '中等'; cls = 'badge-mid'; explain = '部分特征与 AI 文本有重叠，也可能只是规整的人类写作。'; }
+    else { band = '较低'; cls = 'badge-low'; explain = '未发现明显指向 AI 的特征。'; }
+
+    const phraseList = m.pm.matched.slice(0, 8).map((x) => `${escapeHtml(x.p)}（${x.count} 次）`).join('、') || '无';
+    out.innerHTML = `
+      <h3>痕迹检测报告（中文）</h3>
+      <p><span class="badge ${cls}">风险 ${band} · 总分 ${s.total}/100</span></p>
+      <p>${explain}</p>
+      <table class="metric-table">
+        <thead><tr><th>指标</th><th>你的值</th><th>得分</th></tr></thead>
+        <tbody>
+          <tr><td>句长变异系数</td><td>${m.cv.toFixed(2)}（平均句长 ${m.avg.toFixed(0)} 字）</td><td>${s.cvScore}/25</td></tr>
+          <tr><td>高频套话密度</td><td>${s.phraseDensity} 处/千字</td><td>${s.phraseScore}/30</td></tr>
+          <tr><td>破折号密度</td><td>${s.dashDensity} 处/千字</td><td>${s.dashScore}/15</td></tr>
+          <tr><td>句首重复率</td><td>${Math.round(m.starterRep * 100)}%</td><td>${s.starterScore}/15</td></tr>
+          <tr><td>用词多样性</td><td>${(m.uniqueRatio * 100).toFixed(1)}%（去重字/汉字）</td><td>${s.uniqueScore}/10</td></tr>
+          <tr><td>冒号密度（仅展示）</td><td>${m.per1k(m.colons)} 处/千字</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <h4>命中的套话</h4>
+      <p style="font-size:14px;">${phraseList}</p>
+      <hr class="rule">
+      <p style="color:var(--ink-faint);font-size:13px;">重要说明：本报告为本地启发式统计，<strong>不是 AI 检测结论</strong>，存在误报与漏报，不能用于认定作者是否使用 AI。本工具刻意不提供「改写直到分数降低」的功能。</p>
+    `;
+  } else {
+    const m = enMetrics(raw);
+    const s = scoreMetrics(m, 'en');
+    let band, cls, explain;
+    if (s.total >= 60) { band = 'Elevated'; cls = 'badge-high'; explain = 'Several features resemble typical AI-generated text. This remains a probabilistic hint, not a verdict.'; }
+    else if (s.total >= 30) { band = 'Moderate'; cls = 'badge-mid'; explain = 'Some features overlap with AI text; could also be polished human writing.'; }
+    else { band = 'Low'; cls = 'badge-low'; explain = 'No features clearly pointing to AI were found.'; }
+
+    const phraseList = m.pm.matched.slice(0, 8).map((x) => `${escapeHtml(x.p)} (${x.count}×)`).join(', ') || 'none';
+    out.innerHTML = `
+      <h3>Trace detection report (English)</h3>
+      <p><span class="badge ${cls}">Risk: ${band} · total ${s.total}/100</span></p>
+      <p>${explain}</p>
+      <table class="metric-table">
+        <thead><tr><th>Metric</th><th>Your value</th><th>Score</th></tr></thead>
+        <tbody>
+          <tr><td>Sentence-length CV</td><td>${m.cv.toFixed(2)} (avg ${m.avg.toFixed(0)} words)</td><td>${s.cvScore}/25</td></tr>
+          <tr><td>Stock-phrase density</td><td>${s.phraseDensity}/1k chars</td><td>${s.phraseScore}/30</td></tr>
+          <tr><td>Dash density</td><td>${s.dashDensity}/1k chars</td><td>${s.dashScore}/15</td></tr>
+          <tr><td>Repeated openers</td><td>${Math.round(m.starterRep * 100)}%</td><td>${s.starterScore}/15</td></tr>
+          <tr><td>Lexical diversity</td><td>${(m.uniqueRatio * 100).toFixed(1)}% (unique/total words)</td><td>${s.uniqueScore}/10</td></tr>
+          <tr><td>Colon density (info)</td><td>${m.per1k(m.colons)}/1k chars</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <h4>Matched stock phrases</h4>
+      <p style="font-size:14px;">${phraseList}</p>
+      <hr class="rule">
+      <p style="color:var(--ink-faint);font-size:13px;">Important: this is a local heuristic analysis, <strong>not an AI-detection verdict</strong>; false positives and negatives occur. This tool deliberately offers no "rewrite until the score drops" feature.</p>
+    `;
+  }
+});
+
+/* ---- 润色按钮 ---- */
 const zhRedundantRules = [
   { re: /进行了/g, to: '做了', note: '「进行 + 动词」可简化为动词本身' },
   { re: /通过([^\n，。；]{0,30}?)的方式/g, to: '通过$1', note: '「通过……的方式」删去“的方式”' },
@@ -367,7 +366,6 @@ function zhApplyRedundant(text) {
   return { text: out, suggestions };
 }
 
-/* ---- English：润色 ---- */
 const enRedundantRules = [
   { re: /\bIt is important to note that\b/gi, to: 'Note that', note: 'Wordy opener' },
   { re: /\bIt is worth noting that\b/gi, to: 'Note that', note: 'Wordy opener' },
@@ -405,103 +403,6 @@ function enPolish(text) {
   const long = out.split(/[.!?\n]+/).map((s) => s.trim()).filter((s) => s.split(/\s+/).filter(Boolean).length > 30);
   return { text: out, suggestions, dashChanged, redundantCount, long };
 }
-
-/* ---- 工作台按钮 ---- */
-function wbTooShort() {
-  const min = wbLang === 'zh' ? 60 : 80;
-  $('#wbOutput').innerHTML = wbLang === 'zh'
-    ? '<p class="report-empty">文本太短，难以给出有意义的提示。请粘贴至少 60 字（建议 300 字以上）。</p>'
-    : '<p class="report-empty">The text is too short for a meaningful reading. Please paste at least 80 characters (300+ recommended).</p>';
-  void min;
-}
-
-$('#wbDetect').addEventListener('click', () => {
-  const raw = $('#wbInput').value;
-  const out = $('#wbOutput');
-  if (raw.trim().length < 60) { wbTooShort(); return; }
-
-  if (wbLang === 'zh') {
-    const m = zhMetrics(raw);
-    let score = 0;
-    const notes = [];
-    if (m.cv < 0.35) { score += 25; notes.push('句长非常均匀（变异系数 ' + m.cv.toFixed(2) + '），是常见的 AI 文本特征之一；人类写作句长通常起伏更大。'); }
-    else if (m.cv < 0.5) { score += 15; notes.push('句长较均匀（变异系数 ' + m.cv.toFixed(2) + '），略偏 AI 风格。'); }
-    else if (m.cv < 0.65) { score += 5; notes.push('句长有一定起伏，接近常见人类写作。'); }
-    else { notes.push('句长起伏明显，这一项不指向 AI。'); }
-    const phraseDensity = m.per1k(m.phraseHits);
-    score += Math.min(30, phraseDensity * 12);
-    if (m.phraseHits > 0) notes.push('命中 ' + m.phraseHits + ' 处高频套话（如「' + m.phraseTypes.slice(0, 3).join('」「') + '」等），密度约 ' + phraseDensity + ' 处/千字。');
-    const dashDensity = m.per1k(m.dashes);
-    score += Math.min(15, dashDensity * 4);
-    if (dashDensity > 3) notes.push('破折号/连字符密度较高（' + dashDensity + ' 处/千字）。');
-    if (m.starterRep > 0.4) { score += 15; notes.push('句首重复率高（' + Math.round(m.starterRep * 100) + '%），句式较单一。'); }
-    else if (m.starterRep > 0.25) { score += 8; }
-    if (m.uniqueRatio < 0.32) { score += 10; notes.push('用词重复度偏高。'); }
-    score = Math.max(0, Math.min(100, Math.round(score)));
-
-    let band, cls, explain;
-    if (score >= 60) { band = '偏高'; cls = 'badge-high'; explain = '多项特征接近典型 AI 生成文本。请注意：这仍是概率提示，不构成认定。'; }
-    else if (score >= 30) { band = '中等'; cls = 'badge-mid'; explain = '部分特征与 AI 文本有重叠，也可能只是规整的人类写作。'; }
-    else { band = '较低'; cls = 'badge-low'; explain = '未发现明显指向 AI 的特征。'; }
-
-    out.innerHTML = `
-      <h3>痕迹风险提示（中文）</h3>
-      <p><span class="badge ${cls}">风险 ${band} · 启发式得分 ${score}/100</span></p>
-      <p>${explain}</p>
-      <h4>观察到的情况</h4>
-      <ul>${notes.map((n) => `<li>${escapeHtml(n)}</li>`).join('') || '<li>无明显异常特征。</li>'}</ul>
-      <h4>基本指标</h4>
-      <ul>
-        <li>文本长度：${m.total} 字符 · ${m.sentences} 句</li>
-        <li>平均句长：${m.avg.toFixed(1)} 字（变异系数 ${m.cv.toFixed(2)}）</li>
-        <li>用词多样性（去重字/汉字数）：${(m.uniqueRatio * 100).toFixed(1)}%</li>
-        <li>套话密度：${phraseDensity} 处/千字 · 破折号：${dashDensity} 处/千字 · 冒号：${m.per1k(m.colons)} 处/千字</li>
-      </ul>
-      <hr class="rule">
-      <p style="color:var(--ink-faint);font-size:13px;">重要说明：以上为本地启发式特征统计，<strong>不是 AI 检测结论</strong>，存在误报与漏报，不能用于认定作者是否使用 AI。本工具刻意不提供「改写直到分数降低」的功能。</p>
-    `;
-  } else {
-    const m = enMetrics(raw);
-    let score = 0;
-    const notes = [];
-    if (m.cv < 0.4) { score += 25; notes.push('Sentence lengths are very uniform (CV ' + m.cv.toFixed(2) + '), a common trait of AI text; human writing tends to vary more.'); }
-    else if (m.cv < 0.55) { score += 15; notes.push('Sentence lengths are fairly uniform (CV ' + m.cv.toFixed(2) + ').'); }
-    else if (m.cv < 0.7) { score += 5; }
-    else { notes.push('Sentence length varies noticeably; this metric does not point to AI.'); }
-    const phraseDensity = m.per1k(m.phraseHits);
-    score += Math.min(30, phraseDensity * 12);
-    if (m.phraseHits > 0) notes.push('Matched ' + m.phraseHits + ' stock phrases (e.g. "' + m.phraseTypes.slice(0, 3).join('", "') + '"), about ' + phraseDensity + ' per 1k chars.');
-    const dashDensity = m.per1k(m.dashes);
-    score += Math.min(15, dashDensity * 4);
-    if (dashDensity > 3) notes.push('Em/en-dash density is high (' + dashDensity + ' per 1k chars).');
-    if (m.starterRep > 0.4) { score += 15; notes.push('High rate of repeated sentence openers (' + Math.round(m.starterRep * 100) + '%).'); }
-    else if (m.starterRep > 0.25) { score += 8; }
-    if (m.uniqueRatio < 0.45) { score += 10; notes.push('Lexical diversity is on the low side.'); }
-    score = Math.max(0, Math.min(100, Math.round(score)));
-
-    let band, cls, explain;
-    if (score >= 60) { band = 'Elevated'; cls = 'badge-high'; explain = 'Several features resemble typical AI-generated text. This remains a probabilistic hint, not a verdict.'; }
-    else if (score >= 30) { band = 'Moderate'; cls = 'badge-mid'; explain = 'Some features overlap with AI text; could also be polished human writing.'; }
-    else { band = 'Low'; cls = 'badge-low'; explain = 'No features clearly pointing to AI were found.'; }
-
-    out.innerHTML = `
-      <h3>Trace risk report (English)</h3>
-      <p><span class="badge ${cls}">Risk: ${band} · heuristic score ${score}/100</span></p>
-      <p>${explain}</p>
-      <h4>Observations</h4>
-      <ul>${notes.map((n) => `<li>${escapeHtml(n)}</li>`).join('') || '<li>No notable anomalies.</li>'}</ul>
-      <h4>Basic metrics</h4>
-      <ul>
-        <li>Length: ${m.total} characters · ${m.words} words · ${m.sentences} sentences</li>
-        <li>Avg sentence length: ${m.avg.toFixed(1)} words (CV ${m.cv.toFixed(2)})</li>
-        <li>Lexical diversity (unique words / total): ${(m.uniqueRatio * 100).toFixed(1)}%</li>
-        <li>Stock phrases: ${phraseDensity}/1k · dashes: ${dashDensity}/1k · colons: ${m.per1k(m.colons)}/1k</li>
-      </ul>
-      <hr class="rule">
-      <p style="color:var(--ink-faint);font-size:13px;">Important: this is a local heuristic analysis, <strong>not an AI-detection verdict</strong>; false positives and negatives occur. This tool deliberately offers no "rewrite until the score drops" feature.</p>
-    `;
-  }
-});
 
 $('#wbPolish').addEventListener('click', () => {
   const raw = $('#wbInput').value;
@@ -578,20 +479,7 @@ $('#wbPolish').addEventListener('click', () => {
 
 $('#wbClear').addEventListener('click', () => {
   $('#wbInput').value = '';
-  $('#wbOutput').innerHTML = '<p class="report-empty">粘贴文本后点击「检测痕迹」或「简洁化润色」。</p>';
-});
-
-/* ============ 5. 工具箱面板切换 ============ */
-$$('#toolTabs .tab').forEach((tab) => {
-  tab.addEventListener('click', () => {
-    $$('#toolTabs .tab').forEach((t) => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
-    tab.classList.add('active');
-    tab.setAttribute('aria-selected', 'true');
-    const tool = tab.dataset.tool;
-    ['check', 'disclose', 'review'].forEach((k) => {
-      $('#panel-' + k).hidden = k !== tool;
-    });
-  });
+  $('#wbOutput').innerHTML = '<p class="report-empty">粘贴文本后点击「检测痕迹」或「简洁化润色」。检测报告会给出分项打分表。</p>';
 });
 
 /* ============ 工具函数 ============ */
