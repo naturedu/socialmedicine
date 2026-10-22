@@ -2,9 +2,13 @@
 
 **socialmedicine & healtheconomics** · 开源 · MIT
 
-面向**社会医学与卫生事业管理 / 卫生经济学**研究者的开源科研工作台，像海浪一样温柔：从选题、方法学到投稿，按「产品模块」组织，每个模块能完成的事不同。
+面向**社会医学与卫生事业管理 / 卫生经济学**研究者的开源科研工作台，像海浪一样温柔。
 
-> 在线使用：<https://naturedu.github.io/socialmedicine/> ｜ 仓库：<https://github.com/naturedu/socialmedicine>
+> **把健康融入万策，把健康带到每一个人心中。**
+>
+> 以主动健康为策略主轴，为社会医学与卫生事业管理学科的**建设与发展**蒸馏四大板块：理论方法、数据源、选题、院校。
+
+在线使用：<https://naturedu.github.io/socialmedicine/> ｜ 仓库：<https://github.com/naturedu/socialmedicine>
 
 ## 适合谁
 
@@ -28,6 +32,8 @@
 | 方法学 Skill 库 | 六大产品分组、10 份深度 Skill + 54 条速查手册 | 首页「方法学」 |
 | 全球健康数据库 | GBD / WHO / 世界银行 / CHARLS 等 25 个数据源导航 | 首页「数据源」 |
 | 顶刊查询 | 45+ 期刊（含中文核心）按方向筛选 | 首页「顶刊」 |
+| 顶刊选刊指南 | CNS、Nature Medicine、JAMA、Health Affairs、SSM、npj Digital Medicine 等 14 本旗舰的定位与契合选题 | 首页「选刊」 |
+| 院校科普 | 北大公卫、复旦公卫、华科医管等 12 所院系介绍 | 首页「院校」 |
 | CSSCI 语料库 | 100 篇中英对照题录与摘要，可送入工作台 | `papers.html` |
 | 披露声明生成器 | 中 / English 披露草稿一键生成 | 首页「披露」 |
 
@@ -66,6 +72,7 @@
 
 | Skill | 文件 | 覆盖内容（每步方法 + 代码） |
 | --- | --- | --- |
+| 主动健康与健康融入万策（总纲旗舰） | [active-health-hiap-skill.md](skills/active-health-hiap-skill.md) | HiAP 框架、健康影响评估（PAF/集中指数）、五大板块总纲（理论·方法·数据·选题·院校） |
 | 卫生经济学评价教程 | [health-economics-tutorial-skill.md](skills/health-economics-tutorial-skill.md) | 评价类型选择、视角、成本测算、QALY/DALY、贴现、ICER、PSA、CHEERS 2022，9 步 |
 | DCE 设计助手 | [dce-design-assistant-skill.md](skills/dce-design-assistant-skill.md) | 正交/D-效率设计、选择集与分块、clogit / mixlogit / lclogit2 潜类别、WTP |
 | Markov 模型助手 | [markov-model-skill.md](skills/markov-model-skill.md) | 转移矩阵、率-概率换算、半周期校正、贴现、ICER、tornado、PSA 与 CEAC，8 步 |
