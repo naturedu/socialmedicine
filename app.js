@@ -7,7 +7,7 @@ const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 document.getElementById('year').textContent = new Date().getFullYear();
 
 /* ============ 0. 注册与登录（演示：本地模拟验证码与账号） ============ */
-const AUTH_KEY = 'tracehonest-account';
+const AUTH_KEY = 'socialmedicine-account';
 let __code = '';
 
 function genCode() { return String(Math.floor(100000 + Math.random() * 900000)); }
@@ -126,7 +126,7 @@ $$('#discloseTabs .tab').forEach((tab) => {
   });
 });
 
-/* ============ 2. 检测与润色工作台（中 / English） ============ */
+/* ============ 2. AI 检测（中 / English） ============ */
 let wbLang = 'zh';
 
 $$('#langTabs .tab').forEach((tab) => {
@@ -136,8 +136,8 @@ $$('#langTabs .tab').forEach((tab) => {
     tab.setAttribute('aria-selected', 'true');
     wbLang = tab.dataset.lang;
     $('#wbInputLabel').textContent = wbLang === 'zh' ? '原文（中文）' : 'Original text (English)';
-    $('#wbInput').placeholder = wbLang === 'zh' ? '粘贴需要检测或润色的文本（建议 300 字以上，结果更稳定）…' : 'Paste the text to analyze or polish (300+ characters recommended)…';
-    $('#wbOutput').innerHTML = '<p class="report-empty">粘贴文本后点击「检测痕迹」或「简洁化润色」。</p>';
+    $('#wbInput').placeholder = wbLang === 'zh' ? '粘贴需要检测的文本（建议 300 字以上，结果更稳定）…' : 'Paste the text to analyze (300+ characters recommended)…';
+    $('#wbOutput').innerHTML = '<p class="report-empty">粘贴文本后点击「检测痕迹」。</p>';
   });
 });
 
@@ -307,7 +307,26 @@ $('#wbDetect').addEventListener('click', () => {
   }
 });
 
-/* ---- 润色按钮 ---- */
+$('#wbClear').addEventListener('click', () => {
+  $('#wbInput').value = '';
+  $('#wbOutput').innerHTML = '<p class="report-empty">粘贴文本后点击「检测痕迹」。检测报告会给出分项打分表。</p>';
+});
+
+/* ============ 3. 润色（独立模块，中 / English） ============ */
+let polLang = 'zh';
+
+$$('#polLangTabs .tab').forEach((tab) => {
+  tab.addEventListener('click', () => {
+    $$('#polLangTabs .tab').forEach((t) => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    polLang = tab.dataset.lang;
+    $('#polInputLabel').textContent = polLang === 'zh' ? '原文（中文）' : 'Original text (English)';
+    $('#polInput').placeholder = polLang === 'zh' ? '粘贴需要润色的文本（建议 300 字以上）…' : 'Paste the text to polish (300+ characters recommended)…';
+    $('#polOutput').innerHTML = '<p class="report-empty">粘贴文本后点击「简洁化润色」。</p>';
+  });
+});
+
 const zhRedundantRules = [
   { re: /进行了/g, to: '做了', note: '「进行 + 动词」可简化为动词本身' },
   { re: /通过([^\n，。；]{0,30}?)的方式/g, to: '通过$1', note: '「通过……的方式」删去“的方式”' },
@@ -404,15 +423,15 @@ function enPolish(text) {
   return { text: out, suggestions, dashChanged, redundantCount, long };
 }
 
-$('#wbPolish').addEventListener('click', () => {
-  const raw = $('#wbInput').value;
-  const out = $('#wbOutput');
+$('#polPolish').addEventListener('click', () => {
+  const raw = $('#polInput').value;
+  const out = $('#polOutput');
   if (!raw.trim()) {
     out.innerHTML = '<p class="report-empty">请先粘贴文本。</p>';
     return;
   }
 
-  if (wbLang === 'zh') {
+  if (polLang === 'zh') {
     let text = raw;
     const changes = [];
     let totalChanges = 0;
@@ -447,9 +466,9 @@ $('#wbPolish').addEventListener('click', () => {
         </div>`).join('');
     }
     html += '<hr class="rule"><h4>结果</h4><p class="output-text">' + escapeHtml(text) + '</p>';
-    html += '<div class="btn-row" style="margin-top:14px;"><button type="button" class="btn btn-primary" id="wbCopy">复制结果</button></div>';
+    html += '<div class="btn-row" style="margin-top:14px;"><button type="button" class="btn btn-primary" id="polCopy">复制结果</button></div>';
     out.innerHTML = html;
-    $('#wbCopy').addEventListener('click', () => { copyText(text); $('#wbCopy').textContent = '已复制 ✓'; });
+    $('#polCopy').addEventListener('click', () => { copyText(text); $('#polCopy').textContent = '已复制 ✓'; });
   } else {
     const r = enPolish(raw);
     let html = '<h3>Concise polish result (English)</h3>';
@@ -471,16 +490,338 @@ $('#wbPolish').addEventListener('click', () => {
         </div>`).join('');
     }
     html += '<hr class="rule"><h4>Result</h4><p class="output-text">' + escapeHtml(r.text) + '</p>';
-    html += '<div class="btn-row" style="margin-top:14px;"><button type="button" class="btn btn-primary" id="wbCopy">Copy result</button></div>';
+    html += '<div class="btn-row" style="margin-top:14px;"><button type="button" class="btn btn-primary" id="polCopy">Copy result</button></div>';
     out.innerHTML = html;
-    $('#wbCopy').addEventListener('click', () => { copyText(r.text); $('#wbCopy').textContent = 'Copied ✓'; });
+    $('#polCopy').addEventListener('click', () => { copyText(r.text); $('#polCopy').textContent = 'Copied ✓'; });
   }
 });
 
-$('#wbClear').addEventListener('click', () => {
-  $('#wbInput').value = '';
-  $('#wbOutput').innerHTML = '<p class="report-empty">粘贴文本后点击「检测痕迹」或「简洁化润色」。检测报告会给出分项打分表。</p>';
+$('#polClear').addEventListener('click', () => {
+  $('#polInput').value = '';
+  $('#polOutput').innerHTML = '<p class="report-empty">粘贴文本后点击「简洁化润色」。会给出调整清单与修改后全文。</p>';
 });
+
+/* ============ 4. 方法学 Skill 库 ============ */
+const SKILL_GROUPS = {
+  hecon: { label: '卫生经济学方法', en: 'health economics skills' },
+  theory: { label: '社医理论与定性', en: 'medicine theory skills' },
+  policy: { label: '政策评估与因果', en: 'policy & causal skills' },
+  data: { label: '数据科学与预测', en: 'data & ML skills' },
+  stats: { label: '统计与研究设计', en: 'stats & design skills' },
+  writing: { label: '写作与润色', en: 'writing skills' },
+};
+
+const SKILLS = [
+  { name: '卫生经济学评价教程', file: 'health-economics-tutorial-skill.md', group: 'hecon', tags: ['教程', '卫生经济'], desc: 'CEA/CUA 总纲：研究问题、成本测算、QALY、贴现、ICER、不确定性、CHEERS 2022 报告清单，9 步带代码。', icon: '教程' },
+  { name: 'DCE 设计助手', file: 'dce-design-assistant-skill.md', group: 'hecon', tags: ['偏好测量', '卫生经济'], desc: '离散选择实验：正交/D-效率设计步骤 + clogit / mixlogit / lclogit2 潜类别分析，Stata 与 R 双轨。', icon: 'DCE' },
+  { name: 'Markov 模型助手', file: 'markov-model-skill.md', group: 'hecon', tags: ['卫生经济', '建模'], desc: '队列模拟成本-效果分析：转移矩阵、半周期校正、贴现、ICER、tornado 与 PSA，Stata/R 全程代码。', icon: 'Markov' },
+  { name: '机器学习助手', file: 'machine-learning-skill.md', group: 'data', tags: ['预测建模', '数据科学'], desc: '住院费用预测与风险分层：LASSO/弹性网、随机森林、XGBoost、SHAP 与 TRIPOD 报告。', icon: 'ML' },
+  { name: 'DID 双重差分助手', file: 'did-skill.md', group: 'policy', tags: ['因果推断', '政策评估'], desc: '卫生政策效果评估：平行趋势、经典 2×2 DID、多期交错 DID（csdid）、事件研究、安慰剂检验。', icon: 'DID' },
+  { name: 'ITS 间断时间序列助手', file: 'its-skill.md', group: 'policy', tags: ['政策评估', '时间序列'], desc: '单序列干预的水平变化与趋势变化：分段回归、Newey-West 自相关校正、反事实图。', icon: 'ITS' },
+  { name: 'DDD 三重差分助手', file: 'ddd-skill.md', group: 'policy', tags: ['因果推断', '政策评估'], desc: '双重差分之差：三维交互识别（如集采×医院类型×品种类型），与 DID 的分解对照。', icon: 'DDD' },
+  { name: 'Meta 分析助手', file: 'meta-analysis-skill.md', group: 'stats', tags: ['证据综合'], desc: '系统评价效应合并：OR/RR/SMD、固定与随机效应、异质性、森林图、发表偏倚、PRISMA。', icon: 'Meta' },
+  { name: '定性方法与结构方程专题', file: 'sem-qca-qualitative-skill.md', group: 'theory', tags: ['质性研究', 'SEM/fsQCA'], desc: '扎根理论 / SEM / 多层SEM / fsQCA：lavaan、QCA 与 Stata sem/gsem/fuzzy 全程代码。', icon: 'SEM' },
+  { name: 'socialmedicineskills 方法学速查手册', file: 'socialmedicineskills.md', group: 'stats', tags: ['速查', '54 条'], desc: '54 个方法速查：适用 / 要点 / Stata-R 核心代码 / 报告要点 / 常见错误；含理论框架 F 类与专题 G 类。', icon: '速查' },
+  { name: '学术写作规范润色', file: 'academic-copyediting-skill.md', group: 'writing', tags: ['写作'], desc: '中文学术文本标点、句式、冗余与结构规范；写作质量工具，明确不做检测器规避。', icon: '润色' },
+];
+
+const SKILL_BASE = 'https://github.com/naturedu/socialmedicine/blob/main/skills/';
+
+let skillGroupFilter = '';
+
+function renderSkillGroups() {
+  const el = $('#skillGroups');
+  el.innerHTML = `
+    <button type="button" class="chip-btn ${skillGroupFilter === '' ? 'on' : ''}" data-g="">全部</button>
+    ${Object.entries(SKILL_GROUPS).map(([k, g]) => `
+      <button type="button" class="chip-btn ${skillGroupFilter === k ? 'on' : ''}" data-g="${k}" title="${escapeHtml(g.en)}">
+        ${escapeHtml(g.label)}<span class="chip-en">${escapeHtml(g.en)}</span>
+      </button>`).join('')}`;
+  $$('#skillGroups .chip-btn').forEach((b) => {
+    b.addEventListener('click', () => {
+      skillGroupFilter = b.dataset.g;
+      renderSkillGroups();
+      renderSkillCards();
+    });
+  });
+}
+
+function renderSkillCards() {
+  const el = $('#skillCards');
+  const list = SKILLS.filter((s) => !skillGroupFilter || s.group === skillGroupFilter);
+  $('#skillCount').textContent = skillGroupFilter
+    ? `${SKILL_GROUPS[skillGroupFilter].label}（${list.length} 份）`
+    : `共 ${SKILLS.length} 份深度 Skill`;
+  el.innerHTML = list.map((s) => `
+    <div class="skill-card">
+      <div class="skill-card-top">
+        <span class="skill-icon" aria-hidden="true">${escapeHtml(s.icon)}</span>
+        <span class="skill-tags"><span class="mini-tag">${escapeHtml(SKILL_GROUPS[s.group].label)}</span>${s.tags.map((t) => `<span class="mini-tag">${escapeHtml(t)}</span>`).join('')}</span>
+      </div>
+      <h3>${escapeHtml(s.name)}</h3>
+      <p>${escapeHtml(s.desc)}</p>
+      <div class="skill-card-foot">
+        <a href="${SKILL_BASE}${encodeURIComponent(s.file)}" target="_blank" rel="noopener">打开 Skill（GitHub）</a>
+        <span class="hint">方法 + Stata/R 代码</span>
+      </div>
+    </div>`).join('');
+}
+
+renderSkillGroups();
+renderSkillCards();
+
+/* ---- 方法学速查（50 条） ---- */
+const METHOD_CATS = {
+  A: 'A 研究设计与偏倚',
+  B: 'B 统计分析',
+  C: 'C 卫生经济与政策',
+  D: 'D 因果推断',
+  E: 'E 数据科学',
+  F: 'F 理论框架',
+  G: 'G 定性与结构方程',
+};
+
+const METHODS = [
+  { cat: 'A', id: 'A1', name: '横断面研究', use: '一次时点调查患病率与相关因素' },
+  { cat: 'A', id: 'A2', name: '病例对照研究', use: '罕见结局回顾性比较暴露史（OR）' },
+  { cat: 'A', id: 'A3', name: '队列研究', use: '前瞻随访比较暴露组结局发生率（RR/HR）' },
+  { cat: 'A', id: 'A4', name: '随机对照试验 RCT', use: '干预因果评价金标准（ITT、CONSORT）' },
+  { cat: 'A', id: 'A5', name: '准实验设计', use: '无法随机时的前后对照/非等效对照' },
+  { cat: 'A', id: 'A6', name: '生态学研究', use: '群体水平暴露-结局关联初探（注意生态学谬误）' },
+  { cat: 'A', id: 'A7', name: '混合方法研究', use: '定性+定量互补解释机制与背景（joint display）' },
+  { cat: 'A', id: 'A8', name: '德尔菲法', use: '专家多轮征询达成指标/方案共识' },
+  { cat: 'B', id: 'B1', name: '描述统计与正态性检验', use: '分布概貌与检验方法选择（Shapiro-Wilk）' },
+  { cat: 'B', id: 'B2', name: 't 检验与方差分析', use: '两组/多组均值比较' },
+  { cat: 'B', id: 'B3', name: '卡方检验与非参数检验', use: '分类关联与偏态数据比较' },
+  { cat: 'B', id: 'B4', name: '相关与简单线性回归', use: '两连续变量的线性关系与预测' },
+  { cat: 'B', id: 'B5', name: '二元 logistic 回归', use: '二分类结局影响因素与预测（OR）' },
+  { cat: 'B', id: 'B6', name: '有序/多项 logistic 回归', use: '等级结局（如健康状况）与多分类结局' },
+  { cat: 'B', id: 'B7', name: 'Poisson 与负二项回归', use: '计数结局（住院次数、事件数）' },
+  { cat: 'B', id: 'B8', name: '生存分析（KM/Cox）', use: '至事件时间与风险因素（HR）' },
+  { cat: 'B', id: 'B9', name: '重复测量与混合效应模型', use: '纵向/聚集数据的个体内相关' },
+  { cat: 'B', id: 'B10', name: '主成分分析与因子分析', use: '降维与量表结构效度' },
+  { cat: 'C', id: 'C1', name: '成本测算', use: '识别-测量-估值三步与区间估计' },
+  { cat: 'C', id: 'C2', name: 'CEA / CUA', use: '增量成本效果比与经济性判断（详见教程）' },
+  { cat: 'C', id: 'C3', name: 'QALY / DALY 计算', use: '健康效用与疾病负担指标' },
+  { cat: 'C', id: 'C4', name: '预算影响分析 BIA', use: '新干预对医保预算的短期影响' },
+  { cat: 'C', id: 'C5', name: '卫生技术评估 HTA', use: '多维度证据的综合决策框架' },
+  { cat: 'C', id: 'C6', name: 'SFA / DEA 效率评价', use: '医院与卫生系统技术效率前沿' },
+  { cat: 'C', id: 'C7', name: '医保支付标准测算', use: 'DRG/DIP 权重与点值测算思路' },
+  { cat: 'C', id: 'C8', name: '公平性（集中指数）', use: '健康与利用不平等测量与分解' },
+  { cat: 'D', id: 'D1', name: '倾向得分匹配 PSM', use: '观察性数据的处理-对照平衡' },
+  { cat: 'D', id: 'D2', name: '工具变量 IV', use: '内生性下的因果识别（2SLS）' },
+  { cat: 'D', id: 'D3', name: '断点回归 RDD', use: '临界值附近的局部因果效应' },
+  { cat: 'D', id: 'D4', name: '合成控制法 SCM', use: '单地区政策评估的反事实构造' },
+  { cat: 'D', id: 'D5', name: '事件研究法', use: '政策动态效应轨迹' },
+  { cat: 'D', id: 'D6', name: 'DID 双重差分', use: '两期面板政策效应（详见 DID skill）' },
+  { cat: 'D', id: 'D7', name: 'ITS 间断时间序列', use: '单序列干预水平与趋势变化（详见 ITS skill）' },
+  { cat: 'D', id: 'D8', name: 'DDD 三重差分', use: '双重差分之差（详见 DDD skill）' },
+  { cat: 'E', id: 'E1', name: '缺失数据与多重插补', use: '减少删失偏倚（MICE）' },
+  { cat: 'E', id: 'E2', name: '样本量与统计效能', use: '事前确定最小样本量' },
+  { cat: 'E', id: 'E3', name: 'LASSO / 弹性网', use: '高维变量筛选（详见机器学习 skill）' },
+  { cat: 'E', id: 'E4', name: '随机森林 / XGBoost', use: '非线性预测建模（详见机器学习 skill）' },
+  { cat: 'E', id: 'E5', name: '聚类分析', use: '无监督分组（患者分型、机构分类）' },
+  { cat: 'E', id: 'E6', name: '贝叶斯统计入门', use: '先验+数据的后验推断' },
+  { cat: 'F', id: 'F1', name: 'Andersen 行为模型', use: '卫生服务利用的决定因素框架' },
+  { cat: 'F', id: 'F2', name: 'Grossman 健康需求模型', use: '健康资本与医疗需求' },
+  { cat: 'F', id: 'F3', name: '健康信念模型 HBM', use: '个体健康行为的心理动因' },
+  { cat: 'F', id: 'F4', name: '计划行为理论 TPB', use: '态度-规范-控制感→行为意向' },
+  { cat: 'F', id: 'F5', name: '社会生态学模型', use: '多层次因素嵌套解释健康' },
+  { cat: 'F', id: 'F6', name: '健康公平理论', use: 'Rawls 正义与 Sen 可行能力' },
+  { cat: 'F', id: 'F7', name: '健康社会决定因素 CSDH', use: '社会梯度与健康不平等' },
+  { cat: 'F', id: 'F8', name: '委托代理与供方诱导需求', use: '信息不对称下的医生行为' },
+  { cat: 'F', id: 'F9', name: '市场失灵与政府干预', use: '公共品/外部性/信息不对称' },
+  { cat: 'F', id: 'F10', name: '制度变迁与路径依赖', use: '医改的制度分析视角' },
+  { cat: 'G', id: 'G1', name: '扎根理论', use: '三级编码与理论建构（详见 SEM/fsQCA 专题 skill）' },
+  { cat: 'G', id: 'G2', name: '结构方程模型 SEM', use: '潜变量测量与路径（lavaan / sem）' },
+  { cat: 'G', id: 'G3', name: '多层/多重嵌套 SEM', use: '嵌套数据（患者-科室-医院）的多层建模' },
+  { cat: 'G', id: 'G4', name: 'fsQCA 定性比较分析', use: '组态视角的多路径因果（QCA / fuzzy）' },
+];
+
+let methodCatFilter = '';
+let methodQuery = '';
+
+function renderMethodCats() {
+  const el = $('#methodCats');
+  const cats = Object.keys(METHOD_CATS);
+  el.innerHTML = `
+    <button type="button" class="chip-btn ${methodCatFilter === '' ? 'on' : ''}" data-cat="">全部</button>
+    ${cats.map((c) => `<button type="button" class="chip-btn ${methodCatFilter === c ? 'on' : ''}" data-cat="${c}">${escapeHtml(METHOD_CATS[c])}</button>`).join('')}`;
+  $$('#methodCats .chip-btn').forEach((b) => {
+    b.addEventListener('click', () => {
+      methodCatFilter = b.dataset.cat;
+      renderMethodCats();
+      renderMethodList();
+    });
+  });
+}
+
+function renderMethodList() {
+  const q = methodQuery.trim().toLowerCase();
+  const list = METHODS.filter((m) => {
+    const okCat = !methodCatFilter || m.cat === methodCatFilter;
+    const okQ = !q || (m.name + m.use + m.id).toLowerCase().includes(q);
+    return okCat && okQ;
+  });
+  $('#methodCount').textContent = `共 ${list.length} / ${METHODS.length} 条${q ? '（搜索：“' + escapeHtml(methodQuery.trim()) + '”）' : ''}`;
+  const el = $('#methodList');
+  if (!list.length) {
+    el.innerHTML = '<p class="report-empty">没有匹配的方法，换一个关键词试试。</p>';
+    return;
+  }
+  el.innerHTML = list.map((m) => `
+    <div class="method-item">
+      <span class="method-id">${m.id}</span>
+      <span class="method-name">${escapeHtml(m.name)}</span>
+      <span class="method-use">${escapeHtml(m.use)}</span>
+      <span class="mini-tag cat-${m.cat}">${escapeHtml(METHOD_CATS[m.cat])}</span>
+    </div>`).join('');
+}
+
+$('#methodSearch').addEventListener('input', (e) => {
+  methodQuery = e.target.value;
+  renderMethodList();
+});
+
+renderMethodCats();
+renderMethodList();
+
+/* ============ 5. 全球健康数据库（数据源） ============ */
+const DATA_SOURCES = [
+  { tag: '国际', name: 'GBD 全球疾病负担结果工具（IHME）', scope: '疾病、伤害与危险因素的负担、DALY/YLD 可视化与下载', url: 'https://vizhub.healthdata.org/gbd-results/' },
+  { tag: '国际', name: 'WHO 全球卫生观察站（GHO）', scope: '各国卫生指标、卫生系统与健康目标监测', url: 'https://www.who.int/data/gho' },
+  { tag: '国际', name: 'WHO 全球卫生支出数据库（NHA）', scope: '各国卫生总费用、政府/个人/外部筹资构成', url: 'https://apps.who.int/nha/database' },
+  { tag: '国际', name: 'WHO 免疫接种数据门户', scope: '各国疫苗接种率与计划免疫进展', url: 'https://immunizationdata.who.int/' },
+  { tag: '国际', name: 'WHO 死亡率数据库', scope: '按死因、年龄、性别的各国死亡数据', url: 'https://www.who.int/data/data-collection-tools/who-mortality-database' },
+  { tag: '国际', name: '世界银行 HNP 统计', scope: '健康、营养与人口指标（期望寿命、卫生支出占 GDP 等）', url: 'https://databank.worldbank.org/source/health-nutrition-and-population-statistics' },
+  { tag: '国际', name: 'Our World in Data', scope: '全球健康与发展的长时段可视化与开放数据', url: 'https://ourworldindata.org/health' },
+  { tag: '国际', name: 'OECD 健康统计', scope: 'OECD 国家卫生支出、质量、利用与健康状态', url: 'https://stats.oecd.org/Index.aspx?DataSetCode=HEALTH_STAT' },
+  { tag: '国际', name: 'UNICEF Data', scope: '儿童健康、营养、免疫与孕产妇指标', url: 'https://data.unicef.org/' },
+  { tag: '国际', name: 'UNAIDS AIDSinfo', scope: '艾滋病流行、检测、治疗与消除目标数据', url: 'https://aidsinfo.unaids.org/' },
+  { tag: '国际', name: 'FAO FAOSTAT', scope: '食物安全、营养与农业统计（营养流行病学常用）', url: 'https://www.fao.org/faostat/en/' },
+  { tag: '国际', name: '人类死亡率数据库 HMD', scope: '分年龄别死亡率与期望寿命（人口学与精算）', url: 'https://www.mortality.org/' },
+  { tag: '国际', name: 'DHS 人口与健康调查', scope: '90+ 国家微观调查：生育、儿童健康、营养、HIV', url: 'https://dhsprogram.com/' },
+  { tag: '国际', name: 'IPUMS', scope: '国际人口普查与健康调查微观数据整合平台', url: 'https://www.ipums.org/' },
+  { tag: '国际', name: 'healthdata.gov', scope: '美国联邦开放健康数据门户', url: 'https://healthdata.gov/' },
+  { tag: '国际', name: 'IHME COVID-19 预估', scope: '疫情住院、死亡与医疗资源使用建模预估', url: 'https://covid19.healthdata.org/' },
+  { tag: '中国', name: '国家统计局 · 国家数据', scope: '人口、卫生、经济等宏观年度数据', url: 'https://data.stats.gov.cn/' },
+  { tag: '中国', name: '国家卫生健康委员会', scope: '卫生健康统计公报、卫生服务调查与年鉴', url: 'http://www.nhc.gov.cn/' },
+  { tag: '中国', name: '国家医疗保障局', scope: '医保基金收支统计公报、DRG/DIP 与集采动态', url: 'https://www.nhsa.gov.cn/' },
+  { tag: '中国', name: '公共卫生科学数据中心（中国 CDC）', scope: '传染病、慢病、死因监测与健康危险因素数据', url: 'https://www.phsciencedata.cn/' },
+  { tag: '中国', name: 'CHARLS 中国健康与养老追踪调查', scope: '45+ 中老年人群健康、经济与养老微观面板', url: 'https://charls.charlsdata.com/' },
+  { tag: '中国', name: 'CFPS 中国家庭追踪调查', scope: '全国代表性家庭面板（健康、经济、教育）', url: 'https://www.isss.pku.edu.cn/cfps/' },
+  { tag: '中国', name: 'CLHLS 中国老年健康调查', scope: '高龄老人健康长寿影响因素纵向数据', url: 'https://opendata.pku.edu.cn/' },
+  { tag: '中国', name: 'CHNS 中国健康与营养调查', scope: '九省区长期追踪：膳食、健康与卫生服务', url: 'https://www.cpc.unc.edu/projects/china' },
+  { tag: '中国', name: 'CGSS 中国综合社会调查', scope: '社会结构、健康与主观福祉全国截面调查', url: 'http://cgss.ruc.edu.cn/' },
+];
+
+function renderDataSources() {
+  $('#dataGrid').innerHTML = DATA_SOURCES.map((d) => `
+    <div class="data-card">
+      <div class="data-card-top">
+        <span class="mini-tag ${d.tag === '国际' ? 'tag-global' : 'tag-cn'}">${d.tag}</span>
+        <h3>${escapeHtml(d.name)}</h3>
+      </div>
+      <p>${escapeHtml(d.scope)}</p>
+      <a href="${escapeHtml(d.url)}" target="_blank" rel="noopener">打开数据库 ↗</a>
+    </div>`).join('');
+}
+
+renderDataSources();
+
+/* ============ 6. 目标期刊查询 ============ */
+const JOURNALS = [
+  { name: 'Journal of Health Economics', issn: '0167-6296', area: '卫生经济', pub: 'Elsevier' },
+  { name: 'Health Economics', issn: '1057-9230', area: '卫生经济', pub: 'Wiley' },
+  { name: 'Value in Health', issn: '1098-3015', area: '卫生经济', pub: 'Elsevier / ISPOR' },
+  { name: 'PharmacoEconomics', issn: '1170-7690', area: '卫生经济', pub: 'Springer' },
+  { name: 'Applied Health Economics and Health Policy', issn: '1175-5652', area: '卫生经济', pub: 'Springer' },
+  { name: 'Journal of Medical Economics', issn: '1369-6998', area: '卫生经济', pub: 'Taylor & Francis' },
+  { name: 'Cost Effectiveness and Resource Allocation', issn: '1478-7547', area: '卫生经济', pub: 'BMC（开放获取）' },
+  { name: 'Health Economics Review', issn: '2191-1991', area: '卫生经济', pub: 'Springer（开放获取）' },
+  { name: 'Expert Review of Pharmacoeconomics & Outcomes Research', issn: '1473-7167', area: '卫生经济', pub: 'Taylor & Francis' },
+  { name: 'Medical Decision Making', issn: '0272-989X', area: '卫生经济', pub: 'SAGE / SMDM' },
+  { name: 'The Patient — Patient-Centered Outcomes Research', issn: '1178-1653', area: '卫生经济', pub: 'Springer' },
+  { name: 'Social Science & Medicine', issn: '0277-9536', area: '社会医学', pub: 'Elsevier' },
+  { name: 'Social Science & Medicine – Population Health', issn: '2352-8273', area: '社会医学', pub: 'Elsevier（开放获取）' },
+  { name: 'International Journal for Equity in Health', issn: '1475-9276', area: '社会医学', pub: 'BMC（开放获取）' },
+  { name: 'Journal of Epidemiology and Community Health', issn: '0143-005X', area: '社会医学', pub: 'BMJ' },
+  { name: 'BMC Public Health', issn: '1471-2458', area: '社会医学', pub: 'BMC（开放获取）' },
+  { name: 'American Journal of Public Health', issn: '0090-0036', area: '社会医学', pub: 'APHA' },
+  { name: 'Globalization and Health', issn: '1744-8603', area: '社会医学', pub: 'BMC（开放获取）' },
+  { name: 'The Lancet Public Health', issn: '2468-2667', area: '社会医学', pub: 'Elsevier' },
+  { name: 'BMJ Global Health', issn: '2059-7908', area: '社会医学', pub: 'BMJ（开放获取）' },
+  { name: 'Health Policy', issn: '0168-8510', area: '卫生政策', pub: 'Elsevier' },
+  { name: 'Health Policy and Planning', issn: '0268-1080', area: '卫生政策', pub: 'Oxford University Press' },
+  { name: 'Health Affairs', issn: '0278-2715', area: '卫生政策', pub: 'Project HOPE' },
+  { name: 'International Journal of Health Policy and Management', issn: '2322-5939', area: '卫生政策', pub: 'Kerman University（开放获取）' },
+  { name: 'Journal of Health Politics, Policy and Law', issn: '0361-6878', area: '卫生政策', pub: 'Duke University Press' },
+  { name: 'Health Services Research', issn: '0017-9124', area: '卫生管理', pub: 'Wiley / HSR' },
+  { name: 'Medical Care', issn: '0025-7079', area: '卫生管理', pub: 'Wolters Kluwer' },
+  { name: 'Journal of Health Services Research & Policy', issn: '1355-8196', area: '卫生管理', pub: 'SAGE' },
+  { name: 'International Journal of Epidemiology', issn: '0300-5771', area: '流行病', pub: 'Oxford University Press' },
+  { name: 'American Journal of Epidemiology', issn: '0002-9262', area: '流行病', pub: 'Oxford University Press' },
+  { name: '中国卫生经济', issn: '1003-0743', area: '中文期刊', pub: '中国卫生经济学会' },
+  { name: '中国卫生政策研究', issn: '1674-2982', area: '中文期刊', pub: '中国医学科学院' },
+  { name: '卫生经济研究', issn: '1004-7778', area: '中文期刊', pub: '浙江省卫生经济学会' },
+  { name: '中国卫生事业管理', issn: '1004-4663', area: '中文期刊', pub: '四川省卫生健康委' },
+  { name: '中国医院管理', issn: '1001-5329', area: '中文期刊', pub: '中国医院管理杂志社' },
+  { name: '中国卫生资源', issn: '1007-953X', area: '中文期刊', pub: '上海市卫生和健康发展研究中心' },
+  { name: '中国卫生统计', issn: '1002-3674', area: '中文期刊', pub: '中国医科大学' },
+  { name: '中国药物经济学', issn: '1673-5846', area: '中文期刊', pub: '中国中医药研究促进会' },
+  { name: '中国医疗保险', issn: '1674-3830', area: '中文期刊', pub: '中国医疗保险研究会' },
+  { name: '中国全科医学', issn: '1007-9572', area: '中文期刊', pub: '中国全科医学杂志社' },
+  { name: '中华医院管理杂志', issn: '1000-6672', area: '中文期刊', pub: '中华医学会' },
+  { name: '中华流行病学杂志', issn: '0254-6450', area: '中文期刊', pub: '中华医学会' },
+  { name: '中国公共卫生', issn: '1001-0580', area: '中文期刊', pub: '中华预防医学会' },
+  { name: '现代预防医学', issn: '1003-8507', area: '中文期刊', pub: '中华预防医学会' },
+  { name: '中国社会医学杂志', issn: '1673-5625', area: '中文期刊', pub: '华中科技大学同济医学院' },
+  { name: '医学与社会', issn: '1006-5563', area: '中文期刊', pub: '华中科技大学同济医学院' },
+  { name: '中国循证医学杂志', issn: '1672-2531', area: '中文期刊', pub: '四川大学' },
+  { name: '中国卫生质量管理', issn: '1006-7515', area: '中文期刊', pub: '中国医院协会' },
+];
+
+let journalCat = '';
+let journalQuery = '';
+
+function renderJournalCats() {
+  const areas = ['全部', ...new Set(JOURNALS.map((j) => j.area))];
+  $('#journalCats').innerHTML = areas.map((a) => `
+    <button type="button" class="chip-btn ${journalCat === a ? 'on' : ''}" data-area="${a}">${escapeHtml(a)}</button>`).join('');
+  $$('#journalCats .chip-btn').forEach((b) => {
+    b.addEventListener('click', () => {
+      journalCat = b.dataset.area;
+      renderJournalCats();
+      renderJournals();
+    });
+  });
+}
+
+function renderJournals() {
+  const q = journalQuery.trim().toLowerCase();
+  const list = JOURNALS.filter((j) => {
+    const okCat = !journalCat || journalCat === '全部' || j.area === journalCat;
+    const okQ = !q || (j.name + j.issn + j.area + j.pub).toLowerCase().includes(q);
+    return okCat && okQ;
+  });
+  $('#journalCount').textContent = `共 ${list.length} / ${JOURNALS.length} 种（影响因子与分区请以最新 JCR / 官方为准）`;
+  $('#journalBody').innerHTML = list.map((j) => `
+    <tr>
+      <td><strong>${escapeHtml(j.name)}</strong></td>
+      <td>${escapeHtml(j.issn)}</td>
+      <td><span class="mini-tag">${escapeHtml(j.area)}</span></td>
+      <td>${escapeHtml(j.pub)}</td>
+      <td><a href="https://portal.issn.org/resource/ISSN/${encodeURIComponent(j.issn)}" target="_blank" rel="noopener">ISSN 门户 ↗</a></td>
+    </tr>`).join('');
+}
+
+$('#journalSearch').addEventListener('input', (e) => {
+  journalQuery = e.target.value;
+  renderJournals();
+});
+
+renderJournalCats();
+renderJournals();
 
 /* ============ 工具函数 ============ */
 function escapeHtml(s) {

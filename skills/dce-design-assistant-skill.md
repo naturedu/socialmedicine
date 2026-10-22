@@ -392,6 +392,6 @@ WTP = -β_x / β_cost 及 95% CI（注明 delta / Krinsky-Robb 方法）。
 
 ## 引用 / Citation
 
-中文：杜思娴. DCE 设计助手：离散选择实验设计与 Stata/R 分析 Skill [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.
+中文：杜思娴. DCE 设计助手：离散选择实验设计与 Stata/R 分析 Skill [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.
 
-English: Du, S. (2026). *DCE Design Assistant: Discrete choice experiment design and Stata/R analysis skill* [Skill definition]. https://naturedu.github.io/tracehonest/.
+English: Du, S. (2026). *DCE Design Assistant: Discrete choice experiment design and Stata/R analysis skill* [Skill definition]. https://naturedu.github.io/socialmedicine/.

@@ -65,6 +65,6 @@
 
 ## 引用 / Citation
 
-中文：杜思娴. 学术写作规范润色 Skill [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.
+中文：杜思娴. 学术写作规范润色 Skill [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.
 
-English: Du, S. (2026). *Academic writing copyediting skill* [Skill definition]. https://naturedu.github.io/tracehonest/.
+English: Du, S. (2026). *Academic writing copyediting skill* [Skill definition]. https://naturedu.github.io/socialmedicine/.

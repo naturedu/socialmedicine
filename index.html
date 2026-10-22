@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>普贤 · AI 学术检查助手</title>
-  <meta name="description" content="普贤：中 / English 双语 AI 痕迹检测与简洁化润色。多指标启发式打分，每一项都有依据、可复核。免费开源，文本只在本机处理。" />
+  <title>普贤——社医卫管科研助手</title>
+  <meta name="description" content="普贤——社医卫管科研助手：面向社会医学与卫生事业管理/卫生经济学的科研工作台。AI 痕迹检测、独立润色模块、方法学 Skill 库与 50 条方法速查、全球健康数据库、目标期刊查询、披露声明生成。免费开源，文本只在本机处理。" />
   <meta name="theme-color" content="#1f1d1a" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
@@ -20,14 +20,17 @@
           <path d="M9 20.5 L13.5 11 L18 20.5 M10.6 17.2 L16.4 17.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           <circle cx="22.5" cy="20.5" r="3" fill="none" stroke="currentColor" stroke-width="2.2"/>
         </svg>
-        <span class="brand-name">普贤<span class="brand-en">Puxian</span></span>
+        <span class="brand-name">普贤<span class="brand-en">社医卫管科研助手</span></span>
       </a>
       <nav class="site-nav" aria-label="主导航">
-        <a href="#workbench">检测润色</a>
+        <a href="#grants">选题基金</a>
+        <a href="#detect">AI检测</a>
+        <a href="#polish">润色</a>
+        <a href="#methods">方法学</a>
+        <a href="#datasources">数据源</a>
+        <a href="#journals">顶刊</a>
         <a href="papers.html">语料库</a>
-        <a href="#account">注册</a>
         <a href="#disclose">披露</a>
-        <a href="#footer">引用</a>
       </nav>
     </div>
   </header>
@@ -36,19 +39,84 @@
     <!-- Hero -->
     <section id="top" class="hero">
       <div class="wrap hero-inner">
-        <p class="eyebrow">AI 学术检查助手 · 免费开源</p>
-        <h1>粘贴文本，<span class="accent">检测</span>与<span class="accent">润色</span>一步到位。</h1>
-        <p class="lede">多指标启发式检测，<strong>每一项打分都有依据、可复核</strong>。中文 / English 双语，文本只在本机处理，不上传。</p>
+        <p class="eyebrow">普贤——社医卫管科研助手 · socialmedicine &amp; healtheconomics</p>
+        <h1>像<span class="accent">海浪</span>一样温柔，陪你从<span class="accent">方法学</span>走到<span class="accent">投稿</span>。</h1>
+        <p class="lede">几个产品模块，<strong>每个能完成的事不同</strong>：选题与基金（国自然等）、AI 检测、润色、方法学 Skill 库（卫生经济学方法 health economics skills · 社医理论 medicine theory skills）、全球健康数据库、顶刊查询与语料库。<strong>方法学教程每步都有「方法 + Stata/R 代码」</strong>。</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#workbench">开始检测</a>
-          <a class="btn btn-ghost" href="#method">看检测方法说明</a>
+          <a class="btn btn-primary" href="#methods">看方法学 Skill 库</a>
+          <a class="btn btn-ghost" href="#detect">AI 检测助手</a>
+          <a class="btn btn-ghost" href="#journals">查目标期刊</a>
+        </div>
+        <ul class="hero-points">
+          <li>10+ 份深度 Skill · 每步方法 + 代码</li>
+          <li>54 条方法学速查</li>
+          <li>20+ 全球健康数据库</li>
+          <li>45+ 目标期刊索引</li>
+        </ul>
+      </div>
+      <div class="hero-waves" aria-hidden="true">
+        <svg viewBox="0 0 1440 130" preserveAspectRatio="none">
+          <path d="M0,78 C180,104 360,34 540,44 C720,54 900,106 1080,88 C1260,70 1380,40 1440,52 L1440,130 L0,130 Z" fill="rgba(142,211,224,.10)"/>
+          <path d="M0,96 C240,64 480,120 720,102 C960,84 1200,116 1440,86 L1440,130 L0,130 Z" fill="rgba(231,207,150,.05)"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 选题与基金 -->
+    <section id="grants" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>选题与基金（国自然等申报导航）</h2>
+          <p>社医卫管方向常见课题渠道与选题思路。申报要求以当年官方指南为准；本站方法学 Skill 库可直接用于「技术路线与研究方法」部分。</p>
+        </div>
+
+        <div class="data-grid">
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag tag-cn">国家级</span><h3>国家自然科学基金（NSFC）</h3></div>
+            <p>面上 / 青年 / 地区项目为主。社医卫管可投管理科学部（G04 宏观管理与政策、健康管理方向）或医学部（H30 预防医学下属卫生管理与政策）。青年项目男性 ≤35 岁、女性 ≤40 岁（以当年指南为准）。</p>
+            <a href="https://www.nsfc.gov.cn/" target="_blank" rel="noopener">国家自然科学基金委 ↗</a>
+          </div>
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag tag-cn">国家级</span><h3>国家社会科学基金</h3></div>
+            <p>年度项目（重点/一般/青年）、西部项目。社会学、人口学、应用经济（健康经济）、管理学（卫生管理）均可申报；强调理论贡献与现实问题结合。</p>
+            <a href="https://www.nopss.gov.cn/" target="_blank" rel="noopener">全国哲学社会科学工作办公室 ↗</a>
+          </div>
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag tag-cn">部级</span><h3>教育部人文社会科学</h3></div>
+            <p>规划基金 / 青年基金 / 专项。管理学、社会学、交叉学科方向接受卫生政策与健康管理选题；周期短、结项要求相对灵活。</p>
+            <a href="https://www.moe.gov.cn/" target="_blank" rel="noopener">教育部 ↗</a>
+          </div>
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag tag-cn">行业</span><h3>国家卫健委 / 省级课题</h3></div>
+            <p>国家卫生健康委委托课题、省卫健委软科学、省医保局课题、省社科基金。选题贴近政策需求（支付改革、分级诊疗、慢病管理、医保基金监管）。</p>
+            <a href="http://www.nhc.gov.cn/" target="_blank" rel="noopener">国家卫生健康委 ↗</a>
+          </div>
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag tag-cn">校级</span><h3>研究生创新项目</h3></div>
+            <p>各校研究生科研创新基金、学位论文培育项目。适合用 DCE / Markov / DID / Meta 等方法做小切口课题，是国自然的预研。</p>
+            <a href="#methods">用本站方法学选方法 ↓</a>
+          </div>
+          <div class="data-card">
+            <div class="data-card-top"><span class="mini-tag">选题思路</span><h3>选题三步法</h3></div>
+            <p>① 找缺口：读顶刊近三年综述的「future research」；② 定问题：PICO / 组态视角把缺口转成可研究问题；③ 配方法：用 socialmedicineskills 速查手册按数据形态选方法并写技术路线。</p>
+            <a href="skills/socialmedicineskills.md" target="_blank" rel="noopener">打开方法学速查手册 ↗</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Workbench -->
-    <section id="workbench" class="section">
+    <div class="wave-div flip" aria-hidden="true">
+      <svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,28 C240,52 480,8 720,20 C960,32 1200,52 1440,26 L1440,56 L0,56 Z" fill="rgba(94,168,189,.10)"/></svg>
+    </div>
+
+    <!-- AI 检测 -->
+    <section id="detect" class="section section-alt">
       <div class="wrap">
+        <div class="section-head">
+          <h2>AI 检测助手</h2>
+          <p>多指标启发式检测，<strong>每一项打分都有依据、可复核</strong>。中 / English 双语，文本只在本机处理，不上传。润色已独立成模块（见下方「润色」）。</p>
+        </div>
+
         <div class="card">
           <div class="report-tabs" role="tablist" id="langTabs">
             <button role="tab" class="tab active" data-lang="zh" aria-selected="true">中文</button>
@@ -59,11 +127,10 @@
             <div class="stack">
               <label class="field">
                 <span class="field-label" id="wbInputLabel">原文（中文）</span>
-                <textarea id="wbInput" rows="16" placeholder="粘贴需要检测或润色的文本（建议 300 字以上，结果更稳定）…"></textarea>
+                <textarea id="wbInput" rows="16" placeholder="粘贴需要检测的文本（建议 300 字以上，结果更稳定）…"></textarea>
               </label>
               <div class="btn-row">
                 <button type="button" id="wbDetect" class="btn btn-primary">检测痕迹</button>
-                <button type="button" id="wbPolish" class="btn btn-primary">简洁化润色</button>
                 <button type="button" id="wbClear" class="btn btn-ghost">清空</button>
               </div>
 
@@ -76,7 +143,7 @@
             </div>
             <div class="card-report" style="border:1px solid var(--line);border-radius:10px;padding:16px;min-height:360px;">
               <div class="report-body" id="wbOutput">
-                <p class="report-empty">粘贴文本后点击「检测痕迹」或「简洁化润色」。检测报告会给出分项打分表。</p>
+                <p class="report-empty">粘贴文本后点击「检测痕迹」。检测报告会给出分项打分表。</p>
               </div>
             </div>
           </div>
@@ -103,8 +170,183 @@
       </div>
     </section>
 
-    <!-- Account -->
-    <section id="account" class="section section-alt">
+    <div class="wave-div flip" aria-hidden="true">
+      <svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,28 C240,52 480,8 720,20 C960,32 1200,52 1440,26 L1440,56 L0,56 Z" fill="rgba(94,168,189,.10)"/></svg>
+    </div>
+
+    <!-- 润色（独立模块） -->
+    <section id="polish" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>润色（独立模块）</h2>
+          <p>写作质量工具：标点规范、破折号统一、去冗余、长句提示。<strong>不针对任何 AI 检测器优化</strong>，不修改事实与引用。中 / English 双语，只在本机处理。</p>
+        </div>
+
+        <div class="card">
+          <div class="report-tabs" role="tablist" id="polLangTabs">
+            <button role="tab" class="tab active" data-lang="zh" aria-selected="true">中文</button>
+            <button role="tab" class="tab" data-lang="en" aria-selected="false">English</button>
+          </div>
+
+          <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="stack">
+              <label class="field">
+                <span class="field-label" id="polInputLabel">原文（中文）</span>
+                <textarea id="polInput" rows="16" placeholder="粘贴需要润色的文本（建议 300 字以上）…"></textarea>
+              </label>
+              <div class="btn-row">
+                <button type="button" id="polPolish" class="btn btn-primary">简洁化润色</button>
+                <button type="button" id="polClear" class="btn btn-ghost">清空</button>
+              </div>
+              <p class="hint">完整润色规则见 <a href="skills/academic-copyediting-skill.md" target="_blank" rel="noopener">学术写作规范润色 Skill</a>（可移植提示词）。</p>
+            </div>
+            <div class="card-report" style="border:1px solid var(--line);border-radius:10px;padding:16px;min-height:360px;">
+              <div class="report-body" id="polOutput">
+                <p class="report-empty">粘贴文本后点击「简洁化润色」。会给出调整清单与修改后全文。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 方法学 -->
+    <section id="methods" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>方法学 Skill 库（按产品模块分组）</h2>
+          <p>六大产品模块，<strong>每个 Skill 能完成的事不同</strong>：卫生经济学方法（health economics skills）、社医理论与定性（medicine theory skills）、政策评估与因果、数据科学与预测、统计与研究设计、写作与润色。每份都是可移植提示词 + 操作手册，<strong>每一步「方法 + Stata/R 代码」</strong>。全部文件在 <a href="https://github.com/naturedu/socialmedicine/tree/main/skills" target="_blank" rel="noopener">GitHub skills/ 目录</a>，MIT 许可。</p>
+        </div>
+
+        <div class="chip-row" id="skillGroups" style="margin-bottom:14px;"></div>
+        <p class="hint" id="skillCount" style="margin:0 0 16px;"></p>
+
+        <div class="skill-grid" id="skillCards">
+          <!-- JS 渲染 -->
+        </div>
+
+        <div class="card" style="margin-top:28px;">
+          <h3 style="font-family:var(--serif);margin:0 0 6px;">方法学速查手册 · socialmedicineskills（54 条）</h3>
+          <p class="hint" style="margin-bottom:14px;">研究设计、统计分析、卫生经济、因果推断、机器学习、理论框架、定性与结构方程七大类。完整版（含公式与代码）见 <a href="skills/socialmedicineskills.md" target="_blank" rel="noopener">socialmedicineskills.md</a>。</p>
+          <div class="toolbar-row">
+            <input type="search" id="methodSearch" class="search-input" placeholder="搜索方法（如：logistic、断点、德尔菲、QALY…）" aria-label="搜索方法" />
+            <div class="chip-row" id="methodCats"></div>
+          </div>
+          <p class="hint" id="methodCount" style="margin:10px 0 4px;"></p>
+          <div id="methodList" class="method-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wave-div" aria-hidden="true">
+      <svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,24 C220,48 460,6 720,20 C980,34 1220,50 1440,22 L1440,56 L0,56 Z" fill="rgba(142,211,224,.08)"/></svg>
+    </div>
+
+    <!-- 数据源 -->
+    <section id="datasources" class="section section-alt">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>全球健康数据库（数据源）</h2>
+          <p>社医卫管与卫生经济学常用数据库导航：疾病负担、卫生支出、健康调查与国内统计年鉴。多为公开数据；引用与使用条件以各机构官网为准。</p>
+        </div>
+        <div class="data-grid" id="dataGrid">
+          <!-- JS 渲染 -->
+        </div>
+      </div>
+    </section>
+
+    <div class="wave-div flip" aria-hidden="true">
+      <svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,30 C240,6 480,48 720,34 C960,20 1200,4 1440,30 L1440,56 L0,56 Z" fill="rgba(231,207,150,.06)"/></svg>
+    </div>
+
+    <!-- 目标期刊 -->
+    <section id="journals" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>顶刊查询（目标期刊）</h2>
+          <p>社会医学、卫生经济、卫生政策与管理方向的 45+ 期刊速查，含中文核心期刊。影响因子与分区每年更新，<strong>本页不列数值，请以最新 JCR / 官方为准</strong>；投稿前务必核对期刊官网的 Aim &amp; Scope 与格式要求。</p>
+        </div>
+        <div class="card">
+          <div class="toolbar-row">
+            <input type="search" id="journalSearch" class="search-input" placeholder="搜索期刊名 / ISSN / 领域（如：卫生经济、健康公平、中国卫生…）" aria-label="搜索期刊" />
+          </div>
+          <div class="chip-row" id="journalCats" style="margin-top:10px;"></div>
+          <p class="hint" id="journalCount" style="margin:10px 0 6px;"></p>
+          <div class="journal-table-wrap">
+            <table class="metric-table" id="journalTable">
+              <thead>
+                <tr><th>期刊</th><th>ISSN</th><th>方向</th><th>出版机构</th><th>链接</th></tr>
+              </thead>
+              <tbody id="journalBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 披露 -->
+    <section id="disclose" class="section section-alt">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>披露声明生成器</h2>
+          <p>按实际情况填写，一键生成中 / English 披露草稿。</p>
+        </div>
+
+        <div class="card-grid">
+          <div class="card">
+            <form id="discloseForm" class="stack">
+              <div class="field">
+                <label for="toolName">使用的主要工具</label>
+                <select id="toolName">
+                  <option value="ChatGPT (OpenAI)">ChatGPT (OpenAI)</option>
+                  <option value="Claude (Anthropic)">Claude (Anthropic)</option>
+                  <option value="Gemini (Google)">Gemini (Google)</option>
+                  <option value="通义 / 文心 / 豆包等">通义 / 文心 / 豆包等</option>
+                  <option value="其他 / 多个工具">其他 / 多个工具</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="discloseScenes">使用环节</label>
+                <select id="discloseScenes">
+                  <option value="构思与大纲">构思与大纲</option>
+                  <option value="初稿撰写">初稿撰写</option>
+                  <option value="改写与润色">改写与润色</option>
+                  <option value="翻译">翻译</option>
+                  <option value="代码与脚本">代码与脚本</option>
+                  <option value="多环节综合使用">多环节综合使用</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="discloseDegree">AI 参与程度</label>
+                <select id="discloseDegree">
+                  <option value="辅助参考">辅助参考（主要工作由本人完成）</option>
+                  <option value="部分参与" selected>部分参与（本人完成核心内容与把关）</option>
+                  <option value="主要参与">主要参与（AI 完成大部分内容）</option>
+                </select>
+              </div>
+              <label class="check-line">
+                <input type="checkbox" id="discloseFactChecked" checked />
+                已人工核查事实、引用与数据
+              </label>
+              <button type="submit" class="btn btn-primary btn-block">生成披露声明</button>
+            </form>
+          </div>
+
+          <div class="card card-report">
+            <div class="report-tabs" role="tablist" id="discloseTabs">
+              <button role="tab" class="tab active" data-lang="zh" aria-selected="true">中文</button>
+              <button role="tab" class="tab" data-lang="en" aria-selected="false">English</button>
+            </div>
+            <div class="report-body" id="discloseOutput">
+              <p class="report-empty">填写左侧信息后点击「生成披露声明」。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 注册 -->
+    <section id="account" class="section">
       <div class="wrap">
         <div class="section-head">
           <h2>注册</h2>
@@ -168,78 +410,17 @@
         </div>
       </div>
     </section>
-
-    <!-- Disclosure -->
-    <section id="disclose" class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>披露声明生成器</h2>
-          <p>按实际情况填写，一键生成中 / English 披露草稿。</p>
-        </div>
-
-        <div class="card-grid">
-          <div class="card">
-            <form id="discloseForm" class="stack">
-              <div class="field">
-                <label for="toolName">使用的主要工具</label>
-                <select id="toolName">
-                  <option value="ChatGPT (OpenAI)">ChatGPT (OpenAI)</option>
-                  <option value="Claude (Anthropic)">Claude (Anthropic)</option>
-                  <option value="Gemini (Google)">Gemini (Google)</option>
-                  <option value="通义 / 文心 / 豆包等">通义 / 文心 / 豆包等</option>
-                  <option value="其他 / 多个工具">其他 / 多个工具</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="discloseScenes">使用环节</label>
-                <select id="discloseScenes">
-                  <option value="构思与大纲">构思与大纲</option>
-                  <option value="初稿撰写">初稿撰写</option>
-                  <option value="改写与润色">改写与润色</option>
-                  <option value="翻译">翻译</option>
-                  <option value="代码与脚本">代码与脚本</option>
-                  <option value="多环节综合使用">多环节综合使用</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="discloseDegree">AI 参与程度</label>
-                <select id="discloseDegree">
-                  <option value="辅助参考">辅助参考（主要工作由本人完成）</option>
-                  <option value="部分参与" selected>部分参与（本人完成核心内容与把关）</option>
-                  <option value="主要参与">主要参与（AI 完成大部分内容）</option>
-                </select>
-              </div>
-              <label class="check-line">
-                <input type="checkbox" id="discloseFactChecked" checked />
-                已人工核查事实、引用与数据
-              </label>
-              <button type="submit" class="btn btn-primary btn-block">生成披露声明</button>
-            </form>
-          </div>
-
-          <div class="card card-report">
-            <div class="report-tabs" role="tablist" id="discloseTabs">
-              <button role="tab" class="tab active" data-lang="zh" aria-selected="true">中文</button>
-              <button role="tab" class="tab" data-lang="en" aria-selected="false">English</button>
-            </div>
-            <div class="report-body" id="discloseOutput">
-              <p class="report-empty">填写左侧信息后点击「生成披露声明」。</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer" id="footer">
     <div class="wrap footer-inner">
       <div>
-        <p>普贤 · 开源工具 · <span id="year"></span> · 作者 杜思娴（dusixian16@163.com）</p>
-        <p class="footer-note">免费开源 · 检测为概率性提示、非结论；润色针对写作质量，不针对任何检测器。本工具不替代任何期刊、平台或机构的正式要求。</p>
+        <p>普贤——社医卫管科研助手 · 开源工具 · <span id="year"></span> · 作者 杜思娴（dusixian16@163.com）</p>
+        <p class="footer-note">免费开源 · 检测为概率性提示、非结论；润色针对写作质量，不针对任何检测器；方法学与期刊信息供研究参考，不替代期刊官方要求与专业判断。</p>
       </div>
       <div class="footer-cite">
-        <p class="footer-note">中文引用：杜思娴. 普贤（Puxian）：AI 学术检查助手 [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.</p>
-        <p class="footer-note">Cite: Du, S. (2026). <em>Puxian: An AI academic transparency assistant</em> [Web application].</p>
+        <p class="footer-note">中文引用：杜思娴. 普贤——社医卫管科研助手 [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.</p>
+        <p class="footer-note">Cite: Du, S. (2026). <em>Puxian: A research assistant for social medicine and health management</em> [Web application]. https://naturedu.github.io/socialmedicine/.</p>
       </div>
     </div>
   </footer>
