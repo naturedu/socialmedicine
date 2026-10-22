@@ -9,6 +9,8 @@
 - **披露声明生成器**：按工具、环节、参与程度生成中 / 英文披露声明草稿。
 - **编辑审阅清单**：原创性、事实数据、披露规范三组自查项，进度保存在本地。
 - **中文学术排版润色助手**：全半角标点规范化、破折号统一、去冗余表达、句长检查。定位为写作质量工具，不针对任何 AI 检测器优化，不承诺「通过审查」。
+- **AI 痕迹风险提示**：本地启发式特征统计（句长分布、套话密度、标点特征、句首重复），给出概率性提示而非结论，用于自我披露与编辑复核。
+- **可复用 Skill**：`skills/academic-copyediting-skill.md` 是一份可移植的「学术写作规范润色」提示词定义，可喂给任何大语言模型使用；定位为写作质量工具，明确不做检测器规避。
 
 ## 本地运行
 
@@ -33,3 +35,13 @@ npx serve .
 ## 技术栈
 
 原生 HTML / CSS / JavaScript，无依赖，无构建。
+
+## 引用与署名 / Citation
+
+本工具免费开源（MIT）。若在论文或报告中使用了本工具，请按以下格式引用：
+
+中文：杜思贤. 明迹 TraceHonest：AI 学术检查助手 [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.
+
+English: Du, S. (2026). *TraceHonest: An AI academic transparency assistant* [Web application]. https://naturedu.github.io/tracehonest/.
+
+作者 / Author：杜思贤 (Du Sixian) · dusixian16@163.com

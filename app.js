@@ -364,6 +364,107 @@ $('#polishClear').addEventListener('click', () => {
   $('#polishStats').hidden = true;
 });
 
+/* ============ 5. AI 痕迹风险提示（本地启发式，概率性） ============ */
+const aiPhrases = [
+  '值得注意的是', '需要指出的是', '需要强调的是', '综上所述', '总而言之', '总的来说',
+  '不难发现', '由此可见', '换句话说', '换言之', '一般来说', '众所周知', '首先，', '其次，',
+  '再次，', '最后，', '此外，', '与此同时', '值得关注的是', '这意味着', '从这个意义上说',
+  '进一步地', '更进一步', '基于上述', 'It is important to note', 'Moreover', 'Furthermore',
+  'In addition', 'In conclusion', 'Overall', 'It is worth noting',
+];
+
+function detectMetrics(text) {
+  const sentences = text.split(/[。！？!?；;\n]+/).map((s) => s.trim()).filter((s) => s.length > 1);
+  const lens = sentences.map((s) => s.length);
+  const avg = lens.length ? lens.reduce((a, b) => a + b, 0) / lens.length : 0;
+  const sd = lens.length ? Math.sqrt(lens.reduce((a, b) => a + (b - avg) ** 2, 0) / lens.length) : 0;
+  const cv = avg ? sd / avg : 0;
+
+  const hanzi = text.replace(/[^\u4e00-\u9fff]/g, '');
+  const uniqueRatio = hanzi.length ? new Set(hanzi).size / hanzi.length : 0;
+
+  const per1k = (n) => Math.round((n / Math.max(text.length, 1)) * 1000);
+
+  let phraseHits = 0;
+  const phraseTypes = [];
+  for (const p of aiPhrases) {
+    const m = text.split(p).length - 1;
+    if (m > 0) { phraseHits += m; phraseTypes.push(p); }
+  }
+
+  const dashes = (text.match(/——|—|–/g) || []).length;
+  const colons = (text.match(/：|:/g) || []).length;
+
+  const starters = sentences.map((s) => s.slice(0, 2));
+  const starterCounts = {};
+  starters.forEach((st) => { starterCounts[st] = (starterCounts[st] || 0) + 1; });
+  const repeatedStarters = starters.filter((st) => starterCounts[st] > 1).length;
+  const starterRep = starters.length ? repeatedStarters / starters.length : 0;
+
+  return { total: text.length, sentences: sentences.length, avg, sd, cv, uniqueRatio, phraseHits, phraseTypes, dashes, colons, starterRep, per1k };
+}
+
+$('#detectRun').addEventListener('click', () => {
+  const raw = $('#detectInput').value;
+  const out = $('#detectOutput');
+  if (raw.trim().length < 60) {
+    out.innerHTML = '<p class="report-empty">文本太短，难以给出有意义的提示。请粘贴至少 60 字（建议 300 字以上，结果更稳定）。</p>';
+    return;
+  }
+
+  const m = detectMetrics(raw);
+
+  let score = 0;
+  const notes = [];
+
+  if (m.cv < 0.35) { score += 25; notes.push('句长非常均匀（变异系数 ' + m.cv.toFixed(2) + '），是常见的 AI 文本特征之一；人类写作句长通常起伏更大。'); }
+  else if (m.cv < 0.5) { score += 15; notes.push('句长较均匀（变异系数 ' + m.cv.toFixed(2) + '），略偏 AI 风格。'); }
+  else if (m.cv < 0.65) { score += 5; notes.push('句长有一定起伏，接近常见人类写作。'); }
+  else { notes.push('句长起伏明显，这一项不指向 AI。'); }
+
+  const phraseDensity = m.per1k(m.phraseHits);
+  score += Math.min(30, phraseDensity * 12);
+  if (m.phraseHits > 0) {
+    notes.push('命中 ' + m.phraseHits + ' 处高频套话（如「' + m.phraseTypes.slice(0, 3).join('」「') + '」等），密度约 ' + phraseDensity + ' 处/千字。');
+  }
+
+  const dashDensity = m.per1k(m.dashes);
+  score += Math.min(15, dashDensity * 4);
+  if (dashDensity > 3) notes.push('破折号/连字符密度较高（' + dashDensity + ' 处/千字）。');
+
+  if (m.starterRep > 0.4) { score += 15; notes.push('句首重复率高（' + Math.round(m.starterRep * 100) + '%），句式较单一。'); }
+  else if (m.starterRep > 0.25) { score += 8; }
+
+  if (m.uniqueRatio < 0.32) { score += 10; notes.push('用词重复度偏高。'); }
+
+  score = Math.max(0, Math.min(100, Math.round(score)));
+
+  let band, cls, explain;
+  if (score >= 60) { band = '偏高'; cls = 'badge-high'; explain = '多项特征接近典型 AI 生成文本。请注意：这仍是概率提示，不构成认定。'; }
+  else if (score >= 30) { band = '中等'; cls = 'badge-mid'; explain = '部分特征与 AI 文本有重叠，也可能只是规整的人类写作。'; }
+  else { band = '较低'; cls = 'badge-low'; explain = '未发现明显指向 AI 的特征。'; }
+
+  out.innerHTML = `
+    <h3>痕迹风险提示</h3>
+    <p><span class="badge ${cls}">风险 ${band} · 启发式得分 ${score}/100</span></p>
+    <p>${explain}</p>
+    <h4>观察到的情况</h4>
+    <ul>${notes.map((n) => `<li>${escapeHtml(n)}</li>`).join('') || '<li>无明显异常特征。</li>'}</ul>
+    <h4>基本指标</h4>
+    <ul>
+      <li>文本长度：${m.total} 字符 · ${m.sentences} 句</li>
+      <li>平均句长：${m.avg.toFixed(1)} 字（标准差 ${m.sd.toFixed(1)}，变异系数 ${m.cv.toFixed(2)}）</li>
+      <li>用词多样性（去重字/汉字数）：${(m.uniqueRatio * 100).toFixed(1)}%</li>
+      <li>套话密度：${phraseDensity} 处/千字 · 破折号密度：${dashDensity} 处/千字 · 冒号密度：${m.per1k(m.colons)} 处/千字</li>
+    </ul>
+    <hr class="rule">
+    <p style="color:var(--ink-faint);font-size:13px;">
+      重要说明：以上为本地启发式特征统计，<strong>不是 AI 检测结论</strong>，存在误报与漏报，不能用于认定作者是否使用 AI。
+      本工具刻意不提供「改写直到分数降低」的功能；若你在写作中使用了 AI，建议使用上方「披露声明生成器」如实说明。
+    </p>
+  `;
+});
+
 /* ============ 工具函数 ============ */
 function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
