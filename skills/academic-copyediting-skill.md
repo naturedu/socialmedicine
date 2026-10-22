@@ -1,6 +1,6 @@
 # Skill：学术写作规范润色（中文学术文本）
 
-**版本** 1.0 · **作者** 杜思贤 (Du Sixian) · **许可** MIT
+**版本** 1.0 · **作者** 杜思娴 (Du Sixian) · **许可** MIT
 
 ## 用途
 
@@ -59,12 +59,12 @@
 
 ## 使用提示
 
-本 Skill 是写作质量工具。它不保证、也不尝试让文本“看起来不像 AI 写的”。如果你的稿件使用了 AI 辅助，请在稿件中如实披露（可配合明迹 TraceHonest 的披露声明生成器使用）。
+本 Skill 是写作质量工具。它不保证、也不尝试让文本“看起来不像 AI 写的”。如果你的稿件使用了 AI 辅助，请在稿件中如实披露（可配合杜思娴明迹的披露声明生成器使用）。
 
 ---
 
 ## 引用 / Citation
 
-中文：杜思贤. 学术写作规范润色 Skill [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.
+中文：杜思娴. 学术写作规范润色 Skill [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.
 
 English: Du, S. (2026). *Academic writing copyediting skill* [Skill definition]. https://naturedu.github.io/tracehonest/.

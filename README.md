@@ -1,4 +1,4 @@
-# 明迹 TraceHonest · AI 学术检查助手
+# 杜思娴明迹 (TraceHonest) · AI 学术检查助手
 
 面向作者与编辑的 **AI 写作透明化工具**。让 AI 的使用「被看见」，而不是「被隐藏」。
 
@@ -40,8 +40,8 @@ npx serve .
 
 本工具免费开源（MIT）。若在论文或报告中使用了本工具，请按以下格式引用：
 
-中文：杜思贤. 明迹 TraceHonest：AI 学术检查助手 [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.
+中文：杜思娴. 杜思娴明迹（TraceHonest）：AI 学术检查助手 [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.
 
-English: Du, S. (2026). *TraceHonest: An AI academic transparency assistant* [Web application]. https://naturedu.github.io/tracehonest/.
+English: Du, S. (2026). *Du Sixian Mingji (TraceHonest): An AI academic transparency assistant* [Web application]. https://naturedu.github.io/tracehonest/.
 
-作者 / Author：杜思贤 (Du Sixian) · dusixian16@163.com
+作者 / Author：杜思娴 (Du Sixian) · dusixian16@163.com
