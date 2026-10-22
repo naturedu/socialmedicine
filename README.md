@@ -1,4 +1,4 @@
-# 普贤 (TraceHonest) · AI 学术检查助手
+# 普贤 (Puxian) · AI 学术检查助手
 
 面向作者与编辑的 **AI 写作透明化工具**。让 AI 的使用「被看见」，而不是「被隐藏」。
 
@@ -8,8 +8,7 @@
 - **透明化自检**：勾选 AI 使用环节与人工参与程度，生成「该向读者 / 编辑说明什么」的报告（不是 AI 检测器）。
 - **披露声明生成器**：按工具、环节、参与程度生成中 / 英文披露声明草稿。
 - **编辑审阅清单**：原创性、事实数据、披露规范三组自查项，进度保存在本地。
-- **中文学术排版润色助手**：全半角标点规范化、破折号统一、去冗余表达、句长检查。定位为写作质量工具，不针对任何 AI 检测器优化，不承诺「通过审查」。
-- **AI 痕迹风险提示**：本地启发式特征统计（句长分布、套话密度、标点特征、句首重复），给出概率性提示而非结论，用于自我披露与编辑复核。
+- **检测与润色工作台**：中 / English 一键切换。检测给出本地启发式痕迹风险提示（概率性、非结论）；润色做简洁化（标点规范、破折号统一、去冗余、长句提示），定位为写作质量工具，不针对任何 AI 检测器优化。
 - **可复用 Skill**：`skills/academic-copyediting-skill.md` 是一份可移植的「学术写作规范润色」提示词定义，可喂给任何大语言模型使用；定位为写作质量工具，明确不做检测器规避。
 
 ## 本地运行
@@ -40,8 +39,8 @@ npx serve .
 
 本工具免费开源（MIT）。若在论文或报告中使用了本工具，请按以下格式引用：
 
-中文：杜思娴. 普贤（TraceHonest）：AI 学术检查助手 [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.
+中文：杜思娴. 普贤（Puxian）：AI 学术检查助手 [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.
 
-English: Du, S. (2026). *Puxian (TraceHonest): An AI academic transparency assistant* [Web application]. https://naturedu.github.io/tracehonest/.
+English: Du, S. (2026). *Puxian: An AI academic transparency assistant* [Web application]. https://naturedu.github.io/tracehonest/.
 
 作者 / Author：杜思娴 (Du Sixian) · dusixian16@163.com

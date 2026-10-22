@@ -20,15 +20,14 @@
           <path d="M9 20.5 L13.5 11 L18 20.5 M10.6 17.2 L16.4 17.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           <circle cx="22.5" cy="20.5" r="3" fill="none" stroke="currentColor" stroke-width="2.2"/>
         </svg>
-        <span class="brand-name">普贤<span class="brand-en">TraceHonest</span></span>
+        <span class="brand-name">普贤<span class="brand-en">Puxian</span></span>
       </a>
       <nav class="site-nav" aria-label="主导航">
         <a href="#account">注册</a>
+        <a href="#workbench">检测润色</a>
         <a href="#toolkit">工具箱</a>
         <a href="#disclose">披露生成</a>
         <a href="#review">审阅清单</a>
-        <a href="#polish">排版润色</a>
-        <a href="#detect">痕迹检测</a>
         <a href="#explain">说明</a>
         <a href="#cite">引用</a>
       </nav>
@@ -233,7 +232,7 @@
           </div>
 
           <div class="card card-report">
-            <div class="report-tabs" role="tablist">
+            <div class="report-tabs" role="tablist" id="discloseTabs">
               <button role="tab" class="tab active" data-lang="zh" aria-selected="true">中文</button>
               <button role="tab" class="tab" data-lang="en" aria-selected="false">English</button>
             </div>
@@ -280,66 +279,36 @@
       </div>
     </section>
 
-    <!-- Polish assistant -->
-    <section id="polish" class="section section-alt">
+    <!-- Workbench: bilingual detect & polish -->
+    <section id="workbench" class="section">
       <div class="wrap">
         <div class="section-head">
-          <h2>中文学术排版润色助手</h2>
-          <p>全半角标点规范化、破折号统一、去冗余表达、句长检查。纯写作质量工具，不针对任何检测器优化。</p>
+          <h2>检测与润色工作台</h2>
+          <p>粘贴文本，选择语言，一键「检测痕迹」或「简洁化润色」。检测是概率性提示、不是结论；润色针对写作质量（清晰、简洁、标点规范），不针对任何检测器。</p>
         </div>
 
-        <div class="card-grid polish-grid">
-          <div class="card">
+        <div class="card">
+          <div class="report-tabs" role="tablist" id="langTabs">
+            <button role="tab" class="tab active" data-lang="zh" aria-selected="true">中文</button>
+            <button role="tab" class="tab" data-lang="en" aria-selected="false">English</button>
+          </div>
+
+          <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
             <div class="stack">
               <label class="field">
-                <span class="field-label">原文</span>
-                <textarea id="polishInput" rows="12" placeholder="粘贴需要规范化的中文文本…"></textarea>
+                <span class="field-label" id="wbInputLabel">原文（中文）</span>
+                <textarea id="wbInput" rows="14" placeholder="粘贴需要检测或润色的文本…"></textarea>
               </label>
-              <div class="polish-options">
-                <label class="check-line"><input type="checkbox" id="optPunct" checked />全半角标点规范化</label>
-                <label class="check-line"><input type="checkbox" id="optDash" checked />破折号 / 连字符统一</label>
-                <label class="check-line"><input type="checkbox" id="optRedundant" checked />去冗余表达</label>
-              </div>
               <div class="btn-row">
-                <button type="button" id="polishRun" class="btn btn-primary">分析并规范化</button>
-                <button type="button" id="polishClear" class="btn btn-ghost">清空</button>
+                <button type="button" id="wbDetect" class="btn btn-primary">检测痕迹</button>
+                <button type="button" id="wbPolish" class="btn btn-primary">简洁化润色</button>
+                <button type="button" id="wbClear" class="btn btn-ghost">清空</button>
               </div>
             </div>
-          </div>
-
-          <div class="card card-report">
-            <div class="report-body" id="polishOutput">
-              <p class="report-empty">粘贴文本后点击「分析并规范化」，结果与修改建议会显示在这里。</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="stats" id="polishStats" hidden></div>
-      </div>
-    </section>
-
-    <!-- AI-trace heuristic analysis -->
-    <section id="detect" class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>AI 痕迹风险提示</h2>
-          <p>基于词句与标点特征的本地启发式分析。它是<strong>概率性提示，不是结论</strong>，存在误报与漏报；用途是自我披露与编辑复核，不作为认定作者身份的依据。</p>
-        </div>
-
-        <div class="card-grid">
-          <div class="card">
-            <div class="stack">
-              <label class="field">
-                <span class="field-label">待分析文本</span>
-                <textarea id="detectInput" rows="14" placeholder="粘贴需要分析的中文（或中英混合）文本…"></textarea>
-              </label>
-              <button type="button" id="detectRun" class="btn btn-primary">分析痕迹风险</button>
-            </div>
-          </div>
-
-          <div class="card card-report">
-            <div class="report-body" id="detectOutput">
-              <p class="report-empty">粘贴文本后点击「分析痕迹风险」，结果会显示在这里。</p>
+            <div class="card-report" style="border:1px solid var(--line);border-radius:10px;padding:16px;min-height:320px;">
+              <div class="report-body" id="wbOutput">
+                <p class="report-empty">粘贴文本后点击「检测痕迹」或「简洁化润色」。</p>
+              </div>
             </div>
           </div>
         </div>
@@ -386,11 +355,11 @@
         <div class="cite-grid">
           <div class="explain-card">
             <h3>中文引用</h3>
-            <p>杜思娴. 普贤（TraceHonest）：AI 学术检查助手 [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.</p>
+            <p>杜思娴. 普贤（Puxian）：AI 学术检查助手 [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.</p>
           </div>
           <div class="explain-card">
             <h3>English Citation</h3>
-            <p>Du, S. (2026). <em>Puxian (TraceHonest): An AI academic transparency assistant</em> [Web application]. https://naturedu.github.io/tracehonest/.</p>
+            <p>Du, S. (2026). <em>Puxian: An AI academic transparency assistant</em> [Web application]. https://naturedu.github.io/tracehonest/.</p>
           </div>
           <div class="explain-card">
             <h3>联系方式 / Contact</h3>
