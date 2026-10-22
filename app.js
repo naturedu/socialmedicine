@@ -581,6 +581,19 @@ $('#wbClear').addEventListener('click', () => {
   $('#wbOutput').innerHTML = '<p class="report-empty">粘贴文本后点击「检测痕迹」或「简洁化润色」。</p>';
 });
 
+/* ============ 5. 工具箱面板切换 ============ */
+$$('#toolTabs .tab').forEach((tab) => {
+  tab.addEventListener('click', () => {
+    $$('#toolTabs .tab').forEach((t) => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    const tool = tab.dataset.tool;
+    ['check', 'disclose', 'review'].forEach((k) => {
+      $('#panel-' + k).hidden = k !== tool;
+    });
+  });
+});
+
 /* ============ 工具函数 ============ */
 function escapeHtml(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

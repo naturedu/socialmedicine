@@ -210,9 +210,13 @@ legend { font-weight: 600; font-size: 14px; margin-bottom: 10px; color: var(--in
 
 /* Footer */
 .site-footer { border-top: 1px solid var(--line); padding: 40px 0; background: var(--paper-2); }
-.footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-.footer-inner p { margin: 0; font-size: 14px; color: var(--ink-soft); }
-.footer-note { color: var(--ink-faint); }
+.footer-inner { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; }
+.footer-inner p { margin: 0 0 4px; font-size: 14px; color: var(--ink-soft); }
+.footer-note { color: var(--ink-faint); font-size: 13px; }
+.footer-cite { max-width: 560px; }
+
+/* Toolkit panels */
+.tool-panel { margin-top: 22px; }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }

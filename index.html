@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>普贤 · AI 学术检查助手</title>
-  <meta name="description" content="普贤是一套面向作者与编辑的 AI 写作透明化工具：透明化自检、披露声明生成器、编辑审阅清单。让 AI 的使用被看见，而不是被隐藏。" />
+  <meta name="description" content="普贤：注册后用中 / English 双语的 AI 痕迹检测与简洁化润色工作台，附透明化自检、披露声明与审阅清单。让 AI 的使用被看见，而不是被隐藏。" />
   <meta name="theme-color" content="#1f1d1a" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
@@ -26,10 +26,7 @@
         <a href="#account">注册</a>
         <a href="#workbench">检测润色</a>
         <a href="#toolkit">工具箱</a>
-        <a href="#disclose">披露生成</a>
-        <a href="#review">审阅清单</a>
-        <a href="#explain">说明</a>
-        <a href="#cite">引用</a>
+        <a href="#footer">引用</a>
       </nav>
     </div>
   </header>
@@ -38,21 +35,13 @@
     <!-- Hero -->
     <section id="top" class="hero">
       <div class="wrap hero-inner">
-        <p class="eyebrow">AI 学术检查助手 · 开源</p>
-        <h1>AI 可以参与创作，<br />但<span class="accent">诚实</span>不该缺席。</h1>
-        <p class="lede">
-          普贤帮助作者与编辑把「AI 的使用」说清楚：从使用环节自查、到生成规范披露声明，
-          再到可复用的编辑审阅清单。我们不帮你把 AI 的痕迹「抹掉」，而是帮你把它<strong>说清楚</strong>。
-        </p>
+        <p class="eyebrow">AI 学术检查助手 · 免费开源</p>
+        <h1>先注册，再检测与润色。<br />让 AI 的使用被<span class="accent">说清楚</span>。</h1>
+        <p class="lede">中 / English 双语工作台：检测痕迹（概率性提示）+ 简洁化润色（写作质量）。文本只在本机处理，不上传。</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#toolkit">开始透明化自检</a>
-          <a class="btn btn-ghost" href="#explain">先了解「AI 水印」</a>
+          <a class="btn btn-primary" href="#account">开始使用</a>
+          <a class="btn btn-ghost" href="#workbench">直接进入工作台</a>
         </div>
-        <ul class="hero-points">
-          <li>无需登录，文本只在本机处理</li>
-          <li>中文 / English 双语文案</li>
-          <li>开源，可自部署</li>
-        </ul>
       </div>
     </section>
 
@@ -124,161 +113,6 @@
       </div>
     </section>
 
-    <!-- Toolkit: transparency self-check -->
-    <section id="toolkit" class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>透明化自检</h2>
-          <p>勾选你的 AI 使用方式，生成一份「该向读者 / 编辑说明什么」的报告。它不是 AI 检测器。</p>
-        </div>
-
-        <div class="card-grid">
-          <div class="card">
-            <form id="checkForm" class="stack">
-              <fieldset>
-                <legend>你使用 AI 做了哪些事？</legend>
-                <div class="check-grid" id="usageOptions">
-                  <label class="chip"><input type="checkbox" name="usage" value="brainstorm" />头脑风暴 / 选题</label>
-                  <label class="chip"><input type="checkbox" name="usage" value="outline" />拟定大纲</label>
-                  <label class="chip"><input type="checkbox" name="usage" value="draft" />撰写初稿</label>
-                  <label class="chip"><input type="checkbox" name="usage" value="rewrite" />改写 / 扩写</label>
-                  <label class="chip"><input type="checkbox" name="usage" value="polish" />润色 / 校对</label>
-                  <label class="chip"><input type="checkbox" name="usage" value="translate" />翻译</label>
-                  <label class="chip"><input type="checkbox" name="usage" value="code" />代码 / 脚本</label>
-                  <label class="chip"><input type="checkbox" name="usage" value="data" />数据整理 / 分析</label>
-                  <label class="chip"><input type="checkbox" name="usage" value="image" />生成图片 / 图表</label>
-                </div>
-              </fieldset>
-
-              <fieldset>
-                <legend>人工参与程度（你的判断）</legend>
-                <div class="seg" id="involvement">
-                  <label><input type="radio" name="involvement" value="low" />仅辅助参考</label>
-                  <label><input type="radio" name="involvement" value="mid" checked />部分参与</label>
-                  <label><input type="radio" name="involvement" value="high" />主要参与</label>
-                </div>
-              </fieldset>
-
-              <label class="check-line">
-                <input type="checkbox" id="humanReview" checked />
-                我已对 AI 产出做过事实核查与人工修订
-              </label>
-
-              <button type="submit" class="btn btn-primary btn-block">生成透明化报告</button>
-            </form>
-          </div>
-
-          <div class="card card-report" id="reportCard" aria-live="polite">
-            <div class="report-empty" id="reportEmpty">
-              <p class="report-empty-mark">◌</p>
-              <p>报告会显示在这里。左侧勾选后点击「生成透明化报告」。</p>
-            </div>
-            <div class="report-body" id="reportBody" hidden></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Disclosure generator -->
-    <section id="disclose" class="section section-alt">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>披露声明生成器</h2>
-          <p>按你的实际情况填写，一键生成符合常见投稿 / 平台要求的中英文披露草稿。</p>
-        </div>
-
-        <div class="card-grid">
-          <div class="card">
-            <form id="discloseForm" class="stack">
-              <div class="field">
-                <label for="toolName">使用的主要工具</label>
-                <select id="toolName">
-                  <option value="ChatGPT (OpenAI)">ChatGPT (OpenAI)</option>
-                  <option value="Claude (Anthropic)">Claude (Anthropic)</option>
-                  <option value="Gemini (Google)">Gemini (Google)</option>
-                  <option value="通义 / 文心 / 豆包等">通义 / 文心 / 豆包等</option>
-                  <option value="其他 / 多个工具">其他 / 多个工具</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="discloseScenes">使用环节</label>
-                <select id="discloseScenes">
-                  <option value="构思与大纲">构思与大纲</option>
-                  <option value="初稿撰写">初稿撰写</option>
-                  <option value="改写与润色">改写与润色</option>
-                  <option value="翻译">翻译</option>
-                  <option value="代码与脚本">代码与脚本</option>
-                  <option value="多环节综合使用">多环节综合使用</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="discloseDegree">AI 参与程度</label>
-                <select id="discloseDegree">
-                  <option value="辅助参考">辅助参考（主要工作由本人完成）</option>
-                  <option value="部分参与" selected>部分参与（本人完成核心内容与把关）</option>
-                  <option value="主要参与">主要参与（AI 完成大部分内容）</option>
-                </select>
-              </div>
-
-              <label class="check-line">
-                <input type="checkbox" id="discloseFactChecked" checked />
-                已人工核查事实、引用与数据
-              </label>
-
-              <button type="submit" class="btn btn-primary btn-block">生成披露声明</button>
-            </form>
-          </div>
-
-          <div class="card card-report">
-            <div class="report-tabs" role="tablist" id="discloseTabs">
-              <button role="tab" class="tab active" data-lang="zh" aria-selected="true">中文</button>
-              <button role="tab" class="tab" data-lang="en" aria-selected="false">English</button>
-            </div>
-            <div class="report-body" id="discloseOutput">
-              <p class="report-empty">填写左侧信息后点击「生成披露声明」。</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Editorial review checklist -->
-    <section id="review" class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>编辑审阅清单</h2>
-          <p>供编辑、审稿人与作者自查。勾选进度会保存在本机浏览器。</p>
-        </div>
-
-        <div class="checklist" id="reviewChecklist">
-          <div class="checklist-col">
-            <h3>原创性与引用</h3>
-            <label class="check-line"><input type="checkbox" data-group="原创性与引用" />所有引用均有出处，且核对过原文</label>
-            <label class="check-line"><input type="checkbox" data-group="原创性与引用" />观点、论证与结论由作者本人负责</label>
-            <label class="check-line"><input type="checkbox" data-group="原创性与引用" />未将 AI 生成内容冒充为人类原创</label>
-          </div>
-          <div class="checklist-col">
-            <h3>事实与数据</h3>
-            <label class="check-line"><input type="checkbox" data-group="事实与数据" />关键数字、日期、人名已逐项核实</label>
-            <label class="check-line"><input type="checkbox" data-group="事实与数据" />数据来源可追溯，非 AI 杜撰</label>
-            <label class="check-line"><input type="checkbox" data-group="事实与数据" />图表 / 图片的生成与修改方式已说明</label>
-          </div>
-          <div class="checklist-col">
-            <h3>披露与规范</h3>
-            <label class="check-line"><input type="checkbox" data-group="披露与规范" />已在适当位置披露 AI 使用情况</label>
-            <label class="check-line"><input type="checkbox" data-group="披露与规范" />符合目标期刊 / 平台 / 客户的具体要求</label>
-            <label class="check-line"><input type="checkbox" data-group="披露与规范" />保留了人工修订记录或版本历史</label>
-          </div>
-        </div>
-        <div class="checklist-progress">
-          <div class="progress-label"><span id="progressText">0 / 9 项已完成</span><span id="progressPct">0%</span></div>
-          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-        </div>
-      </div>
-    </section>
-
     <!-- Workbench: bilingual detect & polish -->
     <section id="workbench" class="section">
       <div class="wrap">
@@ -315,65 +149,167 @@
       </div>
     </section>
 
-    <!-- Explain -->
-    <section id="explain" class="section">
+    <!-- Simple toolkit -->
+    <section id="toolkit" class="section section-alt">
       <div class="wrap">
         <div class="section-head">
-          <h2>关于「AI 水印」</h2>
-          <p>先把概念说清楚，才能做出负责任的判断。</p>
+          <h2>工具箱</h2>
+          <p>透明化自检、披露声明、审阅清单，三合一。</p>
         </div>
-        <div class="explain-grid">
-          <article class="explain-card">
-            <h3>① 元数据与来源标签（C2PA）</h3>
-            <p>图像、音频等文件可能携带来源与生成方式标签。这是可核验的「出处声明」，应被保留和如实说明，而不是被抹除。</p>
-          </article>
-          <article class="explain-card">
-            <h3>② 文本统计水印</h3>
-            <p>部分模型在生成时会在用词统计上留下可识别的模式。这类信号通常无法稳定去除，也正因此，依赖「去水印」承诺的产品大多不可靠。</p>
-          </article>
-          <article class="explain-card">
-            <h3>③ AI 检测器</h3>
-            <p>检测器给出的是概率判断，存在误报与漏报，不能作为认定作者身份的唯一依据。它测量「像不像 AI 写的」，而不是「是不是 AI 写的」。</p>
-          </article>
+
+        <div class="report-tabs" role="tablist" id="toolTabs">
+          <button role="tab" class="tab active" data-tool="check" aria-selected="true">透明化自检</button>
+          <button role="tab" class="tab" data-tool="disclose" aria-selected="false">披露声明</button>
+          <button role="tab" class="tab" data-tool="review" aria-selected="false">审阅清单</button>
         </div>
-        <div class="stance">
-          <h3>为什么「去痕迹」不是好目标？</h3>
-          <p>
-            把 AI 产出伪装成人类写作，通常违反投稿、学术与平台诚信规范，也会误导读者与审稿人。
-            更可靠的路径是：<strong>保留来源信息、如实披露使用情况、做好人工把关</strong>。普贤做的就是这件事。
-          </p>
-        </div>
-      </div>
-    </section>
-    <!-- Citation & attribution -->
-    <section id="cite" class="section section-alt">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>引用与署名</h2>
-          <p>本工具免费开源。若在你的论文或报告中使用了普贤，请按以下格式引用并署名。</p>
-        </div>
-        <div class="cite-grid">
-          <div class="explain-card">
-            <h3>中文引用</h3>
-            <p>杜思娴. 普贤（Puxian）：AI 学术检查助手 [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.</p>
+
+        <!-- Panel: 自检 -->
+        <div class="tool-panel" id="panel-check">
+          <div class="card-grid">
+            <div class="card">
+              <form id="checkForm" class="stack">
+                <fieldset>
+                  <legend>你使用 AI 做了哪些事？</legend>
+                  <div class="check-grid" id="usageOptions">
+                    <label class="chip"><input type="checkbox" name="usage" value="brainstorm" />头脑风暴 / 选题</label>
+                    <label class="chip"><input type="checkbox" name="usage" value="outline" />拟定大纲</label>
+                    <label class="chip"><input type="checkbox" name="usage" value="draft" />撰写初稿</label>
+                    <label class="chip"><input type="checkbox" name="usage" value="rewrite" />改写 / 扩写</label>
+                    <label class="chip"><input type="checkbox" name="usage" value="polish" />润色 / 校对</label>
+                    <label class="chip"><input type="checkbox" name="usage" value="translate" />翻译</label>
+                    <label class="chip"><input type="checkbox" name="usage" value="code" />代码 / 脚本</label>
+                    <label class="chip"><input type="checkbox" name="usage" value="data" />数据整理 / 分析</label>
+                    <label class="chip"><input type="checkbox" name="usage" value="image" />生成图片 / 图表</label>
+                  </div>
+                </fieldset>
+
+                <fieldset>
+                  <legend>人工参与程度（你的判断）</legend>
+                  <div class="seg" id="involvement">
+                    <label><input type="radio" name="involvement" value="low" />仅辅助参考</label>
+                    <label><input type="radio" name="involvement" value="mid" checked />部分参与</label>
+                    <label><input type="radio" name="involvement" value="high" />主要参与</label>
+                  </div>
+                </fieldset>
+
+                <label class="check-line">
+                  <input type="checkbox" id="humanReview" checked />
+                  我已对 AI 产出做过事实核查与人工修订
+                </label>
+
+                <button type="submit" class="btn btn-primary btn-block">生成透明化报告</button>
+              </form>
+            </div>
+
+            <div class="card card-report" id="reportCard" aria-live="polite">
+              <div class="report-empty" id="reportEmpty">
+                <p class="report-empty-mark">◌</p>
+                <p>报告会显示在这里。左侧勾选后点击「生成透明化报告」。</p>
+              </div>
+              <div class="report-body" id="reportBody" hidden></div>
+            </div>
           </div>
-          <div class="explain-card">
-            <h3>English Citation</h3>
-            <p>Du, S. (2026). <em>Puxian: An AI academic transparency assistant</em> [Web application]. https://naturedu.github.io/tracehonest/.</p>
+        </div>
+
+        <!-- Panel: 披露 -->
+        <div class="tool-panel" id="panel-disclose" hidden>
+          <div class="card-grid">
+            <div class="card">
+              <form id="discloseForm" class="stack">
+                <div class="field">
+                  <label for="toolName">使用的主要工具</label>
+                  <select id="toolName">
+                    <option value="ChatGPT (OpenAI)">ChatGPT (OpenAI)</option>
+                    <option value="Claude (Anthropic)">Claude (Anthropic)</option>
+                    <option value="Gemini (Google)">Gemini (Google)</option>
+                    <option value="通义 / 文心 / 豆包等">通义 / 文心 / 豆包等</option>
+                    <option value="其他 / 多个工具">其他 / 多个工具</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="discloseScenes">使用环节</label>
+                  <select id="discloseScenes">
+                    <option value="构思与大纲">构思与大纲</option>
+                    <option value="初稿撰写">初稿撰写</option>
+                    <option value="改写与润色">改写与润色</option>
+                    <option value="翻译">翻译</option>
+                    <option value="代码与脚本">代码与脚本</option>
+                    <option value="多环节综合使用">多环节综合使用</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="discloseDegree">AI 参与程度</label>
+                  <select id="discloseDegree">
+                    <option value="辅助参考">辅助参考（主要工作由本人完成）</option>
+                    <option value="部分参与" selected>部分参与（本人完成核心内容与把关）</option>
+                    <option value="主要参与">主要参与（AI 完成大部分内容）</option>
+                  </select>
+                </div>
+
+                <label class="check-line">
+                  <input type="checkbox" id="discloseFactChecked" checked />
+                  已人工核查事实、引用与数据
+                </label>
+
+                <button type="submit" class="btn btn-primary btn-block">生成披露声明</button>
+              </form>
+            </div>
+
+            <div class="card card-report">
+              <div class="report-tabs" role="tablist" id="discloseTabs">
+                <button role="tab" class="tab active" data-lang="zh" aria-selected="true">中文</button>
+                <button role="tab" class="tab" data-lang="en" aria-selected="false">English</button>
+              </div>
+              <div class="report-body" id="discloseOutput">
+                <p class="report-empty">填写左侧信息后点击「生成披露声明」。</p>
+              </div>
+            </div>
           </div>
-          <div class="explain-card">
-            <h3>联系方式 / Contact</h3>
-            <p>杜思娴 (Du Sixian)<br />dusixian16@163.com</p>
+        </div>
+
+        <!-- Panel: 审阅清单 -->
+        <div class="tool-panel" id="panel-review" hidden>
+          <div class="checklist" id="reviewChecklist">
+            <div class="checklist-col">
+              <h3>原创性与引用</h3>
+              <label class="check-line"><input type="checkbox" data-group="原创性与引用" />所有引用均有出处，且核对过原文</label>
+              <label class="check-line"><input type="checkbox" data-group="原创性与引用" />观点、论证与结论由作者本人负责</label>
+              <label class="check-line"><input type="checkbox" data-group="原创性与引用" />未将 AI 生成内容冒充为人类原创</label>
+            </div>
+            <div class="checklist-col">
+              <h3>事实与数据</h3>
+              <label class="check-line"><input type="checkbox" data-group="事实与数据" />关键数字、日期、人名已逐项核实</label>
+              <label class="check-line"><input type="checkbox" data-group="事实与数据" />数据来源可追溯，非 AI 杜撰</label>
+              <label class="check-line"><input type="checkbox" data-group="事实与数据" />图表 / 图片的生成与修改方式已说明</label>
+            </div>
+            <div class="checklist-col">
+              <h3>披露与规范</h3>
+              <label class="check-line"><input type="checkbox" data-group="披露与规范" />已在适当位置披露 AI 使用情况</label>
+              <label class="check-line"><input type="checkbox" data-group="披露与规范" />符合目标期刊 / 平台 / 客户的具体要求</label>
+              <label class="check-line"><input type="checkbox" data-group="披露与规范" />保留了人工修订记录或版本历史</label>
+            </div>
+          </div>
+          <div class="checklist-progress">
+            <div class="progress-label"><span id="progressText">0 / 9 项已完成</span><span id="progressPct">0%</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" id="footer">
     <div class="wrap footer-inner">
-      <p>普贤 · 开源工具 · <span id="year"></span> · 作者 杜思娴（dusixian16@163.com）</p>
-      <p class="footer-note">免费开源 · 本工具不替代任何期刊、平台或机构的正式要求，也不构成法律意见。</p>
+      <div>
+        <p>普贤 · 开源工具 · <span id="year"></span> · 作者 杜思娴（dusixian16@163.com）</p>
+        <p class="footer-note">免费开源 · 检测为概率性提示、非结论；润色针对写作质量，不针对任何检测器。本工具不替代任何期刊、平台或机构的正式要求。</p>
+      </div>
+      <div class="footer-cite">
+        <p class="footer-note">中文引用：杜思娴. 普贤（Puxian）：AI 学术检查助手 [EB/OL]. (2026). https://naturedu.github.io/tracehonest/.</p>
+        <p class="footer-note">Cite: Du, S. (2026). <em>Puxian: An AI academic transparency assistant</em> [Web application].</p>
+      </div>
     </div>
   </footer>
 
