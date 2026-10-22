@@ -898,6 +898,72 @@ function renderTopJournals() {
 
 renderTopJournals();
 
+/* ============ 6.8 理论研究板块 ============ */
+const THEORY_GROUPS = [
+  { key: 'social', label: '社会医学与健康行为理论' },
+  { key: 'econ', label: '卫生经济学理论' },
+  { key: 'mgmt', label: '卫生管理与政策理论' },
+  { key: 'china', label: '中国本土政策话语' },
+];
+
+const THEORIES = [
+  { group: 'social', name: '健康社会决定因素框架（CSDH）', src: 'WHO 社会决定因素委员会，2008', core: '健康不平等根源于日常生活条件与权力、金钱、资源的分配方式。', use: '论文开篇论证结构性成因，为公平性分析定框架。', topic: '某类健康结局的社会梯度与贡献分解' },
+  { group: 'social', name: '社会生态学模型', src: 'Bronfenbrenner / McLeroy 等', core: '个体—人际—组织—社区—政策五层嵌套共同塑造健康。', use: '为多水平研究（mixed / 多层 SEM）提供分层变量依据。', topic: '建成环境对居民体力活动的多层次影响' },
+  { group: 'social', name: '健康信念模型（HBM）', src: 'Rosenstock', core: '感知易感性、严重性、收益、障碍与自我效能驱动健康行为。', use: '干预设计与问卷条目来源。', topic: '疫苗犹豫、慢病筛查依从的影响因素' },
+  { group: 'social', name: '计划行为理论（TPB）', src: 'Ajzen', core: '态度—主观规范—知觉行为控制→行为意向→行为。', use: '用 SEM / lavaan 检验理论结构。', topic: '慢病患者自我管理行为机制' },
+  { group: 'social', name: 'Andersen 行为模型', src: 'Andersen', core: '倾向、使能、需要三因素解释卫生服务利用。', use: '就医行为研究的变量框架。', topic: '老年人就医选择与利用公平性' },
+  { group: 'econ', name: 'Grossman 健康需求模型', src: 'Grossman', core: '健康是人力资本存量，健康投资与医疗需求内生决定。', use: '医疗需求弹性的理论起点。', topic: '健康投资行为与医疗服务价格弹性' },
+  { group: 'econ', name: '委托代理与供方诱导需求', src: 'Arrow / Evans', core: '信息不对称下医生兼具患者代理人与服务供给者双重角色。', use: '支付方式改革研究的理论依据。', topic: 'DRG/DIP 改革对服务量的因果效应' },
+  { group: 'econ', name: '市场失灵与政府干预', src: '卫生经济学基础理论', core: '公共品、外部性、信息不对称与逆向选择使市场偏离最优。', use: '医保与公卫制度设计的正当性论证。', topic: '医保市场失灵与制度设计' },
+  { group: 'econ', name: '健康公平与正义理论', src: 'Rawls / Sen', core: '机会公平与可行能力视角下的健康正义。', use: '健康不平等的伦理基础。', topic: '健康不平等的测量与政策含义（集中指数/分解）' },
+  { group: 'mgmt', name: '制度变迁与路径依赖', src: 'North', core: '制度惯性约束改革路径，变迁是渐进与断裂的叠加。', use: '医改历史分析框架。', topic: 'DRG/DIP 改革的路径依赖与突破' },
+  { group: 'mgmt', name: '协同治理与多中心治理', src: 'Ostrom 等', core: '多主体协同、自组织与共同生产超越单一权威。', use: '医共体 / 医联体治理结构分析。', topic: '紧密型县域医共体的治理机制' },
+  { group: 'mgmt', name: '激励与组织行为理论', src: '组织行为学', core: '激励相容、职业倦怠与组织承诺塑造服务行为。', use: '医务人员行为研究。', topic: '医务人员薪酬激励与工作投入' },
+  { group: 'china', name: '健康中国战略', src: '《"健康中国2030"规划纲要》', core: '把健康融入所有政策，覆盖全人群全生命周期。', use: '论文引言与政策背景必备。', topic: '健康融入万策的落地评估' },
+  { group: 'china', name: '主动健康', src: '中国本土概念', core: '个体主动（行为）+ 体系主动（环境、政策、服务与支付）。', use: '行为与体系双重视角的研究设计。', topic: '体医融合、五处方干预评估' },
+  { group: 'china', name: '价值医疗与整合型服务体系', src: '国际概念本土化', core: '以健康结果为导向的支付与服务整合。', use: '支付与服务改革研究的框架。', topic: '按价值付费与医防融合' },
+  { group: 'social', name: '知信行模式（KAP）', src: '健康教育经典模式', core: '知识→信念/态度→行为的递进链。', use: '健康宣教效果评价的常用框架。', topic: '健康科普对行为改变的分段效应' },
+  { group: 'social', name: '保护动机理论（PMT）', src: 'Rogers', core: '威胁评估 + 应对评估共同决定保护行为。', use: '风险沟通与自我防护干预设计。', topic: '传染病防护行为与风险感知' },
+  { group: 'social', name: '压力与应对理论', src: 'Lazarus；JD-R 模型', core: '压力是环境要求与个人资源交互的结果；工作要求—资源模型解释职业倦怠。', use: '职业人群心理健康研究框架。', topic: '医务人员职业倦怠与工作资源' },
+  { group: 'social', name: '生命历程理论', src: 'Elder 等', core: '早期暴露、关键期与累积效应贯穿一生。', use: '队列与自然实验的时间窗设计。', topic: '生命早期营养环境与成年慢病' },
+  { group: 'social', name: '社会网络与社会支持理论', src: 'Berkman & Syme', core: '网络结构与社会支持影响健康行为与结局。', use: '网络干预（朋友提名法等）的理论基础。', topic: '社区健康行为扩散的网络定向干预' },
+  { group: 'social', name: '病耻感理论（Stigma）', src: 'Goffman / Link & Phelan', core: '标签、刻板印象与歧视循环阻碍求助与依从。', use: '精神疾病、传染病患者的定性/混合研究。', topic: '慢病病耻感对就医延迟的影响' },
+  { group: 'econ', name: '健康生产函数', src: '卫生经济学基础', core: '健康产出由医疗服务、行为、环境与禀赋共同生产。', use: '投入-产出边界的实证设定。', topic: '卫生投入的健康产出效率（SFA/DEA）' },
+  { group: 'econ', name: '医疗保险与道德风险', src: 'Arrow；Pauly', core: '参保改变价格与行为：事前道德风险与事后道德风险。', use: '医保政策评估的经典框架。', topic: '门诊统筹对就医行为与费用的影响' },
+  { group: 'econ', name: '支付方式与激励相容', src: '卫生经济学', core: '按项目、按人头、按结果支付塑造不同激励。', use: '支付改革实证研究的对照逻辑。', topic: 'DRG/DIP 与按绩效支付的比较评估' },
+  { group: 'econ', name: '行为经济学与助推（Nudge）', src: 'Thaler & Sunstein', core: '默认选项、框架与损失厌恶影响健康决策。', use: '低成本行为干预实验设计。', topic: '默认预约、短信提醒对接种率的影响' },
+  { group: 'mgmt', name: '多源流理论', src: 'Kingdon', core: '问题流、政策流、政治流在政策之窗汇合。', use: '政策议程与出台时机的过程分析。', topic: '某医保政策为何在此时出台的过程研究' },
+  { group: 'mgmt', name: '政策扩散理论', src: '政策科学', core: '政策在地区间的学习、竞争与模仿扩散。', use: '跨地区政策采纳的定量分析。', topic: 'DRG 付费改革在省份间的扩散' },
+  { group: 'mgmt', name: '全面质量管理与精益管理', src: '管理科学', core: 'PDCA 循环、消除浪费与持续改进。', use: '医疗质量改进项目设计。', topic: '手术室流程再造对效率与安全的影响' },
+  { group: 'mgmt', name: '循证卫生决策', src: 'Evidence-informed policy', core: '用系统综述与本地证据支持政策选择。', use: 'Meta 分析、HTA 的决策接口。', topic: '证据如何进入地方医保目录决策' },
+  { group: 'mgmt', name: '组织变革理论', src: 'Lewin', core: '解冻—变革—再冻结三阶段。', use: '医院改革案例的过程分析。', topic: '公立医院绩效改革的组织阻力与化解' },
+  { group: 'china', name: '新时代卫生与健康工作方针', src: '全国卫生与健康大会', core: '以基层为重点、改革创新为动力、预防为主、中西医并重、把健康融入所有政策、人民共建共享。', use: '标书与研究背景的标准表述。', topic: '基层卫生服务能力与预防优先的实证' },
+  { group: 'china', name: '三医联动', src: '中国医改', core: '医疗、医保、医药协同治理。', use: '多部门政策协同研究的框架。', topic: '集采、支付与医院行为的三医联动评估' },
+  { group: 'china', name: '公立医院高质量发展', src: '国务院办公厅文件', core: '三个转变、三个提高：从规模扩张转向提质增效。', use: '医院管理研究的最新政策语境。', topic: '医院运营效率与学科建设的平衡' },
+  { group: 'china', name: '分级诊疗与整合型服务', src: '中国医改', core: '基层首诊、双向转诊、医联体医共体建设。', use: '服务体系研究的制度背景。', topic: '医共体对县域就诊格局的因果效应' },
+];
+
+function renderTheories() {
+  $('#theoryGrid').innerHTML = THEORY_GROUPS.map((g) => `
+    <div class="top-tier">
+      <h3 class="top-tier-title">${escapeHtml(g.label)}</h3>
+      <div class="data-grid">
+        ${THEORIES.filter((t) => t.group === g.key).map((t) => `
+          <div class="data-card">
+            <div class="data-card-top">
+              <h3>${escapeHtml(t.name)}</h3>
+              <span class="mini-tag tag-cn">${escapeHtml(t.src)}</span>
+            </div>
+            <p><strong style="color:var(--accent);">核心：</strong>${escapeHtml(t.core)}<br>
+               <strong style="color:var(--gold);">论文用法：</strong>${escapeHtml(t.use)}<br>
+               <span class="hint">选题示例：${escapeHtml(t.topic)}</span></p>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+renderTheories();
+
 /* ============ 工具函数 ============ */
 function escapeHtml(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
