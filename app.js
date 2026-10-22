@@ -729,6 +729,36 @@ function renderDataSources() {
 
 renderDataSources();
 
+/* ============ 5.5 院校科普 ============ */
+const SCHOOLS = [
+  { name: '北京大学公共卫生学院', school: '北京大学', type: '公卫', focus: '流行病与卫生统计、全球卫生、卫生政策与管理、营养与食品卫生', note: '社医卫管方向实力全面，保研/申博竞争强；全球卫生与卫生政策团队活跃。', url: 'https://sph.pku.edu.cn/' },
+  { name: '复旦大学公共卫生学院', school: '复旦大学', type: '公卫', focus: '卫生经济学与卫生技术评估、传染病流行病学、生物统计', note: '卫生经济与 HTA 方向传统强院；余宏杰团队在传染病传播动力学领域成果突出。', url: 'https://sph.fudan.edu.cn/' },
+  { name: '医药卫生管理学院', school: '华中科技大学同济医学院', type: '医管', focus: '医院管理、卫生政策、医药信息管理、农村卫生', note: '「华科医管」是卫生管理学科重镇；主办《中国社会医学杂志》《医学与社会》。', url: 'https://mhm.hust.edu.cn/' },
+  { name: '浙江大学公共卫生学院', school: '浙江大学', type: '公卫', focus: '大数据健康科学、流行病学、环境健康', note: '健康大数据与数字健康特色突出，理工交叉资源强。', url: 'https://phs.zju.edu.cn/' },
+  { name: '公共管理学院', school: '中国人民大学', type: '政管', focus: '公共政策、社会保障、卫生政策与管理', note: '公共管理学科顶尖平台，适合从政策科学视角做卫生政策研究。', url: 'https://spap.ruc.edu.cn/' },
+  { name: '人口与健康学院', school: '中国人民大学', type: '综合', focus: '人口学、老年健康、健康经济学、人口健康政策', note: '人口与老龄健康研究传统强；适合老龄健康与健康经济交叉选题。', url: 'https://www.ruc.edu.cn/' },
+  { name: '政治与公共管理学院', school: '武汉大学', type: '政管', focus: '公共管理、社会保障、卫生政策与医保', note: '社会保障与医保研究有传统；公共管理学科评估前列。', url: 'https://psr.whu.edu.cn/' },
+  { name: '卫生管理学院', school: '安徽医科大学', type: '医管', focus: '卫生事业管理、卫生经济、基层卫生政策', note: '省属医科院校中的卫生管理特色院系，基层卫生与医保实践资源多。', url: 'https://www.ahmu.edu.cn/' },
+  { name: '公共卫生学院', school: '山东大学', type: '公卫', focus: '卫生政策与管理、医疗保障、卫生经济', note: '医保与卫生政策研究方向集中，齐鲁医学传统深厚。', url: 'https://sph.sdu.edu.cn/' },
+  { name: '华西公共卫生学院', school: '四川大学', type: '公卫', focus: '卫生经济、卫生政策与管理、职业卫生', note: '西部卫生政策与卫生经济研究重镇，华西医学平台支撑。', url: 'https://wcph.scu.edu.cn/' },
+  { name: '公共政策与管理学院', school: '西安交通大学', type: '政管', focus: '卫生政策、医疗保障、公共管理', note: '医保支付与卫生政策研究活跃，西部政策实践场景丰富。', url: 'https://sppa.xjtu.edu.cn/' },
+  { name: '公共卫生学院（医政方向）', school: '南京医科大学', type: '医管', focus: '卫生政策与管理、医政管理、卫生经济', note: '江苏省属医科龙头，医政管理与卫生政策实践结合紧密。', url: 'https://www.njmu.edu.cn/' },
+];
+
+function renderSchools() {
+  $('#schoolGrid').innerHTML = SCHOOLS.map((s) => `
+    <div class="data-card">
+      <div class="data-card-top">
+        <span class="mini-tag ${s.type === '公卫' ? 'tag-global' : s.type === '医管' ? 'tag-cn' : ''}">${s.type}</span>
+        <h3>${escapeHtml(s.name)}</h3>
+      </div>
+      <p><strong style="color:var(--ink);">${escapeHtml(s.school)}</strong><br>${escapeHtml(s.focus)}<br><span class="hint">${escapeHtml(s.note)}</span></p>
+      <a href="${escapeHtml(s.url)}" target="_blank" rel="noopener">学校/院系官网 ↗（院系入口以学校主页导航为准）</a>
+    </div>`).join('');
+}
+
+renderSchools();
+
 /* ============ 6. 目标期刊查询 ============ */
 const JOURNALS = [
   { name: 'Journal of Health Economics', issn: '0167-6296', area: '卫生经济', pub: 'Elsevier' },
