@@ -1,0 +1,761 @@
+[
+  {
+    "id": "charls",
+    "name": "CHARLS · 中国健康与养老追踪调查",
+    "region": "中国",
+    "family": "HRS家族",
+    "local_status": "已核对本机问卷摘录、跨波对照与清洗溯源",
+    "guide": "charls-database-skill",
+    "overview": "中老年健康、经济与家庭追踪；原始模块、Harmonized与第三方清洗版分别建立版本清单。",
+    "modules": [
+      "人口与家庭",
+      "健康/ADL/IADL",
+      "医疗利用与保险",
+      "认知与心理",
+      "体测与部分波次血检",
+      "生命历程/退出访谈"
+    ],
+    "workflow": [
+      "核对ID类型和各模块连接层级",
+      "按实际访问日期建立person-wave",
+      "逐波追溯测量/跳题/特殊码",
+      "单列失访、死亡和生物样本缺测",
+      "匹配政策前核对地区权限与落地时点"
+    ],
+    "questions": [
+      "失能需求与照护利用是否匹配",
+      "慢病、家庭支持与医疗负担如何随时间变化",
+      "有足够前后期和地区支持时开展分批政策评估"
+    ],
+    "pitfalls": [
+      "2018家庭病床是60岁及以上服务多选题中的一项，不是所有人都被问到",
+      "2015、2018、2020词表测量程序不能直接视为相同",
+      "自报肾病与一次肾功能指标不能互换",
+      "不能用随访信息回填基线预测后声称无泄漏"
+    ],
+    "source_ids": [
+      "charls",
+      "charls-h",
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "clhls",
+    "name": "CLHLS / CLHLS-HF · 老年健康与家庭追踪",
+    "region": "中国",
+    "family": "其他老龄纵向",
+    "local_status": "已核对本机2018/2021字段、值标签和连接对照",
+    "guide": "clhls-database-skill",
+    "overview": "高龄健康与照护研究；2021家庭扩展、存活者问卷、死亡家属问卷和补充样本分别处理。",
+    "modules": [
+      "功能与认知",
+      "生活方式",
+      "慢病与体测",
+      "家庭支持",
+      "照护和服务",
+      "随访与死亡家属问卷"
+    ],
+    "workflow": [
+      "先区分每轮存活者/新补样/退出文件",
+      "统一字符ID并验证一对一和年龄性别一致性",
+      "按问卷重编码ADL与认知",
+      "失访与死亡分别建状态",
+      "总体推断先核对目标人群和权重"
+    ],
+    "questions": [
+      "未满足照护需求及其社会差异",
+      "高龄人群功能转移与死亡竞争",
+      "家庭支持与正式照护服务的关系"
+    ],
+    "pitfalls": [
+      "本机2018 g15a1与2021 g14a1为高血压题，前缀不能机械沿用",
+      "2021 e64a系列只在相应跳题路径有值",
+      "本次核对的文件未见客观肾标志物，不概括为CLHLS所有子项目都没有",
+      "母亲/父亲死亡年龄不等于受访者死亡随访"
+    ],
+    "source_ids": [
+      "clhls",
+      "clhls-data"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "hrs",
+    "name": "HRS · Health and Retirement Study",
+    "region": "美国",
+    "family": "HRS家族",
+    "local_status": "已核对本机清洗CSV文件头与波次；原始/衍生目录已定位",
+    "guide": "hrs-database-skill",
+    "overview": "以健康、工作退休和家庭经济为主线的纵向调查。Core、RAND、家庭、CAMS、退出和生物标志物产品分开。",
+    "modules": [
+      "健康与功能",
+      "认知/心理",
+      "财富/收入/养老金",
+      "就业与退休",
+      "家庭转移/照护",
+      "退出及HCAP等扩展"
+    ],
+    "workflow": [
+      "先选原始Core或RAND/Gateway产品",
+      "保留HHID与PN的原始键格式并核对hhidpn",
+      "将波次映射实际访谈年/月",
+      "选择社区/机构、个人/家庭及子样本权重",
+      "按人和家庭组织重复测量与训练验证"
+    ],
+    "questions": [
+      "退休前后健康轨迹与社会经济差异",
+      "照护责任与劳动退出",
+      "自付医疗支出分布与保障差异"
+    ],
+    "pitfalls": [
+      "本机CSV含wave 5—15不代表拥有全部HRS历史波次",
+      "hhidpn不是家庭ID；家庭财富不能在夫妻两行当成独立家庭求和",
+      "自报与测量BMI分别存放",
+      "公共下载不包含所有行政理赔/地理/遗传链接权限"
+    ],
+    "source_ids": [
+      "hrs",
+      "hrs-rand",
+      "hrs-doc",
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "elsa",
+    "name": "ELSA · English Longitudinal Study of Ageing",
+    "region": "英格兰",
+    "family": "HRS家族",
+    "local_status": "已核对本机清洗表1—9波与资料目录",
+    "guide": "elsa-database-skill",
+    "overview": "英格兰老龄纵向研究；访问、护士测量、自填、生命历程和退出材料按组件衔接。",
+    "modules": [
+      "健康/功能/认知",
+      "经济与退休",
+      "社会联系/孤独",
+      "护士测量",
+      "自填与生命历程",
+      "退出及链接资料"
+    ],
+    "workflow": [
+      "按UKDS产品号及发布版建清单",
+      "核对个人键、访问波和护士波",
+      "逐轮确认样本/补样/代理访谈",
+      "区分访谈、自填和护士样本权重",
+      "比较认知与体测的实际程序"
+    ],
+    "questions": [
+      "孤独与功能变化的双向关系",
+      "住房和经济资源与健康",
+      "健康测量参与的选择偏差"
+    ],
+    "pitfalls": [
+      "英格兰不能自动写作全英国代表性",
+      "本机csv仅1—9波，官方存在后续产品不表示本机已整理",
+      "护士缺测不是血压正常",
+      "HES/死亡/癌症链接有单独访问路径，普通EUL不代表已获准"
+    ],
+    "source_ids": [
+      "elsa",
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "share",
+    "name": "SHARE · Survey of Health, Ageing and Retirement in Europe",
+    "region": "欧洲多国",
+    "family": "HRS家族",
+    "local_status": "已核对本机清洗字段、原始9.0.0与Harmonized F相关文件头",
+    "guide": "share-database-skill",
+    "overview": "跨欧洲国家的健康与退休调查；国家、常规波、SHARELIFE、疫情及退出组件需识别。",
+    "modules": [
+      "国家/波次/样本状态",
+      "健康与认知",
+      "工作/养老金/财富",
+      "家庭与照护",
+      "SHARELIFE",
+      "疫情与测量扩展"
+    ],
+    "workflow": [
+      "锁定统一发布版与国家覆盖矩阵",
+      "以mergeid核对个人连接",
+      "识别常规问卷与回顾性模块",
+      "每国分别处理权重/抽样设计",
+      "先得各国结果，再决定是否合并"
+    ],
+    "questions": [
+      "照护制度与家庭负担的异质性",
+      "退休、贫困与健康差异",
+      "多国失能和未满足服务需求比较"
+    ],
+    "pitfalls": [
+      "本机清洗表没有wave3，wave7也不是全体常规访谈样本",
+      "mergeid按字符保存",
+      "本机wspeed标签写秒数，转换需先核对距离及计时定义",
+      "个人权重直接相加会让大国主导目标总体；先写清加权目标"
+    ],
+    "source_ids": [
+      "share",
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "klosa",
+    "name": "KLoSA · Korean Longitudinal Study of Aging",
+    "region": "韩国",
+    "family": "HRS家族",
+    "local_status": "已核对本机清洗表3—8波与Harmonized E.2字段标签",
+    "guide": "klosa-database-skill",
+    "overview": "2006起的中老年家庭追踪；基线抽样覆盖与后期补样须分别说明。",
+    "modules": [
+      "就业/退休",
+      "收入与资产",
+      "家庭转移",
+      "健康/功能",
+      "认知与满意度",
+      "退出信息"
+    ],
+    "workflow": [
+      "用KEIS逐波问卷建立变量表",
+      "分开原样本与补充样本",
+      "核对认知计分及特殊码",
+      "从原发布文件补回适合目标样本的权重",
+      "检查劳动退出与健康的时间顺序"
+    ],
+    "questions": [
+      "就业退出与照护职责",
+      "家庭转移和健康不平等",
+      "认知、慢病和劳动参与"
+    ],
+    "pitfalls": [
+      "本机CSV仅3—8波，原始目录更多不等于完成所有波的清洗",
+      "Harmonized r1wtresp标签为横断面个人权重，不能替代任意随访权重",
+      "本机weight是体重，不是抽样权重",
+      "控制教育不自动消除认知量表的测量差异"
+    ],
+    "source_ids": [
+      "klosa",
+      "klosa-q",
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "lasi",
+    "name": "LASI / LASI-DAD · Longitudinal Ageing Study in India",
+    "region": "印度",
+    "family": "HRS家族",
+    "local_status": "已核对本机Harmonized A.3标签与清洗宽表",
+    "guide": "lasi-database-skill",
+    "overview": "老龄、家庭与健康调查；全国Wave 1、2010试调查及LASI-DAD认知子研究为不同产品。",
+    "modules": [
+      "家庭与个人",
+      "健康/功能/医疗利用",
+      "经济与工作",
+      "体测/生物标志物",
+      "DAD认知/知情人",
+      "社区与背景"
+    ],
+    "workflow": [
+      "先识别Pilot、Wave 1或DAD",
+      "按实际调查日期与地区核对调查期间",
+      "识别宽表r1前缀，不伪造多期面板",
+      "访谈/生物标志物/认知子样本分别定权重",
+      "与他国比较前统一年龄和量表项目"
+    ],
+    "questions": [
+      "医疗利用与保障差异",
+      "失能和照护支持",
+      "认知测量与教育/语言差异"
+    ],
+    "pitfalls": [
+      "本机lasi.csv是r1宽表且无wave列，不能据此跑DID或轨迹",
+      "A.2/A.3为发布版本，不是第二/第三次访谈",
+      "DAD不是全部LASI参与者",
+      "本机r1wtresp与r1nwtresp分别标为个人分析及生物标志物权重"
+    ],
+    "source_ids": [
+      "lasi",
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "mhas",
+    "name": "MHAS / ENASEM · Mexican Health and Aging Study",
+    "region": "墨西哥",
+    "family": "HRS家族",
+    "local_status": "已核对本机清洗表1—5波及Harmonized C.2字段",
+    "guide": "mhas-database-skill",
+    "overview": "健康、家庭和经济追踪；Core、代理、家属、Master Follow-Up、Mex-Cog及插补资料分开。",
+    "modules": [
+      "直接/代理访谈",
+      "健康与服务",
+      "家庭/迁移/转移",
+      "经济与插补",
+      "家属退出",
+      "Mex-Cog认知"
+    ],
+    "workflow": [
+      "按官方cross-wave merging说明连接",
+      "主随访文件识别死亡/未访/新样本",
+      "分别检查直接和代理认知可用性",
+      "原始与插补变量保留标记",
+      "统一收入/费用回顾窗口与币值"
+    ],
+    "questions": [
+      "家庭支持、迁移与健康",
+      "失能与正式/非正式照护",
+      "经济资源与医疗负担"
+    ],
+    "pitfalls": [
+      "本机1—5波清洗表不包含原始目录2021的所有新资料",
+      "Master Follow-Up可辅助状态核对，不生成不存在的死亡日期",
+      "Mex-Cog不能无子样本设计地当全样本",
+      "公共数据使用条款限制第三方再分发"
+    ],
+    "source_ids": [
+      "mhas",
+      "mhas-doc",
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "nhanes",
+    "name": "NHANES · National Health and Nutrition Examination Survey",
+    "region": "美国",
+    "family": "健康检查/重复横断面",
+    "local_status": "已定位本机I/J周期XPT、示例脚本和课程资料；未逐个执行课程分析",
+    "guide": "nhanes-database-skill",
+    "overview": "健康访谈、MEC体检、实验室及饮食模块构成的复杂抽样调查；连续周期通常是不同受访者。",
+    "modules": [
+      "DEMO人口/设计/权重",
+      "问卷",
+      "MEC体测",
+      "实验室/子样本",
+      "饮食回顾",
+      "可用死亡链接"
+    ],
+    "workflow": [
+      "按周期下载XPT及同版Doc File",
+      "先核对SEQN唯一性，再在周期内合并",
+      "依组件确定分析样本及权重",
+      "保留SDMVSTRA/SDMVPSU并用survey方差",
+      "跨周期先核对仪器/单位/检测下限再合并"
+    ],
+    "questions": [
+      "人群营养及慢病标志物分布",
+      "加权暴露—健康关联和非线性",
+      "有适当链接与资格信息时研究死亡关联"
+    ],
+    "pitfalls": [
+      "SEQN不是跨周期个人追踪键",
+      "2017—March 2020不能和其内部2017—2018重复拼接",
+      "2021—2023有新的采血权重要求，旧MEC代码不能无条件套用",
+      "观察性NHANES回归加外部MR不自动形成同一人群的因果链"
+    ],
+    "source_ids": [
+      "nhanes",
+      "nhanes-w",
+      "nhanes-d",
+      "nhanes-v",
+      "nhanes-pre",
+      "nhanes-post",
+      "lmf"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "jstar",
+    "name": "JSTAR · Japanese Study of Aging and Retirement",
+    "region": "日本",
+    "family": "HRS家族/认知扩展",
+    "local_status": "官方产品目录核对；未核验本机个体文件",
+    "guide": "aging-family-extension-skill",
+    "overview": "日本老龄与退休面板，按RIETI批准的访问层级使用。",
+    "modules": [
+      "健康",
+      "经济与退休",
+      "家庭"
+    ],
+    "workflow": [
+      "查主调查与扩展组件关系",
+      "确认访问许可及具体代码本",
+      "建立变量、权重与样本选择对照",
+      "先做可行性审计再估计"
+    ],
+    "questions": [
+      "照护与功能比较",
+      "社会经济资源与健康差异",
+      "量表可比性与跨队列外部验证"
+    ],
+    "pitfalls": [
+      "先核对入样地区与总体外推范围，不能把地方样本直接称全国代表",
+      "地区信息分级；本次未核对本机个体文件"
+    ],
+    "source_ids": [
+      "jstar",
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "tilda",
+    "name": "TILDA · The Irish Longitudinal Study on Ageing",
+    "region": "爱尔兰",
+    "family": "HRS家族/认知扩展",
+    "local_status": "官方产品目录核对；未核验本机个体文件",
+    "guide": "aging-family-extension-skill",
+    "overview": "健康、社会与经济相结合的老龄纵向研究。",
+    "modules": [
+      "访谈",
+      "自填",
+      "健康评估"
+    ],
+    "workflow": [
+      "查主调查与扩展组件关系",
+      "确认访问许可及具体代码本",
+      "建立变量、权重与样本选择对照",
+      "先做可行性审计再估计"
+    ],
+    "questions": [
+      "照护与功能比较",
+      "社会经济资源与健康差异",
+      "量表可比性与跨队列外部验证"
+    ],
+    "pitfalls": [
+      "公共/受限文件的变量可用性不同；健康评估参与可能有选择",
+      "访问仅面向非商业实体；本次未核对本机个体文件"
+    ],
+    "source_ids": [
+      "tilda",
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "creles",
+    "name": "CRELES · Costa Rican Longevity and Healthy Aging Study",
+    "region": "哥斯达黎加",
+    "family": "HRS家族/认知扩展",
+    "local_status": "官方产品目录核对；未核验本机个体文件",
+    "guide": "aging-family-extension-skill",
+    "overview": "Gateway列有核心Harmonized产品的老龄研究。",
+    "modules": [
+      "健康与老龄",
+      "功能",
+      "经济与家庭"
+    ],
+    "workflow": [
+      "查主调查与扩展组件关系",
+      "确认访问许可及具体代码本",
+      "建立变量、权重与样本选择对照",
+      "先做可行性审计再估计"
+    ],
+    "questions": [
+      "照护与功能比较",
+      "社会经济资源与健康差异",
+      "量表可比性与跨队列外部验证"
+    ],
+    "pitfalls": [
+      "本次只核对产品目录，入组队列/年龄/波次/权重仍须按代码本确认",
+      "不要把不同入组队列简单视为同一全国面板"
+    ],
+    "source_ids": [
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "sps",
+    "name": "SPS–ENCAVIDAM · 社会保护与老年生活质量",
+    "region": "智利",
+    "family": "HRS家族/认知扩展",
+    "local_status": "官方产品目录核对；未核验本机个体文件",
+    "guide": "aging-family-extension-skill",
+    "overview": "EPS/SPS长期追踪与ENCAVIDAM老年生活质量扩展衔接。",
+    "modules": [
+      "社会保护",
+      "劳动经济",
+      "老年生活质量"
+    ],
+    "workflow": [
+      "查主调查与扩展组件关系",
+      "确认访问许可及具体代码本",
+      "建立变量、权重与样本选择对照",
+      "先做可行性审计再估计"
+    ],
+    "questions": [
+      "照护与功能比较",
+      "社会经济资源与健康差异",
+      "量表可比性与跨队列外部验证"
+    ],
+    "pitfalls": [
+      "扩展问卷的选择样本与全部EPS人群不同",
+      "先审查官方数据条件及连接文档；本次无本机个体文件核验"
+    ],
+    "source_ids": [
+      "sps",
+      "chile-cog",
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "mars",
+    "name": "MARS · Malaysian Ageing and Retirement Survey",
+    "region": "马来西亚",
+    "family": "HRS家族/认知扩展",
+    "local_status": "官方产品目录核对；未核验本机个体文件",
+    "guide": "aging-family-extension-skill",
+    "overview": "Gateway目录列有Harmonized MARS核心产品。",
+    "modules": [
+      "健康",
+      "工作退休",
+      "家庭经济"
+    ],
+    "workflow": [
+      "查主调查与扩展组件关系",
+      "确认访问许可及具体代码本",
+      "建立变量、权重与样本选择对照",
+      "先做可行性审计再估计"
+    ],
+    "questions": [
+      "照护与功能比较",
+      "社会经济资源与健康差异",
+      "量表可比性与跨队列外部验证"
+    ],
+    "pitfalls": [
+      "本次为产品导航级核验；不预填具体波次与样本数",
+      "是否有重复访问及可用生物样本需读获准版本代码本"
+    ],
+    "source_ids": [
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "chile-cog",
+    "name": "Chile-Cog · Harmonized Cognitive Assessment Protocol",
+    "region": "智利",
+    "family": "HRS家族/认知扩展",
+    "local_status": "官方产品目录核对；未核验本机个体文件",
+    "guide": "aging-family-extension-skill",
+    "overview": "认知评估扩展，应与SPS/ENCAVIDAM的抽样与连接关系一起理解。",
+    "modules": [
+      "认知评估",
+      "知情人资料",
+      "主调查连接"
+    ],
+    "workflow": [
+      "查主调查与扩展组件关系",
+      "确认访问许可及具体代码本",
+      "建立变量、权重与样本选择对照",
+      "先做可行性审计再估计"
+    ],
+    "questions": [
+      "照护与功能比较",
+      "社会经济资源与健康差异",
+      "量表可比性与跨队列外部验证"
+    ],
+    "pitfalls": [
+      "HCAP认知扩展不是独立全国通用健康面板",
+      "认知分类、诊断及可比因子分数需各自验证"
+    ],
+    "source_ids": [
+      "chile-cog",
+      "gateway"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "cfps",
+    "name": "CFPS · 中国家庭追踪调查",
+    "region": "中国",
+    "family": "综合家庭纵向",
+    "local_status": "官方文档/入口补充；未核对本机个体文件",
+    "guide": "cfps-chns-database-skill",
+    "overview": "家庭成员、成人、少儿与家庭经济相衔接的社会调查。",
+    "modules": [
+      "个人/成人/少儿",
+      "家庭关系",
+      "经济与健康"
+    ],
+    "workflow": [
+      "核对数据许可与发布版",
+      "确定个人/家庭/事件分析单位",
+      "建立题体、权重及时间窗口表",
+      "按实际设计选描述、面板或费用模型"
+    ],
+    "questions": [
+      "健康公平与医疗负担",
+      "家庭资源与健康",
+      "服务利用差异"
+    ],
+    "pitfalls": [
+      "本次为官方申请入口核验，未确认用户本机版本",
+      "家庭ID可能随分户变化，个人与家庭键不可混用"
+    ],
+    "source_ids": [
+      "cfps"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "chns",
+    "name": "CHNS · 中国健康与营养调查",
+    "region": "中国",
+    "family": "营养/社区纵向",
+    "local_status": "官方文档/入口补充；未核对本机个体文件",
+    "guide": "cfps-chns-database-skill",
+    "overview": "营养、健康及家庭/社区资料，先区分个人、家庭、食物日和社区层级。",
+    "modules": [
+      "个人健康",
+      "膳食记录",
+      "家庭食物与社区"
+    ],
+    "workflow": [
+      "核对数据许可与发布版",
+      "确定个人/家庭/事件分析单位",
+      "建立题体、权重及时间窗口表",
+      "按实际设计选描述、面板或费用模型"
+    ],
+    "questions": [
+      "健康公平与医疗负担",
+      "家庭资源与健康",
+      "服务利用差异"
+    ],
+    "pitfalls": [
+      "本次官方问卷可读，主站数据页抓取受限；未确认本机版本",
+      "食物日或食物条目需先聚合到研究单位；全国外推须查抽样依据"
+    ],
+    "source_ids": [
+      "chns"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "sage",
+    "name": "WHO SAGE · Study on global AGEing and adult health",
+    "region": "六国",
+    "family": "其他老龄纵向",
+    "local_status": "官方文档/入口补充；未核对本机个体文件",
+    "guide": "aging-family-extension-skill",
+    "overview": "WHO六国老龄纵向研究，含50岁以上及18—49岁比较样本。",
+    "modules": [
+      "健康功能",
+      "经济社会",
+      "体测与服务"
+    ],
+    "workflow": [
+      "核对数据许可与发布版",
+      "确定个人/家庭/事件分析单位",
+      "建立题体、权重及时间窗口表",
+      "按实际设计选描述、面板或费用模型"
+    ],
+    "questions": [
+      "健康公平与医疗负担",
+      "家庭资源与健康",
+      "服务利用差异"
+    ],
+    "pitfalls": [
+      "与HRS家族分别建来源和量表对照",
+      "国别波次、访问日期和文件权限需逐一核对"
+    ],
+    "source_ids": [
+      "sage"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "nhis",
+    "name": "NHIS · National Health Interview Survey",
+    "region": "美国",
+    "family": "健康访谈/年度调查",
+    "local_status": "官方文档/入口补充；未核对本机个体文件",
+    "guide": "cfps-chns-database-skill",
+    "overview": "美国年度家庭健康访谈，可与健康检查型NHANES互补。",
+    "modules": [
+      "健康访谈",
+      "服务可及",
+      "保障与家庭"
+    ],
+    "workflow": [
+      "核对数据许可与发布版",
+      "确定个人/家庭/事件分析单位",
+      "建立题体、权重及时间窗口表",
+      "按实际设计选描述、面板或费用模型"
+    ],
+    "questions": [
+      "健康公平与医疗负担",
+      "家庭资源与健康",
+      "服务利用差异"
+    ],
+    "pitfalls": [
+      "年度文件不能按同名ID伪造追踪队列",
+      "问卷与设计更改的断点需查年度文档；本次仅核验入口"
+    ],
+    "source_ids": [
+      "nhis",
+      "lmf"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  },
+  {
+    "id": "meps",
+    "name": "MEPS · Medical Expenditure Panel Survey",
+    "region": "美国",
+    "family": "医疗费用与服务",
+    "local_status": "官方文档/入口补充；未核对本机个体文件",
+    "guide": "claims-clinical-database-skill",
+    "overview": "医疗费用和服务使用调查，有不同组件及数据产品。",
+    "modules": [
+      "家庭组件",
+      "保险/雇主",
+      "医疗提供方"
+    ],
+    "workflow": [
+      "核对数据许可与发布版",
+      "确定个人/家庭/事件分析单位",
+      "建立题体、权重及时间窗口表",
+      "按实际设计选描述、面板或费用模型"
+    ],
+    "questions": [
+      "健康公平与医疗负担",
+      "家庭资源与健康",
+      "服务利用差异"
+    ],
+    "pitfalls": [
+      "先核对年度横断面与纵向文件的抽样单位和权重",
+      "费用调查不等于医保全量结算或医院成本；本次仅核验入口"
+    ],
+    "source_ids": [
+      "meps"
+    ],
+    "checked": "2026-10-23",
+    "scope": "研究问题与分析步骤为方法建议；可用波次和字段以实际获准版本及代码本为准。"
+  }
+]

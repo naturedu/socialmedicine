@@ -1,0 +1,69 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>🌍 ELSA · English Longitudinal Study of Ageing · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/elsa-database-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">本机版本与组件</a><ul>
+<li><a href="#_2">访谈与护士测量衔接</a></li>
+<li><a href="#_3">孤独、社会隔离与功能</a></li>
+<li><a href="#_4">访问与外推</a></li>
+</ul>
+</li>
+<li><a href="#rstata">R与Stata：标准化层的最小接口</a></li>
+<li><a href="#_5">🧺 先把数据放进正确的小篮子</a></li>
+<li><a href="#_6">从问题到估计的顺序</a></li>
+<li><a href="#_7">交付与报告</a></li>
+<li><a href="#_8">官方出处与版本边界</a></li>
+</ul>
+</div>
+</aside><article><h1 id="elsa-english-longitudinal-study-of-ageing">🌍 ELSA · English Longitudinal Study of Ageing</h1>
+<p>核验日期：2026-10-23。英格兰老龄纵向研究；访问、护士测量、自填、生命历程和退出材料按组件衔接。</p>
+<h2 id="_1">本机版本与组件</h2>
+<p>已定位普通问卷、护士测量、自填、退出和Harmonized资料目录；本机清洗CSV含343列、wave1—9。官网当前列出的后续波次与本机清洗范围分开登记，不能把目录里存在PDF当作已经完成相应数据合并。</p>
+<p>本机<code>idauniqc</code>是清洗表的个人键名称；应回查原产品个人键及转换规则。<code>inw</code>、自填参与和护士参与应分别存在。清洗表<code>cesd</code>标签为CESD-8，<code>internet</code>为至少每周使用互联网，<code>mweight</code>为测量体重；它们与其他国家同名变量不必具有相同参考期、题目或测量程序。</p>
+<h3 id="_2">访谈与护士测量衔接</h3>
+<ol>
+<li>每人每次核心访问和护士访问建立独立日期；以产品文档规定的连接键连接，不按文件排序拼列。</li>
+<li>护士测量不在每次访谈同等覆盖，先列样本资格、拒绝/安全排除和成功测量。</li>
+<li>临床指标优先按测量组件权重及有效样本分析，不能用访谈权重无说明代替。</li>
+<li>若护士日期晚于暴露/结果定义，按实际时间判断能否作为基线信息；不能把后测血压塞进早期预测模型。</li>
+</ol>
+<h3 id="_3">孤独、社会隔离与功能</h3>
+<p>孤独是主观体验，社会隔离是结构性联系，两者分别设量表和效应假设。以基线结局调整后的随访模型或适当面板模型估计关联，讨论反向因果、丧偶与健康限制。自填量表的缺测与访谈完成分开；代理访问通常不能补出本人主观感受。纵向中介还需时间顺序和混杂假设。</p>
+<h3 id="_4">访问与外推</h3>
+<p>官方通过UKDS提供不同许可层次；普通EUL、Special Licence和Secure Access不等价。英格兰研究结论按其抽样总体表述，不自动推广全英国。行政健康链接还需按官方专门流程判断权限和可得性。</p>
+<h2 id="rstata">R与Stata：标准化层的最小接口</h2>
+<p>以下变量名是<strong>分析层约定</strong>，不是原始数据库通用字段。必须先完成题级映射。若没有所需设计变量，先回查官方设计文件，不能任意生成PSU或权重。</p>
+<pre><code class="language-r"># d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量
+stopifnot(!anyNA(d$id), !anyDuplicated(d[c(&quot;id&quot;, &quot;year&quot;)]))
+d &lt;- d[order(d$id, d$year), ]
+# 纵向条件关联；不自动等于政策因果效应
+m &lt;- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)
+summary(m)
+# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。
+</code></pre>
+<pre><code class="language-stata">* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。
+assert !missing(id_s, year)
+isid id_s year
+egen long pid = group(id_s)
+xtset pid year
+xtreg y x i.year, fe vce(cluster pid)
+* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。
+</code></pre>
+<h2 id="_5">🧺 先把数据放进正确的小篮子</h2>
+<p>建立文件清单：<code>study / release / module / wave / visit_date / unit / key / source / permission</code>。文件名中的版本字母、下载年份和访谈波次分开。原始文件只读；另存标准化层和分析层。先输出字段名、标签、值标签、缺失码和连接诊断，再决定变量能否使用。</p>
+<p>每个分析变量至少记录：概念、原题、来源变量、适用人群、回顾窗口、单位、跳答路径、特殊码、代理回答、派生公式、可用波次、权重及核验状态。不得只凭中文列名判断值域或方向；<code>weight</code>在多份表中是体重。</p>
+<h2 id="_6">从问题到估计的顺序</h2>
+<ol>
+<li>写清目标人群、暴露/政策、比较组、结局和时间零点。区分人群患病比例、个体内变化、预测准确性和政策效应。</li>
+<li>画样本流：原始入样→年龄/资格→完成访谈→完成测量→连接随访→分析样本。死亡、失访、跳题、拒答、未测量分别记，不统一改成0。</li>
+<li>描述研究所需字段在每波的可用性。两波数据最多支持一次变化；多波轨迹需要足够重复观测、可比较测量与合理类数。</li>
+<li>按估计目标选择横断面、纵向或特定组件权重；权重不能凭变量名相似借用。失访加权需要可解释的响应模型和正值性诊断。</li>
+<li>面板FE估计的是个体内关联；PSM不能消除未测混杂；交错DID还需真实政策起始、前期趋势和有效对照；TTE需对齐资格、分组及随访起点。</li>
+<li>保留未加权人数、加权估计与区间。重复测量、家庭和地区依赖按设计处理；缺失值插补与抽样设计的结合需写明方法，避免把插补当作增加独立样本。</li>
+</ol>
+<h2 id="_7">交付与报告</h2>
+<p>交付版本清单、变量字典、跨波可用矩阵、连接诊断、样本流、缺失/失访表、模型脚本和执行记录。公共教程仅包含方法与元数据；获准数据留在授权环境。问卷存在某题、当前文件有字段、分析样本有有效观测是三个不同层次。</p>
+<p>相关路线：<a href="longitudinal-public-data-skill.html">纵向研究</a>、<a href="propensity-score-skill.html">PSM/加权</a>、<a href="staggered-did-skill.html">分批DID</a>、<a href="target-trial-emulation-skill.html">目标试验模拟</a>、<a href="econometric-modeling-skill.html">计量模型</a>。R/Stata代码为接口模板，本次未在这两个运行时执行。</p>
+<h2 id="_8">官方出处与版本边界</h2>
+<ul>
+<li><a href="https://www.elsa-project.ac.uk/accessing-elsa-data">Accessing ELSA data</a>：UKDS普通许可、特殊许可和安全访问的边界。</li>
+<li><a href="https://www.g2aging.org/harmonized-data/overview?dataset=2">Gateway Harmonized Data</a>：跨研究产品导航；统一变量仍有研究特定差异。</li>
+</ul><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

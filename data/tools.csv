@@ -1,13 +1,43 @@
 ﻿name,category,description,url,tags
-主动健康与健康融入万策（总纲旗舰）,flagship,把健康融入万策、带到每一个人心中：主动健康策略 + 健康影响评估（PAF/集中指数）+ 理论·数据·选题·院校五大板块，学科建设总纲。,skills/active-health-hiap-skill.md,"[""旗舰"", ""HiAP"", ""主动健康""]"
-卫生经济学评价教程,hecon,CEA/CUA 总纲：研究问题、成本测算、QALY、贴现、ICER、不确定性、CHEERS 2022 报告清单，9 步带代码。,skills/health-economics-tutorial-skill.md,"[""教程"", ""卫生经济""]"
-DCE 设计助手,hecon,离散选择实验：正交/D-效率设计步骤 + clogit / mixlogit / lclogit2 潜类别分析，Stata 与 R 双轨。,skills/dce-design-assistant-skill.md,"[""偏好测量"", ""卫生经济""]"
-Markov 模型助手,hecon,队列模拟成本-效果分析：转移矩阵、半周期校正、贴现、ICER、tornado 与 PSA，Stata/R 全程代码。,skills/markov-model-skill.md,"[""卫生经济"", ""建模""]"
-机器学习助手,data,住院费用预测与风险分层：LASSO/弹性网、随机森林、XGBoost、SHAP 与 TRIPOD 报告。,skills/machine-learning-skill.md,"[""预测建模"", ""数据科学""]"
-DID 双重差分助手,policy,卫生政策效果评估：平行趋势、经典 2×2 DID、多期交错 DID（csdid）、事件研究、安慰剂检验。,skills/did-skill.md,"[""因果推断"", ""政策评估""]"
-ITS 间断时间序列助手,policy,单序列干预的水平变化与趋势变化：分段回归、Newey-West 自相关校正、反事实图。,skills/its-skill.md,"[""政策评估"", ""时间序列""]"
-DDD 三重差分助手,policy,双重差分之差：三维交互识别（如集采×医院类型×品种类型），与 DID 的分解对照。,skills/ddd-skill.md,"[""因果推断"", ""政策评估""]"
-Meta 分析助手,stats,系统评价效应合并：OR/RR/SMD、固定与随机效应、异质性、森林图、发表偏倚、PRISMA。,skills/meta-analysis-skill.md,"[""证据综合""]"
-定性方法与结构方程专题,theory,扎根理论 / SEM / 多层SEM / fsQCA：lavaan、QCA 与 Stata sem/gsem/fuzzy 全程代码。,skills/sem-qca-qualitative-skill.md,"[""质性研究"", ""SEM/fsQCA""]"
-socialmedicineskills 方法学速查手册,stats,54 个方法速查：适用 / 要点 / Stata-R 核心代码 / 报告要点 / 常见错误；含理论框架 F 类与专题 G 类。,skills/socialmedicineskills.md,"[""速查"", ""54 条""]"
-学术写作规范润色,writing,中文学术文本标点、句式、冗余与结构规范；写作质量工具，明确不做检测器规避。,skills/academic-copyediting-skill.md,"[""写作""]"
+主动健康与健康融入万策（总纲旗舰）,flagship,把健康融入万策、带到每一个人心中：主动健康策略 + 健康影响评估（PAF/集中指数）+ 理论·数据·选题·院校五大板块，学科建设总纲。,skills/active-health-hiap-skill.md,旗舰 / HiAP / 主动健康
+卫生经济学评价教程,hecon,CEA/CUA 总纲：研究问题、成本测算、QALY、贴现、ICER、不确定性、CHEERS 2022 报告清单，9 步带代码。,skills/health-economics-tutorial-skill.md,教程 / 卫生经济
+DCE 设计助手,hecon,离散选择实验：正交/D-效率设计步骤 + clogit / mixlogit / lclogit2 潜类别分析，Stata 与 R 双轨。,skills/dce-design-assistant-skill.md,偏好测量 / 卫生经济
+Markov 模型助手,hecon,队列模拟成本-效果分析：转移矩阵、半周期校正、贴现、ICER、tornado 与 PSA，Stata/R 全程代码。,skills/markov-model-skill.md,卫生经济 / 建模
+机器学习助手,data,住院费用预测与风险分层：LASSO/弹性网、随机森林、XGBoost、SHAP 与 TRIPOD 报告。,skills/machine-learning-skill.md,预测建模 / 数据科学
+DID 双重差分助手,policy,卫生政策效果评估：平行趋势、经典 2×2 DID、多期交错 DID（csdid）、事件研究、安慰剂检验。,skills/did-skill.md,因果推断 / 政策评估
+ITS 间断时间序列助手,policy,单序列干预的水平变化与趋势变化：分段回归、Newey-West 自相关校正、反事实图。,skills/its-skill.md,政策评估 / 时间序列
+DDD 三重差分助手,policy,双重差分之差：三维交互识别（如集采×医院类型×品种类型），与 DID 的分解对照。,skills/ddd-skill.md,因果推断 / 政策评估
+Meta 分析助手,stats,系统评价效应合并：OR/RR/SMD、固定与随机效应、异质性、森林图、发表偏倚、PRISMA。,skills/meta-analysis-skill.md,证据综合
+定性方法与结构方程专题,theory,扎根理论 / SEM / 多层SEM / fsQCA：lavaan、QCA 与 Stata sem/gsem/fuzzy 全程代码。,skills/sem-qca-qualitative-skill.md,质性研究 / SEM/fsQCA
+socialmedicineskills 方法学速查手册,stats,54 个方法速查：适用 / 要点 / Stata-R 核心代码 / 报告要点 / 常见错误；含理论框架 F 类与专题 G 类。,skills/socialmedicineskills.md,速查 / 54 条
+学术写作规范润色,writing,中文学术文本标点、句式、冗余与结构规范；写作质量工具，明确不做检测器规避。,skills/academic-copyediting-skill.md,写作
+网状 Meta 分析,evidence,传递性、网络结构、多臂相关、直接/间接诊断与证据确定性。,guides/network-meta-analysis-skill.html,NMA / 证据综合
+meta-meta / 伞状综述,evidence,综述家族、原始研究重叠矩阵、CCA、AMSTAR 2/ROBIS与二阶合并边界。,guides/umbrella-review-skill.html,umbrella / meta-meta
+目标试验模拟 TTE,policy,七要素协议、time zero、IPW、CCW路线与TARGET报告。,guides/target-trial-emulation-skill.html,目标实验模拟 / TTE
+蒙特卡洛模拟与 PSA,simulation,ADEMP、偏倚/覆盖/效能、MCSE、PSA与CEAC的教学实验。,guides/monte-carlo-simulation-skill.html,Monte Carlo / PSA
+因果推断进阶,policy,SDID、DML、IPW/MSM与g方法：先定估计目标，再核对识别和诊断。,guides/advanced-causal-inference-skill.html,SDID / DML
+卫生政策文本分析,text,三维框架、PMC、主题模型、LLM编码与人工金标准验证。,guides/policy-text-analysis-skill.html,PMC / BERTopic / LLM
+医疗 AI 与人工评价,data,准确性、一致性、配对比较、校准、安全错误和TRIPOD-LLM。,guides/medical-ai-evaluation-skill.html,Kappa / ICC / 医学AI
+公共数据库与纵向研究,data,CHARLS/CLHLS/CFPS口径、抽样、失访、轨迹与竞争风险。,guides/longitudinal-public-data-skill.html,纵向 / 公共数据库
+模拟模型选型,simulation,Markov、微观、DES、系统动力学、ABM：结构、参数、校准与验证。,guides/simulation-models-skill.html,微观模拟 / ABM / DES
+实施科学与健康公平,theory,CFIR/RE-AIM、可测机制链、定性定量整合和公平性评价。,guides/implementation-equity-skill.html,实施科学 / 公平
+从选题到论文的研究流程,writing,文献核验、综述分流、变量与图表计划、写作修订和投稿材料。,guides/research-workflow-skill.html,研究流程 / 范围综述
+PSM、匹配与加权,policy,ATE/ATT/ATO、变量选择、共同支持、Love plot与匹配后推断。,guides/propensity-score-skill.html,PSM / IPW / 熵平衡
+交错 DID / 分批政策,policy,"ATT(g,t)、C&S、Sun–Abraham、事件窗、对照支持与小簇推断。",guides/staggered-did-skill.html,交错DID / csdid
+聚类分析与分型,data,距离、变量尺度、算法、类数、稳定性与外部验证的完整路线。,guides/clustering-analysis-skill.html,K-means / 聚类 / 潜类别
+卫生计量模型选型,stats,GLM、两部、计数、面板FE/RE/CRE、分位数、IV/RDD和空间模型。,guides/econometric-modeling-skill.html,计量经济学 / 模型逻辑
+长期护理保险政策与研究,政策主题,2016/2020试点到2026建制，筹资、评估、待遇、地方版本与研究变量。,guides/long-term-care-policy-skill.html,长护险 / 政策主题
+家庭病床政策与研究,政策主题,2026服务指南、建撤床流程、支付、地方差异及效果评价框架。,guides/home-hospital-bed-policy-skill.html,家庭病床 / 居家医疗
+CHARLS · 中国健康与养老追踪调查,data,中老年健康、经济与家庭追踪；原始模块、Harmonized与第三方清洗版分别建立版本清单。,skills/charls-database-skill.md,CHARLS / 数据库
+CLHLS / CLHLS-HF · 老年健康与家庭追踪,data,高龄健康与照护研究；2021家庭扩展、存活者问卷、死亡家属问卷和补充样本分别处理。,skills/clhls-database-skill.md,CLHLS / CLHLS-HF / 数据库
+HRS · Health and Retirement Study,data,以健康、工作退休和家庭经济为主线的纵向调查。Core、RAND、家庭、CAMS、退出和生物标志物产品分开。,skills/hrs-database-skill.md,HRS / 数据库
+ELSA · English Longitudinal Study of Ageing,data,英格兰老龄纵向研究；访问、护士测量、自填、生命历程和退出材料按组件衔接。,skills/elsa-database-skill.md,ELSA / 数据库
+"SHARE · Survey of Health, Ageing and Retirement in Europe",data,跨欧洲国家的健康与退休调查；国家、常规波、SHARELIFE、疫情及退出组件需识别。,skills/share-database-skill.md,SHARE / 数据库
+KLoSA · Korean Longitudinal Study of Aging,data,2006起的中老年家庭追踪；基线抽样覆盖与后期补样须分别说明。,skills/klosa-database-skill.md,KLoSA / 数据库
+LASI / LASI-DAD · Longitudinal Ageing Study in India,data,老龄、家庭与健康调查；全国Wave 1、2010试调查及LASI-DAD认知子研究为不同产品。,skills/lasi-database-skill.md,LASI / LASI-DAD / 数据库
+MHAS / ENASEM · Mexican Health and Aging Study,data,健康、家庭和经济追踪；Core、代理、家属、Master Follow-Up、Mex-Cog及插补资料分开。,skills/mhas-database-skill.md,MHAS / ENASEM / 数据库
+NHANES · 复杂抽样与健康检查实操,data,从XPT与Doc File核对到周期合并、组件权重、survey分析和死亡链接。,skills/nhanes-database-skill.md,NHANES / 数据库
+HRS家族 · 跨国协调与外部验证,data,把CHARLS、HRS、ELSA、SHARE、KLoSA、LASI、MHAS及扩展研究按共同概念协调。,skills/cross-cohort-harmonization-skill.md,HRS家族 / 数据库
+CFPS、CHNS与NHIS · 扩展调查选型,data,综合家庭、营养社区和年度健康访谈的单位、时间、权重与分析路线。,skills/cfps-chns-database-skill.md,CFPS、CHNS与NHIS / 数据库
+医保结算、临床登记与MEPS · 费用和事件数据,data,按人、就诊、费用明细和制度暴露构建可追溯分析层，区分结算费用与真实成本。,skills/claims-clinical-database-skill.md,医保结算、临床登记与MEPS / 数据库
+HRS家族扩展 · JSTAR、TILDA、CRELES、SPS、MARS与HCAP,data,补充亚洲、欧洲、拉美老龄研究与认知扩展，并明确文档核验深度。,skills/aging-family-extension-skill.md,HRS家族扩展 / 数据库

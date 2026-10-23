@@ -1598,5 +1598,195 @@
       }
     ],
     "status": "结构化方法教程；教学参数、数据接口与运行边界见全文"
+  },
+  {
+    "id": "charls-database-skill",
+    "title": "CHARLS · 中国健康与养老追踪调查",
+    "tags": "CHARLS 数据库",
+    "use": "中老年健康、经济与家庭追踪；原始模块、Harmonized与第三方清洗版分别建立版本清单。",
+    "url": "guides/charls-database-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。"
+      },
+      {
+        "lang": "stata",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。"
+      }
+    ],
+    "status": "数据库专题：版本、变量、权重和分析路线；执行状态见正文"
+  },
+  {
+    "id": "clhls-database-skill",
+    "title": "CLHLS / CLHLS-HF · 老年健康与家庭追踪",
+    "tags": "CLHLS / CLHLS-HF 数据库",
+    "use": "高龄健康与照护研究；2021家庭扩展、存活者问卷、死亡家属问卷和补充样本分别处理。",
+    "url": "guides/clhls-database-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。"
+      },
+      {
+        "lang": "stata",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。"
+      }
+    ],
+    "status": "数据库专题：版本、变量、权重和分析路线；执行状态见正文"
+  },
+  {
+    "id": "hrs-database-skill",
+    "title": "HRS · Health and Retirement Study",
+    "tags": "HRS 数据库",
+    "use": "以健康、工作退休和家庭经济为主线的纵向调查。Core、RAND、家庭、CAMS、退出和生物标志物产品分开。",
+    "url": "guides/hrs-database-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。"
+      },
+      {
+        "lang": "stata",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。"
+      }
+    ],
+    "status": "数据库专题：版本、变量、权重和分析路线；执行状态见正文"
+  },
+  {
+    "id": "elsa-database-skill",
+    "title": "ELSA · English Longitudinal Study of Ageing",
+    "tags": "ELSA 数据库",
+    "use": "英格兰老龄纵向研究；访问、护士测量、自填、生命历程和退出材料按组件衔接。",
+    "url": "guides/elsa-database-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。"
+      },
+      {
+        "lang": "stata",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。"
+      }
+    ],
+    "status": "数据库专题：版本、变量、权重和分析路线；执行状态见正文"
+  },
+  {
+    "id": "share-database-skill",
+    "title": "SHARE · Survey of Health, Ageing and Retirement in Europe",
+    "tags": "SHARE 数据库",
+    "use": "跨欧洲国家的健康与退休调查；国家、常规波、SHARELIFE、疫情及退出组件需识别。",
+    "url": "guides/share-database-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。"
+      },
+      {
+        "lang": "stata",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。"
+      }
+    ],
+    "status": "数据库专题：版本、变量、权重和分析路线；执行状态见正文"
+  },
+  {
+    "id": "klosa-database-skill",
+    "title": "KLoSA · Korean Longitudinal Study of Aging",
+    "tags": "KLoSA 数据库",
+    "use": "2006起的中老年家庭追踪；基线抽样覆盖与后期补样须分别说明。",
+    "url": "guides/klosa-database-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。"
+      },
+      {
+        "lang": "stata",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。"
+      }
+    ],
+    "status": "数据库专题：版本、变量、权重和分析路线；执行状态见正文"
+  },
+  {
+    "id": "mhas-database-skill",
+    "title": "MHAS / ENASEM · Mexican Health and Aging Study",
+    "tags": "MHAS / ENASEM 数据库",
+    "use": "健康、家庭和经济追踪；Core、代理、家属、Master Follow-Up、Mex-Cog及插补资料分开。",
+    "url": "guides/mhas-database-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。"
+      },
+      {
+        "lang": "stata",
+        "heading": "R与Stata：标准化层的最小接口",
+        "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。"
+      }
+    ],
+    "status": "数据库专题：版本、变量、权重和分析路线；执行状态见正文"
+  },
+  {
+    "id": "nhanes-database-skill",
+    "title": "NHANES · 复杂抽样与健康检查实操",
+    "tags": "NHANES 数据库",
+    "use": "从XPT与Doc File核对到周期合并、组件权重、survey分析和死亡链接。",
+    "url": "guides/nhanes-database-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "R：仅示范2015—2016普通MEC成人BMI",
+        "code": "library(haven)\nlibrary(survey)\ndem <- read_xpt(\"DEMO_I.XPT\")\nbmx <- read_xpt(\"BMX_I.XPT\")\nstopifnot(!anyDuplicated(dem$SEQN), !anyDuplicated(bmx$SEQN))\nd <- merge(dem, bmx, by=\"SEQN\", all.x=TRUE, sort=FALSE)\nstopifnot(nrow(d)==nrow(dem))\n# BMI为MEC测量；此例不含实验室子样本或多周期。\nz <- subset(d, !is.na(WTMEC2YR) & WTMEC2YR>0 &\n               !is.na(SDMVPSU) & !is.na(SDMVSTRA))\ndes <- svydesign(ids=~SDMVPSU, strata=~SDMVSTRA,\n                 weights=~WTMEC2YR, nest=TRUE, data=z)\nadult <- subset(des, RIDAGEYR>=20)\nsvymean(~BMXBMI, adult, na.rm=TRUE)\nconfint(svymean(~BMXBMI, adult, na.rm=TRUE))\n# 补报未加权人数、BMI缺失率与估计可靠性；不将缺失直接当健康。"
+      },
+      {
+        "lang": "stata",
+        "heading": "Stata：同一周期的分析层",
+        "code": "* d 已在周期内按 SEQN 合并，字段经Doc File核对。\nisid SEQN\nsvyset SDMVPSU [pweight=WTMEC2YR], strata(SDMVSTRA)\ngen byte adult = RIDAGEYR>=20 if !missing(RIDAGEYR)\nsvy, subpop(adult): mean BMXBMI\n* 保留完整设计再subpop，不先只保留成人破坏设计方差。"
+      }
+    ],
+    "status": "数据库专题：版本、变量、权重和分析路线；执行状态见正文"
+  },
+  {
+    "id": "cross-cohort-harmonization-skill",
+    "title": "HRS家族 · 跨国协调与外部验证",
+    "tags": "HRS家族 数据库",
+    "use": "把CHARLS、HRS、ELSA、SHARE、KLoSA、LASI、MHAS及扩展研究按共同概念协调。",
+    "url": "guides/cross-cohort-harmonization-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "推荐输出",
+        "code": "# 标准化层示意；不改变原始ID，不公开对应表。\nstopifnot(all(c(\"study\",\"id\",\"visit_date\") %in% names(d)))\nd$key <- paste(d$study, d$id, sep=\":\")\nstopifnot(!anyDuplicated(d[c(\"key\",\"visit_date\")]))\n# study内真实设计单元与权重需单独核对，key不是PSU。"
+      }
+    ],
+    "status": "数据库专题：版本、变量、权重和分析路线；执行状态见正文"
+  },
+  {
+    "id": "claims-clinical-database-skill",
+    "title": "医保结算、临床登记与MEPS · 费用和事件数据",
+    "tags": "医保结算、临床登记与MEPS 数据库",
+    "use": "按人、就诊、费用明细和制度暴露构建可追溯分析层，区分结算费用与真实成本。",
+    "url": "guides/claims-clinical-database-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "MEPS选型入口",
+        "code": "# 已去标识的标准化示意：每次就诊费用先聚合，避免多表多行膨胀。\nstopifnot(!anyDuplicated(encounter$encounter_id))\ntot <- aggregate(amount ~ encounter_id, cost_detail, sum)\na <- merge(encounter, tot, by=\"encounter_id\", all.x=TRUE)\nstopifnot(nrow(a)==nrow(encounter))\n# 缺少明细先核查，不能不加判断地将NA替换为0。"
+      }
+    ],
+    "status": "数据库专题：版本、变量、权重和分析路线；执行状态见正文"
   }
 ]

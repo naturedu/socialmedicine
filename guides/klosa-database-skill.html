@@ -1,0 +1,65 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>🌍 KLoSA · Korean Longitudinal Study of Aging · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/klosa-database-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">文件与波次审计</a><ul>
+<li><a href="#_2">健康、劳动与照护</a></li>
+<li><a href="#_3">认知与跨国比较</a></li>
+<li><a href="#_4">建议交付</a></li>
+</ul>
+</li>
+<li><a href="#rstata">R与Stata：标准化层的最小接口</a></li>
+<li><a href="#_5">🧺 先把数据放进正确的小篮子</a></li>
+<li><a href="#_6">从问题到估计的顺序</a></li>
+<li><a href="#_7">交付与报告</a></li>
+<li><a href="#_8">官方出处与版本边界</a></li>
+</ul>
+</div>
+</aside><article><h1 id="klosa-korean-longitudinal-study-of-aging">🌍 KLoSA · Korean Longitudinal Study of Aging</h1>
+<p>核验日期：2026-10-23。2006起的中老年家庭追踪；基线抽样覆盖与后期补样须分别说明。</p>
+<h2 id="_1">文件与波次审计</h2>
+<p>本机清洗表236列、wave3—8；Harmonized KLoSA E.2代码本标注2006—2020，原始目录也有其他波。原始覆盖、Harmonized覆盖和分析提取覆盖分开登记。官方介绍说明2006基线家庭样本为45岁及以上且不含济州，后续补样与样本覆盖按当轮文档核查。</p>
+<p>Harmonized字段<code>r1wtresp</code>标签是第一波个人横断面权重。本机CSV的<code>weight</code>标签是自报体重，未见明确抽样权重字段时回原发布文件查找；不能依据文件已清洗就忽略设计。合并时还需核对个人键的字符/数值类型及补样识别，不能仅以行号对齐。</p>
+<h3 id="_2">健康、劳动与照护</h3>
+<p>健康变化→劳动退出和劳动退出→健康变化可能同时存在。分别构造工作状态、退休状态、工作小时和家庭照护责任；转移支付并不是照护投入。至少画暴露和结局的观测时间线，控制哪些基线混杂，哪些变量可能处于因果路径中。两波内发生事件的先后未知时，减弱因果表述。</p>
+<h3 id="_3">认知与跨国比较</h3>
+<p>读本轮认知题体和计分手册，保留语言、教育及未测试状态。总分的常用名称不表示每次题目相同；与CHARLS或HRS比较优先用共同任务/已验证协调指标。把各国量表都转成Z分数只能比较相对位置，不能证明量尺具有测量不变性。</p>
+<h3 id="_4">建议交付</h3>
+<p>除通用审计外，增加原样本/补样流向、劳动状态转移矩阵、照护题资格、认知完成标记、权重来源及非应答分布。报告地区覆盖和目标年龄范围，而不是笼统称所有韩国老年人。</p>
+<h2 id="rstata">R与Stata：标准化层的最小接口</h2>
+<p>以下变量名是<strong>分析层约定</strong>，不是原始数据库通用字段。必须先完成题级映射。若没有所需设计变量，先回查官方设计文件，不能任意生成PSU或权重。</p>
+<pre><code class="language-r"># d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量
+stopifnot(!anyNA(d$id), !anyDuplicated(d[c(&quot;id&quot;, &quot;year&quot;)]))
+d &lt;- d[order(d$id, d$year), ]
+# 纵向条件关联；不自动等于政策因果效应
+m &lt;- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)
+summary(m)
+# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。
+</code></pre>
+<pre><code class="language-stata">* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。
+assert !missing(id_s, year)
+isid id_s year
+egen long pid = group(id_s)
+xtset pid year
+xtreg y x i.year, fe vce(cluster pid)
+* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。
+</code></pre>
+<h2 id="_5">🧺 先把数据放进正确的小篮子</h2>
+<p>建立文件清单：<code>study / release / module / wave / visit_date / unit / key / source / permission</code>。文件名中的版本字母、下载年份和访谈波次分开。原始文件只读；另存标准化层和分析层。先输出字段名、标签、值标签、缺失码和连接诊断，再决定变量能否使用。</p>
+<p>每个分析变量至少记录：概念、原题、来源变量、适用人群、回顾窗口、单位、跳答路径、特殊码、代理回答、派生公式、可用波次、权重及核验状态。不得只凭中文列名判断值域或方向；<code>weight</code>在多份表中是体重。</p>
+<h2 id="_6">从问题到估计的顺序</h2>
+<ol>
+<li>写清目标人群、暴露/政策、比较组、结局和时间零点。区分人群患病比例、个体内变化、预测准确性和政策效应。</li>
+<li>画样本流：原始入样→年龄/资格→完成访谈→完成测量→连接随访→分析样本。死亡、失访、跳题、拒答、未测量分别记，不统一改成0。</li>
+<li>描述研究所需字段在每波的可用性。两波数据最多支持一次变化；多波轨迹需要足够重复观测、可比较测量与合理类数。</li>
+<li>按估计目标选择横断面、纵向或特定组件权重；权重不能凭变量名相似借用。失访加权需要可解释的响应模型和正值性诊断。</li>
+<li>面板FE估计的是个体内关联；PSM不能消除未测混杂；交错DID还需真实政策起始、前期趋势和有效对照；TTE需对齐资格、分组及随访起点。</li>
+<li>保留未加权人数、加权估计与区间。重复测量、家庭和地区依赖按设计处理；缺失值插补与抽样设计的结合需写明方法，避免把插补当作增加独立样本。</li>
+</ol>
+<h2 id="_7">交付与报告</h2>
+<p>交付版本清单、变量字典、跨波可用矩阵、连接诊断、样本流、缺失/失访表、模型脚本和执行记录。公共教程仅包含方法与元数据；获准数据留在授权环境。问卷存在某题、当前文件有字段、分析样本有有效观测是三个不同层次。</p>
+<p>相关路线：<a href="longitudinal-public-data-skill.html">纵向研究</a>、<a href="propensity-score-skill.html">PSM/加权</a>、<a href="staggered-did-skill.html">分批DID</a>、<a href="target-trial-emulation-skill.html">目标试验模拟</a>、<a href="econometric-modeling-skill.html">计量模型</a>。R/Stata代码为接口模板，本次未在这两个运行时执行。</p>
+<h2 id="_8">官方出处与版本边界</h2>
+<ul>
+<li><a href="https://survey.keis.or.kr/eng/klosa/klosa01.jsp">KEIS KLoSA Introduction</a>：2006基线、45岁及以上家庭人口及抽样覆盖。</li>
+<li><a href="https://survey.keis.or.kr/eng/klosa/questionnaire/List.jsp">KLoSA Questionnaires</a>：逐波问卷，不由清洗字段推断题体相同。</li>
+<li><a href="https://www.g2aging.org/harmonized-data/overview?dataset=2">Gateway Harmonized Data</a>：跨研究产品导航；统一变量仍有研究特定差异。</li>
+</ul><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

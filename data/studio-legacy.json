@@ -322,6 +322,149 @@
         "居家医疗"
       ],
       "desc": "2026服务指南、建撤床流程、支付、地方差异及效果评价框架。"
+    },
+    {
+      "icon": "🌱",
+      "name": "CHARLS · 中国健康与养老追踪调查",
+      "file": "charls-database-skill.md",
+      "group": "data",
+      "desc": "中老年健康、经济与家庭追踪；原始模块、Harmonized与第三方清洗版分别建立版本清单。",
+      "tags": [
+        "CHARLS",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "🌱",
+      "name": "CLHLS / CLHLS-HF · 老年健康与家庭追踪",
+      "file": "clhls-database-skill.md",
+      "group": "data",
+      "desc": "高龄健康与照护研究；2021家庭扩展、存活者问卷、死亡家属问卷和补充样本分别处理。",
+      "tags": [
+        "CLHLS / CLHLS-HF",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "🌍",
+      "name": "HRS · Health and Retirement Study",
+      "file": "hrs-database-skill.md",
+      "group": "data",
+      "desc": "以健康、工作退休和家庭经济为主线的纵向调查。Core、RAND、家庭、CAMS、退出和生物标志物产品分开。",
+      "tags": [
+        "HRS",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "🌍",
+      "name": "ELSA · English Longitudinal Study of Ageing",
+      "file": "elsa-database-skill.md",
+      "group": "data",
+      "desc": "英格兰老龄纵向研究；访问、护士测量、自填、生命历程和退出材料按组件衔接。",
+      "tags": [
+        "ELSA",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "🌍",
+      "name": "SHARE · Survey of Health, Ageing and Retirement in Europe",
+      "file": "share-database-skill.md",
+      "group": "data",
+      "desc": "跨欧洲国家的健康与退休调查；国家、常规波、SHARELIFE、疫情及退出组件需识别。",
+      "tags": [
+        "SHARE",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "🌍",
+      "name": "KLoSA · Korean Longitudinal Study of Aging",
+      "file": "klosa-database-skill.md",
+      "group": "data",
+      "desc": "2006起的中老年家庭追踪；基线抽样覆盖与后期补样须分别说明。",
+      "tags": [
+        "KLoSA",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "🌍",
+      "name": "LASI / LASI-DAD · Longitudinal Ageing Study in India",
+      "file": "lasi-database-skill.md",
+      "group": "data",
+      "desc": "老龄、家庭与健康调查；全国Wave 1、2010试调查及LASI-DAD认知子研究为不同产品。",
+      "tags": [
+        "LASI / LASI-DAD",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "🌍",
+      "name": "MHAS / ENASEM · Mexican Health and Aging Study",
+      "file": "mhas-database-skill.md",
+      "group": "data",
+      "desc": "健康、家庭和经济追踪；Core、代理、家属、Master Follow-Up、Mex-Cog及插补资料分开。",
+      "tags": [
+        "MHAS / ENASEM",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "🧪",
+      "name": "NHANES · 复杂抽样与健康检查实操",
+      "file": "nhanes-database-skill.md",
+      "group": "data",
+      "desc": "从XPT与Doc File核对到周期合并、组件权重、survey分析和死亡链接。",
+      "tags": [
+        "NHANES",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "🧭",
+      "name": "HRS家族 · 跨国协调与外部验证",
+      "file": "cross-cohort-harmonization-skill.md",
+      "group": "data",
+      "desc": "把CHARLS、HRS、ELSA、SHARE、KLoSA、LASI、MHAS及扩展研究按共同概念协调。",
+      "tags": [
+        "HRS家族",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "📚",
+      "name": "CFPS、CHNS与NHIS · 扩展调查选型",
+      "file": "cfps-chns-database-skill.md",
+      "group": "data",
+      "desc": "综合家庭、营养社区和年度健康访谈的单位、时间、权重与分析路线。",
+      "tags": [
+        "CFPS、CHNS与NHIS",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "🏥",
+      "name": "医保结算、临床登记与MEPS · 费用和事件数据",
+      "file": "claims-clinical-database-skill.md",
+      "group": "data",
+      "desc": "按人、就诊、费用明细和制度暴露构建可追溯分析层，区分结算费用与真实成本。",
+      "tags": [
+        "医保结算、临床登记与MEPS",
+        "数据库"
+      ]
+    },
+    {
+      "icon": "🪴",
+      "name": "HRS家族扩展 · JSTAR、TILDA、CRELES、SPS、MARS与HCAP",
+      "file": "aging-family-extension-skill.md",
+      "group": "data",
+      "desc": "补充亚洲、欧洲、拉美老龄研究与认知扩展，并明确文档核验深度。",
+      "tags": [
+        "HRS家族扩展",
+        "数据库"
+      ]
     }
   ],
   "METHODS": [

@@ -1,0 +1,250 @@
+[
+  {
+    "id": "gateway",
+    "url": "https://www.g2aging.org/harmonized-data/overview?dataset=2",
+    "title": "Gateway Harmonized Data",
+    "supports": "跨研究产品导航；统一变量仍有研究特定差异",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "charls",
+    "url": "https://charls.pku.edu.cn/",
+    "title": "CHARLS 官方网站",
+    "supports": "问卷、代码本、数据申请与公告",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "charls-h",
+    "url": "https://charls.pku.edu.cn/sj/Harmonized_CHARLS.htm",
+    "title": "Harmonized CHARLS",
+    "supports": "本机D版需与官网所用发布版对应",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "clhls",
+    "url": "https://dupri.duke.edu/node/43",
+    "title": "Duke CLHLS / CLHLS-HF",
+    "supports": "研究设计、历次调查与2021家庭扩展",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "clhls-data",
+    "url": "https://opendata.pku.edu.cn/dataset.xhtml?persistentId=doi%3A10.18170%2FDVN%2FWBO7LK&version=2.1",
+    "title": "北大CLHLS纵向数据1998—2018",
+    "supports": "该链接对应指定历史版本，2021需另查发布说明",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "hrs",
+    "url": "https://hrsdata.isr.umich.edu/data-products",
+    "title": "HRS Data Downloads",
+    "supports": "注册、公共数据、敏感及受限数据的不同入口",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "hrs-rand",
+    "url": "https://hrsdata.isr.umich.edu/data-products/rand",
+    "title": "RAND HRS Products",
+    "supports": "纵向、家庭、插补、退出等不同产品",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "hrs-doc",
+    "url": "https://hrs.isr.umich.edu/documentation",
+    "title": "HRS Documentation",
+    "supports": "问卷、代码本、数据说明及跨波问题对照入口",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "elsa",
+    "url": "https://www.elsa-project.ac.uk/accessing-elsa-data",
+    "title": "Accessing ELSA data",
+    "supports": "UKDS普通许可、特殊许可和安全访问的边界",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "share",
+    "url": "https://share-eric.eu/data/data-access",
+    "title": "SHARE-ERIC Data Access",
+    "supports": "注册科学研究使用、发布版与行政链接入口",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "klosa",
+    "url": "https://survey.keis.or.kr/eng/klosa/klosa01.jsp",
+    "title": "KEIS KLoSA Introduction",
+    "supports": "2006基线、45岁及以上家庭人口及抽样覆盖",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "klosa-q",
+    "url": "https://survey.keis.or.kr/eng/klosa/questionnaire/List.jsp",
+    "title": "KLoSA Questionnaires",
+    "supports": "逐波问卷，不由清洗字段推断题体相同",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "lasi",
+    "url": "https://www.iipsindia.ac.in/node/6702",
+    "title": "IIPS LASI Data",
+    "supports": "Wave 1申请与实际调查期间；试调查和DAD分开",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "mhas",
+    "url": "https://www.mhasweb.org/DataProducts/Home.aspx",
+    "title": "MHAS Data Products",
+    "supports": "注册和使用条款；公共数据不等于可任意再分发",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "mhas-doc",
+    "url": "https://www.mhasweb.org/Documentation/Home.aspx",
+    "title": "MHAS Documentation",
+    "supports": "抽样权重、跨波合并、直接/代理/家属问卷和问题对照",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "jstar",
+    "url": "https://www.rieti.go.jp/en/projects/jstar/index.html",
+    "title": "RIETI JSTAR",
+    "supports": "项目与分级申请说明",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "tilda",
+    "url": "https://tilda.tcd.ie/data/accessing-data/",
+    "title": "TILDA Accessing Data",
+    "supports": "公共与受限访问路径；限非商业实体",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "sps",
+    "url": "https://previsionsocial.gob.cl/datos-estadisticos/condiciones-bases-de-datos-encavidam/",
+    "title": "ENCAVIDAM 官方数据条件",
+    "supports": "EPS与ENCAVIDAM衔接及数据使用条件",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "chile-cog",
+    "url": "https://web.sas.upenn.edu/harmonized-cognitive-assessment-protocol-chile/data/",
+    "title": "Chile-Cog 团队数据说明",
+    "supports": "SPS、ENCAVIDAM与认知项目的不同层次",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "nhanes",
+    "url": "https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/faq.aspx",
+    "title": "NHANES FAQ",
+    "supports": "逐文件Doc File与可用变量入口",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "nhanes-w",
+    "url": "https://wwwn.cdc.gov/nchs/nhanes/tutorials/weighting.aspx",
+    "title": "NHANES Weighting",
+    "supports": "按分析组件选择权重及合并周期",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "nhanes-d",
+    "url": "https://wwwn.cdc.gov/nchs/nhanes/tutorials/SampleDesign.aspx",
+    "title": "NHANES Sample Design",
+    "supports": "复杂抽样设计与方差估计",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "nhanes-v",
+    "url": "https://wwwn.cdc.gov/Nchs/Nhanes/Search/variablelist.aspx?Component=Demographics",
+    "title": "NHANES Demographics Variable List",
+    "supports": "SEQN、SDMVSTRA、SDMVPSU和权重的逐周期核对",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "nhanes-pre",
+    "url": "https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/overviewBrief.aspx?Cycle=2017-2020",
+    "title": "NHANES 2017—March 2020 Guidance",
+    "supports": "疫情前特殊周期；不能拆出不完整2019—2020进行总体估计",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "nhanes-post",
+    "url": "https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/OverviewBrief.aspx?Cycle=2021-2023",
+    "title": "NHANES August 2021—August 2023 Guidance",
+    "supports": "设计变化、非应答和采血权重",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "lmf",
+    "url": "https://www.cdc.gov/nchs/linked-data/about-access/index.html",
+    "title": "NCHS Using Linked Data",
+    "supports": "公共死亡链接和受限链接；部分随访/死因值为保护隐私替代",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "cfps",
+    "url": "https://www.isss.pku.edu.cn/cfps/sjzx/index.htm",
+    "title": "CFPS 公开数据申请指南",
+    "supports": "官方平台、申请与审核",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "chns",
+    "url": "https://www.cpc.unc.edu/projects/china/data/questionnaires/TableofContents.pdf",
+    "title": "CHNS 官方问卷目录",
+    "supports": "调查模块与题体入口；主站本次抓取受限",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "sage",
+    "url": "https://www.who.int/data/data-collection-tools/study-on-global-ageing-and-adult-health",
+    "title": "WHO SAGE",
+    "supports": "六国纵向设计、50岁及以上和年轻比较组",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "nhis",
+    "url": "https://www.cdc.gov/nchs/nhis/index.html",
+    "title": "CDC NHIS",
+    "supports": "年度家庭健康访谈、数据及问卷入口",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  },
+  {
+    "id": "meps",
+    "url": "https://meps.ahrq.gov/mepsweb/data_stats/download_data_files.jsp",
+    "title": "AHRQ MEPS Data Files",
+    "supports": "家庭、保险/雇主、提供方组件和数据下载入口",
+    "checked": "2026-10-23",
+    "status": "官方/研究团队文档；CHNS主站数据页不可抓取，使用可读官方问卷"
+  }
+]

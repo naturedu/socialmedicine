@@ -51,7 +51,7 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 
 范围仅为社会医学与卫生事业管理及其必要方法参考。公共资料含 69 条题录（54 条领域文献、15 条方法参考）、27 张图表、97 个期刊／刊名入口、91 个机构入口；项目为 990 条基金会与 60 条教育部领域候选，非逐项全文核验。
 
-当前目录保留原有12份完整工具手册并新增15份专题，集中索引89个方法、239 个原有代码片段；另补进阶方法与耦合脚本。文献库包含已有 CSSCI 题录、Nature/Science 书单、Nature Medicine 与相关数字医学资料以及 JAMA 图表文献。Cell 已列入期刊入口，但没有已提供且确认属于 Cell 主刊的题录，不能虚报为完整 CNS 语料。
+当前目录保留原有12份完整工具手册，完整Skill书架共42份；集中索引89个方法与286段教学代码，另有进阶方法与耦合脚本。文献库包含已有 CSSCI 题录、Nature/Science 书单、Nature Medicine 与相关数字医学资料以及 JAMA 图表文献。Cell 已列入期刊入口，但没有已提供且确认属于 Cell 主刊的题录，不能虚报为完整 CNS 语料。
 
 期刊和院校目录属于导航索引，不是排名、完整学科普查或招生承诺。2026 年教育部项目公示入口与 2025 年已解析正式立项名单分开；基金会库保留提供时的公开快照。
 
@@ -66,3 +66,23 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 - [长期护理保险](long-term-care-policy-skill.md)：核对试点/建制版本、筹资、评估、待遇与服务。
 - [家庭病床](home-hospital-bed-policy-skill.md)：核对2026服务指南、建撤床、支付及地方差异。
 - 14个主题和27个官方文件入口见网站policy-topics.html与data/policy-topics.json；政策含义、研究建议和实际执行分开。
+
+## 数据库专属Skills与跨国协调
+
+数据请求先按具体数据库分流；先读元数据，确认权限、单位、题体、波次、抽样和时间，再进入模型。网站数据库小花园在`database-skills.html`，公开卡片不包含个体记录或私人路径。
+
+- [CHARLS · 中国健康与养老追踪调查](charls-database-skill.md)：中老年健康、经济与家庭追踪；原始模块、Harmonized与第三方清洗版分别建立版本清单。
+- [CLHLS / CLHLS-HF · 老年健康与家庭追踪](clhls-database-skill.md)：高龄健康与照护研究；2021家庭扩展、存活者问卷、死亡家属问卷和补充样本分别处理。
+- [HRS · Health and Retirement Study](hrs-database-skill.md)：以健康、工作退休和家庭经济为主线的纵向调查。Core、RAND、家庭、CAMS、退出和生物标志物产品分开。
+- [ELSA · English Longitudinal Study of Ageing](elsa-database-skill.md)：英格兰老龄纵向研究；访问、护士测量、自填、生命历程和退出材料按组件衔接。
+- [SHARE · Survey of Health, Ageing and Retirement in Europe](share-database-skill.md)：跨欧洲国家的健康与退休调查；国家、常规波、SHARELIFE、疫情及退出组件需识别。
+- [KLoSA · Korean Longitudinal Study of Aging](klosa-database-skill.md)：2006起的中老年家庭追踪；基线抽样覆盖与后期补样须分别说明。
+- [LASI / LASI-DAD · Longitudinal Ageing Study in India](lasi-database-skill.md)：老龄、家庭与健康调查；全国Wave 1、2010试调查及LASI-DAD认知子研究为不同产品。
+- [MHAS / ENASEM · Mexican Health and Aging Study](mhas-database-skill.md)：健康、家庭和经济追踪；Core、代理、家属、Master Follow-Up、Mex-Cog及插补资料分开。
+- [NHANES · 复杂抽样与健康检查实操](nhanes-database-skill.md)：从XPT与Doc File核对到周期合并、组件权重、survey分析和死亡链接。
+- [HRS家族 · 跨国协调与外部验证](cross-cohort-harmonization-skill.md)：把CHARLS、HRS、ELSA、SHARE、KLoSA、LASI、MHAS及扩展研究按共同概念协调。
+- [CFPS、CHNS与NHIS · 扩展调查选型](cfps-chns-database-skill.md)：综合家庭、营养社区和年度健康访谈的单位、时间、权重与分析路线。
+- [医保结算、临床登记与MEPS · 费用和事件数据](claims-clinical-database-skill.md)：按人、就诊、费用明细和制度暴露构建可追溯分析层，区分结算费用与真实成本。
+- [HRS家族扩展 · JSTAR、TILDA、CRELES、SPS、MARS与HCAP](aging-family-extension-skill.md)：补充亚洲、欧洲、拉美老龄研究与认知扩展，并明确文档核验深度。
+
+本机CHARLS/CLHLS核对包含既有问卷/字典；HRS家族六份清洗CSV核对列头和波次，部分Harmonized核对字段标签；NHANES定位到XPT及课程资料。其他研究按卡片标明官方文档/产品目录核验，不将文件存在当作模型已复现。

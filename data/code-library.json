@@ -2410,5 +2410,167 @@
     "line": 75,
     "code": "ivregress 2sls y x (a=z), vce(robust)\nestat firststage",
     "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "charls-database-skill-1",
+    "title": "CHARLS · 中国健康与养老追踪调查 · R与Stata：标准化层的最小接口",
+    "language": "r",
+    "source": "skills/charls-database-skill.md",
+    "line": 40,
+    "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "charls-database-skill-2",
+    "title": "CHARLS · 中国健康与养老追踪调查 · R与Stata：标准化层的最小接口",
+    "language": "stata",
+    "source": "skills/charls-database-skill.md",
+    "line": 50,
+    "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "clhls-database-skill-1",
+    "title": "CLHLS / CLHLS-HF · 老年健康与家庭追踪 · R与Stata：标准化层的最小接口",
+    "language": "r",
+    "source": "skills/clhls-database-skill.md",
+    "line": 39,
+    "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "clhls-database-skill-2",
+    "title": "CLHLS / CLHLS-HF · 老年健康与家庭追踪 · R与Stata：标准化层的最小接口",
+    "language": "stata",
+    "source": "skills/clhls-database-skill.md",
+    "line": 49,
+    "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "hrs-database-skill-1",
+    "title": "HRS · Health and Retirement Study · R与Stata：标准化层的最小接口",
+    "language": "r",
+    "source": "skills/hrs-database-skill.md",
+    "line": 41,
+    "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "hrs-database-skill-2",
+    "title": "HRS · Health and Retirement Study · R与Stata：标准化层的最小接口",
+    "language": "stata",
+    "source": "skills/hrs-database-skill.md",
+    "line": 51,
+    "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "elsa-database-skill-1",
+    "title": "ELSA · English Longitudinal Study of Ageing · R与Stata：标准化层的最小接口",
+    "language": "r",
+    "source": "skills/elsa-database-skill.md",
+    "line": 37,
+    "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "elsa-database-skill-2",
+    "title": "ELSA · English Longitudinal Study of Ageing · R与Stata：标准化层的最小接口",
+    "language": "stata",
+    "source": "skills/elsa-database-skill.md",
+    "line": 47,
+    "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "share-database-skill-1",
+    "title": "SHARE · Survey of Health, Ageing and Retirement in Europe · R与Stata：标准化层的最小接口",
+    "language": "r",
+    "source": "skills/share-database-skill.md",
+    "line": 34,
+    "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "share-database-skill-2",
+    "title": "SHARE · Survey of Health, Ageing and Retirement in Europe · R与Stata：标准化层的最小接口",
+    "language": "stata",
+    "source": "skills/share-database-skill.md",
+    "line": 44,
+    "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "klosa-database-skill-1",
+    "title": "KLoSA · Korean Longitudinal Study of Aging · R与Stata：标准化层的最小接口",
+    "language": "r",
+    "source": "skills/klosa-database-skill.md",
+    "line": 34,
+    "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "klosa-database-skill-2",
+    "title": "KLoSA · Korean Longitudinal Study of Aging · R与Stata：标准化层的最小接口",
+    "language": "stata",
+    "source": "skills/klosa-database-skill.md",
+    "line": 44,
+    "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "mhas-database-skill-1",
+    "title": "MHAS / ENASEM · Mexican Health and Aging Study · R与Stata：标准化层的最小接口",
+    "language": "r",
+    "source": "skills/mhas-database-skill.md",
+    "line": 36,
+    "code": "# d: id=字符个人键, year=实际访谈年, y=已核对结局, x=预定协变量\nstopifnot(!anyNA(d$id), !anyDuplicated(d[c(\"id\", \"year\")]))\nd <- d[order(d$id, d$year), ]\n# 纵向条件关联；不自动等于政策因果效应\nm <- fixest::feols(y ~ x | id + year, cluster = ~id, data = d)\nsummary(m)\n# 按复杂抽样作描述应另用对应设计与权重，而非仅cluster=id。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "mhas-database-skill-2",
+    "title": "MHAS / ENASEM · Mexican Health and Aging Study · R与Stata：标准化层的最小接口",
+    "language": "stata",
+    "source": "skills/mhas-database-skill.md",
+    "line": 46,
+    "code": "* id_s 是字符键，pid 仅作当前数据内面板编码，不输出映射。\nassert !missing(id_s, year)\nisid id_s year\negen long pid = group(id_s)\nxtset pid year\nxtreg y x i.year, fe vce(cluster pid)\n* 单波数据不运行此面板流程；先选择合适的survey描述/横断面模型。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "nhanes-database-skill-1",
+    "title": "NHANES · 复杂抽样与健康检查实操 · R：仅示范2015—2016普通MEC成人BMI",
+    "language": "r",
+    "source": "skills/nhanes-database-skill.md",
+    "line": 33,
+    "code": "library(haven)\nlibrary(survey)\ndem <- read_xpt(\"DEMO_I.XPT\")\nbmx <- read_xpt(\"BMX_I.XPT\")\nstopifnot(!anyDuplicated(dem$SEQN), !anyDuplicated(bmx$SEQN))\nd <- merge(dem, bmx, by=\"SEQN\", all.x=TRUE, sort=FALSE)\nstopifnot(nrow(d)==nrow(dem))\n# BMI为MEC测量；此例不含实验室子样本或多周期。\nz <- subset(d, !is.na(WTMEC2YR) & WTMEC2YR>0 &\n               !is.na(SDMVPSU) & !is.na(SDMVSTRA))\ndes <- svydesign(ids=~SDMVPSU, strata=~SDMVSTRA,\n                 weights=~WTMEC2YR, nest=TRUE, data=z)\nadult <- subset(des, RIDAGEYR>=20)\nsvymean(~BMXBMI, adult, na.rm=TRUE)\nconfint(svymean(~BMXBMI, adult, na.rm=TRUE))\n# 补报未加权人数、BMI缺失率与估计可靠性；不将缺失直接当健康。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "nhanes-database-skill-2",
+    "title": "NHANES · 复杂抽样与健康检查实操 · Stata：同一周期的分析层",
+    "language": "stata",
+    "source": "skills/nhanes-database-skill.md",
+    "line": 54,
+    "code": "* d 已在周期内按 SEQN 合并，字段经Doc File核对。\nisid SEQN\nsvyset SDMVPSU [pweight=WTMEC2YR], strata(SDMVSTRA)\ngen byte adult = RIDAGEYR>=20 if !missing(RIDAGEYR)\nsvy, subpop(adult): mean BMXBMI\n* 保留完整设计再subpop，不先只保留成人破坏设计方差。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "cross-cohort-harmonization-skill-1",
+    "title": "HRS家族 · 跨国协调与外部验证 · 推荐输出",
+    "language": "r",
+    "source": "skills/cross-cohort-harmonization-skill.md",
+    "line": 47,
+    "code": "# 标准化层示意；不改变原始ID，不公开对应表。\nstopifnot(all(c(\"study\",\"id\",\"visit_date\") %in% names(d)))\nd$key <- paste(d$study, d$id, sep=\":\")\nstopifnot(!anyDuplicated(d[c(\"key\",\"visit_date\")]))\n# study内真实设计单元与权重需单独核对，key不是PSU。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
+  },
+  {
+    "id": "claims-clinical-database-skill-1",
+    "title": "医保结算、临床登记与MEPS · 费用和事件数据 · MEPS选型入口",
+    "language": "r",
+    "source": "skills/claims-clinical-database-skill.md",
+    "line": 43,
+    "code": "# 已去标识的标准化示意：每次就诊费用先聚合，避免多表多行膨胀。\nstopifnot(!anyDuplicated(encounter$encounter_id))\ntot <- aggregate(amount ~ encounter_id, cost_detail, sum)\na <- merge(encounter, tot, by=\"encounter_id\", all.x=TRUE)\nstopifnot(nrow(a)==nrow(encounter))\n# 缺少明细先核查，不能不加判断地将NA替换为0。",
+    "status": "数据接口模板；未在R/Stata运行，必须先完成实际字段映射"
   }
 ]

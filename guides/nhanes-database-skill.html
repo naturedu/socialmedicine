@@ -1,0 +1,70 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>🧪 NHANES · 复杂抽样与健康检查实操 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/nhanes-database-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">本机资料与研究单位</a></li>
+<li><a href="#_2">🧩 四层合并顺序</a></li>
+<li><a href="#_3">权重小抄：按组件选，按设计估计</a><ul>
+<li><a href="#r20152016mecbmi">R：仅示范2015—2016普通MEC成人BMI</a></li>
+<li><a href="#stata">Stata：同一周期的分析层</a></li>
+</ul>
+</li>
+<li><a href="#_4">非线性、交互与死亡关联</a></li>
+<li><a href="#_5">最小报告清单</a></li>
+<li><a href="#_6">官方出处与版本边界</a></li>
+</ul>
+</div>
+</aside><article><h1 id="nhanes">🧪 NHANES · 复杂抽样与健康检查实操</h1>
+<p>核验日期：2026-10-23。从XPT与Doc File核对到周期合并、组件权重、survey分析和死亡链接。</p>
+<h2 id="_1">本机资料与研究单位</h2>
+<p>已定位<code>DEMO_I/BMX_I/MCQ_I/ALQ_I/DR1TOT_I/SMQ_I</code>及J后缀等XPT和课程脚本。这里确认的是文件存在；课程中的模型、孟德尔随机化结果和发表结论未逐个复现。先核对Doc File的周期、题体、适用年龄与样本，不能根据课程目录推断变量质量。</p>
+<p>NHANES连续周期通常是重复横断面。<code>SEQN</code>用于同周期模块连接，不代表同一人跨周期追踪；时间趋势的单位是调查周期，不是个人年龄增长轨迹。外部死亡链接则是基线调查接随访结局，需要核对资格与适用发布版。</p>
+<h2 id="_2">🧩 四层合并顺序</h2>
+<ol>
+<li>每个XPT先核对SEQN是否唯一。膳食食物条目等一人多行表不能直接与人口表一对一；先决定使用每日总量、食物日或事件单位。</li>
+<li>在同周期合并DEMO、体测、问卷和实验室；保留未成功连接情况和每项资格。不要因inner join而悄悄改变样本总体。</li>
+<li>逐周期核对检测方法、单位、检出限、问卷和样本年龄。特殊码、低于检出限和真零分开；转换规则逐项锁定。</li>
+<li>再纵向堆叠周期，用<code>cycle + SEQN</code>作审计键并设正确合并权重。跨周期趋势先检查测量可比，不能仅控制cycle就修复实验室方法改变。</li>
+</ol>
+<h2 id="_3">权重小抄：按组件选，按设计估计</h2>
+<p>访谈、MEC、空腹/环境化学等子样本及饮食组件的权重适用范围不同。先查每个分析字段的Doc File，选能覆盖该分析样本的相应权重，并保留分层<code>SDMVSTRA</code>与PSU<code>SDMVPSU</code>。2021—2023采血组件增加相应采血权重考虑，不能把早期MEC范例无条件套入新实验室分析。<a href="https://wwwn.cdc.gov/nchs/nhanes/tutorials/weighting.aspx">CDC权重教程</a></p>
+<p>两个完整且可合并的常规2年周期，常见做法是在适用条件下将原2年权重除2；这不是所有年份通用公式。2017—March2020是3.2年特殊发布，不能再并入其内部2017—2018造成重复；不完整2019—March2020不得单独作全国估计。若与一个前期2年周期合并，CDC示例按2/5.2与3.2/5.2分配周期贡献。具体组件仍按相应指南核对。<a href="https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/overviewBrief.aspx?Cycle=2017-2020">特殊周期指南</a></p>
+<h3 id="r20152016mecbmi">R：仅示范2015—2016普通MEC成人BMI</h3>
+<pre><code class="language-r">library(haven)
+library(survey)
+dem &lt;- read_xpt(&quot;DEMO_I.XPT&quot;)
+bmx &lt;- read_xpt(&quot;BMX_I.XPT&quot;)
+stopifnot(!anyDuplicated(dem$SEQN), !anyDuplicated(bmx$SEQN))
+d &lt;- merge(dem, bmx, by=&quot;SEQN&quot;, all.x=TRUE, sort=FALSE)
+stopifnot(nrow(d)==nrow(dem))
+# BMI为MEC测量；此例不含实验室子样本或多周期。
+z &lt;- subset(d, !is.na(WTMEC2YR) &amp; WTMEC2YR&gt;0 &amp;
+               !is.na(SDMVPSU) &amp; !is.na(SDMVSTRA))
+des &lt;- svydesign(ids=~SDMVPSU, strata=~SDMVSTRA,
+                 weights=~WTMEC2YR, nest=TRUE, data=z)
+adult &lt;- subset(des, RIDAGEYR&gt;=20)
+svymean(~BMXBMI, adult, na.rm=TRUE)
+confint(svymean(~BMXBMI, adult, na.rm=TRUE))
+# 补报未加权人数、BMI缺失率与估计可靠性；不将缺失直接当健康。
+</code></pre>
+<h3 id="stata">Stata：同一周期的分析层</h3>
+<pre><code class="language-stata">* d 已在周期内按 SEQN 合并，字段经Doc File核对。
+isid SEQN
+svyset SDMVPSU [pweight=WTMEC2YR], strata(SDMVSTRA)
+gen byte adult = RIDAGEYR&gt;=20 if !missing(RIDAGEYR)
+svy, subpop(adult): mean BMXBMI
+* 保留完整设计再subpop，不先只保留成人破坏设计方差。
+</code></pre>
+<h2 id="_4">非线性、交互与死亡关联</h2>
+<p>RCS用于预定连续暴露形状，事先选择结点、参考值和合理范围；使用支持设计的拟合/方差方法，报告整体和非线性检验、置信带及尾部人数，不追逐阈值。分层显著与不显著不等于两组有交互；检验交互项并报告尺度。</p>
+<p>死亡链接先核对可链接资格、随访起点/截止、时间单位、事件编码及调查权重。公共LMF有部分随访时间或死因保护性替换；不能把它当完整临床病程。普通NHANES横断面生物标志物关联不证明因果；外部GWAS的MR还需独立核对人群、工具变量和假设，不能由NHANES回归“验证”全部MR条件。</p>
+<h2 id="_5">最小报告清单</h2>
+<p>列周期与组件文件、合并排除、分析资格、设计变量、权重及跨周期公式、检测方法与单位、缺失/检出限、未加权N及加权区间、亚组有效样本/PSU支持、模型和敏感性。代码是数据接口，未在R/Stata执行；本次没有替课程或示例结果背书。</p>
+<h2 id="_6">官方出处与版本边界</h2>
+<ul>
+<li><a href="https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/faq.aspx">NHANES FAQ</a>：逐文件Doc File与可用变量入口。</li>
+<li><a href="https://wwwn.cdc.gov/Nchs/Nhanes/Search/variablelist.aspx?Component=Demographics">NHANES Demographics Variable List</a>：SEQN、SDMVSTRA、SDMVPSU和权重的逐周期核对。</li>
+<li><a href="https://wwwn.cdc.gov/nchs/nhanes/tutorials/SampleDesign.aspx">NHANES Sample Design</a>：复杂抽样设计与方差估计。</li>
+<li><a href="https://wwwn.cdc.gov/nchs/nhanes/tutorials/weighting.aspx">NHANES Weighting</a>：按分析组件选择权重及合并周期。</li>
+<li><a href="https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/overviewBrief.aspx?Cycle=2017-2020">NHANES 2017—March 2020 Guidance</a>：疫情前特殊周期；不能拆出不完整2019—2020进行总体估计。</li>
+<li><a href="https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/OverviewBrief.aspx?Cycle=2021-2023">NHANES August 2021—August 2023 Guidance</a>：设计变化、非应答和采血权重。</li>
+<li><a href="https://www.cdc.gov/nchs/linked-data/about-access/index.html">NCHS Using Linked Data</a>：公共死亡链接和受限链接；部分随访/死因值为保护隐私替代。</li>
+</ul><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

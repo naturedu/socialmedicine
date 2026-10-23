@@ -1,0 +1,84 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>🏥 医保结算、临床登记与MEPS · 费用和事件数据 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/claims-clinical-database-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">本次材料范围</a></li>
+<li><a href="#_2">四张核心表与连接</a></li>
+<li><a href="#_3">队列、事件与随访</a></li>
+<li><a href="#_4">政策评估与费用模型</a></li>
+<li><a href="#meps_1">MEPS选型入口</a></li>
+<li><a href="#_5">🧺 先把数据放进正确的小篮子</a></li>
+<li><a href="#_6">从问题到估计的顺序</a></li>
+<li><a href="#_7">交付与报告</a></li>
+<li><a href="#_8">官方出处与版本边界</a></li>
+</ul>
+</div>
+</aside><article><h1 id="meps">🏥 医保结算、临床登记与MEPS · 费用和事件数据</h1>
+<p>核验日期：2026-10-23。按人、就诊、费用明细和制度暴露构建可追溯分析层，区分结算费用与真实成本。</p>
+<h2 id="_1">本次材料范围</h2>
+<p>已定位本机医保清洗库与多中心临床数据说明文件；本教程抽取通用结构与核验规则，不发布机构患者记录、未公开研究结果或私人路径。MEPS作为官方公共费用调查补充入口，与医保结算库、病历和登记系统分别解释。</p>
+<h2 id="_2">四张核心表与连接</h2>
+<table>
+<thead>
+<tr>
+<th>表</th>
+<th>最小单位</th>
+<th>键和核验</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>person</td>
+<td>一人</td>
+<td>授权的匿名链接键、出生/性别等一致性；不可逆混淆规则由数据管理者保管</td>
+</tr>
+<tr>
+<td>encounter</td>
+<td>一次门诊/住院</td>
+<td>就诊键、个人键、机构、入出院/就诊时间；转科转院与重复记录区分</td>
+</tr>
+<tr>
+<td>cost_detail</td>
+<td>一次收费/结算行</td>
+<td>行键、就诊键、项目/药品、数量、单价、费用及冲退标记</td>
+</tr>
+<tr>
+<td>policy</td>
+<td>地区/机构—生效期间</td>
+<td>发文、名义实施、真实结算切换、适用人群/服务及豁免规则</td>
+</tr>
+</tbody>
+</table>
+<p>先查每层唯一性、孤立记录、多重连接、合并后行数及费用总额守恒；join后总额膨胀通常提示明细或诊断多行交叉。诊断多项表用于疾病定义前先按就诊聚合，不能直接重复计费用。保留原币值、价格年、报销与自付口径；冲账、负值、补结算和跨月记账按业务规则审查，不能全部删作异常。</p>
+<h2 id="_3">队列、事件与随访</h2>
+<p>第一次可观察就诊不必是真正新发病；需要入组前可观察窗口和疾病洗脱期才可提出相应新使用者/新发定义。出院后再入院需明确同日转院、跨院捕获、30/90天起止和死亡竞争。未见后续费用可能是未就医、转地区、退出参保或数据截断，不能全部当健康/零成本。</p>
+<p>临床结局应区分检验原值、诊断代码、人工核实与算法派生；同次住院的末次检验不能当入院预测因子。病情严重程度、转诊及医院选择可能同时影响支付方式和结局；复杂模型不能替代可识别比较。</p>
+<h2 id="_4">政策评估与费用模型</h2>
+<p>DRG/DIP、长护险、家庭病床等政策的启动时间按结算/供给实际切换核对，允许机构/人群例外。做交错DID需处理不同批次、对照支持、时间窗与聚类层级；只有一家医院且一时点可考虑ITS/CITS的条件，而非虚构多地区DID。政策可能改变编码或报销分类，先检验表面病例结构变化是否来自编码。</p>
+<p>大量0费用考虑两部模型；正偏费用可比较适当GLM与标准化边际均值；计数结局考虑暴露时间和过度离散。报告总费用、自付和支付方支出，避免把某一方节约等同社会成本节约。人年变化与名义费用变化分开。</p>
+<h2 id="meps_1">MEPS选型入口</h2>
+<p>从AHRQ核对所需家庭、保险/雇主或提供方组件，确认年度/纵向文件、个人/事件键、调查权重、费用构造和回顾期。未经文档验证不要把调查报告的服务费用写成医院全成本。跨年度、跨面板连接需查该产品说明；本次仅核对官方入口，未导入MEPS微观文件。</p>
+<pre><code class="language-r"># 已去标识的标准化示意：每次就诊费用先聚合，避免多表多行膨胀。
+stopifnot(!anyDuplicated(encounter$encounter_id))
+tot &lt;- aggregate(amount ~ encounter_id, cost_detail, sum)
+a &lt;- merge(encounter, tot, by=&quot;encounter_id&quot;, all.x=TRUE)
+stopifnot(nrow(a)==nrow(encounter))
+# 缺少明细先核查，不能不加判断地将NA替换为0。
+</code></pre>
+<h2 id="_5">🧺 先把数据放进正确的小篮子</h2>
+<p>建立文件清单：<code>study / release / module / wave / visit_date / unit / key / source / permission</code>。文件名中的版本字母、下载年份和访谈波次分开。原始文件只读；另存标准化层和分析层。先输出字段名、标签、值标签、缺失码和连接诊断，再决定变量能否使用。</p>
+<p>每个分析变量至少记录：概念、原题、来源变量、适用人群、回顾窗口、单位、跳答路径、特殊码、代理回答、派生公式、可用波次、权重及核验状态。不得只凭中文列名判断值域或方向；<code>weight</code>在多份表中是体重。</p>
+<h2 id="_6">从问题到估计的顺序</h2>
+<ol>
+<li>写清目标人群、暴露/政策、比较组、结局和时间零点。区分人群患病比例、个体内变化、预测准确性和政策效应。</li>
+<li>画样本流：原始入样→年龄/资格→完成访谈→完成测量→连接随访→分析样本。死亡、失访、跳题、拒答、未测量分别记，不统一改成0。</li>
+<li>描述研究所需字段在每波的可用性。两波数据最多支持一次变化；多波轨迹需要足够重复观测、可比较测量与合理类数。</li>
+<li>按估计目标选择横断面、纵向或特定组件权重；权重不能凭变量名相似借用。失访加权需要可解释的响应模型和正值性诊断。</li>
+<li>面板FE估计的是个体内关联；PSM不能消除未测混杂；交错DID还需真实政策起始、前期趋势和有效对照；TTE需对齐资格、分组及随访起点。</li>
+<li>保留未加权人数、加权估计与区间。重复测量、家庭和地区依赖按设计处理；缺失值插补与抽样设计的结合需写明方法，避免把插补当作增加独立样本。</li>
+</ol>
+<h2 id="_7">交付与报告</h2>
+<p>交付版本清单、变量字典、跨波可用矩阵、连接诊断、样本流、缺失/失访表、模型脚本和执行记录。公共教程仅包含方法与元数据；获准数据留在授权环境。问卷存在某题、当前文件有字段、分析样本有有效观测是三个不同层次。</p>
+<p>相关路线：<a href="longitudinal-public-data-skill.html">纵向研究</a>、<a href="propensity-score-skill.html">PSM/加权</a>、<a href="staggered-did-skill.html">分批DID</a>、<a href="target-trial-emulation-skill.html">目标试验模拟</a>、<a href="econometric-modeling-skill.html">计量模型</a>。R/Stata代码为接口模板，本次未在这两个运行时执行。</p>
+<h2 id="_8">官方出处与版本边界</h2>
+<ul>
+<li><a href="https://meps.ahrq.gov/mepsweb/data_stats/download_data_files.jsp">AHRQ MEPS Data Files</a>：家庭、保险/雇主、提供方组件和数据下载入口。</li>
+</ul><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>
