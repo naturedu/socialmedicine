@@ -68,3 +68,8 @@
 中文：杜思娴. 学术写作规范润色 Skill [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.
 
 English: Du, S. (2026). *Academic writing copyediting skill* [Skill definition]. https://naturedu.github.io/socialmedicine/.
+
+
+## 期刊模式扩展
+
+需要《管理世界》、Nature/Science 或临床公共卫生期刊风格时，先读 [期刊写作模式](references/journal-writing.md)。优先修正问题—机制—证据链和结论强度；字词替换只是表层环节。页面提供本地审读和模型润色任务书，不把规则输出冒充大模型完成的全文润色。

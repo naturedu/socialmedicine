@@ -1,0 +1,380 @@
+[
+  {
+    "id": "A1",
+    "name": "横断面研究",
+    "category": "A",
+    "content": "**适用**：在某一时点同时测量暴露与结局，描述疾病分布或探索暴露-结局关联（如国家卫生服务调查、体检数据、居民健康素养调查）。\n\n**要点**：核心是一次性调查，暴露与结局同时收集、无时间先后，只能得关联不能定因果。患病率 = 现患病例数 / 调查人口数（时点患病率）；关联指标推荐患病率比 PR（log-binomial）或暴露患病比值比 POR，结局常见时 OR 会高估关联。抽样常为多阶段/分层抽样，需加权估计总体；典型偏倚有奈曼偏倚（病程长短影响入选，长病程者过度代表）、无应答偏倚与回忆偏倚。\n\n**代码**：\n\n```stata\n* ===== Stata =====\nproportion disease                       // 患病率及 CI（默认 Wald）\nci proportions disease, wilson           // Wilson CI，小样本更稳\nglm disease exposed, family(binomial) link(log) eform   // PR；不收敛时换 poisson disease exposed, irr vce(robust)\n\n* ===== R =====\nx <- 45; n <- 300                        # 患病人数与调查人数\nprop.test(x, n, correct = FALSE)         # 患病率及近似 CI\nbinom.test(x, n)                         # 精确 Clopper-Pearson CI\nm <- glm(disease ~ exposed, family = binomial(link = \"log\"), data = d)\nexp(cbind(PR = coef(m), confint.default(m)))   # 患病率比 PR\n```\n\n**报告要点**：报告调查时点、抽样设计与加权方法；患病率须附 95% CI（注明方法），关联指标用 PR/POR 并说明为何不选 OR。\n\n**常见错误**：用 OR 解读高患病率结局、忽略复杂抽样权重直接做点估计。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "A2",
+    "name": "病例对照研究",
+    "category": "A",
+    "content": "**适用**：结局已发生、回顾比较病例与对照的既往暴露，适合罕见病、长潜伏期结局的病因探索（如肿瘤、罕见不良反应）。\n\n**要点**：按结局状态选病例组与对照组（来自同一源人群），回顾收集暴露史；指标 OR = (a×d)/(b×c) = 病例组暴露比值 / 对照组暴露比值，罕见病时近似 RR。匹配设计（个体/频数匹配）提高效率并控制混杂，个体匹配通常采用条件 logistic；频数匹配可采用调整匹配因素的非条件 logistic，需按设计选择；不能直接估计发病率。典型偏倚：回忆偏倚、选择偏倚（如 Berkson 偏倚）、暴露测量偏倚。\n\n**代码**：\n\n```stata\n* ===== Stata =====\ntabulate exposed case, chi2\ncci 40 20 30 70          // 病例暴露/非暴露=40/20，对照暴露/非暴露=30/70 → OR 与 CI\nlogistic case exposed age, or              // 不匹配：多因素校正 OR\nclogit case exposed, group(pairid) or      // 1:1 匹配：条件 logistic\n\n* ===== R =====\nm <- matrix(c(40, 20, 30, 70), nrow = 2)   # 病例暴露/非暴露、对照暴露/非暴露\nfisher.test(m)                             # 精确 OR 与 CI\nglm(case ~ exposed + age, family = binomial(), data = d)   # 校正 OR\nlibrary(survival)\nclogit(case ~ exposed + strata(pairid), data = d)          # 匹配条件 logistic\n```\n\n**报告要点**：报告病例/对照来源、匹配变量与匹配比、应答率；报告 OR 与 95% CI、校正变量与模型类型（条件/非条件）。\n\n**常见错误**：匹配数据用非条件 logistic（偏倚）、结局不罕见时把 OR 当 RR 解释。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "A3",
+    "name": "队列研究",
+    "category": "A",
+    "content": "**适用**：按暴露状态分组、随访观察结局，用于验证病因或评估暴露效应，可直接计算发病率、同时观察多个结局（如出生队列、职业队列）。\n\n**要点**：暴露组与非暴露组前瞻（或回顾）随访；核心指标：累积发病率 CI = 发病数/期初人数、发病密度 ID = 发病数/人时。关联：RR = 暴露组发病率/非暴露组发病率（2×2 数据），人时数据用 Poisson 回归得 IRR，含删失的生存数据用 Cox 回归得 HR。典型偏倚：失访偏倚、健康工人效应、暴露/结局测量偏倚，混杂用分层 MH 或多变量模型控制。\n\n**代码**：\n\n```stata\n* ===== Stata =====\ncs disease exposed, exact                  // 2×2：RR 及 CI\nir disease exposed                         // 发病密度比 IRR\nstset time, failure(disease)               // 人时/生存数据\nstrate exposed                             // 各组人时与发病率\npoisson disease exposed, exposure(time) irr\nstcox exposed age                          // 校正 HR\n\n* ===== R =====\nlibrary(epiR)\nepi.2by2(matrix(c(45, 955, 20, 980), nrow = 2), method = \"cohort.count\")\nglm(disease ~ exposed + offset(log(time)), family = poisson(), data = d)  # IRR\nlibrary(survival)\ncoxph(Surv(time, disease) ~ exposed + age, data = d)                      # HR\n```\n\n**报告要点**：报告随访起止、人时、失访率与删失规则；报告累积发病率/发病密度及 RR/IRR/HR 的 95% CI 与校正模型。\n\n**常见错误**：忽略人时把发病密度当累积发病率，或随访长短不一却不用生存分析。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "A4",
+    "name": "随机对照试验 RCT",
+    "category": "A",
+    "content": "**适用**：评价干预效果的金标准，随机分配均衡已知与未知混杂，用于药物、诊疗方案与卫生服务干预的效果评价。\n\n**要点**：要素为随机分配（简单/区组/分层）、对照（安慰剂/标准治疗）、盲法（单盲/双盲），平行组为主，另有交叉与整群设计。首要分析人群为 ITT（意向性分析）；效应量：二分类结局用 RR、RD 与 NNT（NNT = 1/RD），连续结局用均数差 MD。报告遵循 CONSORT（注册号、随机序列、分配隐藏、盲法、流程图）。整群 RCT 需按设计效应 DE = 1 + (m−1)×ICC 扩大样本量。\n\n**代码**：\n\n```stata\n* ===== Stata =====\nset obs 120\nset seed 2026\negen block = seq(), to(30) block(4)       // 30 个区组、组内 4 人\ngen treat = rbinomial(1, 0.5)             // 简单随机（严格 2:2 区组需再抽样）\ntab treat\ncsi 20 10 25 5                            // 干预组事件/非事件=20/10，对照组=25/5 → RD、RR 及 CI；NNT=1/RD\nttest y, by(treat)                        // 连续结局：MD\nregress y treat, vce(robust)\n\n* ===== R =====\nset.seed(2026)\nd$treat <- sample(rep(0:1, 60))           # 120 人简单随机（可用 blockrand 做区组）\nlibrary(epiR)\nepi.2by2(table(d$treat, d$outcome), method = \"cohort.count\")   # RR/RD/NNT\nt.test(y ~ treat, data = d)\nlm(y ~ treat, data = d)\n```\n\n**报告要点**：报告注册号、随机方法与分配隐藏、盲法、CONSORT 流程图；同时报告 ITT（与 PP）结果、效应量及 95% CI（NNT 须附 CI）。\n\n**常见错误**：用 PP 替代 ITT 下结论、未报告分配隐藏，或整群随机忽略设计效应。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "A5",
+    "name": "准实验设计",
+    "category": "A",
+    "content": "**适用**：无法随机分配时评价政策/干预效果的次优选择，如自然实验、政策评估（医改前后比较、地区间政策差异）。\n\n**要点**：常见类型：前后对照、非等同对照组（DID）、间断时间序列 ITS、断点回归 RDD。DID =（干预组前后差）−（对照组前后差），以组×时间交互项系数估计，前提是平行趋势；ITS 用分段回归，干预后水平变化与斜率变化分开估计。典型威胁：历史因素、向均数回归、霍桑效应与选择偏倚，须做平行趋势/安慰剂检验。\n\n**代码**：\n\n```stata\n* ===== Stata =====\ngen did = treat * post\nregress y treat post did, vce(cluster id)        // did 系数即 DID 估计\nxtset id time\nxtreg y ib0.time#i.treat i.time, fe vce(cluster id)   // 事件研究：检验平行趋势\ngen time_after = max(0, time - t0)               // ITS 分段回归（t0 = 干预时点）\nnewey y time post time_after, lag(1)             // Newey-West 处理自相关\n\n* ===== R =====\nm <- lm(y ~ treat * post, data = d)              # 交互项系数即 DID\nlibrary(sandwich); library(lmtest)\ncoeftest(m, vcov = vcovCL(m, cluster = ~id))     # 聚类稳健标准误\nd$time_after <- pmax(0, d$time - t0)\nits <- lm(y ~ time + post + time_after, data = d)   # ITS 分段回归\n```\n\n**报告要点**：报告设计类型与可比性证据（基线平衡、平行趋势图、安慰剂检验）；报告 DID 系数或 ITS 水平/斜率变化及 95% CI 与稳健标准误类型。\n\n**常见错误**：不检验平行趋势就下因果结论，或 ITS 忽略自相关直接用 OLS 标准误。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "A6",
+    "name": "生态学研究",
+    "category": "A",
+    "content": "**适用**：以群体（国家/地区/年份）为分析单位探索宏观暴露与结局关联，用于跨国比较、政策环境因素分析与假说生成，数据易得、成本低。\n\n**要点**：分析单位是群体，暴露与结局均为群体汇总值，关联指标为相关系数、加权回归斜率或标化率比；比较地区率前须标准化年龄结构。核心局限是生态学谬误——群体关联不能推论到个体（跨层推论需多水平模型）；典型混杂为未测量的群体因素（医疗可及性、经济水平）。\n\n**代码**：\n\n```stata\n* ===== Stata =====\nregress rate exposure [aweight = pop]           // 按地区人口加权\ncorr rate exposure\ndstdize deaths pop, by(agegrp) using(stdpop)    // 直接标化；stdpop.dta 含 agegrp 与 pop\n\n* ===== R =====\nm <- lm(rate ~ exposure, data = d, weights = pop)\ncor(d$rate, d$exposure)\nlibrary(epitools)\nageadjust.direct(count = d$deaths, pop = d$pop, stdpop = ref$stdpop)  # 直接标化\n```\n\n**报告要点**：报告分析单位与群体指标定义、是否加权/标化；明确“生态学谬误”局限，结论限定在群体层面。\n\n**常见错误**：把群体关联外推为个体因果（生态学谬误），或不标化年龄结构直接比较地区率。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "A7",
+    "name": "混合方法研究（定性+定量）",
+    "category": "A",
+    "content": "**适用**：单一方法不足以回答研究问题时，定性（机制、体验、实施障碍）与定量（测量、检验）互补，常见于卫生服务研究、实施科学与量表开发。\n\n**要点**：核心设计：聚敛（并行）、解释性顺序（先量后质）、探索性顺序（先质后量）、嵌入式；须明确整合点与整合方式（如 joint display 联合展示）。抽样上定量用概率抽样、定性用目的抽样（最大变异/典型/极端案例），定性样本量以信息饱和为原则。质量报告：定性遵循 COREQ，整体遵循 GRAMMS/MMARS，三角互证提升效度。\n\n**代码**：\n\n```stata\n* ===== Stata =====\nttest score, by(group)                 // 定量侧比较\ntab theme group, chi2                  // 定性主题（编码后）与分组交叉：量化整合\n\n* ===== R =====\nlibrary(quanteda)\ndfm <- dfm(tokens(interview_text, remove_punct = TRUE))   # 定性文本：词频辅助主题\ntopfeatures(dfm, 20)\nt.test(score ~ group, data = d)                           # 定量侧\nchisq.test(table(d$theme, d$group))                       # 主题×分组整合\n```\n\n**报告要点**：报告设计类型（顺序/并行）与整合点、两部分抽样与分析方法；定性部分附 COREQ 清单，整合结果用 joint display 呈现。\n\n**常见错误**：两部分平行发表而无真正整合，或定性样本套用概率抽样逻辑、未报告理论视角与反思性。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "A8",
+    "name": "德尔菲法（Delphi）",
+    "category": "A",
+    "content": "**适用**：证据不足或意见分歧时，通过多轮匿名专家咨询收敛共识，用于指标筛选、指南推荐、评价体系构建（如卫生管理指标体系）。\n\n**要点**：匿名多轮问卷（通常 2–3 轮），每轮反馈统计汇总（均数、变异系数 CV、满分比），专家据反馈修改意见直至收敛。指标：专家积极系数（回收率）、权威系数 Cr = (Ca + Cs)/2（Ca 判断依据、Cs 熟悉程度）、协调度（肯德尔和谐系数 W、CV）。专家一般 15–50 人；条目筛选常用均数 ≥ 3.5 且 CV ≤ 0.25（阈值因研究而异）。\n\n**代码**：\n\n```stata\n* ===== Stata =====\negen mean_score = mean(score), by(item)\negen sd_score = sd(score), by(item)\ngen cv = sd_score / mean_score\nlist item mean_score cv if mean_score >= 3.5 & cv <= 0.25   // 示例筛选阈值\nssc install concord\nconcord score1-score15                       // 各专家评分变量 → 肯德尔 W\n\n* ===== R =====\nlibrary(dplyr)\nd |> group_by(item) |>\n  summarise(m = mean(score), cv = sd(score)/mean(score)) |>\n  filter(m >= 3.5 & cv <= 0.25)              # 示例筛选阈值\nlibrary(irr)\nw <- kendall(t(as.matrix(xtabs(score ~ expert + item, data = d))))   # 行为条目、列为专家\nw$value                                      # 肯德尔和谐系数 W\n```\n\n**报告要点**：报告轮数、每轮专家数与积极系数、权威系数、筛选标准与保留/删除条目清单、协调系数及其显著性检验。\n\n**常见错误**：轮间无统计反馈直接计分、只看均数忽略离散度与协调度检验，专家过于同质却称“共识”。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "B1",
+    "name": "描述统计与正态性检验",
+    "category": "B",
+    "content": "**适用**：任何连续型变量的分布描述与正态性判断，是选择后续参数或非参数方法的起点。\n\n**要点**：连续资料先报 n、均值±SD（正态）或中位数（P25–P75，偏态）与最小–最大值，`summarize, detail` 还给出偏度/峰度。正态性判断不能只看 Shapiro-Wilk 检验（大样本时几乎总拒绝），要结合直方图与 Q-Q 图，并参考 |偏度|<2、|峰度|<7 等经验界值。偏态明显时报告并分析中位数（IQR），可先尝试对数/平方根变换，或直接改用非参数方法。\n\n**代码**：\n\n```stata+r\n* Stata\nsummarize y, detail              // n、均值、百分位数、偏度峰度\nswilk y                          // Shapiro-Wilk 正态性检验\nhistogram y, normal              // 直方图叠加正态密度曲线\nqnorm y                          // 分位-分位（Q-Q）图",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "B2",
+    "name": "t 检验与方差分析",
+    "category": "B",
+    "content": "**适用**：两组（t 检验）或三组及以上（方差分析）连续结局的组间比较。\n\n**要点**：两组独立样本用独立样本 t 检验，方差齐性不满足时用 Welch 校正（`unequal`）；同一对象前后两次测量用配对 t 检验。三组及以上用单因素方差分析（ANOVA），F 显著后再做两两比较并用 Bonferroni/Tukey 校正多重性。多组反复做两两 t 检验会膨胀 I 类错误。\n\n**代码**：\n\n```stata+r\n* Stata\nttest y, by(group) unequal       // Welch t 检验（不假定方差齐）\nttest y1 == y2                   // 配对 t 检验\noneway y group, bonferroni       // 单因素 ANOVA + Bonferroni 两两比较\nanova y group                    // 方差分析表",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "B3",
+    "name": "卡方检验与非参数检验",
+    "category": "B",
+    "content": "**适用**：分类结局的组间比较，以及不满足正态/方差齐性条件的连续或等级资料的组间比较。\n\n**要点**：四格表先看期望频数：n≥40 且所有期望频数≥5 用 Pearson 卡方，否则用 Fisher 精确检验。等级资料或严重偏态的连续资料，两独立组用 Mann-Whitney U（`ranksum`），配对用 Wilcoxon 符号秩（`signrank`），多组用 Kruskal-Wallis（`kwallis`）。非参数检验比较的是分布/秩次而非均数，结论措辞要相应调整。\n\n**代码**：\n\n```stata+r\n* Stata\ntab a b, chi2 exact              // Pearson 卡方 + Fisher 精确检验\nranksum y, by(group)             // Mann-Whitney U（Wilcoxon 秩和）\nsignrank y1 = y2                 // 配对 Wilcoxon 符号秩检验\nkwallis y, by(group)             // Kruskal-Wallis 检验",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "B4",
+    "name": "相关与简单线性回归",
+    "category": "B",
+    "content": "**适用**：两个连续变量间线性关联的方向与强度描述（相关），及一个变量预测另一个变量的简单线性回归。\n\n**要点**：双变量均近正态时用 Pearson r，否则用 Spearman ρ；r 只衡量线性关联强度，不表示因果。回归分析前必须画散点图确认线性趋势并识别离群点，回归系数 β 报告 95% CI，R² 表示结局方差被解释的比例。拟合后应检查残差的正态性、独立性与方差齐性。\n\n**代码**：\n\n```stata+r\n* Stata\nscatter y x                     // 先画散点图判断线性\npwcorr x y, sig                 // Pearson r 及 p 值\nspearman x y                    // Spearman ρ\nregress y x                     // 简单线性回归",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "B5",
+    "name": "二元 logistic 回归",
+    "category": "B",
+    "content": "**适用**：二分类结局（患病与否、是否就诊、是否满意）的影响因素分析，结果以比值比 OR 解释。\n\n**要点**：模型为 logit(p)=β₀+Σβᵢxᵢ，OR=exp(β) 表示自变量每增加 1 个单位时结局「发生/不发生」比值的变化倍数；分类自变量必须设参照组（虚拟变量）。报告整体模型的似然比检验、区分度（AUC）与校准（Hosmer-Lemeshow）。结局事件数太少（每自变量不足约 10 个事件，EPV<10）时模型不稳定，应减少自变量。\n\n**代码**：\n\n```stata+r\n* Stata\nlogit y x1 x2, or               // 二元 logistic，报告 OR\nestat gof, group(10)            // Hosmer-Lemeshow 校准检验\nlroc                            // ROC 曲线与 AUC",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "B6",
+    "name": "有序/多项 logistic 回归",
+    "category": "B",
+    "content": "**适用**：等级结局（Likert 量表、疾病分期等有序分类）与无序多分类结局（就医机构类型、职业类别等）的影响因素分析。\n\n**要点**：有序结局用有序 logistic（比例优势模型），前提是比例优势假设（各切点回归系数相同），用 Brant 检验验证；满足时报一个公共 OR，不满足改用广义有序 logit（`gologit2`）或多项模型。无序多分类用多项 logistic，选定一类为参照，其余各类分别与参照类比较，系数指数化后为相对风险比 RRR。\n\n**代码**：\n\n```stata+r\n* Stata\nologit y x1 x2, or              // 有序 logistic（比例优势模型）\nbrant, detail                   // 比例优势/平行线假设检验（SSC 安装）\nmlogit y x1 x2, rrr base(1)     // 多项 logistic，参照组=1，报 RRR",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "B7",
+    "name": "Poisson 与负二项回归",
+    "category": "B",
+    "content": "**适用**：计数结局（就诊次数、住院天数、跌倒次数、处方数等）的回归建模。\n\n**要点**：Poisson 回归假设均数=方差；存在过度离散（方差明显大于均数）时标准误被低估，改用负二项回归（`nbreg`/`glm.nb`）或 Poisson+稳健标准误。随访/暴露时间不等时必须加 `exposure()`（Stata）或 `offset(log(t))`（R）按人时调整。结果以发病率比 IRR=exp(β) 解释；零计数过多可考虑零膨胀模型（zip/zinb）。\n\n**代码**：\n\n```stata+r\n* Stata\npoisson y x1 x2, irr vce(robust)          // Poisson + 稳健标准误\nnbreg y x1 x2, irr                        // 负二项回归\npoisson y x1 x2, irr exposure(t)          // 随访时间不等：按 t 调整",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "B8",
+    "name": "生存分析（Kaplan-Meier 与 Cox）",
+    "category": "B",
+    "content": "**适用**：事件发生时间结局（再入院时间、死亡时间、并发症出现时间等），数据含删失。\n\n**要点**：先用 `stset` 定义随访时间与事件指示变量（0=删失、1=事件），编码弄反会使 KM 曲线与风险集全部出错。Kaplan-Meier 法估计生存函数并画曲线，log-rank 检验比较组间差异；Cox 模型估计风险比 HR 并做多变量调整。必须用 Schoenfeld 残差（`estat phtest`/`cox.zph`）检验比例风险（PH）假设，违反时改用分层 Cox 或时依协变量模型。\n\n**代码**：\n\n```stata+r\n* Stata\nstset time, failure(event)               // event=1 事件，0 删失\nsts graph, by(group)                     // Kaplan-Meier 生存曲线\nsts test group                           // log-rank 检验\nstcox x1 x2                              // Cox 比例风险模型（HR）\nestat phtest, detail                     // PH 假设检验",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "B9",
+    "name": "重复测量与混合效应模型",
+    "category": "B",
+    "content": "**适用**：同一对象多次随访的重复测量数据，或患者嵌套于医院/村等层级（聚类）数据的建模。\n\n**要点**：重复测量数据各次观测彼此相关，不能当独立样本处理；球形假设满足时可用重复测量 ANOVA，否则用线性混合效应模型。混合模型以随机截距/随机斜率刻画个体轨迹差异，报告重点是固定效应 β 及其 95% CI，随机效应与协方差结构的选择用 AIC/BIC 或似然比检验判断。二分类结局改用广义混合模型（`melogit`/`glmer`）。\n\n**代码**：\n\n```stata+r\n* Stata\nxtset id time\nmixed y x##c.time || id: time, reml      // 随机截距 + 随机斜率\nmixed y x##c.time || id:                 // 仅随机截距（供比较）\nestat ic                                 // AIC/BIC 比较\n* 二分类结局改用：melogit y x || id:",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "B10",
+    "name": "主成分分析与因子分析",
+    "category": "B",
+    "content": "**适用**：多个指标降维合成综合得分（主成分分析），或探索量表/问卷的潜在结构（探索性因子分析）。\n\n**要点**：先做适用性检验：KMO>0.6 可接受（>0.8 好）、Bartlett 球形检验 p<0.05，不满足则不适合因子分析。主成分数按特征值>1、碎石图肘点或累计方差解释率（如≥60–80%）确定；因子分析定因子数优先用平行分析，并选择旋转方法（正交 varimax 或斜交 promax）。载荷 |λ|≥0.4 视为有实际意义，量表类结果还应报告 Cronbach's α。\n\n**代码**：\n\n```stata+r\n* Stata\npca x1-x10                          // 主成分分析\nfactor x1-x10, pcf                  // 因子分析（主成分因子法）\nestat kmo                           // KMO（Bartlett 检验：ssc install factortest）\nrotate, varimax                     // 正交旋转后看载荷\nalpha x1-x10                        // Cronbach's α",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "C1",
+    "name": "成本测算",
+    "category": "C",
+    "content": "**适用**：测算某一疾病、干预或服务在特定视角与时间段内消耗的资源总量（货币化成本），为成本分析、CEA/BIA 提供成本输入。\n**要点**：先明确测算视角（社会 / 卫生体系 / 医保 / 患者）与时间范围，视角决定纳入范围。\n成本分直接成本（直接医疗 + 直接非医疗）与间接成本（生产力损失，常用人力资本法按工资估算）。\n按「识别—测量—估值」三步：识别资源项目 → 测量消耗数量 → 以单位成本估值（数量 × 单价）。\n微观成本法（bottom-up）逐项自下而上加总，自上而下法（top-down）用总费用分摊，二者结果应交叉校验；跨年度成本须按医疗 CPI 等调整价格并按贴现率折现。\n**代码**：\n\n```stata\n* 成本均数与 bootstrap 95% CI（成本右偏时优于正态 CI）\nbootstrap r(mean), reps(1000) seed(2026): summarize cost\nci means cost\n```\n\n```r\nset.seed(2026)\nboot <- replicate(1000, mean(sample(cost, replace = TRUE)))\nmean(cost)                       # 点估计\nquantile(boot, c(.025, .975))    # 95% 百分位置信区间\n```\n\n**报告要点**：报告测算视角、时间范围、数据与单价来源（年份）、贴现率与价格调整方式；均数附 95% CI。\n**常见错误**：混淆视角（把患者自负费用计入医保视角成本），或把不同年份未经价格调整的成本直接相加。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "C2",
+    "name": "成本-效果分析 CEA 与成本-效用分析 CUA",
+    "category": "C",
+    "content": "**适用**：比较两种及以上干预的成本与健康产出，产出为自然单位（CEA）或 QALY（CUA）。\n**要点**：核心指标 ICER = ΔC/ΔE = (C₁−C₀)/(E₁−E₀)，与支付意愿阈值（国内常用 1–3 倍人均 GDP/QALY，口径须注明）比较判断经济性。\n不确定性用 bootstrap 或概率敏感性分析（PSA）刻画，绘制成本-效果平面与成本-效果可接受曲线（CEAC）；净货币效益 NMB = λ·ΔE − ΔC > 0 等价于在阈值 λ 下可接受。\n增量必须基于同一人群、同一时间范围计算，不能简单用两组均值相除代替统计推断。\n**代码**：\n\n```stata\n* ICER 增量计算（arm：1 = 干预，0 = 对照；ttest 按组值升序，组 2 为 arm=1）\nttest c, by(arm)\nscalar dC = r(mu_2) - r(mu_1)\nttest e, by(arm)\nscalar dE = r(mu_2) - r(mu_1)\ndi \"ICER = \" dC / dE\n```\n\n```r\ndC <- with(dat, mean(c[arm == 1]) - mean(c[arm == 0]))\ndE <- with(dat, mean(e[arm == 1]) - mean(e[arm == 0]))\nset.seed(2026)\nicers <- replicate(1000, with(dat[sample(nrow(dat), replace = TRUE), ],\n              (mean(c[arm==1]) - mean(c[arm==0])) / (mean(e[arm==1]) - mean(e[arm==0]))))\nquantile(icers, c(.025, .975))   # bootstrap ICER 置信区间\n```\n\n**报告要点**：并列报告两组成本与效果均数（含 95% CI）、ICER 及 bootstrap/PSA 结果（CEAC 上阈值处的接受概率），并注明阈值来源。\n**常见错误**：增量效果趋近 0 时 ICER 数值爆炸仍直接解读，或不做不确定性分析即断言结论稳健。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "C3",
+    "name": "QALY 与 DALY 计算",
+    "category": "C",
+    "content": "**适用**：把生存时间与生命质量合成为单一健康产出（QALY），或按死亡与伤残损失合成疾病负担（DALY），用于 CUA 与负担比较。\n**要点**：QALY = Σ 生存年 × 效用权重（0–1），效用来自 EQ-5D-5L（使用中国效用值集）、SF-6D 或 TTO/SG，纵向数据用曲线下面积法按时间区间加总。\nDALY = YLL + YLD：YLL = 死亡数 × 标准期望寿命，YLD = 患病人数 × 伤残权重 × 病程（权重查 GBD 表）。\nDALY 常用 GBD 参数（3% 贴现、年龄权重）；QALY 与 DALY 互为近似镜像但不能直接互换。\n**代码**：\n\n```stata\n* QALY：效用曲线下面积（q 为效用、t 为时点，按 id 与 t 排序）\nbysort id (t): gen qaly_step = (q + q[_n-1]) / 2 * (t - t[_n-1]) if _n > 1\nbysort id: egen qaly = total(qaly_step)\n* DALY：YLL + YLD（yll、yld 按 GBD 公式预先计算）\ngen daly = yll + yld\n```\n\n```r\ndat <- dat[order(dat$id, dat$t), ]\nqaly <- tapply(seq_len(nrow(dat)), dat$id, function(i) {\n  t <- dat$t[i]; q <- dat$q[i]\n  sum(diff(t) * (head(q, -1) + tail(q, -1)) / 2)     # 梯形面积法\n})\n```\n\n**报告要点**：报告效用工具、值集来源与测量时点，说明 QALY 加总方法（AUC/梯形法）与 DALY 的伤残权重、贴现参数。\n**常见错误**：把疾病严重度评分当效用权重，或直接混用 QALY 与 DALY 做比较。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "C4",
+    "name": "预算影响分析 BIA",
+    "category": "C",
+    "content": "**适用**：从预算持有人（医保基金、医院或政府）视角，估计采纳新干预后 3–5 年内逐年及累计的财务影响。\n**要点**：预算影响 =（新干预下目标人群总费用）−（现行干预下总费用），按「目标人群规模 × 渗透/替代率 × 人均年费用」逐年滚动测算。\n需设定市场吸纳曲线（uptake）、替代与增量使用比例、人群自然增长与价格变化；ISPOR 建议按年度现金流报告、不做贴现，且与 CEA 分开呈现。\n**代码**：\n\n```stata\n* 逐年预算影响 = 目标人群 × 渗透率 ×（新方案 − 现行方案）人均年费用\ngen bi = pop * uptake * (c_new - c_cur)\nlist year bi\nsum bi                         // 研究期内合计\n```\n\n```r\nbia <- data.frame(year = 1:5, pop = 1e5, uptake = c(.2, .4, .6, .8, .9))\nbia$bi <- bia$pop * bia$uptake * (c_new - c_cur)\nbia                            # 逐年预算影响；sum(bia$bi) 为合计\n```\n\n**报告要点**：报告视角、时间范围、目标人群与 uptake/替代假设，并给出单因素与情景（乐观/悲观）敏感性分析。\n**常见错误**：把预算影响结果当作成本-效果结论，或漏报 uptake 与人群增长假设。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "C5",
+    "name": "卫生技术评估 HTA 流程",
+    "category": "C",
+    "content": "**适用**：为新技术（药品、器械、诊断、服务包）的准入、定价与报销决策整合临床与经济证据的规范化评估。\n**要点**：标准流程：明确评估问题（PICO 与决策问题）→ 系统检索与证据评价 → 临床效果（必要时间接比较/网状 Meta）→ 经济评价（CEA/CUA + BIA）→ 伦理、组织、公平等非经济维度 → 综合报告供委员会决策。\n核心产出是相对阈值的经济性判断与预算影响估计；国内对应医保谈判/准入的申报与专家评审流程。\n**代码**：\n\n```stata\n* PSA 决策判断：净货币效益 NMB = λ·ΔE − ΔC，λ 为阈值（如 1–3 倍人均 GDP）\ngen nmb = lambda * (e_new - e_cur) - (c_new - c_cur)\ncount if nmb > 0\ndi \"成本-效果概率 = \" r(N) / _N\n```\n\n```r\nnmb <- lambda * (e_new - e_cur) - (c_new - c_cur)\nmean(nmb > 0)                  # NMB > 0 的比例 → CEAC 上阈值 λ 处的接受概率\n```\n\n**报告要点**：写明评估视角、关键参数来源与假设、模型结构及不确定性，并独立核验申办方提交的参数与模型。\n**常见错误**：直接采信申办方模型结论而不做独立校验，或把 HTA 简化为只看 ICER 的经济评价。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "C6",
+    "name": "随机前沿分析 SFA 与数据包络分析 DEA（效率评价）",
+    "category": "C",
+    "content": "**适用**：评价医院、科室、疾控机构等决策单元（DMU）的技术效率及其影响因素。\n**要点**：DEA 为非参数确定性前沿：CCR（规模报酬不变）与 BCC（可变），允许多投入多产出、无需函数形式，但对离群值敏感且不区分随机误差与无效率。\nSFA 为参数随机前沿：把误差分解为统计噪声 v 与无效率 u（半正态/截断正态等分布假设），可检验影响因素，但一般仅处理单一产出。\n两者常组合使用：DEA 得效率得分，再以 Tobit/截断回归或 SFA 分析效率影响因素。\n**代码**：\n\n```stata\n* SFA：Cobb-Douglas 随机前沿，半正态无效率\nsfcross y x1 x2, distribution(hnormal)\npredict te_sfa, te\n* DEA：投入导向 BCC（先 ssc install dea）\ndea x1 x2 = y, rts(vrs) ort(in)   // 效率得分；选项以 help dea 为准\n```\n\n```r\nlibrary(Benchmarking)\nr_dea <- dea(X = cbind(x1, x2), Y = y, RTS = \"vrs\")    # 投入导向 BCC\neff_dea <- r_dea$eff                                    # Farrell 效率 E ∈ (0,1]\nlibrary(frontier)\neff_sfa <- efficiencies(sfa(log(y) ~ log(x1) + log(x2), data = dat))\n```\n\n**报告要点**：报告前沿模型设定（方向、规模报酬、分布假设）、效率得分分布（均值/四分位）与影响因素回归结果。\n**常见错误**：样本量相对投入产出维度过小导致多数 DMU 效率 = 1 仍做解释，或 SFA 无效率分布假设未检验。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "C7",
+    "name": "医保支付标准测算（DRG/DIP 权重与点值测算思路）",
+    "category": "C",
+    "content": "**适用**：为 DRG/DIP 付费改革测算病组权重、费率与病种分值、点值，作为医保基金按病种结算的支付标准。\n**要点**：DRG：权重 RW = 该病组例均费用 ÷ 全部病例例均费用（基于历史住院费用数据，再经临床论证与成本校正）；费率 = 住院基金预算总额 ÷ Σ(RW × 组病例数)，支付标准 = RW × 费率 × 调整系数。\nDIP：病种分值 = 该病种例均费用 ÷ 基准例均费用（或相对点数），点值 = 区域基金总额 ÷ Σ(病种分值 × 病例数)，总量控制下按年度清算校正。\n权重/分值应剔除不合理费用结构影响（药品耗材占比、人次人头比）并建立动态调整机制。\n**代码**：\n\n```stata\n* DRG 权重：病组例均费用 ÷ 全样本例均费用\nbysort drg: egen fee_drg = mean(fee)\negen fee_all = mean(fee)\ngen rw = fee_drg / fee_all\n* DIP 点值：区域基金总额 ÷ Σ(病种分值 × 病例数)\ngen point_amt = dip_score * n_cases\nsum point_amt\ndi \"每分值金额 = \" fund_budget / r(sum)\n```\n\n```r\nlibrary(dplyr)\nrw <- dat |> group_by(drg) |> summarise(rw = mean(fee) / mean(dat$fee))\ndip_value <- fund_budget / sum(dat$dip_score * dat$n_cases)   # DIP 点值\n```\n\n**报告要点**：报告测算数据年份与费用口径、权重/分值校正方法（专家论证、费用结构剔除）及点值年度清算与校正规则。\n**常见错误**：直接使用未校正的历史例均费用当权重/分值，或忽略总额控制下点值年终清算的浮动风险。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "C8",
+    "name": "卫生服务利用公平性（集中指数 CI 与不平等分解）",
+    "category": "C",
+    "content": "**适用**：量化卫生服务利用（或健康结局、费用）随经济状况分布的不平等程度及其来源。\n**要点**：集中指数 CI = 2·cov(y, R)/ȳ，R 为按经济状况（收入/财富）排序的分数秩（(rank−0.5)/n），CI ∈ [−1, 1]，负值表示利用偏向较穷人群，0 为绝对平等；标准误用回归法或专门命令计算，跨人群比较时建议先做年龄性别标化。\n不平等分解：CI = Σ(βk·x̄k/ȳ)·CIk + 残差，即每个影响因素按「弹性 × 该变量的集中指数」贡献，用于定位不平等的主要驱动因素。\n**代码**：\n\n```stata\nssc install conindex, replace\nconindex y, rankvar(r)      // r：按经济状况排序的分数秩；选项以 help conindex 为准\n```\n\n```r\nr  <- (rank(ses) - 0.5) / length(ses)   # 按经济状况排序的分数秩\nci <- 2 * cov(y, r) / mean(y)           # 协方差法集中指数\n```\n\n**报告要点**：报告 CI 及其标准误/置信区间（是否显著偏离 0），分解表给出各因素的弹性、集中指数与贡献占比。\n**常见错误**：分数秩按 y 自身而非经济状况排序，或不做标化直接跨人群比较 CI。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "D1",
+    "name": "倾向得分匹配（PSM）",
+    "category": "D",
+    "content": "**适用**：观察性数据中处理（治疗/政策暴露）分配非随机、但可观测混杂充分时，用倾向得分匹配估计平均处理效应（ATT/ATE）。\n**要点**：核心思想是用协变量 X 估计倾向得分 p(X) = P(T=1|X)，将处理组与对照组按得分匹配，使两组在可观测协变量上可比，近似「准随机化」。\n匹配前须检查**共同支撑**（common support）：两组 p(X) 分布应充分重叠，可画密度重叠图或用 `teffects overlap`。\n匹配后须检验**平衡性**：各协变量标准化均值差 SMD，|SMD| < 0.1 视为平衡，否则调整模型设定或更换匹配算法。\nPSM 只控制可观测混杂，不能解决未观测混杂。\n**代码**：\n\n```stata\n* Stata：1:1 近邻匹配估计 ATT（y 结局、t 处理、x1 x2 协变量）\nteffects psmatch (y) (t x1 x2), atet\ntebalance summarize          // 平衡性：SMD 与方差比\ntebalance density            // 共同支撑：倾向得分重叠图\n```\n\n```r\nlibrary(MatchIt)\nm <- matchit(t ~ x1 + x2, data = dat, method = \"nearest\")\nmd <- match.data(m)\nlm(y ~ t + x1 + x2, data = md, weights = weights)\ncobalt::love.plot(m, abs = TRUE)   # SMD 平衡图\n```\n\n**报告要点**：报告匹配算法与卡尺、匹配前后样本量与 SMD 平衡表，效应量附稳健标准误与 95% CI，并声明结果仅对可观测混杂成立。\n**常见错误**：把匹配后结果当作随机对照试验证据，或不报告共同支撑与平衡性检查。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "D2",
+    "name": "工具变量（IV）",
+    "category": "D",
+    "content": "**适用**：处理变量存在内生性（遗漏变量、反向因果、测量误差）且能找到有效工具变量 Z 时，用工具变量法估计因果效应（2SLS）。\n**要点**：有效 IV 需满足：①相关性——Z 与内生处理 T 强相关，一阶段 F 统计量 > 10（弱 IV 会放大偏误）；②排他性——Z 仅通过 T 影响 Y，不可直接检验，需靠研究设计论证；③同质性或单调性假设下，2SLS 识别的是依从者平均处理效应（LATE）。\n多工具变量时可用过度识别检验（Sargan/Hansen J）检验工具变量的有效性。\n工具变量的有效性首先取决于研究设计与背景论证，而非统计检验本身。\n2SLS 分两阶段：第一阶段 T 对 Z（及外生协变量）回归得拟合值，第二阶段 Y 对拟合值回归；标准误由 `ivregress`/`ivreg` 自动校正。\n弱 IV 时除 F 统计量外，可加做对弱工具变量稳健的推断（如 Anderson–Rubin 检验）。\nR 公式 y ~ t | z 中，`|` 右侧为工具变量，t 为内生处理。\n**代码**：\n\n```stata\n* Stata：2SLS（核心命令）\nivregress 2sls y (t = z), first vce(robust)\nestat firststage            // 一阶段 F，>10 为强工具变量\n* 多工具变量：ivregress 2sls y (t = z1 z2), first，再用 estat overid 做过度识别检验\n```\n\n```r\nlibrary(AER)\nm_iv <- ivreg(y ~ t | z, data = dat)\nsummary(m_iv, diagnostics = TRUE)   # 含弱工具变量诊断\n```\n\n**报告要点**：报告一阶段 F、工具变量的相关性与排他性论证、2SLS 系数及稳健标准误，并把效应解读为对依从者成立的 LATE。\n**常见错误**：弱工具变量（一阶段 F<10）仍下强因果结论，或把排他性假设当作可检验。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "D3",
+    "name": "断点回归（RDD）",
+    "category": "D",
+    "content": "**适用**：处理由连续运行变量是否越过临界值决定（如分数线录取、年龄阈值报销）时，估计断点附近的局部因果效应。\n**要点**：RDD 依据「断点附近个体近似随机落入两侧」，比较临界值两侧的局部平均结果之差。\n须做三类检验：①运行变量密度在断点处连续（无操纵，McCrary 检验）；②前定协变量在断点处平衡；③结果对带宽选择稳健。\n主流做法为局部线性回归 + 三角核权重，带宽按 MSE 最优或 Calonico–Cattaneo–Titiunik (2014) 方法选择，并报告 RD 图。\n效应是断点处的 LATE，向远离断点的人群外推需谨慎。\n模糊断点（fuzzy RD）以「是否越线」为工具变量估计：Stata `rdrobust y x, c(0) fuzzy(t)`，R `rdrobust` 加 `fuzzy = \"t\"`。\n**代码**：\n\n```stata\nssc install rdrobust\nssc install rddensity\nrdrobust y x, c(0)          // x 为中心化运行变量\nrdplot y x, c(0)            // RD 图\nrddensity x, c(0)           // 密度操纵检验\n```\n\n```r\nlibrary(rdrobust)\nrdrobust(y = dat$y, x = dat$x, c = 0)\nrddensity::rddensity(dat$x, c = 0)   # 操纵检验\n```\n\n**报告要点**：报告带宽选择方法与不同带宽下的稳健性、RD 图（断点两侧拟合线 + 置信区间）、操纵检验与协变量连续性检验。\n**常见错误**：不做密度与协变量连续性检验、不报带宽敏感性就下因果结论。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "D4",
+    "name": "合成控制法（SCM）",
+    "category": "D",
+    "content": "**适用**：政策只影响一个（或少数）处理单元、且有较长政策前后面板与多个未处理对照单元时，估计政策对处理单元的效应。\n**要点**：用对照组单元的加权组合构造「合成对照」，权重在政策前时期最小化处理单元与合成对照在结局及预测协变量上的差异；政策后两者的差距即政策效应轨迹。\n推断依靠**安慰剂检验**：把每个对照单元依次当作「假处理」单元重复估计，看真实效应是否显著大于假效应分布（可换算置换 p 值）。\n要求政策前时期足够长、合成拟合良好（政策前 RMSPE 小）。\n权重通常非负且和为 1；Stata `synth` 的 `nested` 选项与 R 侧嵌套求解参数（如 `optimxmethod`）控制权重求解（以帮助文档为准）。\n**代码**：\n\n```stata\nssc install synth\ntsset id time\nsynth y x1 x2 y(1990(1)1999), trunit(1) trperiod(2000) fig\n* 安慰剂检验：对每个对照单元重复 synth 比较效应轨迹（以 help synth 为准）\n```\n\n```r\ndp <- Synth::dataprep(foo = dat, predictors = c(\"x1\", \"x2\"), dependent = \"y\",\n                      unit.variable = \"id\", time.variable = \"time\",\n                      treatment.identifier = 1, controls.identifier = 2:20,\n                      time.predictors.prior = 1990:1999, time.optimize.ssr = 1990:1999)\ns1 <- Synth::synth(dp)\n```\n\n**报告要点**：报告合成对照的权重构成与政策前拟合优度（RMSPE）、政策后效应轨迹图，以及安慰剂/置换检验结果。\n**常见错误**：政策前拟合差（RMSPE 大）仍解读效应，或不做安慰剂检验。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "D5",
+    "name": "事件研究法",
+    "category": "D",
+    "content": "**适用**：政策冲击时点明确、需考察效应随时间的动态变化（事前趋势与事后轨迹）时使用，适用于面板或重复截面数据。\n**要点**：以相对事件时间（relative time）生成各期虚拟变量并与处理组交互，取政策前一期（-1）为参照。\n**事前系数应不显著**（平行趋势检验），事后系数轨迹刻画效应的动态演化；事件研究图（系数 + 置信区间）是标准呈现。\n基准设定为双向固定效应 + 聚类稳健标准误；交错采用（异质性处理时点）时双向固定效应估计可能有偏，应加做 Sun–Abraham (2021) 或 Callaway–Sant'Anna (2021) 稳健性。\n各期系数均相对 -1 期解读（-1 期系数被吸收进常数项）。\n正式平行趋势检验可对事前交互项做联合检验（`reghdfe` 后用 `test` 联合检验事前系数）。\n若为重复截面而非面板，个体固定效应不可用，改用群组固定效应并按群组聚类。\n**代码**：\n\n```stata\nssc install reghdfe\nssc install coefplot\nreghdfe y ib(-1).time#i.treat, absorb(id time) vce(cluster id)\ncoefplot, keep(*.time#1.treat)          // 事件研究图\n```\n\n```r\nlibrary(fixest)\nm <- feols(y ~ i(time, treat, ref = -1) | id + time, data = dat)\ncoefplot(m)                              // 事件研究图\n```\n\n**报告要点**：报告事件研究图（事前系数应为零、事后轨迹与显著性）、参照期与聚类层级；交错采用时说明稳健性检验。\n**常见错误**：只看平均效应不看动态轨迹，或事前趋势不平行仍解读为因果。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "D6",
+    "name": "双重差分（DID）",
+    "category": "D",
+    "content": "**适用**：政策在某时点只冲击处理组、且有政策前后数据时，比较两组变化之差估计处理效应。\n**要点**：识别假设为**平行趋势**（无政策时两组结局变化相同）；交互项 treat × post 的系数即 DID 估计量；交错采用时注意异质性处理效应偏误（见 D5 稳健性建议）。\n**代码**：\n```stata\n* Stata：2×2 DID（交互项系数即效应）\nreg y i.treat##i.post, vce(cluster id)\n```\n```r",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "D7",
+    "name": "间断时间序列（ITS）",
+    "category": "D",
+    "content": "**适用**：单一单元（或合并总体）有政策前后多期连续时间序列时，检验政策的水平与斜率改变。\n**要点**：分段回归 Y = β0 + β1·time + β2·post + β3·time_after；β2 为水平（即时）改变，β3 为斜率（长期）改变；须用 Newey–West 或 Prais–Winsten 校正自相关（季节性需处理）。\n**代码**：\n```stata\ntsset time\ngen post = (time >= t0)          // t0 = 政策实施期\ngen time_after = (time - t0) * post\nnewey y time post time_after, lag(1)\n```\n```r\nm <- lm(y ~ time + post + time_after, data = dat)\nlmtest::coeftest(m, vcov = sandwich::NeweyWest(m, lag = 1))\n```\n**报告要点**：报告 β2、β3 与自相关校正方法，并画拟合线与无政策反事实对照。\n**常见错误**：忽略自相关导致标准误低估，或政策前观测点太少无法识别趋势。\n> 详见 ITS skill：完整流程、自相关诊断与季节性处理。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "D8",
+    "name": "三重差分（DDD）",
+    "category": "D",
+    "content": "**适用**：DID 中处理组与对照组存在不同时间趋势或额外混淆时，加入第三个维度（地区/人群/结果）作双重对照。\n**要点**：DDD = 处理 × 时间 × 第三维度的三重交互项系数，通过「差异中的差异的差异」消除两组各自时间趋势与第三维度的共同冲击。\n应同时报告各双重交互项，并说明第三维度剔除何种混淆。\n**代码**：\n```stata\n* Stata：DDD（三重交互项系数即效应）\nreg y i.treat##i.post##i.group, vce(cluster id)\n```\n```r",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "E1",
+    "name": "缺失数据与多重插补",
+    "category": "E",
+    "content": "**适用**：数据存在缺失值但需完整数据集进行回归/模型分析时，用多重插补替代删除法以减少偏倚与效能损失（如问卷调查、纵向随访、电子病历数据）。\n\n**要点**：缺失机制决定处理策略——完全随机缺失 MCAR（缺失与任何变量无关）、随机缺失 MAR（缺失与已观测变量有关，条件于已观测变量后可忽略）、非随机缺失 MNAR（缺失与缺失值本身有关）。多重插补（MI）用链式方程生成 m 个（建议 20–50 次，缺失比例越高 m 越大）完整数据集，分别分析后用 Rubin 规则合并点估计与方差，正确体现插补不确定性；优于均值填补与完整病例分析（后者仅在 MCAR 且缺失比例很小时基本无偏）。MNAR 下 MI 仍有偏，需做敏感性分析（如 worst-case、δ 调整）；插补模型应纳入与缺失性及结局相关的辅助变量。\n\n**代码**：\n\n```stata\n* ===== Stata =====\nmi set mlong                                  // 声明多重插补 long 格式\nmi register imputed y x                       // 登记含缺失的待插补变量\nmi impute chained (regress) y (logit) x = z age, add(20) rseed(2026)\n                                              // y 连续用 regress、x 二分类用 logit；z age 为完整辅助变量\nmi estimate: regress y x age                  // 逐集估计 + Rubin 规则合并\n* ===== R =====\nlibrary(mice)\nimp <- mice(data, m = 20, seed = 2026)        # 链式方程多重插补\ndensityplot(imp)                              # 检查插补值分布\nfit <- with(imp, glm(y ~ x + age, family = binomial()))   # 逐集估计\npool(fit)                                     # Rubin 规则合并\n```\n\n**报告要点**：报告各变量缺失比例与缺失模式，明确缺失机制假设（MCAR/MAR/MNAR 判断依据）、插补模型与 m 值、Rubin 合并规则；并与完整病例分析并列作敏感性比较。\n\n**常见错误**：用均值/末次观测填补、只插补 1 次（m=1）当多重插补，或插补模型漏掉预测缺失与结局的关键变量。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "E2",
+    "name": "样本量与统计效能计算",
+    "category": "E",
+    "content": "**适用**：研究设计阶段确定所需样本量、或评估既有样本的检验效能，保证结果可解释（RCT、两率比较、抽样调查、预测模型开发）。\n\n**要点**：先固定四个量：效应量（取最小临床重要差异 MCID，或文献/预试验值）、显著性水平 α（通常 0.05）、目标效能 1−β（通常 0.8/0.9）与设计参数（组间比、方差），已知任意三个可解出第四个。效应量须由专业判断或外部证据给定，不能用当前观测数据倒推（事后效能无意义）。连续结局用标准化均数差 d = (μ1−μ2)/σ，分类结局用率差或 OR；分层、整群与重复测量设计须乘设计效应 DE = 1 + (m−1)ICC 并预留脱落率。\n\n**代码**：\n\n```stata\n* ===== Stata =====\npower twomeans 100 110, sd(20) power(0.8)    // 两组均数 100 vs 110、SD 20 → 每组 n\npower twomeans 100 110, sd(20) n(64)         // 固定每组 n=64 → 检验效能\npower twoproportions 0.30 0.20, power(0.8)   // 两率 0.30 vs 0.20 → 每组 n\npower oneproportion 0.20 0.25                // 单组率 0.20 对目标 0.25\npower twomeans 100 110, sd(20) power(0.8) nratio(2)   // 组间比 1:2 设计\n* ===== R =====\nlibrary(pwr)\npwr.t.test(d = 0.5, sig.level = 0.05, power = 0.8, type = \"two.sample\")  // 每组 n\npwr.t.test(d = 0.5, sig.level = 0.05, n = 64, type = \"two.sample\")       // 固定 n → 效能\npwr.2p.test(h = ES.h(0.3, 0.2), sig.level = 0.05, power = 0.8)           // 两率\npwr.anova.test(k = 3, f = 0.25, sig.level = 0.05, power = 0.8)           // 多组方差分析\npwr.chisq.test(w = 0.1, df = 1, sig.level = 0.05, power = 0.8)           // 卡方检验\n```\n\n**报告要点**：报告四个要素（效应量及其来源、α、1−β、设计参数），给出每组所需样本量、考虑脱落后最终样本量；附效能曲线或关键参数敏感性表。\n\n**常见错误**：用观察到的效应量做“事后效能”论证、忽略脱落率与整群/重复测量的设计效应，或多重比较不校正 α。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "E3",
+    "name": "LASSO/弹性网与正则化",
+    "category": "E",
+    "content": "**适用**：高维数据（变量数接近或超过样本量）下的变量筛选与惩罚回归，防止过拟合。\n\n**要点**：LASSO 用 L1 惩罚把部分系数压缩为 0，实现变量选择；岭回归用 L2 收缩但不稀疏；弹性网混合两者，变量高度相关时更稳。λ 用交叉验证选择（常取 1-SE 规则，模型更简约）；结局决定 family（连续/二分类）。LASSO 系数有收缩偏倚，P 值需谨慎（样本拆分或去偏）。完整预处理、调参与评估流程详见机器学习 skill。\n\n**代码**：\n\n```stata\n* ===== Stata =====\nlasso linear y x1-x200, selection(cv) nolog    // 连续结局，CV 选 λ\nlasso logit y x1-x200, selection(cv)           // 二分类结局\n* ===== R =====\ncvfit <- glmnet::cv.glmnet(x, y, family = \"binomial\", alpha = 0.5)   // 弹性网\ncoef(cvfit, s = \"lambda.1se\")                  // 1-SE λ 的系数\n```\n\n**报告要点**：报告惩罚类型与 α、λ 选择规则（min/1se）与 CV 折数、最终保留变量及系数（注明标准化与否）。\n**常见错误**：把 LASSO 系数直接报显著性 P 值、在测试集上选 λ、连续变量不标准化。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "E4",
+    "name": "随机森林与 XGBoost",
+    "category": "E",
+    "content": "**适用**：非线性、含复杂交互或高维的分类/回归预测任务，作为灵活强基线模型（风险预测、结局分类）。\n\n**要点**：随机森林 = 多棵决策树 bagging + 随机特征子集，抗过拟合、稳健，袋外（OOB）误差可作内部验证；XGBoost = 梯度提升迭代修正残差，精度常更高但对超参敏感、需早停。两者均须调参（树数/深度/学习率）并在独立测试集或交叉验证评估。完整调参、变量重要性与模型解释流程详见机器学习 skill。\n\n**代码**：\n\n```stata\n* ===== Stata =====\n* Stata 无内置实现；可经 PyStata 调用 Python（sklearn/xgboost）\n* ===== R =====\nlibrary(randomForest); library(xgboost); set.seed(2026)\nrf <- randomForest(y ~ ., data = train, ntree = 500, importance = TRUE)   # 分类/回归自动识别\nbst <- xgboost(data = xgb.DMatrix(as.matrix(train_x), label = train_y),\n               nrounds = 100, eta = 0.1, max_depth = 3, objective = \"binary:logistic\")\n```\n\n**报告要点**：报告调参范围、重抽样策略（CV/独立测试集）与区分度、校准指标（AUC、Brier）。\n**常见错误**：只在训练集报告精度（过拟合乐观），或不做调优直接套用默认参数。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "E5",
+    "name": "聚类分析（K-means/层次聚类）",
+    "category": "E",
+    "content": "**适用**：无监督地将个体或变量分成同质组，用于人群分型（患者亚组、健康素养/就医行为类型）、变量降维与问卷条目归类。\n\n**要点**：分析前须标准化（量纲不同时）；K-means 将样本迭代分配到最近质心、最小化组内平方和，需预先指定 K；层次聚类（凝聚/分裂）不预设 K，按距离逐层合并并用树状图展示。K 的选择：肘部法（组内平方和随 K 的拐点）、轮廓系数（越接近 1 越好）或树状图截断，最终由专业可解释性定夺。结果依赖距离度量（欧氏/曼哈顿）、标准化与初始值，须设种子并比较多种方案验证稳定性。\n\n**代码**：\n\n```stata\n* ===== Stata =====\ncluster kmeans x1 x2, k(3) start(krandom(2026)) name(k3)   // K-means（x1 x2 宜先标准化）\ncluster stop, rule(duda)                      // 肘部指标辅助选 K（Duda-Hart）\ncluster wardslinkage x1 x2, name(hc)          // 层次聚类（Ward 法）\ncluster dendrogram hc, labels(id)             // 树状图\ncluster generate g = groups(k3)               // 保存 K-means 分组结果\n* ===== R =====\nset.seed(2026); km <- kmeans(scale(x), centers = 3, nstart = 25)   # K-means（scale 标准化）\nd <- dist(scale(x)); hc <- hclust(d, method = \"ward.D2\")           # 层次聚类（Ward 法）\nplot(hc); table(cutree(hc, k = 3), km$cluster)                     # 树状图；两法结果交叉\nlibrary(cluster)\nmean(silhouette(km$cluster, dist(scale(x)))[, 3])                  # 平均轮廓系数（选 K）\n```\n\n**报告要点**：报告标准化方式、距离度量与聚类方法、K 的选择依据（肘部/轮廓系数/树状图）与各组样本量；描述各组特征并验证稳定性（不同种子/子样本重复）。\n\n**常见错误**：不标准化直接聚类、凭主观随意定 K 不报告依据，或聚类后不验证稳定性与可解释性。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "E6",
+    "name": "贝叶斯统计入门",
+    "category": "E",
+    "content": "**适用**：需要结合先验知识、小样本推断、或输出参数完整后验分布与不确定性区间的分析（网状 meta 分析、卫生经济学评价、适应性设计、层次模型）。\n\n**要点**：贝叶斯推断 = 后验 ∝ 先验 × 似然，先验（文献/专家/无信息弱信息）与数据结合更新信念；区间用 95% 可信区间（credible interval：参数有 95% 概率落于其中），区别于频率学派的置信区间。用 MCMC 抽样近似后验，必须检查收敛（链轨迹混合、R-hat < 1.01、有效样本量 ESS 充足）并报告链数、迭代数与预热期。先验选择需说明依据并做先验敏感性分析（不同先验下结论是否稳健）。\n\n**代码**：\n\n```stata\n* ===== Stata =====\nbayes, mcmcsize(10000) rseed(2026): regress y x   // 默认弱信息先验的贝叶斯回归\nbayesgraph diagnostics {y:x}                      // 轨迹/自相关/R-hat 收敛诊断\nbayesstats ess                                   // 有效样本量\nbayesstats summary, credible                     // 后验均值与 95% 可信区间\nbayes, prior({y:x}, normal(0, 10)) rseed(2026): regress y x   // 自定义先验 → 敏感性分析\n* ===== R =====\nlibrary(brms)\nfit <- brm(y ~ x, data = d, chains = 4, iter = 2000, warmup = 1000, seed = 2026)\nsummary(fit)                                 # 后验均值、95% CI、R-hat、ESS\nplot(fit)                                    # 链轨迹与后验密度\nhypothesis(fit, \"x > 0\")                     # 后验概率 P(x > 0)\n```\n\n**报告要点**：报告先验分布及依据、MCMC 设置（链数/迭代/预热/种子）与收敛指标（R-hat、ESS）；效应量给出后验均值与 95% 可信区间，附先验敏感性分析。\n\n**常见错误**：把可信区间当置信区间解释、不检查收敛就下结论，或先验无依据且不做敏感性分析。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "F1",
+    "name": "Andersen 卫生服务利用行为模型",
+    "category": "F",
+    "content": "**适用**：解释与预测个体卫生服务利用（是否就诊、就诊次数、慢病服务利用），为就医行为与卫生服务研究提供变量选择框架。\n\n**要点**：模型由三类因素构成——倾向特征（predisposing：年龄、性别、教育、健康信念）、使能资源（enabling：收入、医保、机构可及性）、需要因素（need：自评健康、疾病状况），其中需要因素通常对利用的解释力最强。初始模型（1960s）后经多轮扩展，加入卫生系统、环境与健康行为/结局（BMH 版）。论文用法：按三因素组织自变量并分组报告，检验「需要主导」假设。\n\n**代码**（论文应用模板：三因素变量清单 + 回归）：\n\n```stata\n* Andersen 三因素变量清单（就诊行为研究示例）\n* 倾向特征 predisposing：age 年龄、female 性别(0/1)、edu 教育年限\n* 使能资源 enabling：lnincome 家庭收入对数、insured 是否参保(0/1)、dist 距最近机构(km)\n* 需要因素 need：sahealth 自评健康(1-5)、chronic 慢病种数\nlogit visit age female edu lnincome insured dist sahealth chronic, or\n```\n\n**报告要点**：理论框架部分画三因素模型图，逐项说明本研究变量与模型的对应关系；讨论中用「需要因素是否主导、使能因素是否受限」呼应模型预测并推导政策含义。\n\n**常见错误**：三因素不齐却声称「基于 Andersen 模型」；只列变量不说明归属与依据，模型沦为装饰。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "F2",
+    "name": "Grossman 健康需求模型",
+    "category": "F",
+    "content": "**适用**：把健康视为人力资本，分析健康投资的决定因素及健康与教育、收入、年龄的关系，用于健康不平等与老年健康研究。\n\n**要点**：健康既是消费品（健康本身产生效用）又是投资品（健康时间增加劳动供给）；健康存量随年龄折旧，个体通过医疗服务等投资维持存量，投资量由工资率、教育效率与医疗服务价格决定。论文用法：用模型说明健康方程为何必须控制收入、教育与年龄，并据此提出机制性假设（教育提高健康生产效率）。\n\n**代码**（论文应用模板：需求简化式示意）：\n\n```stata\n* 健康需求简化式：H = f(工资率 w, 教育 E, 年龄 t, 医疗服务价格 p)\n* 预期：教育、工资系数为正（效率与投资回报），年龄为负（折旧），价格为负\nreg health lnwage edu age age2 lnprice\n* 教育→健康的机制检验：加入知识/行为中介后看 edu 系数变化\nreg health edu age\nreg health edu age knowl healthbehavior\n```\n\n**报告要点**：在理论框架部分以「健康存量—投资」逻辑引出变量；讨论中解释教育与年龄的系数方向如何与折旧、效率机制一致。\n\n**常见错误**：与 Andersen 模型混用（前者是需求决定机制，后者是利用分析框架）；只做相关回归不交代机制。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "F3",
+    "name": "健康信念模型 HBM",
+    "category": "F",
+    "content": "**适用**：解释与干预个体预防性健康行为（疫苗接种、筛查、体检、遵医服药），为问卷维度设计与干预设计提供依据。\n\n**要点**：行为由六个构念驱动——感知易感性、感知严重性、感知收益、感知障碍、行动线索、自我效能（后两者为修订版加入）。论文用法：按维度编制 Likert 量表条目（每维度 ≥ 3 题，取均值入模），以预防行为为因变量做 logistic 回归或结构方程。\n\n**代码**（论文应用模板：维度变量清单）：\n\n```stata\n* HBM 维度量表（Likert 1-5，各维度多题取均值）与预防行为模型\n* perc_sus 感知易感性 | perc_sev 感知严重性 | perc_ben 感知收益 | perc_bar 感知障碍\n* cue 行动线索(0/1) | selfeff 自我效能\nlogit vaccinate perc_sus perc_sev perc_ben perc_bar cue selfeff, or\n```\n\n**报告要点**：方法部分报各维度的信度（Cronbach's α）与效度；讨论按维度解释作用方向，并把「感知障碍最显著」等结果转化为干预靶点。\n\n**常见错误**：每维度只设 1 题且不报信效度；用 HBM 解释治疗行为（HBM 针对预防行为，治疗行为宜用 TPB）。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "F4",
+    "name": "计划行为理论 TPB",
+    "category": "F",
+    "content": "**适用**：解释由行为意向驱动的健康行为（锻炼、戒烟、手卫生、用药依从），用于问卷编制与行为干预研究。\n\n**要点**：行为意向由态度、主观规范、知觉行为控制（PBC）三者决定；行为则由意向与 PBC 共同预测，且 PBC 可绕过意向直接作用于行为。论文用法：用结构方程模型（SEM）检验 TPB 全路径，报告路径系数与模型拟合指标。\n\n**代码**（论文应用模板：SEM 语法）：\n\n```stata\n* Stata sem：观测题项均值入模（单指标路径模型）\nsem (intention <- att sn pbc) (behavior <- intention pbc), standardized\nestat gof, stats(all)\n```\n\n```r",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "F5",
+    "name": "社会生态学模型",
+    "category": "F",
+    "content": "**适用**：识别个体、人际、社区/组织、政策多层影响因素，为多水平干预设计（慢病管理、控烟、体力活动促进）提供框架。\n\n**要点**：行为由嵌套层级共同决定——个体内（知识、信念）、人际（家庭、同伴）、组织/社区（学校、工作场所、社区资源）、政策（法规、环境）。论文用法：按层级组织变量，用多水平模型同时估计个体层与群体层效应，干预建议对应各层级。\n\n**代码**（论文应用模板：分层变量 + 多水平模型）：\n\n```stata\n* 个体层：age sex edu | 人际层：fam_support 家庭支持(0-3) | 社区层：park_density 绿地密度\n* 随机截距两水平模型（个体嵌套于社区）\nmixed behavior age sex edu fam_support park_density || community: , mle\n* 跨层交互：社区环境调节个体因素\nmixed behavior age sex edu fam_support c.fam_support#c.park_density || community: , mle\n```\n\n**报告要点**：理论框架部分画出层级图并标出本研究落在哪几层；讨论按层级解读系数（个体层 vs 群体层）并给出分层干预建议。\n\n**常见错误**：声称用生态学框架却把社区变量当个体变量做 OLS（忽视组内相关、易犯生态谬误）；层级划分与数据结构不匹配。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "F6",
+    "name": "健康公平与正义理论（Rawls / Sen 可行能力）",
+    "category": "F",
+    "content": "**适用**：为健康公平测量与卫生政策评价提供规范基础，用于健康不平等测量、医保待遇公平性与政策伦理分析。\n\n**要点**：Rawls 差别原则——社会经济不平等安排应使最不利者获益最大（maximin）；Sen 可行能力——评价的核心是「人实际能做到什么（functionings/capabilities）」而非资源占有。论文用法：理论部分明确采纳的正义观，并据此选择公平测量指标（如集中指数、公平缺口）与「有利变化」的判定标准。\n\n**代码**（论文应用模板：集中指数计算）：\n\n```stata\n* 集中指数 CI（便利回归法）：按收入排序后，2*σ²_rank*(h/μ) 对 rank 回归\nsort income\ngen rank = _n / _N\nquietly summarize h\nlocal mu = r(mean)\nquietly summarize rank\ngen lhs = 2 * r(Var) * (h / `mu')\nreg lhs rank\n* _b[rank] 即 CI（正=亲富，负=亲穷）；SSC 版：ssc install conindex; conindex h, rankvar(income)\n```\n\n**报告要点**：理论框架部分说明采纳 Rawls 或 Sen 的理由，并解释它如何决定公平指标选择与结果判定；讨论中回到所采纳的正义观检验结论。\n\n**常见错误**：公平测量指标与所宣称的正义理论脱节；把「公平」与「平等」混为一谈，未交代价值判断。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "F7",
+    "name": "健康社会决定因素框架（CSDH）",
+    "category": "F",
+    "content": "**适用**：分析结构性/中间决定因素如何沿社会经济梯度造成健康不平等，用于健康不平等机制与「将健康融入所有政策」研究。\n\n**要点**：因果链为「社会经济政治环境 → 社会经济地位（SES）→ 中间决定因素（物质条件、行为、生物、心理社会）→ 健康」，卫生系统本身也是社会决定因素。论文用法：把变量明确归入结构层与中间层，用分解方法（Oaxaca-Blinder、集中指数分解）量化各因素对健康不平等的贡献。\n\n**代码**（论文应用模板：分层变量 + 分解）：\n\n```stata\n* 结构层：ses 教育年限/收入/职业 | 中间层：housing 居住条件、smoke 吸烟、stress 心理压力 | 结局：health\n* Oaxaca-Blinder 分解：高/低 SES 组健康差距分解为「禀赋效应 + 系数效应」\nssc install oaxaca\noaxaca health housing smoke stress, by(ses_group)\n```\n\n**报告要点**：在理论框架中画出 CSDH 因果链并把变量标注到对应层级；讨论中报告各决定因素的贡献排序，指出政策切入点（结构层优先）。\n\n**常见错误**：把 CSDH 当普通回归变量清单，不做分解或机制分析；结构层与中间层混排、因果方向写反。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "F8",
+    "name": "委托代理与供方诱导需求（SID）",
+    "category": "F",
+    "content": "**适用**：解释医患信息不对称下供方诱导过度需求，用于卫生服务利用、过度医疗与医保控费研究。\n\n**要点**：医患信息不对称使医生同时充当患者代理人（决定需求）与服务提供者（获取收益），存在为自身利益诱导需求的动机；经典经验检验是「床位数/医生密度 → 利用量」正相关（Roemer 定律：造好的床位就会被填满）。论文用法：在控制需要与价格后，用供给资源变量的系数作为诱导需求的证据。\n\n**代码**（论文应用模板：简化估计式）：\n\n```stata\n* 供方诱导需求简化估计式：y = β0 + β1·beds + β2·need + β3·price + ε\n* β1 > 0 且在控制需要与价格后仍显著 → 诱导需求的证据\nreg visits beds_per1000 chronic lnprice insurance age\n* 稳健性：换供给指标（医生密度）重复\nreg visits doctors_per1000 chronic lnprice insurance age\n```\n\n**报告要点**：讨论中如实报告识别问题（供给与需求同时决定、地区未观测因素），说明缓解策略（工具变量、自然实验、滞后期）并谨慎表述因果。\n\n**常见错误**：把床位—利用正相关直接等同于诱导需求，忽视人口需要、价格与反向因果；不讨论内生性。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "F9",
+    "name": "市场失灵与政府干预（公共品 / 外部性 / 信息不对称）",
+    "category": "F",
+    "content": "**适用**：论证政府干预卫生领域的必要性与方式选择，用于卫生政策分析、医保制度设计与公共卫生筹资研究。\n\n**要点**：卫生领域存在公共品（传染病防控、健康信息，非竞争非排他）、正外部性（疫苗接种、抗生素合理使用，私人收益低于社会收益）、信息不对称（医患关系诱导需求；保险市场逆选择与道德风险），市场配置失灵为政府干预提供理由。论文用法：把每条政策建议对应到具体失灵类型，形成「失灵—干预—机制」论证链。\n\n**代码**（论文应用模板：失灵—干预论证链提纲）：\n\n```text\n论文应用模板：市场失灵 → 对应卫生服务 → 干预手段（论证链）\n· 公共品：传染病监测、控烟立法（非竞争、非排他）→ 政府提供或强制\n· 正外部性：疫苗接种（私人收益 < 社会收益，私人最优接种量低于社会最优）→ 补贴、免疫规划\n· 信息不对称①：医患（供方诱导需求）→ 支付方式改革、监管、信息公开\n· 信息不对称②：保险市场（逆选择、道德风险）→ 强制参保、共付与起付线设计\n```\n\n**报告要点**：在政策建议部分逐条注明依据的是哪类市场失灵及其证据；讨论政府干预本身可能的失灵（政府失灵）以保持分析平衡。\n\n**常见错误**：只罗列失灵类型不落到具体干预设计；不区分市场失灵与政府失灵，政策建议缺乏对应机制。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "F10",
+    "name": "制度变迁与路径依赖（医改分析）",
+    "category": "F",
+    "content": "**适用**：解释医改政策演进、制度为何难以变革及政策扩散规律，用于卫生体制改革与医保制度变迁研究。\n\n**要点**：制度变迁受历史路径约束——初始制度选择通过规模报酬递增、学习效应、协调效应、适应性预期与利益集团锁定而自我强化；制度突破依赖关键节点或外部冲击。论文用法：以政策时间线证据识别锁定机制与变迁触发点，解释医改反复或试点—推广过程。\n\n**代码**（论文应用模板：制度变迁分析提纲）：\n\n```text\n论文应用模板：医改制度变迁分析提纲\n1) 锁定起点：初始制度安排（如公费/劳保/新农合分轨起点）与关键节点（2009 新医改）\n2) 自我强化机制：规模报酬递增、沉没成本、利益集团、适应性预期\n3) 锁定证据：政策时间线——改革方案反复收敛于既有路径（如碎片化格局持续）\n4) 变迁触发：外部冲击（疫情、财政压力）或内部矛盾积累 → 制度突破/渐进调整\n```\n\n**报告要点**：用时间线表格或图呈现制度沿革，逐条对应锁定机制；讨论说明本案例中路径依赖的强度与突破条件，避免历史决定论。\n\n**常见错误**：把路径依赖当「历史决定论」只叙述不分析机制；时间线证据与机制脱节，未说明变迁触发条件。\n\n---",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "G1",
+    "name": "扎根理论（Grounded Theory）",
+    "category": "G",
+    "content": "**适用**：从访谈/观察/文本材料中归纳建构理论（医患体验、政策执行过程、患者旅程）。\n\n**要点**：三级编码——开放式编码（贴标签）、主轴编码（范畴与关系）、选择性编码（核心范畴与故事线）；理论抽样与饱和（新资料不再产生新范畴）；备忘录贯穿全程。Strauss-Corbin 偏结构化程序，Charmaz 偏建构主义。质性分析以**人工编码为主**，软件（NVivo/MAXQDA）与文本挖掘只是辅助；报告遵循 COREQ。\n\n**代码**：R 文本辅助（词频与共现），编码本身仍由人完成：\n\n```r\nlibrary(quanteda)\ncorp <- corpus(data.frame(text = interviews$text, doc_id = interviews$id))\ndfm(corp, remove = stopwords(\"zh\"), remove_punct = TRUE) |>\n  textstat_frequency(n = 30)          # 高频词提示开放编码线索\n```\n\n**报告要点**：编码表（范畴-子范畴-原始引文）、理论模型图、饱和度说明、研究者立场。\n\n**常见错误**：只贴词频不做理论建构；样本量小却宣称饱和；混淆描述与理论。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "G2",
+    "name": "结构方程模型（SEM）",
+    "category": "G",
+    "content": "**适用**：多个潜变量（如健康素养、自我效能）与其测量条目、结构路径的联合检验。\n\n**要点**：测量模型（CFA，效度：载荷、CR、AVE）与结构模型（路径）两步或联合估计；拟合指标 CFI/TLI ≥ 0.90、RMSEA < 0.08、SRMR < 0.08，修正指数仅用于理论允许的修正；样本量经验：每个自由参数 10–20 例。\n\n**代码**：\n\n```stata\n* Stata：三潜变量 SEM\nsem (HL -> x1 x2 x3) (SE -> y1 y2 y3) (AD -> z1 z2 z3) (HL -> SE) (SE -> AD), method(mlmv)\nestat gof\n```\n\n```r\n# R：lavaan 等价写法\nlibrary(lavaan)\nmodel <- ' HL =~ x1 + x2 + x3\n           SE =~ y1 + y2 + y3\n           AD =~ z1 + z2 + z3\n           SE ~ HL\n           AD ~ SE '\nfit <- sem(model, data = dat)\nfitMeasures(fit, c(\"cfi\",\"tli\",\"rmsea\",\"srmr\"))\n```\n\n**报告要点**：模型图、载荷与路径系数表（标准化）、拟合指标与判断标准、测量不变性（如做群组比较）。\n\n**常见错误**：把探索性结果当验证性模型报告；只看卡方显著性；无理论依据乱加修正路径。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "G3",
+    "name": "多层 / 多重嵌套 SEM（Multilevel SEM）",
+    "category": "G",
+    "content": "**适用**：嵌套数据（患者—科室—医院、居民—社区）的潜变量与结构关系，区分组内与组间效应。\n\n**要点**：先检验 ICC 判断是否需要多层；组内/组间变异分解；样本量经验：组数至少 30–50，组内个体可少；随机截距与随机斜率设定要有理论依据。\n\n**代码**：\n\n```stata\n* Stata：gsem 多层（医院随机截距）\ngsem (HL -> x1 x2 x3) (SE -> y1 y2 y3) (SE <- HL M1[hospital]), vce(cluster hospital)\n```\n\n```r\n# R：lavaan 双层写法\nlibrary(lavaan)\nmodel2 <- '\n  level: 1\n    SEw =~ y1 + y2 + y3\n    SEw ~ HLw\n  level: 2\n    SEb =~ y1 + y2 + y3\n    SEb ~ HLb '\nfit2 <- sem(model2, data = dat, cluster = \"hospital\")\n```\n\n**报告要点**：ICC、组内与组间两层结果分表、层级说明与软件语法对照。\n\n**常见错误**：组数很少却做多层 SEM；把组间结论套到个体；忽略聚类稳健标准误。",
+    "source": "skills/references/methods-54.md"
+  },
+  {
+    "id": "G4",
+    "name": "fsQCA 模糊集定性比较分析",
+    "category": "G",
+    "content": "**适用**：中小样本、多条路径达到同一结果（组态视角），如「基层能力建设成效」的条件组合：资源投入、人员配置、激励机制、信息化。\n\n**要点**：校准（直接法三锚点：完全隶属/交叉点/完全不隶属）；必要条件（一致性 ≥ 0.9）与充分条件（一致性 ≥ 0.75–0.8）；真值表与最小化得到复杂解/简约解/中间解；覆盖率（原始/唯一）；与回归互补：fsQCA 问「哪些组合」，回归问「净效应」。\n\n**代码**：\n\n```r\nlibrary(QCA)\ndat2 <- data.frame(成效 = calibrate(score, c(60, 75, 90)),\n                   资源 = calibrate(res, c(10, 20, 30)),\n                   人员 = calibrate(staff, c(5, 10, 15)),\n                   激励 = calibrate(inc, c(0.2, 0.5, 0.8)),\n                   信息化 = calibrate(it, c(1, 3, 5)))\ntt <- truthTable(dat2, outcome = \"成效\", n.cut = 1, incl.cut = 0.8)\nminimize(tt, include = \"?\")            # 中间解\n```\n\n```stata\n* Stata：SSC 的 fuzzy 包做校准等（以 help fuzzy 为准）\nssc install fuzzy\nfzcalc zy, low(60) cross(75) high(90)\n```\n\n**报告要点**：校准锚点与理由、真值表、各解的组态表、一致性与覆盖率、稳健性（锚点微调/阈值变动）。\n\n**常见错误**：校准锚点拍脑袋不给理由；把组态解当净效应做因果推断；样本与条件数比例失衡。\n\n> 以上 4 条的完整教程（含完整模拟数据与更多代码）见 **sem-qca-qualitative-skill.md**。\n\n\n---",
+    "source": "skills/references/methods-54.md"
+  }
+]

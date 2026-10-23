@@ -1,0 +1,216 @@
+{
+  "version": "2026-10-23",
+  "topics": {
+    "econ": {
+      "terms": [
+        "卫生经济",
+        "health economics",
+        "医疗费用",
+        "卫生筹资",
+        "成本效果",
+        "成本效用",
+        "成本效益",
+        "成本-效果",
+        "cost-effect",
+        "cost-utility",
+        "qaly",
+        "icer",
+        "预算影响",
+        "budget impact",
+        "经济评价",
+        "资源配置",
+        "效率"
+      ],
+      "methods": [
+        "health economics",
+        "cost-effect",
+        "经济评价",
+        "Markov",
+        "马尔可夫",
+        "QALY",
+        "ICER",
+        "成本",
+        "DCE",
+        "离散选择"
+      ]
+    },
+    "drug": {
+      "terms": [
+        "药物经济",
+        "药品",
+        "用药",
+        "药事",
+        "pharmaco",
+        "drug",
+        "medication",
+        "集采",
+        "带量采购",
+        "药价"
+      ],
+      "methods": [
+        "药物经济",
+        "真实世界",
+        "成本效果",
+        "成本效用",
+        "预算影响",
+        "cost-effect",
+        "budget impact"
+      ]
+    },
+    "policy": {
+      "terms": [
+        "医保",
+        "医疗保险",
+        "支付方式",
+        "drg",
+        "dip",
+        "医改",
+        "政策",
+        "health policy",
+        "health insurance",
+        "payment reform",
+        "insurance",
+        "医疗保障",
+        "分级诊疗",
+        "筹资",
+        "带量采购"
+      ],
+      "methods": [
+        "双重差分",
+        "did",
+        "difference-in-differences",
+        "事件研究",
+        "event study",
+        "断点",
+        "regression discontinuity",
+        "工具变量",
+        "instrumental variable",
+        "its",
+        "间断时间",
+        "政策分析"
+      ]
+    },
+    "services": {
+      "terms": [
+        "卫生服务",
+        "医疗服务",
+        "基层",
+        "primary care",
+        "health service",
+        "医院",
+        "hospital",
+        "health system",
+        "供给",
+        "可及性",
+        "服务利用",
+        "quality of care",
+        "患者体验",
+        "运营",
+        "质量改进"
+      ],
+      "methods": [
+        "调查",
+        "survey",
+        "mixed method",
+        "混合方法",
+        "定性",
+        "qualitative",
+        "效率",
+        "质量改进",
+        "implementation"
+      ]
+    },
+    "social": {
+      "terms": [
+        "社会医学",
+        "社会决定因素",
+        "不平等",
+        "公平",
+        "健康差异",
+        "弱势",
+        "贫困",
+        "social determinant",
+        "equity",
+        "inequality",
+        "inequities",
+        "disparit",
+        "migrant",
+        "健康素养",
+        "照护",
+        "养老",
+        "长护"
+      ],
+      "methods": [
+        "社会流行病",
+        "中介",
+        "mediation",
+        "定性",
+        "qualitative",
+        "访谈",
+        "结构方程",
+        "cohort",
+        "队列"
+      ]
+    },
+    "digital": {
+      "terms": [
+        "数字健康",
+        "人工智能",
+        "数字医疗",
+        "医疗算法",
+        "电子病历",
+        "digital health",
+        "artificial intelligence",
+        "large language model",
+        "大语言模型",
+        "telemedicine",
+        "算法偏倚"
+      ],
+      "methods": [
+        "外部验证",
+        "external validation",
+        "calibration",
+        "校准",
+        "随机",
+        "random",
+        "implementation",
+        "公平"
+      ]
+    },
+    "public": {
+      "terms": [
+        "公共卫生",
+        "疫苗",
+        "接种",
+        "健康促进",
+        "健康行为",
+        "public health",
+        "vaccin",
+        "immuni",
+        "卫生干预",
+        "健康治理"
+      ],
+      "methods": [
+        "随机",
+        "random",
+        "试验",
+        "trial",
+        "队列",
+        "cohort",
+        "mixed method",
+        "混合方法"
+      ]
+    }
+  },
+  "labels": {
+    "econ": "卫生经济评价",
+    "drug": "药物经济与药事政策",
+    "policy": "医保与卫生政策",
+    "services": "卫生服务与医院管理",
+    "social": "社会医学与健康公平",
+    "digital": "数字健康治理与评价",
+    "public": "公共卫生干预与治理"
+  },
+  "scoring": "每个主题词按标题 3 分、摘要 1 分计，单主题至多 8 分；期刊按已配置主题累加，相关方法命中每项 1 分至多 3 分；仅为规则排序，不是适配概率。",
+  "sources_date": "2026-10-23"
+}

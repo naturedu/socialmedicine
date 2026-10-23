@@ -22,7 +22,7 @@
 
 ## 软件准备
 
-方法：Stata 17 及以上（`didregress` / `xtdidregress` 需 17+；官方 `csdid` / `csdid_plot` / `xthdidregress` 需 18+）、R ≥ 4.2（`fixest`、`did`、`MatchIt`、`ggplot2` 等）。SSC 安装 `csdid`、`drdid`、`reghdfe`、`coefplot`、`estout`、`ritest`、`psmatch2`；Stata 18+ 自带官方 `csdid`，若另装 SSC 版，运行 `which csdid` 核对实际调用的版本。
+方法：Stata 17 及以上（`didregress` / `xtdidregress` 需 17+；官方异质性 DID 命令 `hdidregress` / `xthdidregress` 需 18+；`csdid` / `csdid_plot` 是社区命令）、R ≥ 4.2（`fixest`、`did`、`MatchIt`、`ggplot2` 等）。SSC 安装 `csdid`、`drdid`、`reghdfe`、`coefplot`、`estout`、`ritest`、`psmatch2`；`csdid` 不是 Stata 自带命令，运行 `which csdid` 核对社区包版本；安装兼容性以当前帮助文件为准。
 
 ```stata
 * Stata（联网安装一次）

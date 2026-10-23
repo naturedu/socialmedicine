@@ -523,7 +523,7 @@ const SKILLS = [
   { name: 'DDD 三重差分助手', file: 'ddd-skill.md', group: 'policy', tags: ['因果推断', '政策评估'], desc: '双重差分之差：三维交互识别（如集采×医院类型×品种类型），与 DID 的分解对照。', icon: 'DDD' },
   { name: 'Meta 分析助手', file: 'meta-analysis-skill.md', group: 'stats', tags: ['证据综合'], desc: '系统评价效应合并：OR/RR/SMD、固定与随机效应、异质性、森林图、发表偏倚、PRISMA。', icon: 'Meta' },
   { name: '定性方法与结构方程专题', file: 'sem-qca-qualitative-skill.md', group: 'theory', tags: ['质性研究', 'SEM/fsQCA'], desc: '扎根理论 / SEM / 多层SEM / fsQCA：lavaan、QCA 与 Stata sem/gsem/fuzzy 全程代码。', icon: 'SEM' },
-  { name: 'socialmedicineskills 方法学速查手册', file: 'socialmedicineskills.md', group: 'stats', tags: ['速查', '54 条'], desc: '54 个方法速查：适用 / 要点 / Stata-R 核心代码 / 报告要点 / 常见错误；含理论框架 F 类与专题 G 类。', icon: '速查' },
+  { name: 'socialmedicineskills 方法学速查手册', file: 'references/methods-54.md', group: 'stats', tags: ['速查', '54 条'], desc: '54 个方法速查：适用 / 要点 / Stata-R 核心代码 / 报告要点 / 常见错误；含理论框架 F 类与专题 G 类。', icon: '速查' },
   { name: '学术写作规范润色', file: 'academic-copyediting-skill.md', group: 'writing', tags: ['写作'], desc: '中文学术文本标点、句式、冗余与结构规范；写作质量工具，明确不做检测器规避。', icon: '润色' },
 ];
 
@@ -732,20 +732,7 @@ function renderDataSources() {
 renderDataSources();
 
 /* ============ 5.5 院校科普 ============ */
-const SCHOOLS = [
-  { name: '北京大学公共卫生学院', school: '北京大学', type: '公卫', focus: '流行病与卫生统计、全球卫生、卫生政策与管理、营养与食品卫生', note: '社医卫管方向实力全面，保研/申博竞争强；全球卫生与卫生政策团队活跃。', url: 'https://sph.pku.edu.cn/' },
-  { name: '复旦大学公共卫生学院', school: '复旦大学', type: '公卫', focus: '卫生经济学与卫生技术评估、传染病流行病学、生物统计', note: '卫生经济与 HTA 方向传统强院；余宏杰团队在传染病传播动力学领域成果突出。', url: 'https://sph.fudan.edu.cn/' },
-  { name: '医药卫生管理学院', school: '华中科技大学同济医学院', type: '医管', focus: '医院管理、卫生政策、医药信息管理、农村卫生', note: '「华科医管」是卫生管理学科重镇；主办《中国社会医学杂志》《医学与社会》。', url: 'https://mhm.hust.edu.cn/' },
-  { name: '浙江大学公共卫生学院', school: '浙江大学', type: '公卫', focus: '大数据健康科学、流行病学、环境健康', note: '健康大数据与数字健康特色突出，理工交叉资源强。', url: 'https://phs.zju.edu.cn/' },
-  { name: '公共管理学院', school: '中国人民大学', type: '政管', focus: '公共政策、社会保障、卫生政策与管理', note: '公共管理学科顶尖平台，适合从政策科学视角做卫生政策研究。', url: 'https://spap.ruc.edu.cn/' },
-  { name: '人口与健康学院', school: '中国人民大学', type: '综合', focus: '人口学、老年健康、健康经济学、人口健康政策', note: '人口与老龄健康研究传统强；适合老龄健康与健康经济交叉选题。', url: 'https://www.ruc.edu.cn/' },
-  { name: '政治与公共管理学院', school: '武汉大学', type: '政管', focus: '公共管理、社会保障、卫生政策与医保', note: '社会保障与医保研究有传统；公共管理学科评估前列。', url: 'https://psr.whu.edu.cn/' },
-  { name: '卫生管理学院', school: '安徽医科大学', type: '医管', focus: '卫生事业管理、卫生经济、基层卫生政策', note: '省属医科院校中的卫生管理特色院系，基层卫生与医保实践资源多。', url: 'https://www.ahmu.edu.cn/' },
-  { name: '公共卫生学院', school: '山东大学', type: '公卫', focus: '卫生政策与管理、医疗保障、卫生经济', note: '医保与卫生政策研究方向集中，齐鲁医学传统深厚。', url: 'https://sph.sdu.edu.cn/' },
-  { name: '华西公共卫生学院', school: '四川大学', type: '公卫', focus: '卫生经济、卫生政策与管理、职业卫生', note: '西部卫生政策与卫生经济研究重镇，华西医学平台支撑。', url: 'https://wcph.scu.edu.cn/' },
-  { name: '公共政策与管理学院', school: '西安交通大学', type: '政管', focus: '卫生政策、医疗保障、公共管理', note: '医保支付与卫生政策研究活跃，西部政策实践场景丰富。', url: 'https://sppa.xjtu.edu.cn/' },
-  { name: '公共卫生学院（医政方向）', school: '南京医科大学', type: '医管', focus: '卫生政策与管理、医政管理、卫生经济', note: '江苏省属医科龙头，医政管理与卫生政策实践结合紧密。', url: 'https://www.njmu.edu.cn/' },
-];
+const SCHOOLS = window.SM.institutions.slice(0,12).map(i=>({name:i.name,school:"官方入口导航",type:i.region,focus:i.focus,note:i.status,url:i.url}));
 
 function renderSchools() {
   $('#schoolGrid').innerHTML = SCHOOLS.map((s) => `
@@ -762,56 +749,7 @@ function renderSchools() {
 renderSchools();
 
 /* ============ 6. 目标期刊查询 ============ */
-const JOURNALS = [
-  { name: 'Journal of Health Economics', issn: '0167-6296', area: '卫生经济', pub: 'Elsevier' },
-  { name: 'Health Economics', issn: '1057-9230', area: '卫生经济', pub: 'Wiley' },
-  { name: 'Value in Health', issn: '1098-3015', area: '卫生经济', pub: 'Elsevier / ISPOR' },
-  { name: 'PharmacoEconomics', issn: '1170-7690', area: '卫生经济', pub: 'Springer' },
-  { name: 'Applied Health Economics and Health Policy', issn: '1175-5652', area: '卫生经济', pub: 'Springer' },
-  { name: 'Journal of Medical Economics', issn: '1369-6998', area: '卫生经济', pub: 'Taylor & Francis' },
-  { name: 'Cost Effectiveness and Resource Allocation', issn: '1478-7547', area: '卫生经济', pub: 'BMC（开放获取）' },
-  { name: 'Health Economics Review', issn: '2191-1991', area: '卫生经济', pub: 'Springer（开放获取）' },
-  { name: 'Expert Review of Pharmacoeconomics & Outcomes Research', issn: '1473-7167', area: '卫生经济', pub: 'Taylor & Francis' },
-  { name: 'Medical Decision Making', issn: '0272-989X', area: '卫生经济', pub: 'SAGE / SMDM' },
-  { name: 'The Patient — Patient-Centered Outcomes Research', issn: '1178-1653', area: '卫生经济', pub: 'Springer' },
-  { name: 'Social Science & Medicine', issn: '0277-9536', area: '社会医学', pub: 'Elsevier' },
-  { name: 'Social Science & Medicine – Population Health', issn: '2352-8273', area: '社会医学', pub: 'Elsevier（开放获取）' },
-  { name: 'International Journal for Equity in Health', issn: '1475-9276', area: '社会医学', pub: 'BMC（开放获取）' },
-  { name: 'Journal of Epidemiology and Community Health', issn: '0143-005X', area: '社会医学', pub: 'BMJ' },
-  { name: 'BMC Public Health', issn: '1471-2458', area: '社会医学', pub: 'BMC（开放获取）' },
-  { name: 'American Journal of Public Health', issn: '0090-0036', area: '社会医学', pub: 'APHA' },
-  { name: 'Globalization and Health', issn: '1744-8603', area: '社会医学', pub: 'BMC（开放获取）' },
-  { name: 'The Lancet Public Health', issn: '2468-2667', area: '社会医学', pub: 'Elsevier' },
-  { name: 'BMJ Global Health', issn: '2059-7908', area: '社会医学', pub: 'BMJ（开放获取）' },
-  { name: 'Health Policy', issn: '0168-8510', area: '卫生政策', pub: 'Elsevier' },
-  { name: 'Health Policy and Planning', issn: '0268-1080', area: '卫生政策', pub: 'Oxford University Press' },
-  { name: 'Health Affairs', issn: '0278-2715', area: '卫生政策', pub: 'Project HOPE' },
-  { name: 'International Journal of Health Policy and Management', issn: '2322-5939', area: '卫生政策', pub: 'Kerman University（开放获取）' },
-  { name: 'Journal of Health Politics, Policy and Law', issn: '0361-6878', area: '卫生政策', pub: 'Duke University Press' },
-  { name: 'Health Services Research', issn: '0017-9124', area: '卫生管理', pub: 'Wiley / HSR' },
-  { name: 'Medical Care', issn: '0025-7079', area: '卫生管理', pub: 'Wolters Kluwer' },
-  { name: 'Journal of Health Services Research & Policy', issn: '1355-8196', area: '卫生管理', pub: 'SAGE' },
-  { name: 'International Journal of Epidemiology', issn: '0300-5771', area: '流行病', pub: 'Oxford University Press' },
-  { name: 'American Journal of Epidemiology', issn: '0002-9262', area: '流行病', pub: 'Oxford University Press' },
-  { name: '中国卫生经济', issn: '1003-0743', area: '中文期刊', pub: '中国卫生经济学会' },
-  { name: '中国卫生政策研究', issn: '1674-2982', area: '中文期刊', pub: '中国医学科学院' },
-  { name: '卫生经济研究', issn: '1004-7778', area: '中文期刊', pub: '浙江省卫生经济学会' },
-  { name: '中国卫生事业管理', issn: '1004-4663', area: '中文期刊', pub: '四川省卫生健康委' },
-  { name: '中国医院管理', issn: '1001-5329', area: '中文期刊', pub: '中国医院管理杂志社' },
-  { name: '中国卫生资源', issn: '1007-953X', area: '中文期刊', pub: '上海市卫生和健康发展研究中心' },
-  { name: '中国卫生统计', issn: '1002-3674', area: '中文期刊', pub: '中国医科大学' },
-  { name: '中国药物经济学', issn: '1673-5846', area: '中文期刊', pub: '中国中医药研究促进会' },
-  { name: '中国医疗保险', issn: '1674-3830', area: '中文期刊', pub: '中国医疗保险研究会' },
-  { name: '中国全科医学', issn: '1007-9572', area: '中文期刊', pub: '中国全科医学杂志社' },
-  { name: '中华医院管理杂志', issn: '1000-6672', area: '中文期刊', pub: '中华医学会' },
-  { name: '中华流行病学杂志', issn: '0254-6450', area: '中文期刊', pub: '中华医学会' },
-  { name: '中国公共卫生', issn: '1001-0580', area: '中文期刊', pub: '中华预防医学会' },
-  { name: '现代预防医学', issn: '1003-8507', area: '中文期刊', pub: '中华预防医学会' },
-  { name: '中国社会医学杂志', issn: '1673-5625', area: '中文期刊', pub: '华中科技大学同济医学院' },
-  { name: '医学与社会', issn: '1006-5563', area: '中文期刊', pub: '华中科技大学同济医学院' },
-  { name: '中国循证医学杂志', issn: '1672-2531', area: '中文期刊', pub: '四川大学' },
-  { name: '中国卫生质量管理', issn: '1006-7515', area: '中文期刊', pub: '中国医院协会' },
-];
+const JOURNALS = window.SM.journals.map(j => ({name:j.name,issn:j.issn||"待核",area:j.category,pub:j.publisher||"见官方入口",url:j.url}));
 
 let journalCat = '';
 let journalQuery = '';
@@ -843,7 +781,7 @@ function renderJournals() {
       <td>${escapeHtml(j.issn)}</td>
       <td><span class="mini-tag">${escapeHtml(j.area)}</span></td>
       <td>${escapeHtml(j.pub)}</td>
-      <td><a href="https://portal.issn.org/resource/ISSN/${encodeURIComponent(j.issn)}" target="_blank" rel="noopener">ISSN 门户 ↗</a></td>
+      <td><a href="${escapeHtml(j.url)}" target="_blank" rel="noopener">期刊入口 ↗</a></td>
     </tr>`).join('');
 }
 

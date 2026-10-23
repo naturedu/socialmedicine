@@ -54,5 +54,5 @@ test('homepage labels and built-in asset links resolve',async()=>{
  assert.equal(html,await readFile(new URL('research-studio.html',root),'utf8'));
  assert.ok(html.includes('id="learningForm"'));assert.ok(html.includes('id="journalMetrics"'));
  const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length);
- for(const [,href]of html.matchAll(/(?:src|href)="([^"#]+)"/g))if(!/^(https?:|data:)/.test(href))await access(new URL(href.split('#')[0],root));
+ for(const [,href]of html.matchAll(/(?:src|href)="([^"#]+)"/g))if(!/^[a-z][a-z0-9+.-]*:/i.test(href))await access(new URL(href.split('#')[0],root));
 });
