@@ -23,3 +23,5 @@
 @media(max-width:600px){.goal-roadmap{grid-template-columns:1fr}.goal-step:last-child:nth-child(odd){grid-column:auto}.goal-form .two-col .two-col{grid-template-columns:1.3fr 1fr}.hero-copy{line-height:1.9}.summary-table th{width:36%;padding:10px 6px}.goal-examples{gap:6px}.goal-examples button{font-size:10px;padding:5px 10px}.support-links{gap:12px}}
 
 .table-scroll{overflow-x:auto;margin-bottom:24px}.table-scroll table{min-width:580px}.table-scroll th{width:auto}#globalDataGrid,#theoryCards,#quickMethods,#legacySkills{margin-bottom:24px}.rail .nav{padding-block:9px}.rail-bottom{padding-top:20px}#fundCards{margin-bottom:20px}
+
+.usage-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}.usage-metrics article{padding:20px}.usage-metrics strong{display:block;font-size:34px;font-family:Georgia,serif;margin-top:8px}#usageDashboard h3{margin-top:28px}#usageDashboard .summary-table th:first-child{width:55%}#usageDashboard .table-scroll{max-height:560px}@media(max-width:700px){.usage-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}

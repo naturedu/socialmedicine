@@ -3,14 +3,8 @@
   "papers_before": 194,
   "papers_after": 69,
   "method_references": 15,
-  "gates_before": 41847,
-  "gates_after": 990,
-  "moe_before": 2817,
-  "moe_after": 60,
   "screening": "项目采用保守关键词初筛并记录命中；不是完整领域普查，也未声称逐项人工核验。领域外原始快照未复制进网站。",
-  "gates_patterns": "\\b(health systems?|health ?care (?:delivery|access|services?)|primary (?:health )?care|health financing|health econom\\w*|health polic\\w*|health insurance|health equit\\w*|health (?:service|workforce|system)|delivery systems?|health data|health information|health governance|health management|health sector|health expenditure|universal health coverage|public health (?:policy|capacity|infrastructure|practice)|immuni[sz]ation (?:program\\w*|system\\w*|coverage)|vaccin\\w* (?:access|coverage|delivery)|medical costs?|cost.effectiveness)\\b",
-  "moe_patterns": "医疗|医保|公共卫生|健康|医药|药品|养老服务|长期照护|长期护理|生育支持|失能老人|失能老年",
-  "moe_exclusions": "资本健康发展|生态健康|中医.*译|医药.*文献|医药.*汉译|医药.*校勘|术语翻译|语言蚀失|导学关系失能|生命教育|早期诊断|多参量智能感知|脉搏.*多模态|体育与健康课程|HIIT|中学校园|教室低碳",
   "screening_date": "2026-10-23",
-  "secondary_screening": "对已有文献和教育部候选按题名复筛，移除纯生态、生物传播机制、临床诊断和体育训练技术等直接管理关联不足条目。"
+  "secondary_screening": "对已有文献和教育部候选按题名复筛，移除纯生态、生物传播机制、临床诊断和体育训练技术等直接管理关联不足条目。",
+  "projects": "见 project-coverage.json 与 project-extraction-audit.json；2016—2025 年项目题名按关键词筛选，公示、正式名单与地域样本分别标注。"
 }

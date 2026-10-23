@@ -266,17 +266,17 @@
     "access": "官方公开页面；区别原文与解读"
   },
   {
-    "name": "盖茨基金会 Committed Grants",
-    "category": "资助",
-    "description": "1994 年起的公开资助承诺；不含所有合同和投资",
-    "url": "https://www.gatesfoundation.org/about/committed-grants",
-    "access": "动态数据库；记录快照日期"
-  },
-  {
     "name": "教育部社会科学司",
     "category": "资助",
     "description": "人文社科项目通知、公示及正式立项名单",
     "url": "https://www.moe.gov.cn/s78/A13/",
     "access": "区别公示、立项与结项"
+  },
+  {
+    "name": "国社科与教育部年度项目题目",
+    "category": "项目与基金",
+    "url": "https://naturedu.github.io/socialmedicine/grants.html",
+    "description": "2016—2025 年公开题名筛选与年度覆盖审计；公示与正式立项分开。",
+    "note": "仅社会医学、卫生管理与相关社会政策题名候选，见年度覆盖限制。"
   }
 ]

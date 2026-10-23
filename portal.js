@@ -18,12 +18,12 @@ const configs={
  tools:{key:'tools',filters:[['category','分类']],render:t=>`<article class="entry">${tags(...t.tags)}<h2>${esc(t.name)}</h2><p>${esc(t.description)}</p>${link(t.url,'打开工具手册')}</article>`},
  sources:{key:'sources',filters:[['category','资源类型']],render:s=>`<article class="entry">${tags(s.category)}<h2>${esc(s.name)}</h2><p>${esc(s.description||s.focus||s.note)}</p>${link(s.url,'来源入口')}${s.note?'<p class="tiny">'+esc(s.note)+'</p>':''}</article>`},
  'insurance-timeline':{key:'insurance-timeline',filters:[['track','改革主线']],class:'timeline',size:30,render:p=>`<article class="entry"><div><time>${esc(p.date)}</time><div class="date-basis">${esc(p.date_basis)}</div></div><div>${tags(p.track,p.status)}<h2>${esc(p.title)}</h2><p>${esc(p.description)}</p>${dl([['文件号',p.document_number],['落地与生效',p.implementation]])}${link(p.url,'政策原文')}<p class="tiny">核验日期 ${esc(p.verified_on)}</p></div></article>`},
- grants:{key:'grants',filters:[['funder','资助方'],['country','国家/地区']],class:'wide-grid',render:g=>`<article class="entry">${tags(g.funder,g.date)}<h2>${esc(g.title)}</h2>${dl([['机构',g.organization],['类别',g.category],['项目号',g.id],['资助承诺',g.amount?Number(g.amount).toLocaleString('en-US')+' USD（非实际拨付）':''],['状态',g.status]])}<p class="meta">${esc(g.scope)}</p>${g.matched_terms?'<p class="meta">命中：'+esc(g.matched_terms)+'</p>':''}${link(g.source,g.funder==='Gates Foundation'?'资助数据库（按项目号回查）':'官方名单与所在页')}</article>`}
+ grants:{key:'health-projects',filters:[['date','年份'],['funder','项目来源'],['theme','主题'],['state','资料状态']],class:'wide-grid',render:g=>`<article class="entry">${tags(g.funder,g.date,g.theme)}<h2>${esc(g.title)}</h2>${dl([['负责人',g.principal],['机构',g.organization],['官方学科',g.category],['项目类别',g.project_type],['批准号',g.project_code||'源名单未列；不补造'],['原名单序号',g.serial],['资料状态',g.status]])}<p class="meta">${esc(g.locator)} · ${esc(g.scope)}</p>${link(g.source,'查看原名单与定位')}${g.notice?' · '+link(g.notice,'发布通知'):''}</article>`}
 };
 const category={A:'研究设计',B:'统计分析',C:'卫生经济评价',D:'因果推断',E:'数据科学',F:'理论框架',G:'定性与结构方程',H:'证据综合',I:'模拟与决策',J:'政策文本与AI评价'};
 function initList(){
  const c=configs[page];if(!c)return;
- rows=D[c.key]||[];if(page==='grants')rows=[...rows,...(D['moe-projects']||[])];
+ rows=D[c.key]||[];
  size=c.size||12;filters=c.filters;
  $('#results').className='grid '+(c.class||'');
  $('#toolbar').innerHTML='<label class="search">检索<input type="search" id="search" placeholder="输入名称、主题词、作者或项目号…"></label>'+filters.map(([k,label])=>`<label>${label}<select data-filter="${k}" aria-label="${label}"><option value="">全部${label}</option>${[...new Set(rows.map(x=>x[k]).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b))).map(v=>`<option value="${esc(v)}">${esc(category[v]||v)}</option>`).join('')}</select></label>`).join('');

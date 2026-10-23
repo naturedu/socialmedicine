@@ -11,7 +11,7 @@
 | journals.json / user-journals.json | 合并期刊与用户指定清单 | 历史 IF、分区和时长未重新核验，不当作现行指标 |
 | sources.json | 文献、健康数据、规范与项目入口 | 公开入口不等于全文或微观数据可自由使用 |
 | insurance-timeline.json | 国家医保关键节点 | 不是全量政策法规库，不代替地方落地核对 |
-| grants.json | 盖茨基金会公开资助快照 | 承诺金额，不是实际拨款 |
-| moe-projects.json | 2025 年教育部一般项目正式立项附件 | 不是所有年份所有教育部项目 |
+| health-projects.json / nssf-projects.json | 2016—2025 年国社科及教育部相关题名候选 | 年份、类别及地域覆盖见 project-coverage.json |
+| moe-projects.json | 2016—2025 年教育部相关题名候选 | 不是全部项目；公示与正式立项逐条标注 |
 
 大表使用 JSON/CSV 按条件检索，输出总命中和可复查 ID；页面分页不改变实际纳入数量。项目下载和外部来源回访需保持来源与日期。

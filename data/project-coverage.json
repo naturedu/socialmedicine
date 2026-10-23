@@ -1,0 +1,320 @@
+{
+  "updated": "2026-10-23",
+  "years": [
+    2016,
+    2025
+  ],
+  "scope": "健康、医疗保障与社会政策相关公开项目题名候选。主题分类是本站关键词整理，不是官方学科认定。",
+  "limitations": [
+    "不代表2016—2025年全部国社科和教育部项目。",
+    "2016国社科仅上海地区；2017仅年度项目；2022仅青年项目。",
+    "部分为公示或无批准号存档，逐条标记；不能据样本数量判断年度热度、申请成功率或院校排名。",
+    "仅提取公开题名与元数据，不包含申请书、研究方案或全文。"
+  ],
+  "coverage": [
+    {
+      "year": 2016,
+      "provider": "国社科",
+      "parsedRows": 285,
+      "selectedRows": 16,
+      "note": "仅上海地区官方年报中的重点、一般与青年项目，未取得全国完整名单；不可用于全国年度比较。",
+      "sources": [
+        {
+          "label": "n2016-0 · 正式立项（仅上海地区，非全国名单）",
+          "url": "https://www.sh-popss.gov.cn/url/nb2016.pdf"
+        },
+        {
+          "label": "n2016-1 · 正式立项（仅上海地区，非全国名单）",
+          "url": "https://www.sh-popss.gov.cn/url/nb2016.pdf"
+        },
+        {
+          "label": "n2016-2 · 正式立项（仅上海地区，非全国名单）",
+          "url": "https://www.sh-popss.gov.cn/url/nb2016.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2016,
+      "provider": "教育部",
+      "parsedRows": 1958,
+      "selectedRows": 86,
+      "note": "一般项目中规划基金、青年基金、自筹经费名单；不含全部地区专项、重大攻关与其他专项。",
+      "sources": [
+        {
+          "label": "m2016 · 正式立项",
+          "url": "https://www.moe.gov.cn/s78/A13/tongzhi/201607/W020160715638695812520.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2017,
+      "provider": "国社科",
+      "parsedRows": 3196,
+      "selectedRows": 142,
+      "note": "仅年度项目；青年项目未收录。原PDF横向分栏，提取题目、负责人及单位，项目类别与批准号未补写。",
+      "sources": [
+        {
+          "label": "n2017-0 · 高校官网存档名单，未逐项复核最终立项",
+          "url": "https://sfxy.czu.cn/_upload/article/files/87/af/d504bb8f45ebabb333d00c038139/194e6d9b-b0c0-461d-8586-437c04a17af9.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2017,
+      "provider": "教育部",
+      "parsedRows": 2842,
+      "selectedRows": 127,
+      "note": "一般项目中规划基金、青年基金、自筹经费名单；不含全部地区专项、重大攻关与其他专项。",
+      "sources": [
+        {
+          "label": "m2017 · 正式立项（教育部社科网转载）",
+          "url": "https://www.sinoss.net/uploadfile/2017/0727/20170727071654997.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2018,
+      "provider": "国社科",
+      "parsedRows": 4506,
+      "selectedRows": 170,
+      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "sources": [
+        {
+          "label": "n2018-0 · 正式立项（高校官网转载）",
+          "url": "https://tech.shou.edu.cn/_upload/article/files/4e/8d/40f303f04128af13368a03b401bb/497781ec-0e50-49ec-9023-7ac29a891b5f.xls"
+        },
+        {
+          "label": "n2018-1 · 正式立项（高校官网转载）",
+          "url": "https://tech.shou.edu.cn/_upload/article/files/4e/8d/40f303f04128af13368a03b401bb/c242b156-de62-457a-8744-f031f917997a.xls"
+        }
+      ]
+    },
+    {
+      "year": 2018,
+      "provider": "教育部",
+      "parsedRows": 3127,
+      "selectedRows": 128,
+      "note": "一般项目中规划基金、青年基金、自筹经费名单；不含全部地区专项、重大攻关与其他专项。",
+      "sources": [
+        {
+          "label": "m2018 · 正式立项（高校官网保存名单）",
+          "url": "https://hdc.cczu.edu.cn/_upload/article/files/67/5f/e93bc6054ccab87bfe63421f54fb/0cfafd34-f04a-4b21-8f42-bc7722c9ad84.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2019,
+      "provider": "国社科",
+      "parsedRows": 4627,
+      "selectedRows": 181,
+      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "sources": [
+        {
+          "label": "n2019-0 · 正式立项（高校官网转载）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/17/94/2ef4a05240bfa593a4697b3c9671/aae8d24d-0624-4dd0-a5b6-61f66e18585f.xls"
+        },
+        {
+          "label": "n2019-1 · 正式立项（高校官网转载）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/8a/5a/af0df08d4fd4bb64f23178b15068/bb67b430-f61a-487a-bf23-2a212bcdfcab.xls"
+        }
+      ]
+    },
+    {
+      "year": 2019,
+      "provider": "教育部",
+      "parsedRows": 3095,
+      "selectedRows": 146,
+      "note": "一般项目中规划基金、青年基金、自筹经费名单；不含全部地区专项、重大攻关与其他专项。",
+      "sources": [
+        {
+          "label": "m2019 · 正式立项",
+          "url": "https://www.moe.gov.cn/s78/A13/tongzhi/201903/W020190315648869616155.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2020,
+      "provider": "国社科",
+      "parsedRows": 4625,
+      "selectedRows": 259,
+      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "sources": [
+        {
+          "label": "n2020-0 · 正式立项（高校官网转载）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/f1/1c/cd7bc4b1442b8bdfbb02c7ed11ef/9df6cdab-3c2e-4da7-87a8-c04dbdd28029.xls"
+        },
+        {
+          "label": "n2020-1 · 正式立项（高校官网转载）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/aa/c2/8442ffb84e6389241862bdfc4bd2/c92b5f60-fe48-4adb-bdb4-f496ae987303.xls"
+        }
+      ]
+    },
+    {
+      "year": 2020,
+      "provider": "教育部",
+      "parsedRows": 2620,
+      "selectedRows": 135,
+      "note": "一般项目中规划基金、青年基金、自筹经费名单；不含全部地区专项、重大攻关与其他专项。",
+      "sources": [
+        {
+          "label": "m2020 · 正式立项",
+          "url": "https://www.moe.gov.cn/s78/A13/tongzhi/202003/W020200320550119713907.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2021,
+      "provider": "国社科",
+      "parsedRows": 4650,
+      "selectedRows": 256,
+      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。 本次取得的是公示版本，未逐项比对最终名单。",
+      "sources": [
+        {
+          "label": "n2021-0 · 公示名单，未逐项复核最终立项",
+          "url": "https://news.eol.cn/yaowen/202109/W020210903632632880978.xlsx"
+        },
+        {
+          "label": "n2021-1 · 公示名单，未逐项复核最终立项",
+          "url": "https://news.eol.cn/yaowen/202109/W020210903632632904059.xlsx"
+        }
+      ]
+    },
+    {
+      "year": 2021,
+      "provider": "教育部",
+      "parsedRows": 2362,
+      "selectedRows": 169,
+      "note": "一般项目中规划基金、青年基金、自筹经费名单；不含全部地区专项、重大攻关与其他专项。 官网存档附件无批准号字段；不补造编号，最终状态另核。",
+      "sources": [
+        {
+          "label": "m2021 · 高校官网保存名单（无批准号字段，最终状态另核）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/cc/68/97da8cfc46518e71ce95ae658f0a/dc676670-6d52-496a-8106-2ec293bc0fdb.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "provider": "国社科",
+      "parsedRows": 1127,
+      "selectedRows": 58,
+      "note": "仅青年项目；年度项目附件未能取得有效文件，未记为0项。",
+      "sources": [
+        {
+          "label": "n2022-1 · 正式立项（高校官网转载）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/18/70/db8d06814ea999cd8cbae5eda240/768c4e75-dd49-4e62-b170-e847d79d13be.xlsx"
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "provider": "教育部",
+      "parsedRows": 2616,
+      "selectedRows": 201,
+      "note": "一般项目中规划基金、青年基金、自筹经费名单；不含全部地区专项、重大攻关与其他专项。",
+      "sources": [
+        {
+          "label": "m2022 · 正式立项（高校官网保存名单）",
+          "url": "https://hdc.cczu.edu.cn/_upload/article/files/67/5f/e93bc6054ccab87bfe63421f54fb/0cfafd34-f04a-4b21-8f42-bc7722c9ad84.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "provider": "国社科",
+      "parsedRows": 4790,
+      "selectedRows": 227,
+      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "sources": [
+        {
+          "label": "n2023-0 · 正式立项（高校官网转载）",
+          "url": "https://myy.cueb.edu.cn/docs/2023-10/20231012201635563472.pdf"
+        },
+        {
+          "label": "n2023-1 · 正式立项（高校官网转载）",
+          "url": "https://myy.cueb.edu.cn/docs/2023-10/20231012201644137527.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "provider": "教育部",
+      "parsedRows": 3028,
+      "selectedRows": 191,
+      "note": "一般项目中规划基金、青年基金、自筹经费名单；不含全部地区专项、重大攻关与其他专项。",
+      "sources": [
+        {
+          "label": "m2023 · 正式立项",
+          "url": "https://hudong.moe.gov.cn/s78/A13/tongzhi/202310/W020231019389469500678.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "provider": "国社科",
+      "parsedRows": 5138,
+      "selectedRows": 249,
+      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "sources": [
+        {
+          "label": "n2024-0 · 正式立项（高校官网转载）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/1e/e9/439802424b1ba7c3658daa5766db/920cf8cc-ed04-4f21-9ccb-5dafda43a664.pdf"
+        },
+        {
+          "label": "n2024-1 · 正式立项（高校官网转载）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/1e/e9/439802424b1ba7c3658daa5766db/3b956080-be1e-4c84-a712-d0366e034369.pdf"
+        },
+        {
+          "label": "n2024-2 · 正式立项（高校官网转载）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/1e/e9/439802424b1ba7c3658daa5766db/f77fe19f-817f-4029-8c8a-87bd188433cb.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "provider": "教育部",
+      "parsedRows": 3378,
+      "selectedRows": 211,
+      "note": "一般项目中规划基金、青年基金、自筹经费名单；不含全部地区专项、重大攻关与其他专项。",
+      "sources": [
+        {
+          "label": "m2024 · 正式立项",
+          "url": "https://www.moe.gov.cn/s78/A13/tongzhi/202409/W020240913629168996473.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "provider": "国社科",
+      "parsedRows": 5254,
+      "selectedRows": 278,
+      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "sources": [
+        {
+          "label": "n2025-0 · 正式立项（高校官网转载）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/7e/a4/3e24d4d44b0989bc4fa813e69e88/0837282b-d47f-48d6-a885-7e8fa173cd67.pdf"
+        },
+        {
+          "label": "n2025-1 · 正式立项（高校官网转载）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/7e/a4/3e24d4d44b0989bc4fa813e69e88/a71f5c30-d2dc-4a33-b570-ab2d524622c9.pdf"
+        },
+        {
+          "label": "n2025-2 · 正式立项（高校官网转载）",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/7e/a4/3e24d4d44b0989bc4fa813e69e88/eaa17ce6-8b51-41f6-a891-6134b56a89b5.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "provider": "教育部",
+      "parsedRows": 2817,
+      "selectedRows": 183,
+      "note": "一般项目中规划基金、青年基金、自筹经费名单；不含全部地区专项、重大攻关与其他专项。",
+      "sources": [
+        {
+          "label": "m2025 · 正式立项",
+          "url": "https://www.moe.gov.cn/s78/A13/tongzhi/202512/W020251202477371694907.pdf"
+        }
+      ]
+    }
+  ]
+}

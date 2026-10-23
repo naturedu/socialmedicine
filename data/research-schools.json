@@ -1,32 +1,5 @@
 [
   {
-    "id": "pku-nsd",
-    "school": "北京大学",
-    "department": "国家发展研究院（北大国发）",
-    "region": "北京",
-    "route": "内地",
-    "focus": [
-      "健康与发展经济学",
-      "卫生经济",
-      "医疗体制改革",
-      "应用经济学",
-      "健康老龄化"
-    ],
-    "programs": [
-      "研究生博士项目：专业、方向与招生资格以当年招生目录为准"
-    ],
-    "officialUrl": "https://nsd.pku.edu.cn/",
-    "admissionsUrl": "https://nsd.pku.edu.cn/jxxm/yjs/zszl/index.htm",
-    "admissionsNote": "国家发展研究院与公共卫生学院是不同培养单位。导师职称或历史指导经历不等于当年招生资格；请核对招生专栏、研究生院目录与正式导师名单。",
-    "checked": "2026-10-23",
-    "sources": [
-      {
-        "label": "国发院招生专栏",
-        "url": "https://nsd.pku.edu.cn/jxxm/yjs/zszl/index.htm"
-      }
-    ]
-  },
-  {
     "id": "sysu-guangzhou",
     "school": "中山大学",
     "department": "公共卫生学院（广州校区）·卫生管理学系",
@@ -60,6 +33,94 @@
       }
     ],
     "route": "内地"
+  },
+  {
+    "id": "smu-health-management",
+    "school": "南方医科大学",
+    "department": "卫生管理学院",
+    "region": "广东·广州",
+    "focus": [
+      "公共卫生政策与管理",
+      "基层卫生服务质量",
+      "实施科学",
+      "健康管理与健康促进",
+      "医疗保险与长期照护"
+    ],
+    "programs": [
+      "公共卫生政策与管理（二级学科博士学位授权点；学院官网已核实）"
+    ],
+    "officialUrl": "https://portal.smu.edu.cn/wsglxy/xygk1/xyjj.htm",
+    "admissionsUrl": "https://portal.smu.edu.cn/wsglxy/zszl/yjs.htm",
+    "admissionsNote": "本条对应卫生管理学院，不与公共卫生学院混用。学院另有与葡萄牙里斯本大学学院合作培养的博士项目，须区分普通博士与中外合作项目。已核实学位授权点；本次未核实2027年招生名额、报名截止日期，不据官网旧培养方案填报当年条件。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "学院学科建设与项目介绍",
+        "url": "https://portal.smu.edu.cn/wsglxy/xygk1/xyjj.htm"
+      },
+      {
+        "label": "学院招生入口",
+        "url": "https://portal.smu.edu.cn/wsglxy/zszl/yjs.htm"
+      }
+    ],
+    "route": "内地"
+  },
+  {
+    "id": "sysu-shenzhen-biosafety",
+    "school": "中山大学（深圳校区）",
+    "department": "生物安全学院（原公共卫生学院〔深圳〕）",
+    "region": "广东·深圳",
+    "focus": [
+      "传染病防控",
+      "生物安全",
+      "传染病系统建模",
+      "公共卫生与医学大数据"
+    ],
+    "programs": [
+      "更名后博士专业完整名称与招生代码本次未完整核实；请以学校当年度博士专业目录为准"
+    ],
+    "officialUrl": "https://phs.sysu.edu.cn/zh-hans/node/1378",
+    "admissionsUrl": "https://graduate.sysu.edu.cn/zsw/doctor",
+    "admissionsNote": "2026年5月25日会议宣布原公共卫生学院（深圳）更名为生物安全学院，官网于5月30日发布公告。本条作为邻近公共卫生方向与院系沿革入口，不将其等同于广州卫生管理学系，也不据旧硕士目录推断有同名社医卫管博士招生。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "2026年院系更名官方公告",
+        "url": "https://phs.sysu.edu.cn/zh-hans/node/1378"
+      },
+      {
+        "label": "深圳校区学院清单",
+        "url": "https://shenzhen.sysu.edu.cn/Schools"
+      }
+    ],
+    "route": "内地"
+  },
+  {
+    "id": "pku-nsd",
+    "school": "北京大学",
+    "department": "国家发展研究院（北大国发）",
+    "region": "北京",
+    "route": "内地",
+    "focus": [
+      "健康与发展经济学",
+      "卫生经济",
+      "医疗体制改革",
+      "应用经济学",
+      "健康老龄化"
+    ],
+    "programs": [
+      "研究生博士项目：专业、方向与招生资格以当年招生目录为准"
+    ],
+    "officialUrl": "https://nsd.pku.edu.cn/",
+    "admissionsUrl": "https://nsd.pku.edu.cn/jxxm/yjs/zszl/index.htm",
+    "admissionsNote": "国家发展研究院与公共卫生学院是不同培养单位。导师职称或历史指导经历不等于当年招生资格；请核对招生专栏、研究生院目录与正式导师名单。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "国发院招生专栏",
+        "url": "https://nsd.pku.edu.cn/jxxm/yjs/zszl/index.htm"
+      }
+    ]
   },
   {
     "id": "cuhk-public-health",
@@ -128,37 +189,6 @@
     "route": "港澳及海外"
   },
   {
-    "id": "smu-health-management",
-    "school": "南方医科大学",
-    "department": "卫生管理学院",
-    "region": "广东·广州",
-    "focus": [
-      "公共卫生政策与管理",
-      "基层卫生服务质量",
-      "实施科学",
-      "健康管理与健康促进",
-      "医疗保险与长期照护"
-    ],
-    "programs": [
-      "公共卫生政策与管理（二级学科博士学位授权点；学院官网已核实）"
-    ],
-    "officialUrl": "https://portal.smu.edu.cn/wsglxy/xygk1/xyjj.htm",
-    "admissionsUrl": "https://portal.smu.edu.cn/wsglxy/zszl/yjs.htm",
-    "admissionsNote": "本条对应卫生管理学院，不与公共卫生学院混用。学院另有与葡萄牙里斯本大学学院合作培养的博士项目，须区分普通博士与中外合作项目。已核实学位授权点；本次未核实2027年招生名额、报名截止日期，不据官网旧培养方案填报当年条件。",
-    "checked": "2026-10-23",
-    "sources": [
-      {
-        "label": "学院学科建设与项目介绍",
-        "url": "https://portal.smu.edu.cn/wsglxy/xygk1/xyjj.htm"
-      },
-      {
-        "label": "学院招生入口",
-        "url": "https://portal.smu.edu.cn/wsglxy/zszl/yjs.htm"
-      }
-    ],
-    "route": "内地"
-  },
-  {
     "id": "csu-xiangya-public-health",
     "school": "中南大学",
     "department": "湘雅公共卫生学院·社会医学与卫生事业管理学系",
@@ -222,36 +252,6 @@
       {
         "label": "2026年医学院博士招生简章",
         "url": "https://www.shsmu.edu.cn/__local/1/3E/21/A76FF6BF372EA5DF69F3599269F_94644C37_4D37C.pdf?e=.pdf"
-      }
-    ],
-    "route": "内地"
-  },
-  {
-    "id": "sysu-shenzhen-biosafety",
-    "school": "中山大学（深圳校区）",
-    "department": "生物安全学院（原公共卫生学院〔深圳〕）",
-    "region": "广东·深圳",
-    "focus": [
-      "传染病防控",
-      "生物安全",
-      "传染病系统建模",
-      "公共卫生与医学大数据"
-    ],
-    "programs": [
-      "更名后博士专业完整名称与招生代码本次未完整核实；请以学校当年度博士专业目录为准"
-    ],
-    "officialUrl": "https://phs.sysu.edu.cn/zh-hans/node/1378",
-    "admissionsUrl": "https://graduate.sysu.edu.cn/zsw/doctor",
-    "admissionsNote": "2026年5月25日会议宣布原公共卫生学院（深圳）更名为生物安全学院，官网于5月30日发布公告。本条作为邻近公共卫生方向与院系沿革入口，不将其等同于广州卫生管理学系，也不据旧硕士目录推断有同名社医卫管博士招生。",
-    "checked": "2026-10-23",
-    "sources": [
-      {
-        "label": "2026年院系更名官方公告",
-        "url": "https://phs.sysu.edu.cn/zh-hans/node/1378"
-      },
-      {
-        "label": "深圳校区学院清单",
-        "url": "https://shenzhen.sysu.edu.cn/Schools"
       }
     ],
     "route": "内地"
@@ -486,5 +486,803 @@
     "admissionsUrl": "https://www.njmu.edu.cn/",
     "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
     "legacy": true
+  },
+  {
+    "id": "catalog-school-30",
+    "school": "清华大学",
+    "department": "万科公共卫生与健康学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "健康治理与交叉研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://vsph.tsinghua.edu.cn/",
+    "admissionsUrl": "https://vsph.tsinghua.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://vsph.tsinghua.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-32",
+    "school": "首都医科大学",
+    "department": "公共卫生学院·卫生管理与政策学系",
+    "region": "北京",
+    "route": "内地",
+    "focus": [
+      "卫生管理",
+      "卫生政策",
+      "医疗保障",
+      "卫生事业管理"
+    ],
+    "programs": [
+      "公共卫生与卫生管理相关研究生方向；招生专业及代码以研究生院当年目录为准"
+    ],
+    "officialUrl": "https://sph.ccmu.edu.cn/szdw/wsglyzcxx/index.htm",
+    "admissionsUrl": "https://yjsh.ccmu.edu.cn/",
+    "admissionsNote": "已核实学院及卫生管理与政策学系入口。本次不据学系名称推断招生专业名称或在招名额。",
+    "sources": [
+      {
+        "label": "院系官方介绍",
+        "url": "https://sph.ccmu.edu.cn/szdw/wsglyzcxx/index.htm"
+      },
+      {
+        "label": "官方招生或学院入口",
+        "url": "https://yjsh.ccmu.edu.cn/"
+      }
+    ],
+    "checked": "2026-10-23"
+  },
+  {
+    "id": "catalog-school-34",
+    "school": "广州医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生与健康管理"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.gzhmu.edu.cn/",
+    "admissionsUrl": "https://www.gzhmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.gzhmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-35",
+    "school": "天津医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "流行病学",
+      "卫生统计",
+      "社会医学与卫生管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.tmu.edu.cn/",
+    "admissionsUrl": "https://www.tmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.tmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-36",
+    "school": "中国医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "社会医学与卫生事业管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.cmu.edu.cn/",
+    "admissionsUrl": "https://www.cmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.cmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-37",
+    "school": "哈尔滨医科大学",
+    "department": "卫生管理学院",
+    "region": "黑龙江·哈尔滨",
+    "route": "内地",
+    "focus": [
+      "社会医学与卫生事业管理",
+      "卫生政策",
+      "卫生经济",
+      "卫生管理"
+    ],
+    "programs": [
+      "学院简介载明社会医学与卫生事业管理硕士、博士学位点；当年具体招生计划另核"
+    ],
+    "officialUrl": "https://www.hrbmu.edu.cn/wsglxyx/xygk/xyjj.htm",
+    "admissionsUrl": "https://www.hrbmu.edu.cn/wsglxyx/",
+    "admissionsNote": "已核实学院简介与历史学位点信息。学位点存在不等于当年该方向有招生名额，申请时查研究生院与学院正式通知。",
+    "sources": [
+      {
+        "label": "院系官方介绍",
+        "url": "https://www.hrbmu.edu.cn/wsglxyx/xygk/xyjj.htm"
+      },
+      {
+        "label": "官方招生或学院入口",
+        "url": "https://www.hrbmu.edu.cn/wsglxyx/"
+      }
+    ],
+    "checked": "2026-10-23"
+  },
+  {
+    "id": "catalog-school-38",
+    "school": "吉林大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "卫生事业管理及相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://sph.jlu.edu.cn/",
+    "admissionsUrl": "https://sph.jlu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://sph.jlu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-39",
+    "school": "郑州大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "卫生管理与健康服务"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.zzu.edu.cn/",
+    "admissionsUrl": "https://www.zzu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.zzu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-40",
+    "school": "重庆医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "卫生事业管理及健康服务"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.cqmu.edu.cn/",
+    "admissionsUrl": "https://www.cqmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.cqmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-41",
+    "school": "福建医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "社会医学与卫生事业管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.fjmu.edu.cn/",
+    "admissionsUrl": "https://www.fjmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.fjmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-42",
+    "school": "温州医科大学",
+    "department": "公共卫生与管理学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生与管理学科交叉"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.wmu.edu.cn/",
+    "admissionsUrl": "https://www.wmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.wmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-43",
+    "school": "杭州师范大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "健康管理",
+      "公共卫生与健康服务"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.hznu.edu.cn/",
+    "admissionsUrl": "https://www.hznu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.hznu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-44",
+    "school": "南通大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "卫生政策与管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.ntu.edu.cn/",
+    "admissionsUrl": "https://www.ntu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.ntu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-45",
+    "school": "徐州医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "卫生管理与区域健康服务"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.xzhmu.edu.cn/",
+    "admissionsUrl": "https://www.xzhmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.xzhmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-46",
+    "school": "大连医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生与卫生事业管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.dmu.edu.cn/",
+    "admissionsUrl": "https://www.dmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.dmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-47",
+    "school": "昆明医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "卫生管理与区域卫生服务"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.kmmu.edu.cn/",
+    "admissionsUrl": "https://www.kmmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.kmmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-48",
+    "school": "贵州医科大学",
+    "department": "公共卫生与健康学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "健康服务与卫生管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.gmc.edu.cn/",
+    "admissionsUrl": "https://www.gmc.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.gmc.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-49",
+    "school": "广西医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生与卫生事业管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.gxmu.edu.cn/",
+    "admissionsUrl": "https://www.gxmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.gxmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-50",
+    "school": "新疆医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生与区域健康服务研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.xjmu.edu.cn/",
+    "admissionsUrl": "https://www.xjmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.xjmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-51",
+    "school": "宁夏医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生与卫生管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.nxmu.edu.cn/",
+    "admissionsUrl": "https://www.nxmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.nxmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-52",
+    "school": "兰州大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "卫生政策与健康管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://sph.lzu.edu.cn/",
+    "admissionsUrl": "https://sph.lzu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://sph.lzu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-53",
+    "school": "厦门大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生与预防医学",
+      "健康服务相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://sph.xmu.edu.cn/",
+    "admissionsUrl": "https://sph.xmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://sph.xmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-54",
+    "school": "南昌大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "社会医学与健康管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.ncu.edu.cn/",
+    "admissionsUrl": "https://www.ncu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.ncu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-56",
+    "school": "南华大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "卫生服务管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.usc.edu.cn/",
+    "admissionsUrl": "https://www.usc.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.usc.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-57",
+    "school": "山西医科大学",
+    "department": "管理学院 / 公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "健康服务管理与公共卫生交叉"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.sxmu.edu.cn/",
+    "admissionsUrl": "https://www.sxmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.sxmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-58",
+    "school": "河北医科大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "公共卫生",
+      "卫生管理相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.hebmu.edu.cn/",
+    "admissionsUrl": "https://www.hebmu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.hebmu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-60",
+    "school": "上海健康医学院",
+    "department": "健康管理相关院系",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "健康服务与管理",
+      "应用型卫生人才培养"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.sumhs.edu.cn/",
+    "admissionsUrl": "https://www.sumhs.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.sumhs.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-61",
+    "school": "北京师范大学",
+    "department": "政府管理学院 / 社会发展与公共政策学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "社会保障",
+      "公共政策与健康相关社会政策"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.bnu.edu.cn/",
+    "admissionsUrl": "https://www.bnu.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.bnu.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-62",
+    "school": "中央财经大学",
+    "department": "保险学院及相关院系",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "社会保障",
+      "保险与健康经济相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.cufe.edu.cn/",
+    "admissionsUrl": "https://www.cufe.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.cufe.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-63",
+    "school": "对外经济贸易大学",
+    "department": "保险学院",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "健康保险",
+      "保险经济与风险管理"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.uibe.edu.cn/",
+    "admissionsUrl": "https://www.uibe.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.uibe.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-64",
+    "school": "西南财经大学",
+    "department": "保险学院及相关院系",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "社会保障",
+      "健康保险与卫生经济相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.swufe.edu.cn/",
+    "admissionsUrl": "https://www.swufe.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.swufe.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-65",
+    "school": "中南财经政法大学",
+    "department": "公共管理学院等",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "社会保障",
+      "公共政策与健康相关制度研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.zuel.edu.cn/",
+    "admissionsUrl": "https://www.zuel.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.zuel.edu.cn/"
+      }
+    ]
+  },
+  {
+    "id": "catalog-school-66",
+    "school": "南开大学",
+    "department": "周恩来政府管理学院等",
+    "region": "中国内地 · 扩展导航",
+    "route": "内地",
+    "focus": [
+      "社会保障",
+      "社会政策与老龄健康相关研究"
+    ],
+    "programs": [
+      "院系与方向导航；学位层次、专业代码和当年招生计划须到官网核对"
+    ],
+    "officialUrl": "https://www.nankai.edu.cn/",
+    "admissionsUrl": "https://www.nankai.edu.cn/",
+    "admissionsNote": "来自原站扩展院校机构目录，现接入院校检索。未据学校或院系名称推定博士点、招生资格或名额；请从官网进入研究生招生栏目核对。",
+    "legacy": true,
+    "sources": [
+      {
+        "label": "官方机构入口",
+        "url": "https://www.nankai.edu.cn/"
+      }
+    ]
   }
 ]
