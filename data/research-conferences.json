@@ -1,0 +1,380 @@
+[
+  {
+    "id": "ihea-congress",
+    "name": "iHEA World Congress on Health Economics",
+    "organizer": "International Health Economics Association（iHEA）；2027年由智利大学承办",
+    "category": "卫生经济",
+    "type": "学术会议",
+    "focus": [
+      "卫生经济学方法",
+      "卫生政策与卫生体系",
+      "卫生经济评价与资源配置"
+    ],
+    "eventLabel": "第17届世界卫生经济学大会 · iHEA 2027",
+    "startDate": "2027-07-11",
+    "endDate": "2027-07-14",
+    "location": "智利圣地亚哥，Universidad de Chile（智利大学）",
+    "officialUrl": "https://www.healtheconomics.org/congress/",
+    "submissionUrl": "https://healtheconomics.confex.com/healtheconomics/2027/cfp.cgi",
+    "submissionStatus": "开放",
+    "submissionNote": "截至2026-10-23，个人摘要与组织场次投稿开放；截止2026-11-10 23:59 UTC（北京时间2026-11-11 07:59）。个人摘要上限500词，针对尚未发表的研究。主会为7月11—14日；官网整体活动日程含7月10—11日会前活动。投稿链接由主办方官网提供，登录后实际提交流程未操作。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "iHEA官方大会页：日期、地点、投稿范围和截止时间",
+        "url": "https://www.healtheconomics.org/congress/"
+      },
+      {
+        "label": "iHEA官方摘要说明会公告：确认2027投稿开放及截止时间",
+        "url": "https://www.healtheconomics.org/event/abstract-submission-information-session-session-1-americas-europe-africa/"
+      }
+    ]
+  },
+  {
+    "id": "euhea-conference",
+    "name": "EuHEA Conference",
+    "organizer": "European Health Economics Association（EuHEA）；2026年由Erasmus Centre for Health Economics Rotterdam（EsCHER）承办",
+    "category": "卫生经济",
+    "type": "学术会议",
+    "focus": [
+      "卫生经济实证研究",
+      "卫生政策与实践",
+      "卫生经济学方法"
+    ],
+    "eventLabel": "EuHEA Conference 2026 · Bridging health economics excellence in research & practice",
+    "startDate": "2026-07-15",
+    "endDate": "2026-07-17",
+    "location": "荷兰鹿特丹，Erasmus University Rotterdam，Campus Woudestein",
+    "officialUrl": "https://euhea.eu/welcome_conference_2026.html",
+    "submissionUrl": "https://euhea.eu/call_for_abstracts_conference_2026.html",
+    "submissionStatus": "已截止",
+    "submissionNote": "官方具体会议征稿页列明摘要及组织场次截止2026-02-08；截至2026-10-23已过截止日和会期。主会7月15—17日，7月14日为会前活动。此条保留最近核实的双年大会资料入口；未核实到下一届大会的正式征稿，不能套用另一个EuHEA PhD & Supervisor系列的日期。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "EuHEA官方2026会议介绍与关键日期",
+        "url": "https://euhea.eu/welcome_conference_2026.html"
+      },
+      {
+        "label": "EuHEA官方2026征稿页",
+        "url": "https://euhea.eu/call_for_abstracts_conference_2026.html"
+      },
+      {
+        "label": "EuHEA官方场地说明",
+        "url": "https://euhea.eu/venue_conference_2026.html"
+      }
+    ]
+  },
+  {
+    "id": "icmc",
+    "name": "International Choice Modelling Conference（ICMC）",
+    "organizer": "ICMC Steering Committee；2026年由The University of Queensland（昆士兰大学）承办",
+    "category": "偏好与选择",
+    "type": "学术会议",
+    "focus": [
+      "离散与连续选择模型",
+      "实验设计、陈述偏好与显示偏好",
+      "患者偏好、健康政策及跨领域应用"
+    ],
+    "eventLabel": "第9届ICMC · ICMC 2026 · Connections",
+    "startDate": "2026-07-20",
+    "endDate": "2026-07-22",
+    "location": "澳大利亚昆士兰州黄金海岸，Sheraton Grand Mirage Resort",
+    "officialUrl": "https://www.icmc2026.com/",
+    "submissionUrl": "https://www.icmc2026.com/abstracts",
+    "submissionStatus": "已截止",
+    "submissionNote": "2026会议官网征稿页要求2—3页扩展摘要，截止2026-02-15，使用EasyChair；截至2026-10-23截止日和会期均已过，官网已说明会议结束。采用具体会议官网的2月15日，未沿用系列页面较早的1月15日。未核实到下一届正式征稿。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "ICMC 2026官方主页：会期、场地和会议结束状态",
+        "url": "https://www.icmc2026.com/"
+      },
+      {
+        "label": "ICMC 2026官方征稿页：承办方、主题、摘要要求及截止日",
+        "url": "https://www.icmc2026.com/abstracts"
+      },
+      {
+        "label": "ICMC系列委员会相关官方大学页面",
+        "url": "https://cmc.leeds.ac.uk/activities/icmc/"
+      }
+    ]
+  },
+  {
+    "id": "iahpr-meeting",
+    "name": "International Academy of Health Preference Research（IAHPR）Annual Meeting",
+    "organizer": "International Academy of Health Preference Research（IAHPR）",
+    "category": "偏好与选择",
+    "type": "学术会议",
+    "focus": [
+      "健康偏好研究",
+      "患者偏好证据",
+      "偏好在卫生技术评估与政策中的应用"
+    ],
+    "eventLabel": "第17届IAHPR年会 · 2026",
+    "startDate": "2026-10-05",
+    "endDate": "2026-10-07",
+    "location": "新加坡，Duke-NUS Medical School（杜克—新加坡国立大学医学院）",
+    "officialUrl": "https://iahpr.org/meetings/",
+    "submissionUrl": "https://iahpr.org/meetings/",
+    "submissionStatus": "已截止",
+    "submissionNote": "主办方会议页列明摘要截止2026-04-30、会期2026-10-05至10-07；截至2026-10-23均已过去，不能根据页面仍保留邀请措辞判断可投稿。未核实到下一届正式会议日期或征稿，保留官方系列入口。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "IAHPR官方会议页：第17届日期、场地、摘要截止和偏好研究方向",
+        "url": "https://iahpr.org/meetings/"
+      }
+    ]
+  },
+  {
+    "id": "ispor-global",
+    "name": "ISPOR国际会议（全球会议）",
+    "organizer": "ISPOR—The Professional Society for Health Economics and Outcomes Research",
+    "category": "卫生经济",
+    "type": "学术会议",
+    "focus": [
+      "卫生经济与结局研究（HEOR）",
+      "卫生技术评估与医疗决策",
+      "真实世界证据与患者相关结局"
+    ],
+    "eventLabel": "ISPOR 2027",
+    "startDate": "2027-05-23",
+    "endDate": "2027-05-26",
+    "location": "美国科罗拉多州丹佛，Colorado Convention Center",
+    "officialUrl": "https://www.ispor.org/conferences-education/conferences/upcoming-conferences/ispor-2027",
+    "submissionUrl": "https://www.ispor.org/conferences-education/conferences/upcoming-conferences/ispor-2027/abstract-information",
+    "submissionStatus": "开放",
+    "submissionNote": "仅Session Proposal（Issue Panel、Workshop等场次提案）当前开放，截止2026-12-11 23:59美国东部时间。研究摘要尚未开放：官方计划2026-10-30开放，2027-01-08 23:59美国东部时间截止。请勿把本条“开放”理解为2026-10-23已能提交研究摘要；应按投稿类型分别判断。本条选择最近即将举行的全球会议。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "ISPOR官方后续会议目录：日期、场地和分类型投稿时间",
+        "url": "https://www.ispor.org/conferences-education/conferences/upcoming-conferences"
+      },
+      {
+        "label": "ISPOR 2027官方摘要与场次提案说明",
+        "url": "https://www.ispor.org/conferences-education/conferences/upcoming-conferences/ispor-2027/abstract-information"
+      },
+      {
+        "label": "ISPOR 2027官方会议主页",
+        "url": "https://www.ispor.org/conferences-education/conferences/upcoming-conferences/ispor-2027"
+      }
+    ]
+  },
+  {
+    "id": "ispor-europe",
+    "name": "ISPOR Europe",
+    "organizer": "ISPOR—The Professional Society for Health Economics and Outcomes Research",
+    "category": "卫生经济",
+    "type": "学术会议",
+    "focus": [
+      "卫生经济与结局研究（HEOR）",
+      "欧洲卫生政策与卫生技术评估",
+      "医疗价值、可及性与患者结局"
+    ],
+    "eventLabel": "ISPOR Europe 2026",
+    "startDate": "2026-11-08",
+    "endDate": "2026-11-11",
+    "location": "奥地利维也纳，Austria Center Vienna",
+    "officialUrl": "https://www.ispor.org/conferences-education/conferences/upcoming-conferences/ispor-europe-2026",
+    "submissionUrl": "https://www.ispor.org/conferences-education/conferences/upcoming-conferences",
+    "submissionStatus": "已截止",
+    "submissionNote": "截至2026-10-23，官方明确标注研究摘要、场次提案和HEOR Impact Case投稿全部关闭，虽然会议尚未举行且可报名。此条采用最近即将举行的2026届；官网另列2027-11-14至11-17米兰及2028-10-29至11-01哥本哈根会期，但本次未核实这些后续届次的正式征稿时间。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "ISPOR官方后续会议目录：2026会期、场地和三类投稿关闭状态",
+        "url": "https://www.ispor.org/conferences-education/conferences/upcoming-conferences"
+      },
+      {
+        "label": "ISPOR Europe 2026官方会议主页",
+        "url": "https://www.ispor.org/conferences-education/conferences/upcoming-conferences/ispor-europe-2026"
+      }
+    ]
+  },
+  {
+    "id": "who-wha",
+    "name": "WHO World Health Assembly｜世界卫生大会",
+    "organizer": "世界卫生组织（WHO）；由会员国代表团参加",
+    "category": "全球健康与政策",
+    "type": "政策会议",
+    "focus": [
+      "全球卫生政策",
+      "卫生治理",
+      "WHO规划与预算",
+      "会员国卫生议程"
+    ],
+    "eventLabel": "第80届世界卫生大会（WHA80，2027）",
+    "startDate": "2027-05-23",
+    "endDate": "2027-05-30",
+    "location": "瑞士·日内瓦",
+    "officialUrl": "https://www.who.int/about/governance/world-health-assembly",
+    "submissionUrl": "https://www.who.int/about/governance/world-health-assembly",
+    "submissionStatus": "不适用",
+    "submissionNote": "WHO官方会议日历已列出2027年5月23–30日。WHA是WHO决策机构的政策大会，不是常规论文或博士论文摘要投稿会议；参会、非国家行为体参与及相关活动须分别遵循WHO官方规则。此入口用于跟踪政策议程，不提供通用论文投稿。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "WHO：世界卫生大会性质与职能",
+        "url": "https://www.who.int/about/governance/world-health-assembly"
+      },
+      {
+        "label": "WHO：治理机构会议日历（2027年WHA80）",
+        "url": "https://apps.who.int/gb/gov/en/dates-of-meetings-eb_en.html"
+      }
+    ]
+  },
+  {
+    "id": "geneva-health-forum",
+    "name": "Geneva Health Forum｜日内瓦卫生论坛",
+    "organizer": "Geneva Health Forum及其合作机构；由日内瓦大学（UNIGE）与日内瓦大学医院（HUG）共同创立",
+    "category": "全球健康与政策",
+    "type": "论坛",
+    "focus": [
+      "全球卫生合作",
+      "健康促进",
+      "社区参与",
+      "冲突与危机中的医疗服务可及性"
+    ],
+    "eventLabel": "Geneva Health Forum Conference 2026",
+    "startDate": "2026-11-10",
+    "endDate": "2026-11-12",
+    "location": "瑞士·日内瓦，Campus Biotech",
+    "officialUrl": "https://genevahealthforum.com/",
+    "submissionUrl": "https://conference2026.genevahealthforum.com/call-for-posters/",
+    "submissionStatus": "已截止",
+    "submissionNote": "2026届主题为Rethinking Cooperation in Global Health。官方海报征集期为7月1日至9月15日，面向研究者、卫生从业者及博士/硕士生等；截至核验日征集期已过。海报征集与参会注册是两个流程。GHF由UNIGE与HUG创立，不应写成WHO主办；11月主论坛也应与5月WHA期间的GHF活动区分。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "GHF：2026届日期、地点及主题",
+        "url": "https://conference2026.genevahealthforum.com/about-the-conference/"
+      },
+      {
+        "label": "GHF：官方海报征集与截止日期",
+        "url": "https://conference2026.genevahealthforum.com/call-for-posters/"
+      },
+      {
+        "label": "GHF：创立机构及组织定位",
+        "url": "https://conference2026.genevahealthforum.com/who-we-are/"
+      },
+      {
+        "label": "HUG：GHF官方介绍",
+        "url": "https://www.hug.ch/engagement-humanitaire-cooperation-internationale/geneva-health-forum"
+      }
+    ]
+  },
+  {
+    "id": "world-health-summit",
+    "name": "World Health Summit｜世界卫生峰会（柏林年会）",
+    "organizer": "WHS Foundation GmbH（官网列于Charité – Universitätsmedizin Berlin）",
+    "category": "全球健康与政策",
+    "type": "论坛",
+    "focus": [
+      "全球卫生治理",
+      "卫生体系韧性",
+      "健康创新",
+      "卫生公平",
+      "跨部门合作"
+    ],
+    "eventLabel": "World Health Summit 2026（已结束）",
+    "startDate": "2026-10-11",
+    "endDate": "2026-10-13",
+    "location": "德国·柏林及线上",
+    "officialUrl": "https://www.worldhealthsummit.org/",
+    "submissionUrl": "https://www.worldhealthsummit.org/",
+    "submissionStatus": "未核实",
+    "submissionNote": "最近核实的柏林年会于2026年10月11–13日举办，主题为From Crisis to Resilience: Innovating for Health，现已结束。尚未核实下一届柏林年会日期或面向一般研究者的开放摘要征集；官网参会、合作及专题活动入口不等同于论文投稿。此峰会在德国柏林，不应标为瑞士WHO峰会；区域会议另有举办地与安排。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "WHS：2026届日期、举办地与回顾",
+        "url": "https://www.worldhealthsummit.org/"
+      },
+      {
+        "label": "WHS：组织定位与柏林年会",
+        "url": "https://www.worldhealthsummit.org/about/our-organisation"
+      },
+      {
+        "label": "WHS：官方运营主体",
+        "url": "https://www.worldhealthsummit.org/meta/imprint"
+      }
+    ]
+  },
+  {
+    "id": "gsa-annual-scientific-meeting",
+    "name": "GSA Annual Scientific Meeting｜美国老年学会年度科学会议",
+    "organizer": "The Gerontological Society of America（GSA）",
+    "category": "老龄与卫生服务",
+    "type": "学术会议",
+    "focus": [
+      "老龄健康",
+      "行为与社会科学",
+      "健康科学",
+      "老龄社会政策与实践",
+      "老年学教育"
+    ],
+    "eventLabel": "GSA 2026 Annual Scientific Meeting",
+    "startDate": "2026-11-04",
+    "endDate": "2026-11-07",
+    "location": "美国·马里兰州National Harbor，Gaylord National Resort & Convention Center",
+    "officialUrl": "https://www.gsa2026.org/",
+    "submissionUrl": "https://www.gsa2026.org/abstracts",
+    "submissionStatus": "已截止",
+    "submissionNote": "2026届常规摘要征集为2月1日至3月5日，late-breaking摘要为7月7日至8月13日，均已截止；参会注册开放不代表摘要仍可提交。官网同时预告2027年会于11月3–6日在亚利桑那州Phoenix举办；本次未核实2027届摘要征集时间与独立入口，不能沿用2026年的截止日期。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "GSA：2026会议官网及2027年会预告",
+        "url": "https://www.gsa2026.org/"
+      },
+      {
+        "label": "GSA：2026常规及late-breaking摘要征集",
+        "url": "https://www.gsa2026.org/abstracts"
+      },
+      {
+        "label": "GSA：2026会议日期和地点",
+        "url": "https://www.gsa2026.org/Registration/Continuing-Education-Credits"
+      }
+    ]
+  },
+  {
+    "id": "academyhealth-arm",
+    "name": "AcademyHealth Annual Research Meeting｜卫生服务研究年会",
+    "organizer": "AcademyHealth",
+    "category": "老龄与卫生服务",
+    "type": "学术会议",
+    "focus": [
+      "卫生服务研究",
+      "卫生政策",
+      "卫生体系与健康结局",
+      "实施研究",
+      "健康公平",
+      "患者与社区参与"
+    ],
+    "eventLabel": "2026 Annual Research Meeting（已结束；下一届待官方核实）",
+    "startDate": "2026-05-30",
+    "endDate": "2026-06-02",
+    "location": "美国·华盛顿州西雅图，Seattle Convention Center",
+    "officialUrl": "https://academyhealth.org/",
+    "submissionUrl": "https://academyhealth.confex.com/academyhealth/2026arm/cfp.cgi",
+    "submissionStatus": "已截止",
+    "submissionNote": "官方投稿平台可核实的2026届主题为Rigor & Relevance Driving Action，提供研究摘要、专题小组与学生海报，经同行评审后线下展示；常规截止为2026年1月6日17:00（美国东部时间），late-breaking截止为3月11日17:00，页面已标注关闭。主站在本次核验中访问受限，未能由主办方页面确证2027届日期、地点或征稿状态；这里保留2026届已核实信息，不把第三方会议信息写成官方确认。官方Confex旧链接现重定向至m-anage投稿平台。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "AcademyHealth官方投稿平台：2026届日期、地点、摘要类型与截止时间",
+        "url": "https://academyhealth.confex.com/academyhealth/2026arm/cfp.cgi"
+      },
+      {
+        "label": "官方投稿平台当前重定向地址",
+        "url": "https://studio.m-anage.com/academyhealth/2026arm/cfp.cgi"
+      },
+      {
+        "label": "AcademyHealth主办方官网",
+        "url": "https://academyhealth.org/"
+      }
+    ]
+  }
+]

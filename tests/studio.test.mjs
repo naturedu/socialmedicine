@@ -56,3 +56,18 @@ test('homepage labels and built-in asset links resolve',async()=>{
  const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length);
  for(const [,href]of html.matchAll(/(?:src|href)="([^"#]+)"/g))if(!/^[a-z][a-z0-9+.-]*:/i.test(href))await access(new URL(href.split('#')[0],root));
 });
+
+test('teacher contact records preserve qualification sources and admission uncertainty',async()=>{
+ const records=await json('research-mentors'),schools=await json('research-schools');
+ for(const group of records){
+  assert.ok(schools.some(s=>s.id===group.id));
+  for(const m of group.mentors){
+   assert.match(m.url,/^https:\/\//);assert.ok(m.qualificationNote);
+   if(m.email){assert.match(m.email,/^[^\s@]+@[^\s@]+\.[^\s@]+$/);assert.ok(m.evidence.some(e=>e.url===m.contactSourceUrl));}
+  }
+ }
+ const liu=records.find(s=>s.id==='pku-nsd').mentors.find(m=>m.name==='刘国恩');
+ assert.match(liu.title,/退休/);assert.match(liu.qualificationNote,/不能.*(?:认定|作为)/);
+ const playbook=await json('sci-playbook');assert.equal(playbook.stages.length,8);
+ for(const stage of playbook.stages)for(const skill of stage.skills)if(skill.url)await access(new URL(skill.url,root));
+});

@@ -6,7 +6,7 @@
 - 尚未接入模型 API。路线使用本地规则；检索为关键词与双语词表匹配。任务书需由用户粘贴到自己的 ChatGPT / Claude。
 - PDF.js 在浏览器本地解析 PDF 并以 IndexedDB 保存文本。25 MB / 300 页限制；扫描件需 OCR；可清除索引。
 - 期刊库区分题录、摘要与许可允许的片段；博士论文题录不等于已入库全文。方法代码为教学模板，并非已在真实数据验证的结果。
-- 院系方向与招生入口保留；按用户最新要求，本版不发布导师个人卡片及导师 Skill。
+- 院系方向与招生入口保留。教师介绍与官方公开联系入口置于院系详情的折叠区；区分已载明的博士指导身份、相关研究教师和当年招生资格，不生成个人能力评价。
 - 完整资源入口包含原站方法、理论、数据库、期刊、机构、图表、医保制度史、盖茨基金会及教育部项目目录。
 - `data/studio-journals.json` 中的周期保留定义、来源及核对日期。缺少年度依据的 JCR / 中科院分区显示待核实，不用 SJR 或期刊品牌替代。
 
@@ -70,32 +70,24 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cel
 
 感谢华中科技大学医药卫生管理学院对我的帮助。
 
-## 方法逻辑扩充（2026-10-23）
 
-原有12份完整Skill书架扩充为27份，速查54→89种方法，新增15个专题；原有其他资源与绿色工作台均保留。
+## 绿色科研入口的补充
 
-[方法逻辑地图](guides/method-map.html) · [分类教程与搜索](method-garden.html#methods)。新增PSM、聚类、交错DID、计量模型、NMA、伞状综述、TTE、Monte Carlo，以及SDID/DML、政策文本、医疗AI、纵向数据、模拟选型、实施公平与研究流程。
+主站使用绿色工作台，AI 目标输入置于研究入口。完整旧目录保留在 `classic.html` 与各专题页面。新增国际会议的会期、状态和投稿说明均记录核验日期；SCI 使用指南提供八阶段技巧、检查和模板。
 
-核心主线：研究问题→估计目标→数据结构→识别假设→模型→诊断与解释。代码明确区分教学模拟与真实数据接口，R/Stata未逐项执行。来源见[data/method-sources.json](data/method-sources.json)。
+页脚可复制带访问日期的本站引用。已连接公开访问统计服务，仅发送固定页面标识、预定义按钮或 Skill 事件与随机事件编号；不发送问题、PDF、邮箱或查询内容。脚本失效不影响研究与检索。统计是页面访问与点击计数，不代表独立用户、成功下载或研究成果。
 
-静态阅读页重建：安装`requirements-docs.txt`后运行`python scripts/build_guides.py`。历史对话仅用于归纳通用主题，公开内容不含原始聊天和私人项目数据。
 
-## 全部资料与旧版核对
+## 方法、政策与数据库扩充
 
-[全部资料柜](all-materials.html)跨目录检索旧站与新版的公开材料，可展开每条完整字段。原25个数据入口、12所院校、48条期刊、19篇选刊指南、34条理论与旧站文件均保留；见[data/preservation-audit.json](data/preservation-audit.json)。目录间有交叉，记录总数不是去重文献数。
+[方法逻辑地图](guides/method-map.html)按问题→估计目标→数据结构→识别假设→模型→诊断选方法。完整Skill书架42份、速查89条、代码286段，保留原有12份专题；静态阅读页60个，R/Stata接口未逐项执行。
 
-## 全部资料与旧版核对
+[政策主题库](policy-topics.html)包含14个主题、27个官方文件/入口，重点展开长期护理保险、家庭病床、居家医疗和支付组织改革。发文、生效、地方规则与真实执行分开；变量和机制为研究建议。
 
-[全部资料柜](all-materials.html)跨目录检索旧站与新版的公开材料，可展开每条完整字段。原25个数据入口、12所院校、48条期刊、19篇选刊指南、34条理论与旧站文件均保留；见[data/preservation-audit.json](data/preservation-audit.json)。目录间有交叉，记录总数不是去重文献数。
-
-## 政策主题库
-
-[14个政策主题](policy-topics.html)与27个官方文件/入口，重点提供长护险、家庭病床深度指南。完整Skill书架增至29份，方法速查仍为89条。文件版本、政策意图、地方规则和实际执行分别说明；研究变量/机制为分析建议。
+[数据库小花园](database-skills.html)包含20张数据库/扩展卡片、13份专属或组合Skill、31个官方文档/入口。CHARLS、CLHLS、HRS、ELSA、SHARE、KLoSA、LASI、MHAS、NHANES及其他家族/调查按本机元数据核验或官方文档补充分别标记。跨国协调、权重、跳题、测量与费用口径给出具体路线。公共卡片不含个体记录与私人路径。
 
 ## 全部资料与旧版核对
 
-[全部资料柜](all-materials.html)跨目录检索旧站与新版的公开材料，可展开每条完整字段。原25个数据入口、12所院校、48条期刊、19篇选刊指南、34条理论与旧站文件均保留；见[data/preservation-audit.json](data/preservation-audit.json)。目录间有交叉，记录总数不是去重文献数。
+[全部资料柜](all-materials.html)跨目录检索历版公开材料，保留完整字段与来源；目录间有交叉，记录数不能作去重文献数。原25个数据入口、12所院校、48条期刊、19篇选刊指南与34条理论均保留；[保留对照](data/preservation-audit.json)记录历史核对。CSSCI原100条语料恢复为[历史归档](papers-archive.html)，与当前4条专题筛选版并存。
 
-## 数据库Skills增补
-
-[数据库小花园](database-skills.html)新增20张数据库/扩展卡片与13份专属或组合Skill：CHARLS、CLHLS、HRS、ELSA、SHARE、KLoSA、LASI、MHAS、NHANES，以及跨国协调、CFPS/CHNS/NHIS、医保临床费用和家族扩展。核对本机字段/波次与官方目录补充分开标注，未执行的R/Stata接口明确说明。当前完整书架42份，代码286段，静态阅读页60个；速查方法89条不变。公共卡片不含微观数据或本机私人路径。
+修改Skill后运行`python scripts/build_guides.py`生成阅读页，修改目录后运行`python scripts/build_material_index.py`与`python scripts/build_data_bundle.py`。新增面板元数据审计脚本见`skills/scripts/audit_panel.py`，不输出受访者键值。

@@ -1,5 +1,32 @@
 [
   {
+    "id": "pku-nsd",
+    "school": "北京大学",
+    "department": "国家发展研究院（北大国发）",
+    "region": "北京",
+    "route": "内地",
+    "focus": [
+      "健康与发展经济学",
+      "卫生经济",
+      "医疗体制改革",
+      "应用经济学",
+      "健康老龄化"
+    ],
+    "programs": [
+      "研究生博士项目：专业、方向与招生资格以当年招生目录为准"
+    ],
+    "officialUrl": "https://nsd.pku.edu.cn/",
+    "admissionsUrl": "https://nsd.pku.edu.cn/jxxm/yjs/zszl/index.htm",
+    "admissionsNote": "国家发展研究院与公共卫生学院是不同培养单位。导师职称或历史指导经历不等于当年招生资格；请核对招生专栏、研究生院目录与正式导师名单。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "国发院招生专栏",
+        "url": "https://nsd.pku.edu.cn/jxxm/yjs/zszl/index.htm"
+      }
+    ]
+  },
+  {
     "id": "sysu-guangzhou",
     "school": "中山大学",
     "department": "公共卫生学院（广州校区）·卫生管理学系",
