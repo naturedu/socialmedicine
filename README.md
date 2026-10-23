@@ -69,3 +69,10 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cel
 原有公开作者：杜思娴（Du Sixian）。引用：Du, S. (2026). *Puxian: A research assistant for social medicine and health management* [Web application]. https://naturedu.github.io/socialmedicine/.
 
 感谢华中科技大学医药卫生管理学院对我的帮助。
+
+
+## 绿色科研入口的补充
+
+主站使用绿色工作台，AI 目标输入置于研究入口。完整旧目录保留在 `classic.html` 与各专题页面。新增国际会议的会期、状态和投稿说明均记录核验日期；SCI 使用指南提供八阶段技巧、检查和模板。
+
+页脚可复制带访问日期的本站引用。已连接公开访问统计服务，仅发送固定页面标识、预定义按钮或 Skill 事件与随机事件编号；不发送问题、PDF、邮箱或查询内容。脚本失效不影响研究与检索。统计是页面访问与点击计数，不代表独立用户、成功下载或研究成果。
