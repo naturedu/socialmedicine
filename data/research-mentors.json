@@ -1,0 +1,446 @@
+[
+  {
+    "id": "sysu-guangzhou",
+    "checked": "2026-10-23",
+    "mentors": [
+      {
+        "id": "sysu-huang-yixiang",
+        "name": "黄奕祥",
+        "title": "官网确认博士生导师",
+        "unit": "公共卫生学院·卫生管理学系",
+        "research": [
+          "卫生经济与政策",
+          "卫生健康服务整合",
+          "卫生健康发展战略与规划"
+        ],
+        "url": "https://sph.sysu.edu.cn/teacher/390",
+        "email": "huangyx@mail.sysu.edu.cn",
+        "qualificationNote": "学院教师主页明确为教授、博士生导师。导师身份不等于已确认当年度招生名额。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://sph.sysu.edu.cn/teacher/390"
+          }
+        ],
+        "contactSourceUrl": "https://sph.sysu.edu.cn/teacher/390"
+      },
+      {
+        "id": "sysu-yang-lianping",
+        "name": "杨廉平",
+        "title": "官网确认博士生导师",
+        "unit": "公共卫生学院·卫生管理学系",
+        "research": [
+          "公共卫生政策与管理",
+          "气候变化卫生体系应对",
+          "药物政策与药物经济学",
+          "统计建模及卫生管理应用"
+        ],
+        "url": "https://sph.sysu.edu.cn/node/406",
+        "email": "yanglp7@mail.sysu.edu.cn",
+        "qualificationNote": "学院教师主页明确为副教授、硕士生导师、博士生导师；本目录不作当年度录取或名额承诺。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://sph.sysu.edu.cn/node/406"
+          }
+        ],
+        "contactSourceUrl": "https://sph.sysu.edu.cn/node/406"
+      }
+    ]
+  },
+  {
+    "id": "sysu-shenzhen-biosafety",
+    "checked": "2026-10-23",
+    "mentors": [
+      {
+        "id": "sysu-du-xiangjun",
+        "name": "杜向军",
+        "title": "官网确认博士生导师",
+        "unit": "生物安全学院·卫生统计学与系统生物学教研室",
+        "research": [
+          "传染病分子演化与传播",
+          "系统融合建模及预测预警",
+          "公共卫生与医学大数据",
+          "流行病与卫生统计学、生物信息学"
+        ],
+        "url": "https://phs.sysu.edu.cn/zh-hans/node/83",
+        "email": "duxj9@mail.sysu.edu.cn",
+        "qualificationNote": "当前官网明确为生物安全学院教授、博士生导师；原公共卫生学院（深圳）已更名，勿归入广州卫生管理学系。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://phs.sysu.edu.cn/zh-hans/node/83"
+          }
+        ],
+        "contactSourceUrl": "https://phs.sysu.edu.cn/zh-hans/node/83"
+      }
+    ]
+  },
+  {
+    "id": "cuhk-public-health",
+    "checked": "2026-10-23",
+    "mentors": [
+      {
+        "id": "cuhk-yeoh-eng-kiong",
+        "name": "杨永强（Eng-kiong YEOH）",
+        "title": "博士指导记录已核实",
+        "unit": "赛马会公共卫生及基层医疗学院·卫生系统及政策研究中心",
+        "research": [
+          "卫生系统、服务与政策",
+          "复杂卫生系统的系统思维",
+          "社会与老年服务"
+        ],
+        "url": "https://sphpc.cuhk.edu.hk/engkiongyeoh/?lang=zh-hant",
+        "email": "yeoh_ek@cuhk.edu.hk",
+        "qualificationNote": "现任Research Professor；学院研究生项目官网列有其博士生指导记录。香港项目导师制度与内地称谓不同，此处不据教授头衔推断招生资格，也不承诺当年度名额。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://sphpc.cuhk.edu.hk/engkiongyeoh/?lang=zh-hant"
+          },
+          {
+            "label": "学院研究生项目及博士生指导记录",
+            "url": "https://sphpc.cuhk.edu.hk/rpg-programme/"
+          }
+        ],
+        "contactSourceUrl": "https://sphpc.cuhk.edu.hk/engkiongyeoh/?lang=zh-hant"
+      },
+      {
+        "id": "cuhk-wong-eliza",
+        "name": "黄丽仪（Eliza Lai-yi WONG）",
+        "title": "博士指导记录已核实",
+        "unit": "赛马会公共卫生及基层医疗学院",
+        "research": [
+          "患者报告结局、患者体验",
+          "偏好型健康相关生命质量",
+          "以患者为中心的卫生服务",
+          "代际关系与健康"
+        ],
+        "url": "https://sphpc.cuhk.edu.hk/elizawong/",
+        "email": "lywong@cuhk.edu.hk",
+        "qualificationNote": "现任Professor及Associate Director (Teaching and Learning)；学院研究生项目官网列有其博士生指导记录。不代表当年度可接收新生。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://sphpc.cuhk.edu.hk/elizawong/"
+          },
+          {
+            "label": "学院研究生项目及博士生指导记录",
+            "url": "https://sphpc.cuhk.edu.hk/rpg-programme/"
+          }
+        ],
+        "contactSourceUrl": "https://sphpc.cuhk.edu.hk/elizawong/"
+      }
+    ]
+  },
+  {
+    "id": "hku-public-health",
+    "checked": "2026-10-23",
+    "mentors": [
+      {
+        "id": "hku-bishai-david",
+        "name": "贝大为（David Makram BISHAI）",
+        "title": "未核实",
+        "unit": "公共卫生学院·卫生经济、政策与管理学分部",
+        "research": [
+          "全球公共卫生活动绩效与筹资",
+          "基层医疗",
+          "疫苗卫生经济学",
+          "健康差异"
+        ],
+        "url": "https://sph.hku.hk/zh-HK/Biography/Bishai-David-Makram",
+        "email": "dbishai@hku.hk",
+        "qualificationNote": "学院官网核实Clinical Professor及学分部任职；本次未找到可直接确证其当前HKU博士指导资格的官方名单，不能仅凭职称视为已确认博士生导师。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://sph.hku.hk/zh-HK/Biography/Bishai-David-Makram"
+          }
+        ],
+        "contactSourceUrl": "https://sph.hku.hk/zh-HK/Biography/Bishai-David-Makram"
+      },
+      {
+        "id": "hku-espinoza-manuel",
+        "name": "Manuel Antonio ESPINOZA",
+        "title": "未核实",
+        "unit": "公共卫生学院·卫生经济、政策与管理学分部",
+        "research": [
+          "卫生技术评估",
+          "卫生经济评价",
+          "优先次序制定",
+          "经济评价中的异质性与公平"
+        ],
+        "url": "https://sph.hku.hk/zh-HK/Biography/Espinoza-Manuel-Antonio",
+        "email": "mesp@hku.hk",
+        "qualificationNote": "学院官网核实Associate Professor及卫生经济、政策与管理学分部任职；本次未核实其当前HKU博士指导资格。暑期研究导师名单不作为博士招生资格证明。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://sph.hku.hk/zh-HK/Biography/Espinoza-Manuel-Antonio"
+          }
+        ],
+        "contactSourceUrl": "https://sph.hku.hk/zh-HK/Biography/Espinoza-Manuel-Antonio"
+      }
+    ]
+  },
+  {
+    "id": "smu-health-management",
+    "checked": "2026-10-23",
+    "mentors": [
+      {
+        "id": "smu-zhang-chichen",
+        "name": "张持晨",
+        "title": "官网确认博士生导师",
+        "unit": "卫生管理学院",
+        "research": [
+          "健康管理战略与政策",
+          "健康教育与健康促进",
+          "健康行为与干预技术"
+        ],
+        "url": "https://portal.smu.edu.cn/wsglxy/info/1345/3501.htm",
+        "email": "zhangchichen@sina.com",
+        "qualificationNote": "2026年4月15日学院博士生导师页面明确为教授、博士生导师。所列邮箱虽为商业邮箱域名，但由学院官方工作简介公开提供；不采集私人电话。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://portal.smu.edu.cn/wsglxy/info/1345/3501.htm"
+          }
+        ],
+        "contactSourceUrl": "https://portal.smu.edu.cn/wsglxy/info/1345/3501.htm"
+      },
+      {
+        "id": "smu-xu-dong",
+        "name": "徐东",
+        "title": "官网确认博士生导师",
+        "unit": "卫生管理学院",
+        "research": [
+          "基层卫生服务质量的测量和改善",
+          "全球健康",
+          "实施科学",
+          "慢病管理",
+          "移动科技在卫生服务中的运用"
+        ],
+        "url": "https://portal.smu.edu.cn/wsglxy/info/1345/3471.htm",
+        "email": "romanxu@i.smu.edu.cn",
+        "qualificationNote": "2026年4月15日学院博士生导师页面明确为教授、博士生导师；优先收录官网公开的学校工作邮箱。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://portal.smu.edu.cn/wsglxy/info/1345/3471.htm"
+          }
+        ],
+        "contactSourceUrl": "https://portal.smu.edu.cn/wsglxy/info/1345/3471.htm"
+      }
+    ]
+  },
+  {
+    "id": "csu-xiangya-public-health",
+    "checked": "2026-10-23",
+    "mentors": [
+      {
+        "id": "csu-shen-minxue",
+        "name": "沈敏学",
+        "title": "官网确认博士生导师",
+        "unit": "湘雅公共卫生学院·社会医学与卫生事业管理学系",
+        "research": [
+          "皮肤病流行病学",
+          "皮肤疾病负担",
+          "炎症性皮肤疾病的环境与代谢病因"
+        ],
+        "url": "https://sph.csu.edu.cn/info/1311/4010.htm",
+        "email": "shenmx1988@csu.edu.cn",
+        "qualificationNote": "学院教师页的“导师身份”明确为博士生导师，职称为教授；并非当年度招生名额确认。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://sph.csu.edu.cn/info/1311/4010.htm"
+          }
+        ],
+        "contactSourceUrl": "https://sph.csu.edu.cn/info/1311/4010.htm"
+      },
+      {
+        "id": "csu-hu-mi",
+        "name": "胡宓",
+        "title": "官网仅列硕士生导师",
+        "unit": "湘雅公共卫生学院·社会医学与卫生事业管理学系",
+        "research": [
+          "学校青少年心理危机预防",
+          "农村老年人精神卫生服务",
+          "精神卫生研究和服务伦理"
+        ],
+        "url": "https://sph.csu.edu.cn/info/1311/4037.htm",
+        "email": "humi213@163.com",
+        "qualificationNote": "学院教师页明确写“导师身份：硕士生导师”。可作为相关研究教师展示，不应归入已确认博士生导师列表。邮箱由学院工作简介公开提供。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://sph.csu.edu.cn/info/1311/4037.htm"
+          }
+        ],
+        "contactSourceUrl": "https://sph.csu.edu.cn/info/1311/4037.htm"
+      }
+    ]
+  },
+  {
+    "id": "sjtu-public-health",
+    "checked": "2026-10-23",
+    "mentors": [
+      {
+        "id": "sjtu-li-yan",
+        "name": "李岩",
+        "title": "官网确认博士生导师",
+        "unit": "公共卫生学院·社会医学与卫生事业管理系",
+        "research": [
+          "卫生经济学与卫生政策评估",
+          "健康的社会决定因素",
+          "青少年心理健康",
+          "健康老龄化与养老照护"
+        ],
+        "url": "https://www.shsmu.edu.cn/sph/info/1047/2391.htm",
+        "email": "yanli2022@sjtu.edu.cn",
+        "qualificationNote": "学院在职教师及个人主页明确为研究员、博士生导师、社会医学与卫生事业管理系主任；不据此确认当年度招生名额。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://www.shsmu.edu.cn/sph/info/1047/2391.htm"
+          }
+        ],
+        "contactSourceUrl": "https://www.shsmu.edu.cn/sph/info/1047/2391.htm"
+      },
+      {
+        "id": "sjtu-jing-limei",
+        "name": "荆丽梅",
+        "title": "未核实",
+        "unit": "公共卫生学院·社会医学与卫生事业管理系",
+        "research": [
+          "老年护理与安宁疗护",
+          "医保支付与评价激励",
+          "心理健康与慢病管理"
+        ],
+        "url": "https://www.shsmu.edu.cn/sph/info/1047/2802.htm",
+        "email": "limei_jing@sjtu.edu.cn",
+        "qualificationNote": "学院主页写“研究员、研究生导师”，未明确硕士或博士层次；本次不将其标为已确认博士生导师。",
+        "evidence": [
+          {
+            "label": "学院官方教师主页（任职、研究方向与公开工作联系方式）",
+            "url": "https://www.shsmu.edu.cn/sph/info/1047/2802.htm"
+          }
+        ],
+        "contactSourceUrl": "https://www.shsmu.edu.cn/sph/info/1047/2802.htm"
+      },
+      {
+        "id": "sjtu-zhong-wenze",
+        "name": "钟文泽",
+        "title": "官网确认博士生导师",
+        "unit": "公共卫生学院·流行病学与生物统计学系",
+        "research": [
+          "营养流行病学",
+          "糖尿病与心血管疾病流行病学",
+          "生活方式与代谢性疾病",
+          "认知功能与健康老龄化"
+        ],
+        "url": "https://www.shsmu.edu.cn/sph/szdw/zzjs.htm",
+        "email": "wenze.zhong@shsmu.edu.cn",
+        "qualificationNote": "学院当前教师名录明确为研究员、博士生导师、流行病学与生物统计学系主任；2026年官方师资介绍再次确认。与社医卫管相关的老龄健康方向可交叉匹配，但不归入社会医学与卫生事业管理系。",
+        "evidence": [
+          {
+            "label": "官方教师介绍及公开工作联系方式",
+            "url": "https://www.shsmu.edu.cn/sph/szdw/zzjs.htm"
+          },
+          {
+            "label": "2026年医学院师资介绍：现任与博士生导师身份",
+            "url": "https://www.shsmu.edu.cn/news/info/1112/31091.htm"
+          },
+          {
+            "label": "学院官方课题组介绍：研究方向",
+            "url": "https://www.shsmu.edu.cn/rlzy/info/1011/3286.htm"
+          }
+        ],
+        "contactSourceUrl": "https://www.shsmu.edu.cn/sph/szdw/zzjs.htm"
+      }
+    ]
+  },
+  {
+    "id": "pku-nsd",
+    "checked": "2026-10-23",
+    "mentors": [
+      {
+        "id": "pku-nsd-lei-xiaoyan",
+        "name": "雷晓燕",
+        "title": "博士指导记录已核实",
+        "unit": "国家发展研究院；健康老龄与发展研究中心",
+        "research": [
+          "健康经济学",
+          "老龄化经济学",
+          "劳动经济学",
+          "应用计量学"
+        ],
+        "url": "https://nsd.pku.edu.cn/szdw/qzjs/d5b2b76eaec244b68e5f144925bc8f1e.htm",
+        "email": "xylei@nsd.pku.edu.cn",
+        "qualificationNote": "国发院现任教师页核实经济学教授及研究领域；官方博士生页面列其为经济学博士导师。该记录不代表当前招生名额。",
+        "evidence": [
+          {
+            "label": "官方教师介绍及公开工作联系方式",
+            "url": "https://nsd.pku.edu.cn/szdw/qzjs/d5b2b76eaec244b68e5f144925bc8f1e.htm"
+          },
+          {
+            "label": "国发院官方博士生页面：导师为雷晓燕、黄炜",
+            "url": "https://www.nsd.pku.edu.cn/jxxm/yjs/xsgz/bsdw/ybybs/y13/542602.htm"
+          }
+        ],
+        "contactSourceUrl": "https://nsd.pku.edu.cn/szdw/qzjs/d5b2b76eaec244b68e5f144925bc8f1e.htm"
+      },
+      {
+        "id": "pku-nsd-huang-wei",
+        "name": "黄炜",
+        "title": "博士指导记录已核实",
+        "unit": "国家发展研究院；健康老龄与发展研究中心",
+        "research": [
+          "健康经济学",
+          "公共经济学",
+          "劳动经济学",
+          "应用微观实证"
+        ],
+        "url": "https://nsd.pku.edu.cn/szdw/qzjs/5dc96643667f439c8b3ad220cae890ba.htm",
+        "email": "huangwei@nsd.pku.edu.cn",
+        "qualificationNote": "国发院最新教师页列经济学教授（部分旧中心页面仍写长聘副教授）；官方博士生页面列其为经济学博士导师。不由历史指导记录推断当年度招生名额。",
+        "evidence": [
+          {
+            "label": "官方教师介绍及公开工作联系方式",
+            "url": "https://nsd.pku.edu.cn/szdw/qzjs/5dc96643667f439c8b3ad220cae890ba.htm"
+          },
+          {
+            "label": "国发院官方博士生页面：导师为雷晓燕、黄炜",
+            "url": "https://www.nsd.pku.edu.cn/jxxm/yjs/xsgz/bsdw/ybybs/y13/542602.htm"
+          }
+        ],
+        "contactSourceUrl": "https://nsd.pku.edu.cn/szdw/qzjs/5dc96643667f439c8b3ad220cae890ba.htm"
+      },
+      {
+        "id": "pku-nsd-liu-guoen",
+        "name": "刘国恩",
+        "title": "历史博士指导资格；现已退休",
+        "unit": "国家发展研究院（退休教授）；全球健康发展研究院",
+        "research": [
+          "健康与发展经济学",
+          "医疗体制改革",
+          "医药经济学"
+        ],
+        "url": "https://nsd.pku.edu.cn/szdw/txjs/a88c61ce40a643e8991320e665917278.htm",
+        "email": "gordonliu@nsd.pku.edu.cn",
+        "qualificationNote": "国发院当前师资页已列“退休教授”，同时列全球健康发展研究院院长；北大南南学院官方简介写博士生导师。必须显示退休状态，不能作为当前国发院在岗博士招生导师或名额承诺。",
+        "evidence": [
+          {
+            "label": "官方教师介绍及公开工作联系方式",
+            "url": "https://nsd.pku.edu.cn/szdw/txjs/a88c61ce40a643e8991320e665917278.htm"
+          },
+          {
+            "label": "北大南南学院官方简介：博士生导师历史依据",
+            "url": "https://cnisscad.pku.edu.cn/szll/zdjs/116nnhzyfzxy525030.htm"
+          }
+        ],
+        "contactSourceUrl": "https://nsd.pku.edu.cn/szdw/txjs/a88c61ce40a643e8991320e665917278.htm"
+      }
+    ]
+  }
+]
