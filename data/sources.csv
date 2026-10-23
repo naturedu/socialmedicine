@@ -1,0 +1,41 @@
+﻿name,category,description,url,access
+GBD 全球疾病负担结果工具（IHME）,健康数据,疾病、伤害与危险因素的负担、DALY/YLD 可视化与下载,https://vizhub.healthdata.org/gbd-results/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+WHO 全球卫生观察站（GHO）,健康数据,各国卫生指标、卫生系统与健康目标监测,https://www.who.int/data/gho,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+WHO 全球卫生支出数据库（NHA）,健康数据,各国卫生总费用、政府/个人/外部筹资构成,https://apps.who.int/nha/database,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+WHO 免疫接种数据门户,健康数据,各国疫苗接种率与计划免疫进展,https://immunizationdata.who.int/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+WHO 死亡率数据库,健康数据,按死因、年龄、性别的各国死亡数据,https://www.who.int/data/data-collection-tools/who-mortality-database,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+世界银行 HNP 统计,健康数据,健康、营养与人口指标（期望寿命、卫生支出占 GDP 等）,https://databank.worldbank.org/source/health-nutrition-and-population-statistics,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+Our World in Data,健康数据,全球健康与发展的长时段可视化与开放数据,https://ourworldindata.org/health,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+OECD 健康统计,健康数据,OECD 国家卫生支出、质量、利用与健康状态,https://stats.oecd.org/Index.aspx?DataSetCode=HEALTH_STAT,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+UNICEF Data,健康数据,儿童健康、营养、免疫与孕产妇指标,https://data.unicef.org/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+UNAIDS AIDSinfo,健康数据,艾滋病流行、检测、治疗与消除目标数据,https://aidsinfo.unaids.org/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+FAO FAOSTAT,健康数据,食物安全、营养与农业统计（营养流行病学常用）,https://www.fao.org/faostat/en/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+人类死亡率数据库 HMD,健康数据,分年龄别死亡率与期望寿命（人口学与精算）,https://www.mortality.org/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+DHS 人口与健康调查,健康数据,90+ 国家微观调查：生育、儿童健康、营养、HIV,https://dhsprogram.com/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+IPUMS,健康数据,国际人口普查与健康调查微观数据整合平台,https://www.ipums.org/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+healthdata.gov,健康数据,美国联邦开放健康数据门户,https://healthdata.gov/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+IHME COVID-19 预估,健康数据,疫情住院、死亡与医疗资源使用建模预估,https://covid19.healthdata.org/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+国家统计局 · 国家数据,健康数据,人口、卫生、经济等宏观年度数据,https://data.stats.gov.cn/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+国家卫生健康委员会,健康数据,卫生健康统计公报、卫生服务调查与年鉴,http://www.nhc.gov.cn/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+国家医疗保障局,健康数据,医保基金收支统计公报、DRG/DIP 与集采动态,https://www.nhsa.gov.cn/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+公共卫生科学数据中心（中国 CDC）,健康数据,传染病、慢病、死因监测与健康危险因素数据,https://www.phsciencedata.cn/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+CHARLS 中国健康与养老追踪调查,健康数据,45+ 中老年人群健康、经济与养老微观面板,https://charls.charlsdata.com/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+CFPS 中国家庭追踪调查,健康数据,全国代表性家庭面板（健康、经济、教育）,https://www.isss.pku.edu.cn/cfps/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+CLHLS 中国老年健康调查,健康数据,高龄老人健康长寿影响因素纵向数据,https://opendata.pku.edu.cn/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+CHNS 中国健康与营养调查,健康数据,九省区长期追踪：膳食、健康与卫生服务,https://www.cpc.unc.edu/projects/china,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+CGSS 中国综合社会调查,健康数据,社会结构、健康与主观福祉全国截面调查,http://cgss.ruc.edu.cn/,按来源协议申请、注册或下载；公开入口不等于数据无使用限制
+PubMed,文献检索,生物医学题录、MeSH 与文献类型初筛,https://pubmed.ncbi.nlm.nih.gov/,开放检索；全文权利另核
+Europe PMC,文献检索,题录交叉核验、开放获取标记与部分全文,https://europepmc.org/,按具体文章许可
+Crossref,元数据,DOI、题名、作者、日期与参考文献,https://www.crossref.org/documentation/retrieve-metadata/rest-api/,元数据 API；不代表出版全文授权
+OpenAlex,元数据,作者、机构、文献关系；名称匹配需消歧,https://openalex.org/,按当前服务与数据条款
+ROR,机构规范,机构标识、名称别名与上下级关系,https://ror.org/,机构标识与元数据
+ORCID,作者规范,作者身份核验与公开学术记录,https://orcid.org/,仅使用公开字段
+国家哲学社会科学文献中心,中文文献,中文期刊题录与公开文献入口,https://www.ncpssd.org/,题录和全文权限分别核对
+中国知网,中文文献,中文题录、参考文献与期刊信息,https://www.cnki.net/,部分功能需机构订阅
+万方数据,中文文献,中文学术期刊与学位论文检索,https://www.wanfangdata.com.cn/,部分功能需机构订阅
+EQUATOR Network,报告规范,CONSORT、STROBE、PRISMA 等报告规范入口,https://www.equator-network.org/,规范原文许可另核
+OSF,开放研究,预注册、分析计划、数据与代码归档,https://osf.io/,以每个项目可见性与许可为准
+Zenodo,开放研究,研究软件、数据、图表及 DOI 归档,https://zenodo.org/,按每条记录许可
+国家医疗保障局政策库,政策,医保政策原文、解读、统计资料,https://www.nhsa.gov.cn/col/col104/index.html,官方公开页面；区别原文与解读
+盖茨基金会 Committed Grants,资助,1994 年起的公开资助承诺；不含所有合同和投资,https://www.gatesfoundation.org/about/committed-grants,动态数据库；记录快照日期
+教育部社会科学司,资助,人文社科项目通知、公示及正式立项名单,https://www.moe.gov.cn/s78/A13/,区别公示、立项与结项

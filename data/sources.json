@@ -1,0 +1,282 @@
+[
+  {
+    "name": "GBD 全球疾病负担结果工具（IHME）",
+    "category": "健康数据",
+    "description": "疾病、伤害与危险因素的负担、DALY/YLD 可视化与下载",
+    "url": "https://vizhub.healthdata.org/gbd-results/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "WHO 全球卫生观察站（GHO）",
+    "category": "健康数据",
+    "description": "各国卫生指标、卫生系统与健康目标监测",
+    "url": "https://www.who.int/data/gho",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "WHO 全球卫生支出数据库（NHA）",
+    "category": "健康数据",
+    "description": "各国卫生总费用、政府/个人/外部筹资构成",
+    "url": "https://apps.who.int/nha/database",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "WHO 免疫接种数据门户",
+    "category": "健康数据",
+    "description": "各国疫苗接种率与计划免疫进展",
+    "url": "https://immunizationdata.who.int/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "WHO 死亡率数据库",
+    "category": "健康数据",
+    "description": "按死因、年龄、性别的各国死亡数据",
+    "url": "https://www.who.int/data/data-collection-tools/who-mortality-database",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "世界银行 HNP 统计",
+    "category": "健康数据",
+    "description": "健康、营养与人口指标（期望寿命、卫生支出占 GDP 等）",
+    "url": "https://databank.worldbank.org/source/health-nutrition-and-population-statistics",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "Our World in Data",
+    "category": "健康数据",
+    "description": "全球健康与发展的长时段可视化与开放数据",
+    "url": "https://ourworldindata.org/health",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "OECD 健康统计",
+    "category": "健康数据",
+    "description": "OECD 国家卫生支出、质量、利用与健康状态",
+    "url": "https://stats.oecd.org/Index.aspx?DataSetCode=HEALTH_STAT",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "UNICEF Data",
+    "category": "健康数据",
+    "description": "儿童健康、营养、免疫与孕产妇指标",
+    "url": "https://data.unicef.org/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "UNAIDS AIDSinfo",
+    "category": "健康数据",
+    "description": "艾滋病流行、检测、治疗与消除目标数据",
+    "url": "https://aidsinfo.unaids.org/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "FAO FAOSTAT",
+    "category": "健康数据",
+    "description": "食物安全、营养与农业统计（营养流行病学常用）",
+    "url": "https://www.fao.org/faostat/en/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "人类死亡率数据库 HMD",
+    "category": "健康数据",
+    "description": "分年龄别死亡率与期望寿命（人口学与精算）",
+    "url": "https://www.mortality.org/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "DHS 人口与健康调查",
+    "category": "健康数据",
+    "description": "90+ 国家微观调查：生育、儿童健康、营养、HIV",
+    "url": "https://dhsprogram.com/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "IPUMS",
+    "category": "健康数据",
+    "description": "国际人口普查与健康调查微观数据整合平台",
+    "url": "https://www.ipums.org/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "healthdata.gov",
+    "category": "健康数据",
+    "description": "美国联邦开放健康数据门户",
+    "url": "https://healthdata.gov/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "IHME COVID-19 预估",
+    "category": "健康数据",
+    "description": "疫情住院、死亡与医疗资源使用建模预估",
+    "url": "https://covid19.healthdata.org/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "国家统计局 · 国家数据",
+    "category": "健康数据",
+    "description": "人口、卫生、经济等宏观年度数据",
+    "url": "https://data.stats.gov.cn/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "国家卫生健康委员会",
+    "category": "健康数据",
+    "description": "卫生健康统计公报、卫生服务调查与年鉴",
+    "url": "http://www.nhc.gov.cn/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "国家医疗保障局",
+    "category": "健康数据",
+    "description": "医保基金收支统计公报、DRG/DIP 与集采动态",
+    "url": "https://www.nhsa.gov.cn/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "公共卫生科学数据中心（中国 CDC）",
+    "category": "健康数据",
+    "description": "传染病、慢病、死因监测与健康危险因素数据",
+    "url": "https://www.phsciencedata.cn/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "CHARLS 中国健康与养老追踪调查",
+    "category": "健康数据",
+    "description": "45+ 中老年人群健康、经济与养老微观面板",
+    "url": "https://charls.charlsdata.com/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "CFPS 中国家庭追踪调查",
+    "category": "健康数据",
+    "description": "全国代表性家庭面板（健康、经济、教育）",
+    "url": "https://www.isss.pku.edu.cn/cfps/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "CLHLS 中国老年健康调查",
+    "category": "健康数据",
+    "description": "高龄老人健康长寿影响因素纵向数据",
+    "url": "https://opendata.pku.edu.cn/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "CHNS 中国健康与营养调查",
+    "category": "健康数据",
+    "description": "九省区长期追踪：膳食、健康与卫生服务",
+    "url": "https://www.cpc.unc.edu/projects/china",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "CGSS 中国综合社会调查",
+    "category": "健康数据",
+    "description": "社会结构、健康与主观福祉全国截面调查",
+    "url": "http://cgss.ruc.edu.cn/",
+    "access": "按来源协议申请、注册或下载；公开入口不等于数据无使用限制"
+  },
+  {
+    "name": "PubMed",
+    "category": "文献检索",
+    "description": "生物医学题录、MeSH 与文献类型初筛",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/",
+    "access": "开放检索；全文权利另核"
+  },
+  {
+    "name": "Europe PMC",
+    "category": "文献检索",
+    "description": "题录交叉核验、开放获取标记与部分全文",
+    "url": "https://europepmc.org/",
+    "access": "按具体文章许可"
+  },
+  {
+    "name": "Crossref",
+    "category": "元数据",
+    "description": "DOI、题名、作者、日期与参考文献",
+    "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+    "access": "元数据 API；不代表出版全文授权"
+  },
+  {
+    "name": "OpenAlex",
+    "category": "元数据",
+    "description": "作者、机构、文献关系；名称匹配需消歧",
+    "url": "https://openalex.org/",
+    "access": "按当前服务与数据条款"
+  },
+  {
+    "name": "ROR",
+    "category": "机构规范",
+    "description": "机构标识、名称别名与上下级关系",
+    "url": "https://ror.org/",
+    "access": "机构标识与元数据"
+  },
+  {
+    "name": "ORCID",
+    "category": "作者规范",
+    "description": "作者身份核验与公开学术记录",
+    "url": "https://orcid.org/",
+    "access": "仅使用公开字段"
+  },
+  {
+    "name": "国家哲学社会科学文献中心",
+    "category": "中文文献",
+    "description": "中文期刊题录与公开文献入口",
+    "url": "https://www.ncpssd.org/",
+    "access": "题录和全文权限分别核对"
+  },
+  {
+    "name": "中国知网",
+    "category": "中文文献",
+    "description": "中文题录、参考文献与期刊信息",
+    "url": "https://www.cnki.net/",
+    "access": "部分功能需机构订阅"
+  },
+  {
+    "name": "万方数据",
+    "category": "中文文献",
+    "description": "中文学术期刊与学位论文检索",
+    "url": "https://www.wanfangdata.com.cn/",
+    "access": "部分功能需机构订阅"
+  },
+  {
+    "name": "EQUATOR Network",
+    "category": "报告规范",
+    "description": "CONSORT、STROBE、PRISMA 等报告规范入口",
+    "url": "https://www.equator-network.org/",
+    "access": "规范原文许可另核"
+  },
+  {
+    "name": "OSF",
+    "category": "开放研究",
+    "description": "预注册、分析计划、数据与代码归档",
+    "url": "https://osf.io/",
+    "access": "以每个项目可见性与许可为准"
+  },
+  {
+    "name": "Zenodo",
+    "category": "开放研究",
+    "description": "研究软件、数据、图表及 DOI 归档",
+    "url": "https://zenodo.org/",
+    "access": "按每条记录许可"
+  },
+  {
+    "name": "国家医疗保障局政策库",
+    "category": "政策",
+    "description": "医保政策原文、解读、统计资料",
+    "url": "https://www.nhsa.gov.cn/col/col104/index.html",
+    "access": "官方公开页面；区别原文与解读"
+  },
+  {
+    "name": "盖茨基金会 Committed Grants",
+    "category": "资助",
+    "description": "1994 年起的公开资助承诺；不含所有合同和投资",
+    "url": "https://www.gatesfoundation.org/about/committed-grants",
+    "access": "动态数据库；记录快照日期"
+  },
+  {
+    "name": "教育部社会科学司",
+    "category": "资助",
+    "description": "人文社科项目通知、公示及正式立项名单",
+    "url": "https://www.moe.gov.cn/s78/A13/",
+    "access": "区别公示、立项与结项"
+  }
+]

@@ -1,0 +1,17 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs'),path=require('node:path');
+const r=path.join(__dirname,'..'),load=n=>JSON.parse(fs.readFileSync(path.join(r,'data',n+'.json'),'utf8'));
+const {match}=require('../journal-engine.js'),j=load('journals'),rules=load('journal-rules');
+const run=input=>match(input,j,rules);
+assert.equal(run({}).results.length,0);
+assert.equal(run({title:'新能源汽车电池寿命的预测',language:'中文'}).results.length,0);
+let x=run({title:'医保支付方式改革与住院费用',abstract:'使用双重差分与事件研究评估 DRG 对医疗服务和健康公平的影响',language:'中文'});
+assert.ok(x.results.length>0);assert.ok(x.results.every(x=>x.journal.language==='中文'));
+assert.ok(x.results.some(x=>x.journal.name==='中国卫生政策研究'));
+assert.ok(x.results.some(x=>x.methods.includes('双重差分')));
+x=run({title:'Cost-effectiveness of a drug using QALY and ICER',language:'英文',type:'经济评价'});
+assert.ok(x.titleOnly);assert.ok(x.results.some(x=>x.journal.name==='PharmacoEconomics'));
+assert.ok(x.results.every(x=>x.journal.language==='英文'));
+assert.ok(!x.results.some(x=>x.journal.name==='JAMA AI'));
+assert.equal(x.type,'经济评价');assert.ok(x.results.length<=9);
+console.log('Journal matching tests passed.');

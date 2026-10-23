@@ -1,0 +1,3095 @@
+﻿id,title,language,code,source,status,line
+methods-54-1,A1 横断面研究,Stata + R（混合片段）,"* ===== Stata =====
+proportion disease                       // 患病率及 CI（默认 Wald）
+ci proportions disease, wilson           // Wilson CI，小样本更稳
+glm disease exposed, family(binomial) link(log) eform   // PR；不收敛时换 poisson disease exposed, irr vce(robust)
+
+* ===== R =====
+x <- 45; n <- 300                        # 患病人数与调查人数
+prop.test(x, n, correct = FALSE)         # 患病率及近似 CI
+binom.test(x, n)                         # 精确 Clopper-Pearson CI
+m <- glm(disease ~ exposed, family = binomial(link = ""log""), data = d)
+exp(cbind(PR = coef(m), confint.default(m)))   # 患病率比 PR",skills/references/methods-54.md,模板；未逐项执行,32
+methods-54-2,A2 病例对照研究,Stata + R（混合片段）,"* ===== Stata =====
+tabulate exposed case, chi2
+cci 40 20 30 70          // 病例暴露/非暴露=40/20，对照暴露/非暴露=30/70 → OR 与 CI
+logistic case exposed age, or              // 不匹配：多因素校正 OR
+clogit case exposed, group(pairid) or      // 1:1 匹配：条件 logistic
+
+* ===== R =====
+m <- matrix(c(40, 20, 30, 70), nrow = 2)   # 病例暴露/非暴露、对照暴露/非暴露
+fisher.test(m)                             # 精确 OR 与 CI
+glm(case ~ exposed + age, family = binomial(), data = d)   # 校正 OR
+library(survival)
+clogit(case ~ exposed + strata(pairid), data = d)          # 匹配条件 logistic",skills/references/methods-54.md,模板；未逐项执行,58
+methods-54-3,A3 队列研究,Stata + R（混合片段）,"* ===== Stata =====
+cs disease exposed, exact                  // 2×2：RR 及 CI
+ir disease exposed                         // 发病密度比 IRR
+stset time, failure(disease)               // 人时/生存数据
+strate exposed                             // 各组人时与发病率
+poisson disease exposed, exposure(time) irr
+stcox exposed age                          // 校正 HR
+
+* ===== R =====
+library(epiR)
+epi.2by2(matrix(c(45, 955, 20, 980), nrow = 2), method = ""cohort.count"")
+glm(disease ~ exposed + offset(log(time)), family = poisson(), data = d)  # IRR
+library(survival)
+coxph(Surv(time, disease) ~ exposed + age, data = d)                      # HR",skills/references/methods-54.md,模板；未逐项执行,85
+methods-54-4,A4 随机对照试验 RCT,Stata + R（混合片段）,"* ===== Stata =====
+set obs 120
+set seed 2026
+egen block = seq(), to(30) block(4)       // 30 个区组、组内 4 人
+gen treat = rbinomial(1, 0.5)             // 简单随机（严格 2:2 区组需再抽样）
+tab treat
+csi 20 10 25 5                            // 干预组事件/非事件=20/10，对照组=25/5 → RD、RR 及 CI；NNT=1/RD
+ttest y, by(treat)                        // 连续结局：MD
+regress y treat, vce(robust)
+
+* ===== R =====
+set.seed(2026)
+d$treat <- sample(rep(0:1, 60))           # 120 人简单随机（可用 blockrand 做区组）
+library(epiR)
+epi.2by2(table(d$treat, d$outcome), method = ""cohort.count"")   # RR/RD/NNT
+t.test(y ~ treat, data = d)
+lm(y ~ treat, data = d)",skills/references/methods-54.md,模板；未逐项执行,114
+methods-54-5,A5 准实验设计,Stata + R（混合片段）,"* ===== Stata =====
+gen did = treat * post
+regress y treat post did, vce(cluster id)        // did 系数即 DID 估计
+xtset id time
+xtreg y ib0.time#i.treat i.time, fe vce(cluster id)   // 事件研究：检验平行趋势
+gen time_after = max(0, time - t0)               // ITS 分段回归（t0 = 干预时点）
+newey y time post time_after, lag(1)             // Newey-West 处理自相关
+
+* ===== R =====
+m <- lm(y ~ treat * post, data = d)              # 交互项系数即 DID
+library(sandwich); library(lmtest)
+coeftest(m, vcov = vcovCL(m, cluster = ~id))     # 聚类稳健标准误
+d$time_after <- pmax(0, d$time - t0)
+its <- lm(y ~ time + post + time_after, data = d)   # ITS 分段回归",skills/references/methods-54.md,模板；未逐项执行,146
+methods-54-6,A6 生态学研究,Stata + R（混合片段）,"* ===== Stata =====
+regress rate exposure [aweight = pop]           // 按地区人口加权
+corr rate exposure
+dstdize deaths pop, by(agegrp) using(stdpop)    // 直接标化；stdpop.dta 含 agegrp 与 pop
+
+* ===== R =====
+m <- lm(rate ~ exposure, data = d, weights = pop)
+cor(d$rate, d$exposure)
+library(epitools)
+ageadjust.direct(count = d$deaths, pop = d$pop, stdpop = ref$stdpop)  # 直接标化",skills/references/methods-54.md,模板；未逐项执行,175
+methods-54-7,A7 混合方法研究（定性+定量）,Stata + R（混合片段）,"* ===== Stata =====
+ttest score, by(group)                 // 定量侧比较
+tab theme group, chi2                  // 定性主题（编码后）与分组交叉：量化整合
+
+* ===== R =====
+library(quanteda)
+dfm <- dfm(tokens(interview_text, remove_punct = TRUE))   # 定性文本：词频辅助主题
+topfeatures(dfm, 20)
+t.test(score ~ group, data = d)                           # 定量侧
+chisq.test(table(d$theme, d$group))                       # 主题×分组整合",skills/references/methods-54.md,模板；未逐项执行,200
+methods-54-8,A8 德尔菲法（Delphi）,Stata + R（混合片段）,"* ===== Stata =====
+egen mean_score = mean(score), by(item)
+egen sd_score = sd(score), by(item)
+gen cv = sd_score / mean_score
+list item mean_score cv if mean_score >= 3.5 & cv <= 0.25   // 示例筛选阈值
+ssc install concord
+concord score1-score15                       // 各专家评分变量 → 肯德尔 W
+
+* ===== R =====
+library(dplyr)
+d |> group_by(item) |>
+  summarise(m = mean(score), cv = sd(score)/mean(score)) |>
+  filter(m >= 3.5 & cv <= 0.25)              # 示例筛选阈值
+library(irr)
+w <- kendall(t(as.matrix(xtabs(score ~ expert + item, data = d))))   # 行为条目、列为专家
+w$value                                      # 肯德尔和谐系数 W",skills/references/methods-54.md,模板；未逐项执行,225
+methods-54-9,B1 描述统计与正态性检验,stata+r,"* Stata
+summarize y, detail              // n、均值、百分位数、偏度峰度
+swilk y                          // Shapiro-Wilk 正态性检验
+histogram y, normal              // 直方图叠加正态密度曲线
+qnorm y                          // 分位-分位（Q-Q）图
+
+## R
+summary(df$y)                    // 五数概括
+shapiro.test(df$y)               // Shapiro-Wilk 检验
+hist(df$y, prob = TRUE); lines(density(df$y))
+qqnorm(df$y); qqline(df$y)       // Q-Q 图",skills/references/methods-54.md,模板；未逐项执行,264
+methods-54-10,B2 t 检验与方差分析,stata+r,"* Stata
+ttest y, by(group) unequal       // Welch t 检验（不假定方差齐）
+ttest y1 == y2                   // 配对 t 检验
+oneway y group, bonferroni       // 单因素 ANOVA + Bonferroni 两两比较
+anova y group                    // 方差分析表
+
+## R
+t.test(y ~ group, data = df)              // 默认 Welch t 检验
+t.test(df$y1, df$y2, paired = TRUE)       // 配对 t 检验
+fit <- aov(y ~ group, data = df)
+summary(fit); TukeyHSD(fit)               // ANOVA + Tukey 两两比较",skills/references/methods-54.md,模板；未逐项执行,292
+methods-54-11,B3 卡方检验与非参数检验,stata+r,"* Stata
+tab a b, chi2 exact              // Pearson 卡方 + Fisher 精确检验
+ranksum y, by(group)             // Mann-Whitney U（Wilcoxon 秩和）
+signrank y1 = y2                 // 配对 Wilcoxon 符号秩检验
+kwallis y, by(group)             // Kruskal-Wallis 检验
+
+## R
+chisq.test(table(df$a, df$b))    // Pearson 卡方
+fisher.test(table(df$a, df$b))   // Fisher 精确检验
+wilcox.test(y ~ group, data = df)
+kruskal.test(y ~ group, data = df)",skills/references/methods-54.md,模板；未逐项执行,320
+methods-54-12,B4 相关与简单线性回归,stata+r,"* Stata
+scatter y x                     // 先画散点图判断线性
+pwcorr x y, sig                 // Pearson r 及 p 值
+spearman x y                    // Spearman ρ
+regress y x                     // 简单线性回归
+
+## R
+plot(df$x, df$y)
+cor.test(df$x, df$y, method = ""pearson"")
+cor.test(df$x, df$y, method = ""spearman"")
+fit <- lm(y ~ x, data = df); summary(fit)",skills/references/methods-54.md,模板；未逐项执行,348
+methods-54-13,B5 二元 logistic 回归,stata+r,"* Stata
+logit y x1 x2, or               // 二元 logistic，报告 OR
+estat gof, group(10)            // Hosmer-Lemeshow 校准检验
+lroc                            // ROC 曲线与 AUC
+
+## R
+fit <- glm(y ~ x1 + x2, data = df, family = binomial)
+exp(cbind(OR = coef(fit), confint(fit)))   // OR 与 95% CI
+summary(fit)",skills/references/methods-54.md,模板；未逐项执行,376
+methods-54-14,B6 有序/多项 logistic 回归,stata+r,"* Stata
+ologit y x1 x2, or              // 有序 logistic（比例优势模型）
+brant, detail                   // 比例优势/平行线假设检验（SSC 安装）
+mlogit y x1 x2, rrr base(1)     // 多项 logistic，参照组=1，报 RRR
+
+## R
+library(MASS)
+fit <- polr(y ~ x1 + x2, data = df, Hess = TRUE)   // y 需为有序因子
+exp(cbind(coef(fit), confint(fit)))                // 公共 OR
+library(nnet)
+mfit <- multinom(y ~ x1 + x2, data = df)           // 多项模型，exp(coef)=RRR",skills/references/methods-54.md,模板；未逐项执行,402
+methods-54-15,B7 Poisson 与负二项回归,stata+r,"* Stata
+poisson y x1 x2, irr vce(robust)          // Poisson + 稳健标准误
+nbreg y x1 x2, irr                        // 负二项回归
+poisson y x1 x2, irr exposure(t)          // 随访时间不等：按 t 调整
+
+## R
+glm(y ~ x1 + x2, data = df, family = poisson)
+library(MASS)
+fit <- glm.nb(y ~ x1 + x2, data = df)     // 负二项
+exp(cbind(IRR = coef(fit), confint(fit)))",skills/references/methods-54.md,模板；未逐项执行,430
+methods-54-16,B8 生存分析（Kaplan-Meier 与 Cox）,stata+r,"* Stata
+stset time, failure(event)               // event=1 事件，0 删失
+sts graph, by(group)                     // Kaplan-Meier 生存曲线
+sts test group                           // log-rank 检验
+stcox x1 x2                              // Cox 比例风险模型（HR）
+estat phtest, detail                     // PH 假设检验
+
+## R
+library(survival)
+fit <- survfit(Surv(time, event) ~ group, data = df)
+plot(fit); survdiff(Surv(time, event) ~ group, data = df)
+cfit <- coxph(Surv(time, event) ~ x1 + x2, data = df)
+summary(cfit); cox.zph(cfit)             // PH 假设检验",skills/references/methods-54.md,模板；未逐项执行,457
+methods-54-17,B9 重复测量与混合效应模型,stata+r,"* Stata
+xtset id time
+mixed y x##c.time || id: time, reml      // 随机截距 + 随机斜率
+mixed y x##c.time || id:                 // 仅随机截距（供比较）
+estat ic                                 // AIC/BIC 比较
+* 二分类结局改用：melogit y x || id:
+
+## R
+library(lme4); library(lmerTest)         // lmerTest 提供 p 值
+fit <- lmer(y ~ x*time + (1 + time | id), data = df)
+summary(fit)
+ranova(fit)                              // 随机效应结构的似然比检验",skills/references/methods-54.md,模板；未逐项执行,487
+methods-54-18,B10 主成分分析与因子分析,stata+r,"* Stata
+pca x1-x10                          // 主成分分析
+factor x1-x10, pcf                  // 因子分析（主成分因子法）
+estat kmo                           // KMO（Bartlett 检验：ssc install factortest）
+rotate, varimax                     // 正交旋转后看载荷
+alpha x1-x10                        // Cronbach's α
+
+## R
+library(psych)
+KMO(df); cortest.bartlett(df)       // 适用性检验
+fa.parallel(df)                     // 平行分析定因子数
+fa(df, nfactors = 3, rotate = ""varimax"")   // 探索性因子分析
+alpha(df)                           // Cronbach's α",skills/references/methods-54.md,模板；未逐项执行,516
+methods-54-19,C1 成本测算,stata,"* 成本均数与 bootstrap 95% CI（成本右偏时优于正态 CI）
+bootstrap r(mean), reps(1000) seed(2026): summarize cost
+ci means cost",skills/references/methods-54.md,模板；未逐项执行,552
+methods-54-20,C1 成本测算,r,"set.seed(2026)
+boot <- replicate(1000, mean(sample(cost, replace = TRUE)))
+mean(cost)                       # 点估计
+quantile(boot, c(.025, .975))    # 95% 百分位置信区间",skills/references/methods-54.md,模板；未逐项执行,558
+methods-54-21,C2 成本-效果分析 CEA 与成本-效用分析 CUA,stata,"* ICER 增量计算（arm：1 = 干预，0 = 对照；ttest 按组值升序，组 2 为 arm=1）
+ttest c, by(arm)
+scalar dC = r(mu_2) - r(mu_1)
+ttest e, by(arm)
+scalar dE = r(mu_2) - r(mu_1)
+di ""ICER = "" dC / dE",skills/references/methods-54.md,模板；未逐项执行,577
+methods-54-22,C2 成本-效果分析 CEA 与成本-效用分析 CUA,r,"dC <- with(dat, mean(c[arm == 1]) - mean(c[arm == 0]))
+dE <- with(dat, mean(e[arm == 1]) - mean(e[arm == 0]))
+set.seed(2026)
+icers <- replicate(1000, with(dat[sample(nrow(dat), replace = TRUE), ],
+              (mean(c[arm==1]) - mean(c[arm==0])) / (mean(e[arm==1]) - mean(e[arm==0]))))
+quantile(icers, c(.025, .975))   # bootstrap ICER 置信区间",skills/references/methods-54.md,模板；未逐项执行,586
+methods-54-23,C3 QALY 与 DALY 计算,stata,"* QALY：效用曲线下面积（q 为效用、t 为时点，按 id 与 t 排序）
+bysort id (t): gen qaly_step = (q + q[_n-1]) / 2 * (t - t[_n-1]) if _n > 1
+bysort id: egen qaly = total(qaly_step)
+* DALY：YLL + YLD（yll、yld 按 GBD 公式预先计算）
+gen daly = yll + yld",skills/references/methods-54.md,模板；未逐项执行,607
+methods-54-24,C3 QALY 与 DALY 计算,r,"dat <- dat[order(dat$id, dat$t), ]
+qaly <- tapply(seq_len(nrow(dat)), dat$id, function(i) {
+  t <- dat$t[i]; q <- dat$q[i]
+  sum(diff(t) * (head(q, -1) + tail(q, -1)) / 2)     # 梯形面积法
+})",skills/references/methods-54.md,模板；未逐项执行,615
+methods-54-25,C4 预算影响分析 BIA,stata,"* 逐年预算影响 = 目标人群 × 渗透率 ×（新方案 − 现行方案）人均年费用
+gen bi = pop * uptake * (c_new - c_cur)
+list year bi
+sum bi                         // 研究期内合计",skills/references/methods-54.md,模板；未逐项执行,634
+methods-54-26,C4 预算影响分析 BIA,r,"bia <- data.frame(year = 1:5, pop = 1e5, uptake = c(.2, .4, .6, .8, .9))
+bia$bi <- bia$pop * bia$uptake * (c_new - c_cur)
+bia                            # 逐年预算影响；sum(bia$bi) 为合计",skills/references/methods-54.md,模板；未逐项执行,641
+methods-54-27,C5 卫生技术评估 HTA 流程,stata,"* PSA 决策判断：净货币效益 NMB = λ·ΔE − ΔC，λ 为阈值（如 1–3 倍人均 GDP）
+gen nmb = lambda * (e_new - e_cur) - (c_new - c_cur)
+count if nmb > 0
+di ""成本-效果概率 = "" r(N) / _N",skills/references/methods-54.md,模板；未逐项执行,658
+methods-54-28,C5 卫生技术评估 HTA 流程,r,"nmb <- lambda * (e_new - e_cur) - (c_new - c_cur)
+mean(nmb > 0)                  # NMB > 0 的比例 → CEAC 上阈值 λ 处的接受概率",skills/references/methods-54.md,模板；未逐项执行,665
+methods-54-29,C6 随机前沿分析 SFA 与数据包络分析 DEA（效率评价）,stata,"* SFA：Cobb-Douglas 随机前沿，半正态无效率
+sfcross y x1 x2, distribution(hnormal)
+predict te_sfa, te
+* DEA：投入导向 BCC（先 ssc install dea）
+dea x1 x2 = y, rts(vrs) ort(in)   // 效率得分；选项以 help dea 为准",skills/references/methods-54.md,模板；未逐项执行,682
+methods-54-30,C6 随机前沿分析 SFA 与数据包络分析 DEA（效率评价）,r,"library(Benchmarking)
+r_dea <- dea(X = cbind(x1, x2), Y = y, RTS = ""vrs"")    # 投入导向 BCC
+eff_dea <- r_dea$eff                                    # Farrell 效率 E ∈ (0,1]
+library(frontier)
+eff_sfa <- efficiencies(sfa(log(y) ~ log(x1) + log(x2), data = dat))",skills/references/methods-54.md,模板；未逐项执行,690
+methods-54-31,C7 医保支付标准测算（DRG/DIP 权重与点值测算思路）,stata,"* DRG 权重：病组例均费用 ÷ 全样本例均费用
+bysort drg: egen fee_drg = mean(fee)
+egen fee_all = mean(fee)
+gen rw = fee_drg / fee_all
+* DIP 点值：区域基金总额 ÷ Σ(病种分值 × 病例数)
+gen point_amt = dip_score * n_cases
+sum point_amt
+di ""每分值金额 = "" fund_budget / r(sum)",skills/references/methods-54.md,模板；未逐项执行,710
+methods-54-32,C7 医保支付标准测算（DRG/DIP 权重与点值测算思路）,r,"library(dplyr)
+rw <- dat |> group_by(drg) |> summarise(rw = mean(fee) / mean(dat$fee))
+dip_value <- fund_budget / sum(dat$dip_score * dat$n_cases)   # DIP 点值",skills/references/methods-54.md,模板；未逐项执行,721
+methods-54-33,C8 卫生服务利用公平性（集中指数 CI 与不平等分解）,stata,"ssc install conindex, replace
+conindex y, rankvar(r)      // r：按经济状况排序的分数秩；选项以 help conindex 为准",skills/references/methods-54.md,模板；未逐项执行,738
+methods-54-34,C8 卫生服务利用公平性（集中指数 CI 与不平等分解）,r,"r  <- (rank(ses) - 0.5) / length(ses)   # 按经济状况排序的分数秩
+ci <- 2 * cov(y, r) / mean(y)           # 协方差法集中指数",skills/references/methods-54.md,模板；未逐项执行,743
+methods-54-35,D1 倾向得分匹配（PSM）,stata,"* Stata：1:1 近邻匹配估计 ATT（y 结局、t 处理、x1 x2 协变量）
+teffects psmatch (y) (t x1 x2), atet
+tebalance summarize          // 平衡性：SMD 与方差比
+tebalance density            // 共同支撑：倾向得分重叠图",skills/references/methods-54.md,模板；未逐项执行,765
+methods-54-36,D1 倾向得分匹配（PSM）,r,"library(MatchIt)
+m <- matchit(t ~ x1 + x2, data = dat, method = ""nearest"")
+md <- match.data(m)
+lm(y ~ t + x1 + x2, data = md, weights = weights)
+cobalt::love.plot(m, abs = TRUE)   # SMD 平衡图",skills/references/methods-54.md,模板；未逐项执行,772
+methods-54-37,D2 工具变量（IV）,stata,"* Stata：2SLS（核心命令）
+ivregress 2sls y (t = z), first vce(robust)
+estat firststage            // 一阶段 F，>10 为强工具变量
+* 多工具变量：ivregress 2sls y (t = z1 z2), first，再用 estat overid 做过度识别检验",skills/references/methods-54.md,模板；未逐项执行,795
+methods-54-38,D2 工具变量（IV）,r,"library(AER)
+m_iv <- ivreg(y ~ t | z, data = dat)
+summary(m_iv, diagnostics = TRUE)   # 含弱工具变量诊断",skills/references/methods-54.md,模板；未逐项执行,802
+methods-54-39,D3 断点回归（RDD）,stata,"ssc install rdrobust
+ssc install rddensity
+rdrobust y x, c(0)          // x 为中心化运行变量
+rdplot y x, c(0)            // RD 图
+rddensity x, c(0)           // 密度操纵检验",skills/references/methods-54.md,模板；未逐项执行,822
+methods-54-40,D3 断点回归（RDD）,r,"library(rdrobust)
+rdrobust(y = dat$y, x = dat$x, c = 0)
+rddensity::rddensity(dat$x, c = 0)   # 操纵检验",skills/references/methods-54.md,模板；未逐项执行,830
+methods-54-41,D4 合成控制法（SCM）,stata,"ssc install synth
+tsset id time
+synth y x1 x2 y(1990(1)1999), trunit(1) trperiod(2000) fig
+* 安慰剂检验：对每个对照单元重复 synth 比较效应轨迹（以 help synth 为准）",skills/references/methods-54.md,模板；未逐项执行,849
+methods-54-42,D4 合成控制法（SCM）,r,"dp <- Synth::dataprep(foo = dat, predictors = c(""x1"", ""x2""), dependent = ""y"",
+                      unit.variable = ""id"", time.variable = ""time"",
+                      treatment.identifier = 1, controls.identifier = 2:20,
+                      time.predictors.prior = 1990:1999, time.optimize.ssr = 1990:1999)
+s1 <- Synth::synth(dp)",skills/references/methods-54.md,模板；未逐项执行,856
+methods-54-43,D5 事件研究法,stata,"ssc install reghdfe
+ssc install coefplot
+reghdfe y ib(-1).time#i.treat, absorb(id time) vce(cluster id)
+coefplot, keep(*.time#1.treat)          // 事件研究图",skills/references/methods-54.md,模板；未逐项执行,879
+methods-54-44,D5 事件研究法,r,"library(fixest)
+m <- feols(y ~ i(time, treat, ref = -1) | id + time, data = dat)
+coefplot(m)                              // 事件研究图",skills/references/methods-54.md,模板；未逐项执行,886
+methods-54-45,D6 双重差分（DID）,stata,"* Stata：2×2 DID（交互项系数即效应）
+reg y i.treat##i.post, vce(cluster id)",skills/references/methods-54.md,模板；未逐项执行,901
+methods-54-46,D6 双重差分（DID）,r,"## R：fixest 双向固定效应 DID
+feols(y ~ treat*post | id + time, data = dat, cluster = ~id)",skills/references/methods-54.md,模板；未逐项执行,905
+methods-54-47,D7 间断时间序列（ITS）,stata,"tsset time
+gen post = (time >= t0)          // t0 = 政策实施期
+gen time_after = (time - t0) * post
+newey y time post time_after, lag(1)",skills/references/methods-54.md,模板；未逐项执行,919
+methods-54-48,D7 间断时间序列（ITS）,r,"m <- lm(y ~ time + post + time_after, data = dat)
+lmtest::coeftest(m, vcov = sandwich::NeweyWest(m, lag = 1))",skills/references/methods-54.md,模板；未逐项执行,925
+methods-54-49,D8 三重差分（DDD）,stata,"* Stata：DDD（三重交互项系数即效应）
+reg y i.treat##i.post##i.group, vce(cluster id)",skills/references/methods-54.md,模板；未逐项执行,940
+methods-54-50,D8 三重差分（DDD）,r,"## R：DDD 三重交互（主效应被固定效应吸收时仅保留三重交互）
+feols(y ~ treat:post:group | id + time, data = dat, cluster = ~id)",skills/references/methods-54.md,模板；未逐项执行,944
+methods-54-51,E1 缺失数据与多重插补,Stata + R（混合片段）,"* ===== Stata =====
+mi set mlong                                  // 声明多重插补 long 格式
+mi register imputed y x                       // 登记含缺失的待插补变量
+mi impute chained (regress) y (logit) x = z age, add(20) rseed(2026)
+                                              // y 连续用 regress、x 二分类用 logit；z age 为完整辅助变量
+mi estimate: regress y x age                  // 逐集估计 + Rubin 规则合并
+* ===== R =====
+library(mice)
+imp <- mice(data, m = 20, seed = 2026)        # 链式方程多重插补
+densityplot(imp)                              # 检查插补值分布
+fit <- with(imp, glm(y ~ x + age, family = binomial()))   # 逐集估计
+pool(fit)                                     # Rubin 规则合并",skills/references/methods-54.md,模板；未逐项执行,966
+methods-54-52,E2 样本量与统计效能计算,Stata + R（混合片段）,"* ===== Stata =====
+power twomeans 100 110, sd(20) power(0.8)    // 两组均数 100 vs 110、SD 20 → 每组 n
+power twomeans 100 110, sd(20) n(64)         // 固定每组 n=64 → 检验效能
+power twoproportions 0.30 0.20, power(0.8)   // 两率 0.30 vs 0.20 → 每组 n
+power oneproportion 0.20 0.25                // 单组率 0.20 对目标 0.25
+power twomeans 100 110, sd(20) power(0.8) nratio(2)   // 组间比 1:2 设计
+* ===== R =====
+library(pwr)
+pwr.t.test(d = 0.5, sig.level = 0.05, power = 0.8, type = ""two.sample"")  // 每组 n
+pwr.t.test(d = 0.5, sig.level = 0.05, n = 64, type = ""two.sample"")       // 固定 n → 效能
+pwr.2p.test(h = ES.h(0.3, 0.2), sig.level = 0.05, power = 0.8)           // 两率
+pwr.anova.test(k = 3, f = 0.25, sig.level = 0.05, power = 0.8)           // 多组方差分析
+pwr.chisq.test(w = 0.1, df = 1, sig.level = 0.05, power = 0.8)           // 卡方检验",skills/references/methods-54.md,模板；未逐项执行,993
+methods-54-53,E3 LASSO/弹性网与正则化,Stata + R（混合片段）,"* ===== Stata =====
+lasso linear y x1-x200, selection(cv) nolog    // 连续结局，CV 选 λ
+lasso logit y x1-x200, selection(cv)           // 二分类结局
+* ===== R =====
+cvfit <- glmnet::cv.glmnet(x, y, family = ""binomial"", alpha = 0.5)   // 弹性网
+coef(cvfit, s = ""lambda.1se"")                  // 1-SE λ 的系数",skills/references/methods-54.md,模板；未逐项执行,1021
+methods-54-54,E4 随机森林与 XGBoost,Stata + R（混合片段）,"* ===== Stata =====
+* Stata 无内置实现；可经 PyStata 调用 Python（sklearn/xgboost）
+* ===== R =====
+library(randomForest); library(xgboost); set.seed(2026)
+rf <- randomForest(y ~ ., data = train, ntree = 500, importance = TRUE)   # 分类/回归自动识别
+bst <- xgboost(data = xgb.DMatrix(as.matrix(train_x), label = train_y),
+               nrounds = 100, eta = 0.1, max_depth = 3, objective = ""binary:logistic"")",skills/references/methods-54.md,模板；未逐项执行,1041
+methods-54-55,E5 聚类分析（K-means/层次聚类）,Stata + R（混合片段）,"* ===== Stata =====
+cluster kmeans x1 x2, k(3) start(krandom(2026)) name(k3)   // K-means（x1 x2 宜先标准化）
+cluster stop, rule(duda)                      // 肘部指标辅助选 K（Duda-Hart）
+cluster wardslinkage x1 x2, name(hc)          // 层次聚类（Ward 法）
+cluster dendrogram hc, labels(id)             // 树状图
+cluster generate g = groups(k3)               // 保存 K-means 分组结果
+* ===== R =====
+set.seed(2026); km <- kmeans(scale(x), centers = 3, nstart = 25)   # K-means（scale 标准化）
+d <- dist(scale(x)); hc <- hclust(d, method = ""ward.D2"")           # 层次聚类（Ward 法）
+plot(hc); table(cutree(hc, k = 3), km$cluster)                     # 树状图；两法结果交叉
+library(cluster)
+mean(silhouette(km$cluster, dist(scale(x)))[, 3])                  # 平均轮廓系数（选 K）",skills/references/methods-54.md,模板；未逐项执行,1062
+methods-54-56,E6 贝叶斯统计入门,Stata + R（混合片段）,"* ===== Stata =====
+bayes, mcmcsize(10000) rseed(2026): regress y x   // 默认弱信息先验的贝叶斯回归
+bayesgraph diagnostics {y:x}                      // 轨迹/自相关/R-hat 收敛诊断
+bayesstats ess                                   // 有效样本量
+bayesstats summary, credible                     // 后验均值与 95% 可信区间
+bayes, prior({y:x}, normal(0, 10)) rseed(2026): regress y x   // 自定义先验 → 敏感性分析
+* ===== R =====
+library(brms)
+fit <- brm(y ~ x, data = d, chains = 4, iter = 2000, warmup = 1000, seed = 2026)
+summary(fit)                                 # 后验均值、95% CI、R-hat、ESS
+plot(fit)                                    # 链轨迹与后验密度
+hypothesis(fit, ""x > 0"")                     # 后验概率 P(x > 0)",skills/references/methods-54.md,模板；未逐项执行,1089
+methods-54-57,F1 Andersen 卫生服务利用行为模型,stata,"* Andersen 三因素变量清单（就诊行为研究示例）
+* 倾向特征 predisposing：age 年龄、female 性别(0/1)、edu 教育年限
+* 使能资源 enabling：lnincome 家庭收入对数、insured 是否参保(0/1)、dist 距最近机构(km)
+* 需要因素 need：sahealth 自评健康(1-5)、chronic 慢病种数
+logit visit age female edu lnincome insured dist sahealth chronic, or",skills/references/methods-54.md,模板；未逐项执行,1122
+methods-54-58,F2 Grossman 健康需求模型,stata,"* 健康需求简化式：H = f(工资率 w, 教育 E, 年龄 t, 医疗服务价格 p)
+* 预期：教育、工资系数为正（效率与投资回报），年龄为负（折旧），价格为负
+reg health lnwage edu age age2 lnprice
+* 教育→健康的机制检验：加入知识/行为中介后看 edu 系数变化
+reg health edu age
+reg health edu age knowl healthbehavior",skills/references/methods-54.md,模板；未逐项执行,1142
+methods-54-59,F3 健康信念模型 HBM,stata,"* HBM 维度量表（Likert 1-5，各维度多题取均值）与预防行为模型
+* perc_sus 感知易感性 | perc_sev 感知严重性 | perc_ben 感知收益 | perc_bar 感知障碍
+* cue 行动线索(0/1) | selfeff 自我效能
+logit vaccinate perc_sus perc_sev perc_ben perc_bar cue selfeff, or",skills/references/methods-54.md,模板；未逐项执行,1163
+methods-54-60,F4 计划行为理论 TPB,stata,"* Stata sem：观测题项均值入模（单指标路径模型）
+sem (intention <- att sn pbc) (behavior <- intention pbc), standardized
+estat gof, stats(all)",skills/references/methods-54.md,模板；未逐项执行,1182
+methods-54-61,F4 计划行为理论 TPB,r,"## R lavaan 等价写法（多题项做潜变量时用）
+library(lavaan)
+model <- 'intention ~ att + sn + pbc
+          behavior ~ intention + pbc'
+fit <- sem(model, data = d)
+summary(fit, standardized = TRUE, fit.measures = TRUE)",skills/references/methods-54.md,模板；未逐项执行,1188
+methods-54-62,F5 社会生态学模型,stata,"* 个体层：age sex edu | 人际层：fam_support 家庭支持(0-3) | 社区层：park_density 绿地密度
+* 随机截距两水平模型（个体嵌套于社区）
+mixed behavior age sex edu fam_support park_density || community: , mle
+* 跨层交互：社区环境调节个体因素
+mixed behavior age sex edu fam_support c.fam_support#c.park_density || community: , mle",skills/references/methods-54.md,模板；未逐项执行,1209
+methods-54-63,F6 健康公平与正义理论（Rawls / Sen 可行能力）,stata,"* 集中指数 CI（便利回归法）：按收入排序后，2*σ²_rank*(h/μ) 对 rank 回归
+sort income
+gen rank = _n / _N
+quietly summarize h
+local mu = r(mean)
+quietly summarize rank
+gen lhs = 2 * r(Var) * (h / `mu')
+reg lhs rank
+* _b[rank] 即 CI（正=亲富，负=亲穷）；SSC 版：ssc install conindex; conindex h, rankvar(income)",skills/references/methods-54.md,模板；未逐项执行,1229
+methods-54-64,F7 健康社会决定因素框架（CSDH）,stata,"* 结构层：ses 教育年限/收入/职业 | 中间层：housing 居住条件、smoke 吸烟、stress 心理压力 | 结局：health
+* Oaxaca-Blinder 分解：高/低 SES 组健康差距分解为「禀赋效应 + 系数效应」
+ssc install oaxaca
+oaxaca health housing smoke stress, by(ses_group)",skills/references/methods-54.md,模板；未逐项执行,1253
+methods-54-65,F8 委托代理与供方诱导需求（SID）,stata,"* 供方诱导需求简化估计式：y = β0 + β1·beds + β2·need + β3·price + ε
+* β1 > 0 且在控制需要与价格后仍显著 → 诱导需求的证据
+reg visits beds_per1000 chronic lnprice insurance age
+* 稳健性：换供给指标（医生密度）重复
+reg visits doctors_per1000 chronic lnprice insurance age",skills/references/methods-54.md,模板；未逐项执行,1272
+methods-54-66,F9 市场失灵与政府干预（公共品 / 外部性 / 信息不对称）,text,"论文应用模板：市场失灵 → 对应卫生服务 → 干预手段（论证链）
+· 公共品：传染病监测、控烟立法（非竞争、非排他）→ 政府提供或强制
+· 正外部性：疫苗接种（私人收益 < 社会收益，私人最优接种量低于社会最优）→ 补贴、免疫规划
+· 信息不对称①：医患（供方诱导需求）→ 支付方式改革、监管、信息公开
+· 信息不对称②：保险市场（逆选择、道德风险）→ 强制参保、共付与起付线设计",skills/references/methods-54.md,模板；未逐项执行,1292
+methods-54-67,F10 制度变迁与路径依赖（医改分析）,text,"论文应用模板：医改制度变迁分析提纲
+1) 锁定起点：初始制度安排（如公费/劳保/新农合分轨起点）与关键节点（2009 新医改）
+2) 自我强化机制：规模报酬递增、沉没成本、利益集团、适应性预期
+3) 锁定证据：政策时间线——改革方案反复收敛于既有路径（如碎片化格局持续）
+4) 变迁触发：外部冲击（疫情、财政压力）或内部矛盾积累 → 制度突破/渐进调整",skills/references/methods-54.md,模板；未逐项执行,1312
+methods-54-68,G1 扎根理论（Grounded Theory）,r,"library(quanteda)
+corp <- corpus(data.frame(text = interviews$text, doc_id = interviews$id))
+dfm(corp, remove = stopwords(""zh""), remove_punct = TRUE) |>
+  textstat_frequency(n = 30)          # 高频词提示开放编码线索",skills/references/methods-54.md,模板；未逐项执行,1337
+methods-54-69,G2 结构方程模型（SEM）,stata,"* Stata：三潜变量 SEM
+sem (HL -> x1 x2 x3) (SE -> y1 y2 y3) (AD -> z1 z2 z3) (HL -> SE) (SE -> AD), method(mlmv)
+estat gof",skills/references/methods-54.md,模板；未逐项执行,1356
+methods-54-70,G2 结构方程模型（SEM）,r,"# R：lavaan 等价写法
+library(lavaan)
+model <- ' HL =~ x1 + x2 + x3
+           SE =~ y1 + y2 + y3
+           AD =~ z1 + z2 + z3
+           SE ~ HL
+           AD ~ SE '
+fit <- sem(model, data = dat)
+fitMeasures(fit, c(""cfi"",""tli"",""rmsea"",""srmr""))",skills/references/methods-54.md,模板；未逐项执行,1362
+methods-54-71,G3 多层 / 多重嵌套 SEM（Multilevel SEM）,stata,"* Stata：gsem 多层（医院随机截距）
+gsem (HL -> x1 x2 x3) (SE -> y1 y2 y3) (SE <- HL M1[hospital]), vce(cluster hospital)",skills/references/methods-54.md,模板；未逐项执行,1386
+methods-54-72,G3 多层 / 多重嵌套 SEM（Multilevel SEM）,r,"# R：lavaan 双层写法
+library(lavaan)
+model2 <- '
+  level: 1
+    SEw =~ y1 + y2 + y3
+    SEw ~ HLw
+  level: 2
+    SEb =~ y1 + y2 + y3
+    SEb ~ HLb '
+fit2 <- sem(model2, data = dat, cluster = ""hospital"")",skills/references/methods-54.md,模板；未逐项执行,1391
+methods-54-73,G4 fsQCA 模糊集定性比较分析,r,"library(QCA)
+dat2 <- data.frame(成效 = calibrate(score, c(60, 75, 90)),
+                   资源 = calibrate(res, c(10, 20, 30)),
+                   人员 = calibrate(staff, c(5, 10, 15)),
+                   激励 = calibrate(inc, c(0.2, 0.5, 0.8)),
+                   信息化 = calibrate(it, c(1, 3, 5)))
+tt <- truthTable(dat2, outcome = ""成效"", n.cut = 1, incl.cut = 0.8)
+minimize(tt, include = ""?"")            # 中间解",skills/references/methods-54.md,模板；未逐项执行,1416
+methods-54-74,G4 fsQCA 模糊集定性比较分析,stata,"* Stata：SSC 的 fuzzy 包做校准等（以 help fuzzy 为准）
+ssc install fuzzy
+fzcalc zy, low(60) cross(75) high(90)",skills/references/methods-54.md,模板；未逐项执行,1427
+academic-copyediting-skill-1,输出格式,text,"【修改后全文】
+……
+
+【修改说明】
+1. 第 X 段：……（原因：……）
+2. ……
+
+【请作者人工复核】
+- 事实与数据（润色不改事实，需作者核对）
+- 引用出处
+- AI 使用披露是否已写入稿件",skills/academic-copyediting-skill.md,模板；未逐项执行,46
+active-health-hiap-skill-1,板块 1：理论框架（怎么写进论文与标书）,r,"library(quanteda)
+docs <- readtext::readtext(""policy_texts/*.txt"")          # 政策文件目录
+corp <- corpus(docs)
+toks <- tokens(corp, remove_punct = TRUE)
+dfmat <- dfm(toks)
+kw <- c(""健康"", ""预防"", ""公平"", ""环境"", ""医疗"", ""保障"")
+dfm_select(dfmat, pattern = kw) |> textstat_frequency()    # 政策文本中的健康话语频次",skills/active-health-hiap-skill.md,模板；未逐项执行,48
+active-health-hiap-skill-2,板块 2：健康影响评估（HIA）方法,stata,"* Stata：PAF 与可避免负担的情景计算
+local p  0.35            // 基线暴露率
+local RR 1.45            // 暴露-反应 RR（示例，来自 Meta 分析）
+local paf = (`p'*(`RR'-1))/(`p'*(`RR'-1)+1)
+di ""PAF = "" %5.3f `paf'
+local B 12000            // 基线年死亡数（示例）
+di ""基线归因死亡 = "" %9.0f (`B'*`paf')
+* 干预使暴露率降至 0.25
+local p2 0.25
+local paf2 = (`p2'*(`RR'-1))/(`p2'*(`RR'-1)+1)
+di ""干预后可避免死亡 = "" %9.0f (`B'*(`paf'-`paf2'))
+
+* 公平性：集中指数（协方差法）
+egen r = rank(y)         // y 为健康结局，按经济状况排序后的秩
+sum y
+gen lhs = 2*y*r/r(mean)
+quietly reg lhs r
+di ""CI = "" %5.3f _b[r]",skills/active-health-hiap-skill.md,模板；未逐项执行,72
+active-health-hiap-skill-3,板块 2：健康影响评估（HIA）方法,r,"# R：同一计算 + 集中指数 + 情景比较
+paf <- function(p, RR) p*(RR-1)/(p*(RR-1)+1)
+B <- 12000
+base  <- B * paf(0.35, 1.45)
+after <- B * paf(0.25, 1.45)
+avoid <- base - after
+cat(sprintf(""基线归因死亡 %.0f；干预后可避免死亡 %.0f\n"", base, avoid))
+
+# 集中指数
+ci <- function(y, x) 2 * cov(y, rank(x)) / mean(y)
+ci(health_y, income_x)",skills/active-health-hiap-skill.md,模板；未逐项执行,93
+active-health-hiap-skill-4,板块 3：数据源（健康融入万策的证据底座）,r,"library(readxl)
+df <- read_excel(""GBD_results.xlsx"")     # 从 GBD Results Tool 导出的 CSV/XLSX
+agg <- aggregate(deaths ~ year + location, data = df, sum)
+# 与政策时点对齐：政策前后负担变化（配合 ITS/DID skill 做因果评估）",skills/active-health-hiap-skill.md,模板；未逐项执行,115
+active-health-hiap-skill-5,输出格式（政策健康影响评估报告模板）,text,"【政策与背景】
+政策名称、出台部门、目标与「健康融入万策」的关联点。
+
+【HIA 界定】
+范围、人群（含易受影响人群）、时间范围、评估者与利益相关者。
+
+【基线】
+暴露率、疾病负担、公平性现状（附数据源与版本）。
+
+【影响评估】
+暴露-反应证据（RR 与来源）；PAF 与可避免负担的情景计算；公平性影响（CI 与分解）；不确定性说明。
+
+【建议】
+可执行的政策修改建议（按证据强度分级）。
+
+【监测与评价】
+指标、数据来源与复查时点。",skills/active-health-hiap-skill.md,模板；未逐项执行,166
+dce-design-assistant-skill-1,软件准备,stata,"* Stata（联网安装一次）
+ssc install mixlogit, replace
+ssc install lclogit2, replace
+ssc install dcreate,  replace",skills/dce-design-assistant-skill.md,模板；未逐项执行,25
+dce-design-assistant-skill-2,软件准备,r,"# R
+install.packages(c(""DoE.base"", ""AlgDesign"", ""support.CEs"", ""mlogit"", ""gmnl""))",skills/dce-design-assistant-skill.md,模板；未逐项执行,32
+dce-design-assistant-skill-3,第 1 步：确定属性与水平,stata,"* Stata：生成 2^4 全因子（16 行），用于观察所有组合
+clear
+set obs 16
+gen a = mod(_n-1, 2)              // 0/1
+gen b = mod(int((_n-1)/2), 2)
+gen c = mod(int((_n-1)/4), 2)
+gen d = mod(int((_n-1)/8), 2)
+list",skills/dce-design-assistant-skill.md,模板；未逐项执行,49
+dce-design-assistant-skill-4,第 1 步：确定属性与水平,r,"# R：属性水平表与全因子规模
+levels <- list(费用 = c(10, 30, 50),   # 元/次
+               候诊 = c(1, 3, 7),      # 天
+               连续性 = c(0, 1),       # 0=不同医生 1=同一医生
+               目录 = c(0, 1))         # 0=基础目录 1=扩展目录
+sapply(levels, length)                 # 各属性水平数
+full <- expand.grid(levels)            # 全因子组合
+nrow(full)                             # 3*3*2*2 = 36",skills/dce-design-assistant-skill.md,模板；未逐项执行,60
+dce-design-assistant-skill-5,第 2 步：正交设计与 D-效率设计,stata,"* Stata：2^(4-1) 分辨率 IV 正交主效应设计（8 行，生成元 d = a*b*c 模 2）
+clear
+set obs 16
+gen a = mod(_n-1, 2)
+gen b = mod(int((_n-1)/2), 2)
+gen c = mod(int((_n-1)/4), 2)
+gen d = mod(int((_n-1)/8), 2)
+keep if mod(a+b+c+d, 2) == 0
+list, sep(0)
+
+* Stata：3^4 的 L9 正交设计（9 行）
+clear
+set obs 27
+gen a = mod(_n-1, 3)
+gen b = mod(int((_n-1)/3), 3)
+gen c = mod(int((_n-1)/9), 3)
+keep if mod(a+b+c, 3) == 0
+
+* Stata：D-效率设计（dcreate，SSC）。示例：3 个属性、每选择集 2 个方案、12 个选择集
+matrix b0 = J(1, 3, 0)                    // 先验参数（默认 0）
+dcreate i.x1 i.x2 i.x3, nalt(2) nset(12) bmat(b0) seed(2026)
+* 注：dcreate 要求因子变量写法；详细选项以 help dcreate 为准",skills/dce-design-assistant-skill.md,模板；未逐项执行,83
+dce-design-assistant-skill-6,第 2 步：正交设计与 D-效率设计,r,"# R：正交主效应设计（DoE.base）
+library(DoE.base)
+des24 <- oa.design(nlevels = c(2, 2, 2, 2))    # 2^4 → 8 行 L8
+des33 <- oa.design(nlevels = c(3, 3, 3, 3))    # 3^4 → 9 行 L9
+as.data.frame(des24)
+
+# R：D-效率设计（AlgDesign）
+library(AlgDesign)
+full36 <- expand.grid(x1 = c(0, 1, 2), x2 = c(0, 1, 2), x3 = c(0, 1), x4 = c(0, 1))
+dopt <- optFederov(~ ., data = full36, nTrials = 16, criterion = ""D"")
+dopt$design                                  # 选中的 16 个 profile
+dopt$D                                       # D-效率值",skills/dce-design-assistant-skill.md,模板；未逐项执行,108
+dce-design-assistant-skill-7,第 3 步：检查设计质量,stata,"* Stata：水平平衡 + 两两相关
+tab1 a b c d
+pwcorr a b c d",skills/dce-design-assistant-skill.md,模板；未逐项执行,131
+dce-design-assistant-skill-8,第 3 步：检查设计质量,r,"# R：水平平衡、相关矩阵与设计效率
+apply(des24, 2, table)                       # 水平平衡
+round(cor(as.data.frame(des24)), 3)          # 正交性：非对角应 ≈ 0
+eval.design(~ ., dopt$design)                # AlgDesign：方差膨胀、D/G 效率",skills/dce-design-assistant-skill.md,模板；未逐项执行,137
+dce-design-assistant-skill-9,第 4 步：构造选择集与分块,r,"# R：随机配对、分块
+library(dplyr)
+set.seed(2026)
+prof  <- as.data.frame(des24) |> sample_frac(1)      # 随机打乱
+pairs <- matrix(seq_len(nrow(prof)), ncol = 2, byrow = TRUE)
+nset  <- nrow(pairs)                                  # 选择集数
+nblock <- 2; per <- 2                                 # 2 个块、每块 2 题
+block  <- rep(1:nblock, each = per, length.out = nset)
+out <- data.frame(choice_set = rep(1:nset, each = 2),
+                  block = rep(block, each = 2),
+                  alt = rep(1:2, times = nset),
+                  prof[as.vector(t(pairs)), ])
+# opt-out 在问卷中额外提供“都不选”；数据里记 alt == 3、各属性 = 0",skills/dce-design-assistant-skill.md,模板；未逐项执行,152
+dce-design-assistant-skill-10,opt-out 在问卷中额外提供“都不选”；数据里记 alt == 3、各属性 = 0,stata,"* Stata：为每个选择集追加 opt-out 行（alt == 3，属性全为 0）
+local nset 4
+forvalues s = 1/`nset' {
+    set obs `=_N+1'
+    replace choice_set = `s' if _n == _N
+    replace alt = 3 if _n == _N
+    foreach v in a b c d {
+        replace `v' = 0 if _n == _N
+    }
+}",skills/dce-design-assistant-skill.md,模板；未逐项执行,168
+dce-design-assistant-skill-11,第 5 步：问卷与预测试,stata,"* Stata：预测试数据体检——受访者选择 opt-out 的次数分布
+egen n_optout = total(choice == 1 & alt == 3), by(id)
+tab n_optout
+* 提示：某受访者所有题都选 opt-out，说明属性或任务设计可能有问题",skills/dce-design-assistant-skill.md,模板；未逐项执行,189
+dce-design-assistant-skill-12,第 5 步：问卷与预测试,r,"# R：同一检查
+library(dplyr)
+dat |> group_by(id) |>
+  summarise(n_optout = sum(choice == 1 & alt == 3),
+            n_A      = sum(choice == 1 & alt == 1),
+            n_total  = n_distinct(choice_set))",skills/dce-design-assistant-skill.md,模板；未逐项执行,196
+dce-design-assistant-skill-13,第 6 步：样本量与 long 数据整理,stata,"* Stata：示例 long 数据（1 名受访者、2 个选择集、各 3 个方案）
+clear
+input id choice_set alt choice a b c d
+1 1 1 1 0 0 1 1
+1 1 2 0 1 1 0 0
+1 1 3 0 0 0 0 0
+1 2 1 0 1 0 1 0
+1 2 2 1 0 1 0 1
+1 2 3 0 0 0 0 0
+end
+
+* 宽表 → 长表（宽表每行一个选择集，选项变量带后缀 _1/_2/_3）
+reshape long choice_ a_ b_ c_ d_, i(id choice_set) j(alt)
+rename (choice_ a_ b_ c_ d_) (choice a b c d)
+
+* effects coding 示例：三水平属性 a（0/1/2 → -1/0/1）
+recode a (0 = -1) (1 = 0) (2 = 1)",skills/dce-design-assistant-skill.md,模板；未逐项执行,217
+dce-design-assistant-skill-14,第 6 步：样本量与 long 数据整理,r,"# R：dfidx 构造选择数据（mlogit 用）
+library(mlogit)
+md <- dfidx(dat, idx = c(""id"", ""alt""), choice = ""choice"")",skills/dce-design-assistant-skill.md,模板；未逐项执行,237
+dce-design-assistant-skill-15,7.1 条件 logit（`clogit`）,stata,"clogit choice a b c d, group(choice_set) vce(cluster id)
+est store clogit
+
+* WTP：d 为费用属性时的属性 b 的 WTP（delta 方法，含 95% CI）
+nlcom wtp_b: -_b[b] / _b[d]
+
+* IIA 直觉检验：删除 opt-out 后系数应大体稳定
+clogit choice a b c d if alt != 3, group(choice_set) vce(cluster id)",skills/dce-design-assistant-skill.md,模板；未逐项执行,253
+dce-design-assistant-skill-16,7.1 条件 logit（`clogit`）,r,"# R：clogit（survival）与 mlogit 等价实现
+library(survival)
+clogit(choice ~ a + b + c + d + strata(choice_set), data = dat)
+
+library(mlogit)
+m1 <- mlogit(choice ~ a + b + c + d | 0, data = md)
+summary(m1)",skills/dce-design-assistant-skill.md,模板；未逐项执行,264
+dce-design-assistant-skill-17,7.2 混合 logit（`mixlogit`）,stata,"* 随机系数：a、b、c 正态，d 固定
+mixlogit choice a b c d, group(choice_set) id(id) rand(a b c) nrep(500)
+est store mixl
+fitstat                                     // AIC/BIC，与 clogit 比较
+
+* 对数正态费用 + 相关随机参数（ln(1) = rand() 中第 1 个随机参数取对数正态）
+mixlogit choice a b c d, group(choice_set) id(id) rand(a b c) ln(1) corr nrep(500)
+
+* WTP：mixlwtp（SSC）或 delta 方法；具体语法以 help mixlwtp 为准",skills/dce-design-assistant-skill.md,模板；未逐项执行,280
+dce-design-assistant-skill-18,7.2 混合 logit（`mixlogit`）,r,"# R：混合 logit（mlogit rpar）
+m2 <- mlogit(choice ~ a + b + c + d | 0, data = md,
+             rpar = c(a = ""n"", b = ""n"", c = ""n""),
+             R = 500, halton = NA, panel = TRUE)
+summary(m2)",skills/dce-design-assistant-skill.md,模板；未逐项执行,292
+dce-design-assistant-skill-19,7.3 潜类别 logit（latent class，`lclogit2`）,stata,"lclogit2 choice a b c d, group(choice_set) id(id) nclasses(2) seed(2026)
+lclogit2, nclasses(3) seed(2026)            // 比较 BIC/AIC 选类别数
+est store lc3
+lclogitprob, cpprob(3)                      // 各类别平均成员概率
+estat lcmean, post                          // 各类别协变量均值（刻画类别特征）
+
+* 类成员协变量模型（membership 方程放入 age、income）
+lclogitml choice a b c d, group(choice_set) id(id) nclasses(3) membership(age income)
+
+* WTP：lcwtp（lclogit2 附带），语法以 help lcwtp 为准；
+* 或手工取各类别系数比值并配合 delta 方法",skills/dce-design-assistant-skill.md,模板；未逐项执行,306
+dce-design-assistant-skill-20,7.3 潜类别 logit（latent class，`lclogit2`）,r,"# R：潜类别 logit（gmnl）
+library(gmnl)
+lc <- gmnl(choice ~ a + b + c + d | 0 | 0 | 0 | 1, data = md,
+           model = ""lc"", panel = TRUE, Q = 3)
+summary(lc)",skills/dce-design-assistant-skill.md,模板；未逐项执行,320
+dce-design-assistant-skill-21,第 8 步：结果解读与报告,stata,"* WTP 与置信区间（clogit，delta 方法）
+nlcom wtp_b: -_b[b] / _b[d], post
+estimates store wtp_b
+
+* 三模型并列输出
+estimates table clogit mixl lc3, b(%9.3f) se stats(N aic bic)",skills/dce-design-assistant-skill.md,模板；未逐项执行,341
+dce-design-assistant-skill-22,第 8 步：结果解读与报告,r,"# R：delta 方法 WTP（car::deltaMethod）
+library(car)
+deltaMethod(coef(m1), ""-b/d"")               # 按实际系数名替换 b、d",skills/dce-design-assistant-skill.md,模板；未逐项执行,350
+dce-design-assistant-skill-23,输出格式（分析报告模板）,text,"【设计与数据】
+属性/水平表；设计类型（正交 / D-效率）与效率值；选择集与块数；预测试结果；样本量与法则依据。
+
+【模型估计】
+表 1：clogit 主结果；表 2：mixlogit 均值 + SD；表 3：潜类别各类别系数与成员概率（附 AIC/BIC 选 K 的依据）。
+
+【WTP】
+WTP = -β_x / β_cost 及 95% CI（注明 delta / Krinsky-Robb 方法）。
+
+【结论与局限】
+方向性结论 + 偏好异质性 + 局限（IIA、分布假设、设计假设、外部效度）。",skills/dce-design-assistant-skill.md,模板；未逐项执行,371
+ddd-skill-1,软件准备,stata,"* Stata（联网安装一次）
+ssc install reghdfe, replace
+* 若 ftools 未被自动装上：ssc install ftools, replace",skills/ddd-skill.md,模板；未逐项执行,25
+ddd-skill-2,软件准备,r,"# R
+install.packages(""fixest"")",skills/ddd-skill.md,模板；未逐项执行,31
+ddd-skill-3,第 0 步：构造模拟面板数据（贯穿全流程）,stata,"* ============ 第 0 步：模拟面板数据（贯穿全流程） ============
+clear all
+set seed 2026
+
+* 60 家医院：id 1-30 公立（treated = 1），31-60 民营（treated = 0）
+set obs 60
+gen id = _n
+gen treated = (id <= 30)          // 处理维度：1 = 公立医院（受集采约束）
+gen u_i = rnormal(0, 4)           // 医院层面随机效应（制造院内相关，聚类依据）
+
+* 每家医院 2 类药品：group = 1 集采品种，0 非集采品种
+expand 2
+bysort id: gen group = _n - 1
+
+* 每个（医院 × 品种）2 期：post = 0 政策前，1 政策后
+expand 2
+bysort id group: gen post = _n - 1
+gen time = post                   // 供 reghdfe absorb() 使用
+
+* ---------- 真实数据生成过程（DGP，内置真实 DDD 效应 δ = -8） ----------
+* y = γ0 + γ1·treated + γ2·post + γ3·group
+*     + γ12·treated×post + γ13·treated×group + γ23·post×group
+*     + δ·treated×post×group + u_i + ε
+local g0 100                        // 基组均值（民营 × 非集采 × 政策前）
+local g1 10                         // 公立医院整体费用水平更高
+local g2 -5                         // 全体时间趋势（普遍控费）
+local g3 20                         // 集采品种用量大、费用更高
+local g12 -6                        // 偏误 1：公立医院特有趋势（DRG / 取消加成等）
+local g13 5                         // 公立医院对集采品种的固定偏好
+local g23 -4                        // 偏误 2：集采品种特有趋势（专利到期等）
+local delta -8                      // 真实 DDD 效应：集采使公立医院集采品种额外下降 8 万元/月
+
+gen y = `g0' + `g1'*treated + `g2'*post + `g3'*group + ///
+        `g12'*treated*post + `g13'*treated*group + `g23'*post*group + ///
+        `delta'*treated*post*group + u_i + rnormal(0, 2)
+
+* ---------- 稳健性结局（第 4 步用） ----------
+* y_qty：集采品种采购数量（相关结局，真实效应较小 δ = -3）
+gen y_qty = 60 + 8*treated - 4*post + 18*group - 3*treated*post + ///
+            4*treated*group - 2*post*group - 3*treated*post*group + ///
+            u_i + rnormal(0, 3)
+* y_dev：与药品无关的耗材费用（安慰剂结局，真实 δ = 0）
+gen y_dev = 40 + 5*treated - 2*post + 2*group + 1*treated*post - ///
+            1*treated*group + 0.5*post*group + 0*treated*post*group + ///
+            0.5*u_i + rnormal(0, 5)
+
+* 数据体检：8 组均值表（Stata 17+；16 及更早用 bysort treated post group: summarize y）
+table treated post group, stat(mean y) stat(sd y) nototals
+* 期望组均值（噪声平均掉后）：民营 非集采 前 100 / 后 95；民营 集采 前 120 / 后 111；
+*                             公立 非集采 前 110 / 后 99；公立 集采 前 135 / 后 112",skills/ddd-skill.md,模板；未逐项执行,48
+ddd-skill-4,第 0 步：构造模拟面板数据（贯穿全流程）,r,"# ============ 第 0 步：模拟面板数据（贯穿全流程） ============
+set.seed(2026)
+N <- 60                                     # 60 家医院
+dat <- expand.grid(id = 1:N, group = c(0, 1), post = c(0, 1))
+dat$treated <- as.integer(dat$id <= 30)     # 处理维度：1 = 公立医院
+dat$u_i     <- rnorm(N, 0, 4)[dat$id]       # 医院层面随机效应（聚类依据）
+dat$time    <- dat$post                     # 供 fixest 吸收固定效应
+
+# 真实参数（内置真实 DDD 效应 delta = -8）
+g0 <- 100; g1 <- 10; g2 <- -5; g3 <- 20
+g12 <- -6; g13 <- 5; g23 <- -4; delta <- -8
+
+dat$y <- with(dat, g0 + g1*treated + g2*post + g3*group +
+                   g12*treated*post + g13*treated*group + g23*post*group +
+                   delta*treated*post*group + u_i + rnorm(nrow(dat), 0, 2))
+
+# 稳健性结局：y_qty（相关结局，真实 δ = -3）；y_dev（安慰剂结局，真实 δ = 0）
+dat$y_qty <- with(dat, 60 + 8*treated - 4*post + 18*group - 3*treated*post +
+                      4*treated*group - 2*post*group - 3*treated*post*group +
+                      u_i + rnorm(nrow(dat), 0, 3))
+dat$y_dev <- with(dat, 40 + 5*treated - 2*post + 2*group + 1*treated*post -
+                      1*treated*group + 0.5*post*group + 0*treated*post*group +
+                      0.5*u_i + rnorm(nrow(dat), 0, 5))
+
+# 8 组均值表（应与下方期望值接近）
+aggregate(y ~ treated + post + group, data = dat, FUN = mean)",skills/ddd-skill.md,模板；未逐项执行,101
+ddd-skill-5,第 1 步：从 DID 到 DDD：动机,stata,"* 图形直觉：四组均值线（先平均到 8 个单元格）
+preserve
+collapse (mean) y, by(treated post group)
+twoway (connected y post if treated==1 & group==1, sort) ///
+       (connected y post if treated==1 & group==0, sort) ///
+       (connected y post if treated==0 & group==1, sort) ///
+       (connected y post if treated==0 & group==0, sort), ///
+       legend(order(1 ""公立·集采"" 2 ""公立·非集采"" 3 ""民营·集采"" 4 ""民营·非集采"")) ///
+       xtitle(""post（0 政策前 / 1 政策后）"") ytitle(""月均药品费用（万元）"")
+restore",skills/ddd-skill.md,模板；未逐项执行,152
+ddd-skill-6,第 1 步：从 DID 到 DDD：动机,r,"# 图形直觉：四组均值线（两条 DID 线的斜率差之差 = DDD）
+cell <- aggregate(y ~ treated + post + group, data = dat, FUN = mean)
+plot(NA, xlim = c(0, 1), ylim = range(cell$y),
+     xlab = ""post（0 政策前 / 1 政策后）"", ylab = ""月均药品费用 y（万元）"",
+     main = ""四组均值线：DDD = 实线斜率差 - 虚线斜率差"")
+lines(y ~ post, data = cell, subset = treated == 1 & group == 1, type = ""b"", col = ""red"",  lty = 1)
+lines(y ~ post, data = cell, subset = treated == 1 & group == 0, type = ""b"", col = ""blue"", lty = 1)
+lines(y ~ post, data = cell, subset = treated == 0 & group == 1, type = ""b"", col = ""red"",  lty = 2)
+lines(y ~ post, data = cell, subset = treated == 0 & group == 0, type = ""b"", col = ""blue"", lty = 2)
+legend(""topright"", c(""公立·集采"", ""公立·非集采"", ""民营·集采"", ""民营·非集采""),
+       col = c(""red"", ""blue"", ""red"", ""blue""), lty = c(1, 1, 2, 2), bty = ""n"")",skills/ddd-skill.md,模板；未逐项执行,165
+ddd-skill-7,第 2 步：模型设定与估计（Stata / R 对应）,stata,"* ---------- 模型 A：pooled OLS + 医院聚类稳健标准误 ----------
+reg y i.treated##i.post##i.group, vce(cluster id)
+est store ddd_ols
+
+* ---------- 模型 B：医院 + 时间固定效应（reghdfe） ----------
+reghdfe y i.treated##i.post##i.group, absorb(id time) vce(cluster id)
+est store ddd_fe
+* 说明：treated、post 主效应被吸收（与 id / time 固定效应共线，输出中标注）；
+*       两两交互与三重交互仍可估，δ 与模型 A 相同",skills/ddd-skill.md,模板；未逐项执行,213
+ddd-skill-8,第 2 步：模型设定与估计（Stata / R 对应）,r,"library(fixest)
+
+# 模型 A：pooled OLS + 医院聚类稳健标准误（不吸收固定效应）
+m_ols <- feols(y ~ treated*post*group, cluster = ~id, data = dat)
+summary(m_ols)
+
+# 模型 B：医院 + 时间固定效应（treated、post 因共线被自动移除）
+m_fe <- feols(y ~ treated*post*group | id + time, cluster = ~id, data = dat)
+summary(m_fe)
+
+# 三重交互系数 δ（fixest 中交互用 "":"" 连接，对应 Stata 的 #）
+coef(m_fe)[""treated:post:group""]",skills/ddd-skill.md,模板；未逐项执行,225
+ddd-skill-9,第 3 步：核心系数 δ 的解读与分解验证,stata,"* ---------- 3.1 两个 2×2 DID（品种类型 DID，在公立/民营切片上） ----------
+reg y i.post##i.group if treated == 1, vce(cluster id)
+local did1 = _b[1.post#1.group]          // 期望 ≈ -12（= γ23 + δ）
+reg y i.post##i.group if treated == 0, vce(cluster id)
+local did2 = _b[1.post#1.group]          // 期望 ≈ -4（= γ23）
+
+* ---------- 3.2 分解：DDD = DID1 - DID2 ----------
+display ""DID1(品种|公立) = "" %5.2f `did1'
+display ""DID2(品种|民营) = "" %5.2f `did2'
+display ""DDD = DID1 - DID2 = "" %5.2f (`did1' - `did2')
+
+* ---------- 3.3 镜像分解（医院类型 DID，在集采/非集采切片上） ----------
+reg y i.treated##i.post if group == 1, vce(cluster id)
+local did1b = _b[1.treated#1.post]       // 期望 ≈ -14（= γ12 + δ）
+reg y i.treated##i.post if group == 0, vce(cluster id)
+local did2b = _b[1.treated#1.post]       // 期望 ≈ -6（= γ12）
+display ""镜像分解：DID(医院|集采) - DID(医院|非集采) = "" %5.2f (`did1b' - `did2b')
+
+* ---------- 3.4 与主回归三重交互系数对照（期望 ≈ -8） ----------
+reg y i.treated##i.post##i.group, vce(cluster id)
+display ""主回归三重交互系数 δ = "" %5.2f _b[1.treated#1.post#1.group]",skills/ddd-skill.md,模板；未逐项执行,253
+ddd-skill-10,第 3 步：核心系数 δ 的解读与分解验证,r,"# 3.1 两个 2×2 DID（品种类型 DID 在公立/民营切片上）
+did1 <- coef(feols(y ~ post*group | id, cluster = ~id, data = dat[dat$treated == 1, ]))[""post:group""]
+did2 <- coef(feols(y ~ post*group | id, cluster = ~id, data = dat[dat$treated == 0, ]))[""post:group""]
+c(DID1 = unname(did1), DID2 = unname(did2), DDD = unname(did1 - did2))
+# 期望：DID1 ≈ -12，DID2 ≈ -4，DDD ≈ -8 = δ
+
+# 3.2 镜像分解（医院类型 DID 在集采/非集采切片上），期望 ≈ -8
+d1 <- coef(feols(y ~ treated*post | id, cluster = ~id, data = dat[dat$group == 1, ]))[""treated:post""]
+d2 <- coef(feols(y ~ treated*post | id, cluster = ~id, data = dat[dat$group == 0, ]))[""treated:post""]
+unname(d1 - d2)
+
+# 3.3 与主回归三重交互系数对照（期望 ≈ -8）
+coef(m_fe)[""treated:post:group""]",skills/ddd-skill.md,模板；未逐项执行,277
+ddd-skill-11,第 4 步：平行趋势与稳健性（识别假设、动态检验、安慰剂、替换结局）,stata,"* ---------- 动态检验思路（示意，需多期数据；本模拟两期无法执行） ----------
+* 假设 time = -2..2，政策时点 = 0，基准期 = -1：
+* reghdfe y ib(-1).time##i.treated##i.group, absorb(id) vce(cluster id)
+* 关注各期 1.time#1.treated#1.group 系数（政策前应 ≈ 0）
+* 画图：ssc install coefplot; coefplot, keep(*.time#1.treated#1.group) vertical yline(0)
+* 具体 keep 匹配规则以 help coefplot 为准
+
+* ---------- 安慰剂 1：伪第三维度（Stata permute，200 次） ----------
+* 随机置换 group，破坏品种维度结构；真实 δ = -8 应落在置换分布左尾之外
+permute group delta = _b[1.treated#1.post#1.group], ///
+        reps(200) seed(2026): reg y i.treated##i.post##i.group, vce(cluster id)
+
+* ---------- 安慰剂 2：伪时点（示意，需 time = 0..3 的多期数据） ----------
+* gen post_fake = (time == 1)        // 把政策提前到 t=1，只用真政策前数据
+* reg y i.treated##i.post_fake##i.group if time < 2, vce(cluster id)  // 期望 δ ≈ 0
+
+* ---------- 替换结局 ----------
+reghdfe y_qty i.treated##i.post##i.group, absorb(id time) vce(cluster id)  // 相关结局：期望 δ ≈ -3
+reghdfe y_dev i.treated##i.post##i.group, absorb(id time) vce(cluster id)  // 安慰剂结局：期望 δ ≈ 0
+
+* ---------- 聚类层级敏感性：多向聚类（reghdfe 支持） ----------
+reghdfe y i.treated##i.post##i.group, absorb(id time) vce(cluster id time)",skills/ddd-skill.md,模板；未逐项执行,313
+ddd-skill-12,第 4 步：平行趋势与稳健性（识别假设、动态检验、安慰剂、替换结局）,r,"# ---------- 安慰剂 1（R 版）：伪第三维度，医院内随机交换品种标签，200 次 ----------
+set.seed(2026)
+perm_delta <- replicate(200, {
+  d <- dat
+  d$group_p <- ave(d$group, d$id, FUN = sample)      # 每家医院内部重排，保留医院结构
+  coef(feols(y ~ treated*post*group_p | id + time, data = d))[""treated:post:group_p""]
+})
+hist(perm_delta, main = ""伪第三维度：δ 的置换分布（200 次）"")
+abline(v = -8, col = ""red"", lwd = 2)                 # 真实 δ = -8 应落在左尾之外
+mean(perm_delta <= -8)                               # 置换单侧 p 值（期望接近 0）
+
+# ---------- 替换结局 ----------
+coef(feols(y_qty ~ treated*post*group | id + time, cluster = ~id, data = dat))[""treated:post:group""]  # 期望 ≈ -3
+coef(feols(y_dev ~ treated*post*group | id + time, cluster = ~id, data = dat))[""treated:post:group""]  # 期望 ≈ 0
+
+# 伪时点（示意，需 ≥3 期数据）：把政策时点前移后用真政策前数据估计 δ，期望 ≈ 0；
+# 写法同上，仅替换 post 变量与子样本（以 fixest 帮助文档为准）",skills/ddd-skill.md,模板；未逐项执行,338
+ddd-skill-13,第 6 步：报告清单,stata,"* 主回归表：逐步（仅主效应 → +两两交互 → +三重交互）
+reg y i.treated i.post i.group, vce(cluster id)
+est store m1
+reg y i.treated i.post i.group i.treated#i.post i.treated#i.group i.post#i.group, vce(cluster id)
+est store m2
+reg y i.treated##i.post##i.group, vce(cluster id)
+est store m3
+estimates table m1 m2 m3, b(%9.2f) se stats(N)
+* 报告时另附 95% CI（reg 输出自带）与聚类数（60 家医院）",skills/ddd-skill.md,模板；未逐项执行,379
+ddd-skill-14,第 6 步：报告清单,r,"# 主回归表：逐步（fixest 的 etable；模型 SE 已在估计时按 id 聚类）
+m1 <- feols(y ~ treated + post + group, cluster = ~id, data = dat)
+m2 <- feols(y ~ treated*post + treated*group + post*group, cluster = ~id, data = dat)
+m3 <- feols(y ~ treated*post*group, cluster = ~id, data = dat)
+etable(m1, m2, m3)          # 选项以 ?etable 为准",skills/ddd-skill.md,模板；未逐项执行,391
+ddd-skill-15,输出格式（DDD 报告模板）,text,"【三维定义】
+时间维度（政策时点及文件依据）；处理维度（受政策约束 vs 不受约束）；第三维度（分层依据）；
+第三维度选择论证（外生性、偏误同质性理由）。
+
+【描述统计】
+表 1：2×2×2 八个单元格的均值、SD、N（公立/民营 × 集采/非集采 × 政策前/后）。
+
+【主回归】
+表 2：逐步回归（主效应 → +两两交互 → +三重交互），报 δ、聚类稳健 SE、95% CI、N、聚类数；
+固定效应版本（reghdfe / feols）与 pooled OLS 并列。
+
+【DDD 分解】
+表 3：DID1（维度 A 的 2×2 DID，第三维度切片 1）− DID2（第三维度切片 0）＝ δ；
+标注两个偏误的方向与大小；附镜像分解。
+
+【稳健性】
+表 4：伪第三维度（置换 p 值）、伪时点（若多期）、替换结局、事件研究图（若多期）、
+聚类层级敏感性（多向聚类）。
+
+【局限】
+识别假设（偏误同质）论证；第三维度与政策相关性；溢出可能（价格联动、替代效应）；
+8 单元格样本均衡性；外部效度。",skills/ddd-skill.md,模板；未逐项执行,418
+did-skill-1,软件准备,stata,"* Stata（联网安装一次）
+ssc install csdid,    replace    // 交错处理 DID（Callaway-Sant'Anna）
+ssc install drdid,    replace    // 双重稳健 DID（csdid 的依赖）
+ssc install reghdfe,  replace    // 高维固定效应（事件研究回归用）
+ssc install ftools,   replace    // reghdfe 的依赖
+ssc install coefplot, replace    // 系数图
+ssc install estout,   replace    // 结果表
+ssc install ritest,   replace    // 随机化推断（安慰剂检验备选）
+ssc install psmatch2, replace    // 倾向得分匹配",skills/did-skill.md,模板；未逐项执行,27
+did-skill-2,软件准备,r,"# R
+install.packages(c(""fixest"", ""did"", ""MatchIt"", ""ggplot2"", ""cobalt"", ""modelsummary""))",skills/did-skill.md,模板；未逐项执行,39
+did-skill-3,第 0 步：生成贯穿全文的模拟面板数据,stata,"* ============================================================
+* 模拟面板：60 地区 × 4 期；30 个处理组交错入组；真实 ATT = -150
+* ============================================================
+clear all
+set seed 2026
+set obs 60
+gen id = _n
+* 处理时点 g（0 = 永不受理）
+gen g = 0
+replace g = 2 if inrange(id, 1, 10)
+replace g = 3 if inrange(id, 11, 20)
+replace g = 4 if inrange(id, 21, 30)
+gen treated = (g > 0)
+* 地区特征（时不变）：固定效应、自身趋势、可观测协变量
+gen alpha = rnormal(900, 50)        // 地区平均次均费用水平
+gen beta  = rnormal(-8, 4)          // 地区自身趋势（元/期）
+gen x1 = rnormal(0.3*treated, 1)    // 协变量 1：与入选相关
+gen x2 = rnormal(0, 1)              // 协变量 2
+* 4 期面板
+expand 4
+bysort id: gen t = _n
+gen lambda = -30 * (t - 1)          // 共同时间趋势
+gen D = (t >= g & g > 0)            // 处理指示
+gen y   = alpha + beta*(t-1) + lambda + (-150)*D + rnormal(0, 40)           // 次均药品费用
+gen adm = 0.20 - 0.01*(t-1) + (alpha-900)/3000 + (-0.02)*D + rnormal(0, 0.04)  // 住院率
+xtset id t
+save ""did_demo.dta"", replace
+* 数据体检
+xtdes                               // 面板结构：60 个地区 × 4 期、无缺失
+tab g                               // 队列规模：g=2/3/4 各 10，g=0 共 30
+tabstat y if t == 1, by(treated) stat(n mean sd)   // 干预前基线比较",skills/did-skill.md,模板；未逐项执行,66
+did-skill-4,第 0 步：生成贯穿全文的模拟面板数据,r,"# ============================================================
+# 模拟面板：60 地区 × 4 期；30 个处理组交错入组；真实 ATT = -150
+# ============================================================
+set.seed(2026)
+N <- 60; Tmax <- 4
+id  <- 1:N
+g   <- c(rep(2, 10), rep(3, 10), rep(4, 10), rep(0, 30))   # 处理时点；0 = 永不受理
+treated <- as.integer(g > 0)
+alpha <- rnorm(N, 900, 50)          # 地区固定效应
+beta  <- rnorm(N, -8, 4)            # 地区自身趋势
+x1 <- rnorm(N, 0.3 * treated, 1)    # 协变量 1：与入选相关
+x2 <- rnorm(N, 0, 1)                # 协变量 2
+
+dat <- expand.grid(id = id, t = 1:Tmax)
+dat$g <- g[dat$id]; dat$treated <- treated[dat$id]
+dat$alpha <- alpha[dat$id]; dat$beta <- beta[dat$id]
+dat$x1 <- x1[dat$id]; dat$x2 <- x2[dat$id]
+dat$D <- as.integer(dat$t >= dat$g & dat$g > 0)
+dat$y <- dat$alpha + dat$beta * (dat$t - 1) - 30 * (dat$t - 1) +
+         (-150) * dat$D + rnorm(N * Tmax, 0, 40)                       # 次均药品费用
+dat$adm <- 0.20 - 0.01 * (dat$t - 1) + (dat$alpha - 900) / 3000 +
+           (-0.02) * dat$D + rnorm(N * Tmax, 0, 0.04)                  # 住院率
+
+table(dat$g)                        # 队列规模
+aggregate(y ~ treated + t, data = dat, FUN = mean)     # 各期均值（干预前应接近）",skills/did-skill.md,模板；未逐项执行,100
+did-skill-5,第 1 步：研究设计与识别假设,stata,"* 干预前基线平衡表（t=1 期）
+tabstat y adm x1 x2 if t == 1, by(treated) stat(n mean sd)
+* 各期结局均值图（第一道识别直觉：干预前两组路径应平行）
+egen ybar = mean(y), by(treated t)
+twoway (line ybar t if treated == 1) (line ybar t if treated == 0), ///
+    legend(order(1 ""处理组"" 2 ""对照组"")) xline(2.5, lp(dash)) ///
+    title(""各期次均药品费用：处理组 vs 对照组（干预前应平行）"")
+drop ybar",skills/did-skill.md,模板；未逐项执行,142
+did-skill-6,第 1 步：研究设计与识别假设,r,"# 干预前基线平衡表
+aggregate(cbind(y, adm, x1, x2) ~ treated, data = subset(dat, t == 1), FUN = mean)
+# 各期均值图
+means <- aggregate(y ~ treated + t, data = dat, FUN = mean)
+with(means, {
+    plot(t, y, type = ""n"", xlab = ""t"", ylab = ""次均药品费用"")
+    lines(t[treated == 1], y[treated == 1], col = ""red"",  lwd = 2)
+    lines(t[treated == 0], y[treated == 0], col = ""blue"", lwd = 2)
+    abline(v = 2.5, lty = 2)
+    legend(""topright"", c(""处理组"", ""对照组""), col = c(""red"", ""blue""), lwd = 2)
+})",skills/did-skill.md,模板；未逐项执行,153
+did-skill-7,第 2 步：经典 2×2 DID,stata,"* 两期子样本：t=1 干预前、t=2 干预后；处理组 = t=2 期入组队列
+preserve
+keep if inlist(t, 1, 2)
+gen post = (t == 2)
+gen treated2 = (g == 2)                // 10 个处理组；g=3/4 在 t<=2 尚未处理，作为对照
+* 经典 2×2（OLS + 交互项）
+reg y i.treated2##i.post, vce(cluster id)
+est store m_2x2
+* 系数解释：1.treated2 = 基线差异；1.post = 共同时间变化；
+*           1.treated2#1.post = ATT ≈ -150（集采使次均药品费用下降约 150 元）
+
+* 等价：双向固定效应（系数相同）
+reg y i.treated2#i.post i.id i.t, vce(cluster id)
+
+* 官方命令（Stata 17+）：didregress（自动 FE 与 ATET 报告）
+didregress (y) (treated2), group(id) time(t) vce(cluster id)
+* 注：didregress 假设处理组单一入组时点；交错处理请用第 4 步的 csdid
+restore",skills/did-skill.md,模板；未逐项执行,179
+did-skill-8,第 2 步：经典 2×2 DID,r,"library(fixest)
+d2 <- subset(dat, t %in% 1:2)
+d2$post <- as.integer(d2$t == 2)
+d2$treated2 <- as.integer(d2$g == 2)
+
+# 双向固定效应 DID：组/期主效应被 FE 吸收，交互项 = ATT
+m_2x2 <- feols(y ~ treated2 * post | id + t, data = d2, cluster = ~id)
+summary(m_2x2)                       # treated2:post ≈ -150
+
+# 等价：不含 FE 的经典 2×2（两期时系数相同，方便逐项解释）
+m_ols <- feols(y ~ treated2 * post, data = d2, cluster = ~id)
+summary(m_ols)
+# 系数：treated2 = 基线差异；post = 共同时间变化；treated2:post = ATT",skills/did-skill.md,模板；未逐项执行,200
+did-skill-9,第 3 步：平行趋势检验,stata,"* 事件研究（手工交互虚拟变量，基准 = 干预前一期 rel = -1）
+preserve
+keep if inlist(g, 0, 3)
+gen treated3 = (g == 3)
+gen rel = t - 3                         // rel = -2,-1,0,1
+gen ev_m2 = (rel == -2 & treated3 == 1)
+gen ev_m1 = (rel == -1 & treated3 == 1) // 基准（回归中省略）
+gen ev_0  = (rel ==  0 & treated3 == 1)
+gen ev_1  = (rel ==  1 & treated3 == 1)
+reghdfe y ev_m2 ev_0 ev_1, absorb(id t) vce(cluster id)
+test ev_m2 = 0                          // 正式检验：干预前系数 = 0
+coefplot, keep(ev_*) vertical yline(0, lcolor(red)) xline(1.5, lcolor(gs8) lp(dash))
+* 图：ev_m2（干预前）应 ≈ 0；ev_0、ev_1（干预后）应 ≈ -150
+* 注：本例受 4 期数据限制只有 1 个前趋势系数；真实研究应有 3 期以上干预前数据，
+*     并联合检验全部前趋势系数（test ev_m2 ev_m3 ... = 0）
+
+* 官方替代（Stata 17+）：didregress + 预趋势检验
+didregress (y) (treated3), group(id) time(t) vce(cluster id)
+estat trendplots                        // 各期处理-对照差异图（含置信区间）
+estat ptrends                           // 平行趋势联合检验（H0：干预前各期系数均为 0）
+restore",skills/did-skill.md,模板；未逐项执行,230
+did-skill-10,第 3 步：平行趋势检验,r,"# 事件研究（fixest 的 i() 交互；基准 rel = -1）
+library(fixest)
+es <- subset(dat, g %in% c(0, 3))
+es$treated3 <- as.integer(es$g == 3)
+es$rel <- es$t - 3
+m_es <- feols(y ~ i(rel, treated3, ref = -1) | id + t, data = es, cluster = ~id)
+summary(m_es)
+iplot(m_es)                             # 事件研究图：干预前系数应 ≈ 0
+# 正式检验：干预前系数（本例为 rel = -2）
+coef(m_es)                              # 系数名形如 rel::-2:treated3（以实际输出为准）
+wald(m_es, ""rel::-2:treated3"")          # 名称以 coef(m_es) 输出为准
+# 亦可用 coefplot(m_es)（fixest 自带）；选项以 help(coefplot.fixest) 为准
+# 交错处理时可用 did::pre.test()（对 CS 估计做干预前联合检验，以 help(pre.test) 为准）",skills/did-skill.md,模板；未逐项执行,254
+did-skill-11,"第 4 步：多期 / 交错处理 DID（Callaway & Sant'Anna, 2021）",stata,"* Stata 18+：官方 csdid；Stata 17 及更早：ssc install csdid, replace + ssc install drdid, replace
+* 全样本：30 个处理组在 t=2/3/4 交错入组（g=2/3/4），30 个永不受理（g=0）
+csdid y, ivar(id) time(t) gvar(g)
+* 聚合（官方 18：estat simple/event/group/calendar；SSC 版：csdid_estat simple ...）
+estat simple                  // 总体 ATT ≈ -150
+estat event                   // 事件时间聚合（供第 5 步作图）
+estat group                   // 按队列聚合
+* 选项（method、对照组选择、权重自举等）以 help csdid 为准
+
+* 官方替代（Stata 18+）：xthdidregress，处理时点由 D 自动识别
+xthdidregress ra (y) (D), group(id) time(t)
+* 聚合与作图：estat aggregation / estat atetplot；语法以 help xthdidregress postestimation 为准",skills/did-skill.md,模板；未逐项执行,285
+did-skill-12,"第 4 步：多期 / 交错处理 DID（Callaway & Sant'Anna, 2021）",r,"# Callaway-Sant'Anna（官方 R 实现）
+library(did)
+out <- att_gt(yname = ""y"", tname = ""t"", idname = ""id"", gname = ""g"",
+              data = dat, control_group = ""notyettreated"")
+summary(out)                            # ATT(g,t) 表：队列 g × 时期 t
+agg_simple <- aggte(out, type = ""simple"")    # 总体 ATT ≈ -150
+summary(agg_simple)
+agg_group  <- aggte(out, type = ""group"")     # 按队列
+agg_cal    <- aggte(out, type = ""calendar"")  # 按日历期
+# 对照组设定、估计方法（est_method = ""dr""/""reg""/""ipw""）等选项以 help(att_gt) 为准
+
+# 替代：Sun & Abraham（fixest）
+feols(y ~ sunab(g, t) | id + t, data = dat, cluster = ~id)",skills/did-skill.md,模板；未逐项执行,300
+did-skill-13,第 5 步：事件研究图,stata,"* 接第 4 步 csdid
+estat event                   // 官方 18；SSC 版为 csdid_estat event
+csdid_plot                    // 事件研究图（官方 18 与 SSC 版均有）
+* 若版本支持，亦可用 marginsplot：estat event 后 marginsplot
+* （以 help csdid postestimation / help csdid_plot 为准）",skills/did-skill.md,模板；未逐项执行,326
+did-skill-14,第 5 步：事件研究图,r,"# 接第 4 步
+agg_dyn <- aggte(out, type = ""dynamic"", min_e = -3, max_e = 2)
+summary(agg_dyn)                    # 事件研究系数表（含各期置信区间）
+ggdid(agg_dyn)                      # 事件研究图（需 ggplot2）
+ggdid(agg_dyn, ylim = c(-300, 60), xlab = ""相对处理期"",
+      title = ""动态处理效应：集采对次均药品费用"")
+# ggdid 的图形选项以 help(ggdid) 为准",skills/did-skill.md,模板；未逐项执行,334
+did-skill-15,第 6 步：稳健性检验,stata,"* ---------- 6.1 伪处理组（随机重抽处理组身份，500 次） ----------
+preserve
+keep if inlist(t, 1, 2)
+gen post = (t == 2)
+tempname pf
+tempfile pfres
+postfile `pf' b_did using `pfres', replace
+set seed 2026
+forvalues r = 1/500 {
+    * 在地区层面抽一个伪处理身份（同一地区两期身份一致）
+    bysort id: gen rnd_id = runiform() if _n == 1
+    bysort id (rnd_id): replace rnd_id = rnd_id[1]
+    egen prank = rank(rnd_id), unique
+    gen treatedF = (prank <= 10)          // 随机 10 个伪处理地区
+    quietly reg y i.treatedF##i.post, vce(cluster id)
+    post `pf' (_b[1.treatedF#1.post])
+    drop rnd_id prank treatedF
+}
+postclose `pf'
+use `pfres', clear
+summarize b_did, detail                  // 伪系数分布：中心应 ≈ 0
+count if b_did <= -150                   // 伪系数 ≤ 真实系数（-150）的次数
+di (r(N) + 1) / 501                      // 经验 p 值（单侧）
+histogram b_did, normal xline(-150, lcolor(red))
+* 备选：ritest（SSC）做随机化推断，支持聚类层级（选项以 help ritest 为准）
+restore
+
+* ---------- 6.2 伪时点（预期效应检验） ----------
+* 用 g=3 队列的干预前两期（t=1,2），人为假设 t=2 已干预
+preserve
+keep if inlist(g, 0, 3) & inlist(t, 1, 2)
+gen post = (t == 2)
+gen treated3 = (g == 3)
+reg y i.treated3##i.post, vce(cluster id)     // 预期系数 ≈ 0
+restore
+
+* ---------- 6.3 剔除部分样本 ----------
+* (a) 剔除 y 上下 1% 极端值后重估 2×2
+preserve
+keep if inlist(t, 1, 2)
+gen post = (t == 2)
+gen treated2 = (g == 2)
+quietly summarize y, detail
+drop if y < r(p1) | y > r(p99)
+reg y i.treated2##i.post, vce(cluster id)
+restore
+* (b) 对照只用永不受理组（排除尚未处理队列），多期 FE 估计
+preserve
+keep if inlist(g, 0, 2)
+gen post = (t >= 2)
+gen treated2 = (g == 2)
+reghdfe y i.treated2#i.post, absorb(id t) vce(cluster id)
+restore
+
+* ---------- 6.4 PSM-DID ----------
+preserve
+keep if inlist(t, 1, 2)
+gen post = (t == 2)
+gen treated2 = (g == 2)
+* 方案 A（官方 teffects）：横截面 ATT 演示（把两期分别视为观测）
+teffects psmatch (y) (treated2 x1 x2), atet
+* 方案 B（psmatch2 + DID，SSC；实务常用）：按干预前协变量匹配后做 DID
+psmatch2 treated2 x1 x2, out(y) logit common
+pstest x1 x2, both                        // 匹配后平衡性：标准化差异应 < 0.1
+reg y i.treated2##i.post [pw = _weight], vce(cluster id)
+est store m_psm
+* 注：psmatch2 生成的 _weight 为匹配权重；以 help psmatch2 为准
+restore
+
+* ---------- 6.5 更换结局与聚类层级 ----------
+preserve
+keep if inlist(t, 1, 2)
+gen post = (t == 2)
+gen treated2 = (g == 2)
+reg adm i.treated2##i.post, vce(cluster id)      // 结局换为住院率：预期 ≈ -0.02
+est store m_adm
+* 聚类层级敏感性：地区 → 更保守的层级（示例：每 3 个地区并为一组）
+egen group3 = group(ceil(id/3))
+reg y i.treated2##i.post, vce(cluster group3)    // 聚类数变少，标准误通常变大
+restore",skills/did-skill.md,模板；未逐项执行,358
+did-skill-16,第 6 步：稳健性检验,r,"# 接第 2 步的 d2（t ∈ {1,2}；post、treated2 已定义）
+library(fixest)
+
+# ---------- 6.1 伪处理组（500 次随机重抽） ----------
+set.seed(2026)
+ids <- unique(d2$id)
+b_null <- replicate(500, {
+    fake <- sample(ids, 10)                      # 随机 10 个伪处理地区
+    d2$treatedF <- as.integer(d2$id %in% fake)
+    m <- feols(y ~ treatedF * post | id + t, data = d2, cluster = ~id)
+    coef(m)[""treatedF:post""]                     # 系数名以 coef(m) 输出为准
+})
+pval <- (sum(b_null <= -150) + 1) / 501          # 经验 p 值（单侧）
+hist(b_null, breaks = 30, main = ""伪处理组 DID 系数分布"")
+abline(v = -150, col = ""red"", lwd = 2)
+
+# ---------- 6.2 伪时点 ----------
+d_pre <- subset(dat, g %in% c(0, 3) & t %in% 1:2)
+d_pre$post <- as.integer(d_pre$t == 2)
+d_pre$treated3 <- as.integer(d_pre$g == 3)
+feols(y ~ treated3 * post | id + t, data = d_pre, cluster = ~id)   # 预期 ≈ 0
+
+# ---------- 6.3 剔除极端值 ----------
+q <- quantile(d2$y, c(0.01, 0.99))
+d2t <- subset(d2, y > q[1] & y < q[2])
+feols(y ~ treated2 * post | id + t, data = d2t, cluster = ~id)
+
+# ---------- 6.4 PSM-DID ----------
+library(MatchIt)
+d2pre <- subset(d2, t == 1)
+m.out <- matchit(treated2 ~ x1 + x2, data = d2pre, method = ""nearest"", ratio = 1)
+summary(m.out)                       # 匹配后标准化均值差应 < 0.1
+# library(cobalt); love.plot(m.out)  # 平衡性图
+md  <- match.data(m.out)             # 匹配样本（含 weights）
+d2m <- subset(d2, id %in% unique(md$id))
+feols(y ~ treated2 * post | id + t, data = d2m, cluster = ~id)
+
+# ---------- 6.5 更换结局与聚类层级 ----------
+feols(adm ~ treated2 * post | id + t, data = d2, cluster = ~id)     # 住院率 ≈ -0.02
+d2$group3 <- ceiling(d2$id / 3)
+feols(y ~ treated2 * post | id + t, data = d2, cluster = ~group3)   # 更保守聚类",skills/did-skill.md,模板；未逐项执行,441
+did-skill-17,第 7 步：报告清单,stata,"* 结果表（esttab，SSC；官方 etable 亦可）
+esttab m_2x2 m_psm m_adm, b(%9.2f) se(%9.2f) star(* 0.10 ** 0.05 *** 0.01) ///
+    mtitles(""2x2 DID"" ""PSM-DID"" ""结局=住院率"") ///
+    stats(N N_clust, labels(""观测数"" ""聚类数""))
+* CS 聚合结果用 estat simple / estat event 直接导出；
+* esttab 与 etable 选项以 help esttab / help etable 为准",skills/did-skill.md,模板；未逐项执行,501
+did-skill-18,第 7 步：报告清单,r,"# 结果表（fixest::etable 或 modelsummary）
+etable(list(m_2x2, m_psm, m_adm), cluster = ~id, fitstat = ~n)
+# library(modelsummary)
+# modelsummary(list(""2x2"" = m_2x2, ""PSM-DID"" = m_psm, ""住院率"" = m_adm), stars = TRUE)",skills/did-skill.md,模板；未逐项执行,510
+did-skill-19,输出格式（政策评估报告模板）,text,"【研究设计与数据】
+- 政策背景与干预时点；处理组/对照组定义、规模与队列分布（表 0）
+- 数据来源、时期、结局定义（次均药品费用、住院率）；干预前基线平衡表
+
+【识别假设】
+- 平行趋势论证：图 1 事件研究图 + 干预前系数联合检验 p 值 + 制度背景
+- 共同冲击、无预期效应、无溢出的讨论；不满足时的处理策略
+
+【主要结果】
+- 表 1：2×2 DID（或 didregress ATET）：系数、聚类稳健 SE、95% CI、观测数与聚类数
+- 表 2（交错处理时）：Callaway-Sant'Anna 聚合 ATT（simple/dynamic/group，注明聚合类型与对照组）
+- 图 2：动态处理效应（事件研究）图，注明基准期与置信区间
+
+【稳健性】
+- 表 3：伪处理组系数分布与经验 p 值（附直方图）；伪时点系数
+- 表 4：剔除极端值/部分样本、PSM-DID、更换结局、更换聚类层级结果汇总
+
+【结论与局限】
+- 效应大小与政策含义（如集采使次均药品费用下降约 X 元、住院率变化）
+- 局限：平行趋势不可完全检验、溢出/一般均衡、同期政策干扰、外部效度",skills/did-skill.md,模板；未逐项执行,537
+health-economics-tutorial-skill-1,软件准备,stata,"* Stata（本教程主要用官方命令；结果表导出可选用 estout，putexcel 为官方命令）
+ssc install estout, replace",skills/health-economics-tutorial-skill.md,模板；未逐项执行,25
+health-economics-tutorial-skill-2,软件准备,r,"# R
+install.packages(""boot"")      # bootstrap 置信区间；其余均为基础 R",skills/health-economics-tutorial-skill.md,模板；未逐项执行,30
+health-economics-tutorial-skill-3,第 1 步：提出研究问题与评价类型选择,text,"P（人群）：某慢性病患者（示例：2 型糖尿病、病程 ≥ 5 年、无严重并发症）
+I（干预）：新综合管理方案
+C（对照）：常规治疗
+O（结局）：QALY（及并发症发生率等自然单位结局）
+T（时间范围）：10 年
+研究问题：在 P 中，与 C 相比，I 在 T 年内对 O 产生的增量成本与增量效果如何？
+           ICER 是否低于支付意愿阈值 λ？",skills/health-economics-tutorial-skill.md,模板；未逐项执行,55
+health-economics-tutorial-skill-4,第 1 步：提出研究问题与评价类型选择,stata,"* Stata：评价类型选择示意（把结局类型写入 local 后运行）
+local outcome ""qaly""    // 可选：equivalent / natural / qaly / monetary
+if ""`outcome'"" == ""equivalent"" {
+    display ""结局已证明等效 → 用 CMA（最小成本分析）""
+}
+else if ""`outcome'"" == ""natural"" {
+    display ""结局为自然单位（血压、生命年等）→ 用 CEA（成本-效果分析）""
+}
+else if ""`outcome'"" == ""qaly"" {
+    display ""结局为偏好加权指标（QALY/DALY）→ 用 CUA（成本-效用分析）""
+}
+else {
+    display ""结局已货币化或需跨领域比较 → 用 CBA（成本-效益分析）""
+}",skills/health-economics-tutorial-skill.md,模板；未逐项执行,67
+health-economics-tutorial-skill-5,第 1 步：提出研究问题与评价类型选择,r,"# R：评价类型选择决策函数
+pick_type <- function(outcome = c(""equivalent"", ""natural"", ""qaly"", ""monetary"")) {
+  outcome <- match.arg(outcome)
+  switch(outcome,
+    equivalent = ""CMA：最小成本分析（结局等效时只比较成本）"",
+    natural    = ""CEA：成本-效果分析（自然单位结局）"",
+    qaly       = ""CUA：成本-效用分析（QALY/DALY 等偏好加权结局）"",
+    monetary   = ""CBA：成本-效益分析（成本与效果均货币化）"")
+}
+pick_type(""qaly"")     # 本算例用 QALY → CUA",skills/health-economics-tutorial-skill.md,模板；未逐项执行,84
+health-economics-tutorial-skill-6,第 2 步：研究视角与时间范围,stata,"* Stata：成本条目按研究视角纳入的示意见表（1 = 纳入，0 = 不纳入）
+* 注：中文值需 Stata 17+（UTF-8）
+clear
+input byte payer byte system byte society str50 item
+1 1 1 ""药品费用（医保报销部分）""
+1 1 1 ""检查与住院（医保报销部分）""
+0 1 1 ""政府财政补助与公共卫生投入""
+0 1 1 ""患者自付医疗费用""
+0 0 1 ""交通、陪护与食宿（患者家庭）""
+0 0 1 ""因病损失的生产力""
+end
+label var payer   ""医保支付方视角""
+label var system  ""卫生体系视角""
+label var society ""社会视角""
+list, sep(0) noobs",skills/health-economics-tutorial-skill.md,模板；未逐项执行,112
+health-economics-tutorial-skill-7,第 2 步：研究视角与时间范围,r,"# R：不同研究视角纳入的成本条目（示例矩阵）
+items <- data.frame(
+  条目 = c(""药品费用（医保报销部分）"", ""检查与住院（医保报销部分）"", ""政府财政补助与公共卫生投入"",
+           ""患者自付医疗费用"", ""交通、陪护与食宿（患者家庭）"", ""因病损失的生产力""),
+  医保支付方 = c(""√"", ""√"", ""—"", ""—"", ""—"", ""—""),
+  卫生体系   = c(""√"", ""√"", ""√"", ""√"", ""—"", ""—""),
+  社会视角   = c(""√"", ""√"", ""√"", ""√"", ""√"", ""√""))
+items",skills/health-economics-tutorial-skill.md,模板；未逐项执行,130
+health-economics-tutorial-skill-8,第 3 步：成本测算,stata,"* Stata：直接医疗成本示例数据（元/人/年；与贯穿算例一致：对照均值 6040、干预均值 9180）
+clear
+input byte group int cost
+0 6000
+0 5500
+0 6800
+0 5900
+0 6200
+0 6100
+0 5700
+0 6400
+0 5800
+0 6000
+1 9000
+1 8800
+1 9500
+1 9200
+1 8900
+1 9600
+1 9100
+1 9300
+1 9000
+1 9400
+end
+label define grp 0 ""对照"" 1 ""干预""
+label values group grp
+
+* 均数与 95% CI（正态近似）
+mean cost, over(group)
+ci means cost if group == 0
+ci means cost if group == 1
+
+* bootstrap：两组成本之差的 95% 百分位区间与偏差校正（BC）区间
+capture program drop diff_cost
+program define diff_cost, rclass
+    quietly summarize cost if group == 0
+    local m0 = r(mean)
+    quietly summarize cost if group == 1
+    local m1 = r(mean)
+    return scalar diff = `m1' - `m0'
+end
+bootstrap r(diff), reps(1000) seed(2026) nodots: diff_cost
+estat bootstrap, percentile bc",skills/health-economics-tutorial-skill.md,模板；未逐项执行,157
+health-economics-tutorial-skill-9,第 3 步：成本测算,r,"# R：直接医疗成本示例数据（贯穿算例：对照组均值 6040、干预组均值 9180）
+cost0 <- c(6000, 5500, 6800, 5900, 6200, 6100, 5700, 6400, 5800, 6000)
+cost1 <- c(9000, 8800, 9500, 9200, 8900, 9600, 9100, 9300, 9000, 9400)
+c(mean0 = mean(cost0), mean1 = mean(cost1))
+t.test(cost0)$conf.int          # 对照组 95% CI（正态近似）
+t.test(cost1)$conf.int          # 干预组 95% CI
+
+# bootstrap：两组成本之差的 95% 百分位 CI
+library(boot)
+d <- data.frame(cost = c(cost0, cost1), group = rep(c(0, 1), each = 10))
+diff_mean <- function(data, i) {
+  g <- data[i, ]
+  mean(g$cost[g$group == 1]) - mean(g$cost[g$group == 0])
+}
+set.seed(2026)
+b <- boot(d, diff_mean, R = 1000)
+boot.ci(b, type = ""perc"")       # 差值点估计 ≈ 9180 - 6040 = 3140 元",skills/health-economics-tutorial-skill.md,模板；未逐项执行,203
+health-economics-tutorial-skill-10,第 4 步：效果与效用指标,stata,"* Stata：QALY 与增量 QALY（效用 × 生存年数，未贴现）
+scalar u0 = 0.70       // 对照年效用
+scalar u1 = 0.78       // 干预年效用
+scalar years = 10
+display ""对照 QALY = "" u0 * years          // 7.0
+display ""干预 QALY = "" u1 * years          // 7.8
+display ""ΔQALY     = "" (u1 - u0) * years   // 0.8",skills/health-economics-tutorial-skill.md,模板；未逐项执行,240
+health-economics-tutorial-skill-11,第 4 步：效果与效用指标,r,"# R：QALY 与增量 QALY（未贴现）
+u0 <- 0.70; u1 <- 0.78; years <- 10
+Q0 <- u0 * years        # 7.0
+Q1 <- u1 * years        # 7.8
+dQ <- Q1 - Q0           # 0.8 QALY
+list(QALY_control = Q0, QALY_treat = Q1, dQALY = dQ)
+
+# R：DALY 简算示意：DALY = YLL + YLD
+YLL <- 10               # 早亡损失的生命年（示例）
+YLD <- 2.5              # 伤残状态生存年 × 伤残权重（示例）
+YLL + YLD               # 12.5 DALY
+
+# 提示：EQ-5D 状态（如 21121）须用已发表的中国积分体系系数换算效用值，
+# 勿自造系数；换算公式形如 U = 1 −（常数项 + 各维度离差项 + 交互/极端项）",skills/health-economics-tutorial-skill.md,模板；未逐项执行,250
+health-economics-tutorial-skill-12,第 5 步：贴现,stata,"* Stata：贴现因子与 10 年年金贴现因子（r = 5%）
+scalar r = 0.05
+scalar df = 0
+forvalues t = 1/10 {
+    scalar df = df + 1 / (1 + r)^`t'
+}
+display ""10 年、5% 的年金贴现因子 = "" %9.4f df      // 7.7217
+
+* 贴现后的增量成本与增量效果
+scalar dC = (12000 - 8000) * df
+scalar dE = (0.78 - 0.70) * df
+display ""贴现后 ΔC = "" %9.2f dC                      // 30886.93 元
+display ""贴现后 ΔE = "" %9.4f dE                      // 0.6177 QALY
+
+* 贴现率敏感性（0–8%）
+foreach rr in 0 0.03 0.05 0.08 {
+    scalar df = 0
+    forvalues t = 1/10 {
+        scalar df = df + 1 / (1 + `rr')^`t'
+    }
+    display ""r = "" `rr' ""：10 年年金贴现因子 = "" %9.4f df
+}",skills/health-economics-tutorial-skill.md,模板；未逐项执行,280
+health-economics-tutorial-skill-13,第 5 步：贴现,r,"# R：贴现与贴现率敏感性
+r <- 0.05; t <- 1:10
+disc <- 1 / (1 + r)^t
+sum(disc)                                   # 7.7217（10 年、5% 年金贴现因子）
+dC <- (12000 - 8000) * sum(disc)            # 30886.9（贴现后增量成本，元）
+dE <- (0.78 - 0.70) * sum(disc)             # 0.6177（贴现后增量 QALY）
+
+# 贴现率敏感性（0–8%）
+sapply(c(0, 0.03, 0.05, 0.08), function(rr) sum(1 / (1 + rr)^(1:10)))
+# 本算例年增量恒定 → 贴现率不改变 ICER（= 4000 / 0.08 = 50000）；
+# 成本与效果时间分布不同时，ICER 会随贴现率变化（见第 7 步）",skills/health-economics-tutorial-skill.md,模板；未逐项执行,305
+health-economics-tutorial-skill-14,第 6 步：增量分析与 ICER,stata,"* Stata：ICER、净收益与四象限判断
+scalar dC = 30886.9
+scalar dE = 0.6177
+scalar lambda = 100000
+display ""ICER = "" %9.1f dC / dE                    // ≈ 50003 元/QALY
+display ""NB(λ=100000) = "" %9.1f lambda * dE - dC   // ≈ 30887 元
+
+if dC > 0 & dE > 0 {
+    display ""东北象限：更贵更有效 → 比较 ICER 与 λ""
+    display cond(dC/dE < lambda, ""ICER < λ → 具有成本-效果"", ""ICER ≥ λ → 不具有成本-效果"")
+}
+else if dC < 0 & dE > 0 {
+    display ""东南象限：更便宜更有效 → 优势策略，直接推荐""
+}
+else if dC > 0 & dE < 0 {
+    display ""西北象限：更贵更差 → 劣势策略，拒绝""
+}
+else {
+    display ""西南象限：更便宜更差 → 权衡节省与效果损失""
+}",skills/health-economics-tutorial-skill.md,模板；未逐项执行,336
+health-economics-tutorial-skill-15,第 6 步：增量分析与 ICER,r,"# R：ICER、净收益与四象限判断
+dC <- 30886.9; dE <- 0.6177
+lambda <- 100000
+ICER <- dC / dE                                    # ≈ 50003 元/QALY
+NB   <- lambda * dE - dC                            # ≈ 30887 元（净货币收益）
+quadrant <- if (dC > 0 && dE > 0) ""NE：更贵更有效（与 λ 比较）"" else
+            if (dC < 0 && dE > 0) ""SE：更便宜更有效（优势）"" else
+            if (dC > 0 && dE < 0) ""NW：更贵更差（劣势）"" else
+            ""SW：更便宜更差（权衡）""
+verdict <- ifelse(ICER < lambda, ""ICER < λ，具有成本-效果"", ""ICER ≥ λ，不具有成本-效果"")
+list(ICER = ICER, NB = NB, quadrant = quadrant, verdict = verdict)",skills/health-economics-tutorial-skill.md,模板；未逐项执行,359
+health-economics-tutorial-skill-16,第 7 步：不确定性分析,stata,"* Stata：单因素敏感性分析（基线 ICER ≈ 50003 元/QALY）
+scalar dC = 30886.9
+scalar dE = 0.6177
+display ""基线 ICER            = "" %9.1f dC / dE
+display ""ΔE +20% 的 ICER      = "" %9.1f dC / (dE * 1.2)
+display ""ΔE −20% 的 ICER      = "" %9.1f dC / (dE * 0.8)
+display ""ΔC +20% 的 ICER      = "" %9.1f (dC * 1.2) / dE
+display ""ΔC −20% 的 ICER      = "" %9.1f (dC * 0.8) / dE
+
+* 干预组年效用取 0.73 / 0.83（其余不变；贴现后 ΔE = Δu × 7.7217）
+display ""干预效用 0.73 → ICER = "" %9.1f dC / (0.03 * 7.7217)
+display ""干预效用 0.83 → ICER = "" %9.1f dC / (0.13 * 7.7217)
+* 解读：ICER 范围约 30769–133333 元/QALY，跨过 λ = 100000 →
+* 结论对效用参数敏感，报告中须突出说明",skills/health-economics-tutorial-skill.md,模板；未逐项执行,386
+health-economics-tutorial-skill-17,第 7 步：不确定性分析,r,"# R：概率敏感性分析（PSA）示意——直接从 ΔC、ΔE 的分布抽样；
+# 正式研究应从参数层面抽样（成本 gamma、概率 beta、RR lognormal），
+# 完整实现见《Markov 模型助手》skill。
+set.seed(2026)
+n <- 1000
+dC <- rnorm(n, mean = 30886.9, sd = 3200)     # 增量成本（元）
+dE <- rnorm(n, mean = 0.6177, sd = 0.05)      # 增量 QALY
+
+# 成本-效果平面散点图（λ = 100000 元/QALY 的斜率线）
+plot(dE, dC, xlab = ""ΔE（QALY）"", ylab = ""ΔC（元）"", pch = 20,
+     cex = 0.5, col = rgb(0, 0, 0, 0.3), main = ""PSA 成本-效果平面散点图"")
+abline(h = 0, v = 0, lty = 2)
+abline(a = 0, b = 100000, col = ""red"")        # 斜率 = λ
+
+# 各象限模拟点占比
+quad <- ifelse(dE > 0, ifelse(dC > 0, ""NE"", ""SE""),
+               ifelse(dC > 0, ""NW"", ""SW""))
+table(quad) / n
+
+# 成本-效果可接受曲线（CEAC）：P(NMB(λ) > 0)
+lam  <- seq(0, 300000, by = 5000)
+ceac <- sapply(lam, function(x) mean(x * dE - dC > 0))
+plot(lam, ceac, type = ""l"", xlab = ""支付意愿阈值 λ（元/QALY）"",
+     ylab = ""具有成本-效果的概率"", ylim = c(0, 1))
+abline(h = 0.5, lty = 3)",skills/health-economics-tutorial-skill.md,模板；未逐项执行,403
+health-economics-tutorial-skill-18,第 8 步：报告规范（CHEERS 2022）,stata,"* Stata：把主要结果写入 Excel（putexcel，Stata 14+）
+putexcel set results.xlsx, replace
+putexcel A1 = ""指标"" B1 = ""数值""
+putexcel A2 = ""贴现后 ΔC（元）""        B2 = 30886.9
+putexcel A3 = ""贴现后 ΔE（QALY）""      B3 = 0.6177
+putexcel A4 = ""ICER（元/QALY）""        B4 = 50003
+putexcel A5 = ""阈值 λ（元/QALY）""      B5 = 100000
+putexcel A6 = ""净收益 NB（元）""        B6 = 30887",skills/health-economics-tutorial-skill.md,模板；未逐项执行,446
+health-economics-tutorial-skill-19,第 8 步：报告规范（CHEERS 2022）,r,"# R：导出主要结果表
+res <- data.frame(
+  指标 = c(""贴现后 ΔC（元）"", ""贴现后 ΔE（QALY）"", ""ICER（元/QALY）"",
+           ""阈值 λ（元/QALY）"", ""净收益 NB（元）""),
+  数值 = c(30886.9, 0.6177, 50003, 100000, 30887))
+res
+write.csv(res, ""results.csv"", row.names = FALSE)",skills/health-economics-tutorial-skill.md,模板；未逐项执行,457
+health-economics-tutorial-skill-20,第 9 步：研究工具箱指引（本仓库配套 Skill）,r,"# R：本仓库配套 Skill 一览（可复制到 README / 网页）
+toolbox <- data.frame(
+  Skill = c(""DCE 设计助手"", ""Markov 模型助手"", ""机器学习"", ""DID 双重差分""),
+  什么时候用 = c(
+    ""测量偏好、效用值与支付意愿（EQ-5D 的补充或替代）"",
+    ""慢性病动态建模、时间外推与完整 PSA/CEAC"",
+    ""真实世界大数据下的费用预测与风险分层"",
+    ""用面板数据评估医保与支付改革政策的因果效果""))
+toolbox",skills/health-economics-tutorial-skill.md,模板；未逐项执行,482
+health-economics-tutorial-skill-21,输出格式（研究方案 / 报告模板）,text,"【研究方案模板】
+1. 研究问题（PICO-T）与评价类型（CEA/CUA/CMA/CBA 及选择理由）
+2. 研究视角（社会/卫生体系/医保支付方）与时间范围（含理由）
+3. 成本：条目清单（识别→测量→估值）、单位成本来源与年份、间接成本方法（HCA/FCM）
+4. 效果/效用：结局指标、数据来源、效用积分体系（如 EQ-5D 中国积分体系及版本）
+5. 贴现：贴现率（指南 2020：5%，敏感性 0–8%）与基年
+6. 分析计划：ICER、阈值 λ 与依据、敏感性分析（单因素/场景/PSA 与参数分布）
+7. 自查：按 CHEERS 2022 清单逐条对照
+
+【报告模板】
+标题（注明评价类型，如「……的成本-效用分析」）
+摘要（视角、时间范围、贴现率、ΔC、ΔE、ICER、结论）
+1 背景与目的 2 方法（视角、人群、时间范围、成本、效果、贴现、分析计划）
+3 结果（成本表、效果表、ICER、tornado 图、PSA 散点图与 CEAC）
+4 讨论（与文献比较、阈值与不确定性、异质性与公平性、局限）
+5 结论（附：CHEERS 2022 对照自查表）",skills/health-economics-tutorial-skill.md,模板；未逐项执行,514
+its-skill-1,软件准备,stata,"* Stata（联网安装一次）
+ssc install actest, replace
+ssc install itsa,   replace
+ssc install estout, replace",skills/its-skill.md,模板；未逐项执行,29
+its-skill-2,软件准备,r,"# R
+install.packages(c(""lmtest"", ""sandwich"", ""car"", ""ggplot2"", ""texreg""))",skills/its-skill.md,模板；未逐项执行,36
+its-skill-3,第 1 步：适用条件与研究设计（含数据要求与模拟数据）,stata,"* =====================================================================
+* 模拟数据：48 个月 = 干预前 24（第 1–24 月）+ 干预后 24（第 25–48 月）
+* 场景：某院 DRG 付费改革（第 25 个月实施）对次均住院费用（元）的影响
+* 内置真实干预效应：
+*   β0 = 12000（干预时点基线，元）  β1 = -50（干预前趋势，元/月）
+*   β2 = -600 （即时水平变化，元）  β3 = -30（斜率变化，元/月）
+* 误差：AR(1)，rho = 0.3，扰动标准差 200 元
+* =====================================================================
+clear all
+set seed 2026
+set obs 48
+gen time        = _n
+gen time_c      = time - 25               // 中心化：干预时点 = 0
+gen level       = time >= 25              // 干预指示：第 25 个月起 = 1
+gen trend_after = time_c * level          // 干预后斜率增量（干预前恒为 0）
+
+* AR(1) 误差
+gen e = rnormal(0, 200)
+forvalues t = 2/48 {
+    replace e = 0.3 * e[_n-1] + rnormal(0, 200) if time == `t'
+}
+
+* 结局：次均住院费用（元）
+gen y = 12000 - 50*time_c - 600*level - 30*trend_after + e
+
+tsset time
+twoway (line y time), xline(24.5, lpattern(dash)) ///
+    title(""模拟月度序列：次均住院费用"") ytitle(""元"") xtitle(""月份"")",skills/its-skill.md,模板；未逐项执行,58
+its-skill-4,第 1 步：适用条件与研究设计（含数据要求与模拟数据）,r,"# =====================================================================
+# 模拟数据（与 Stata 版同参数；随机数实现不同，不影响示例）
+# =====================================================================
+set.seed(2026)
+n           <- 48
+time        <- 1:n
+time_c      <- time - 25                 # 中心化：干预时点 = 0
+level       <- as.numeric(time >= 25)    # 干预指示：第 25 个月起 = 1
+trend_after <- time_c * level            # 干预后斜率增量
+
+# AR(1) 误差：rho = 0.3，扰动 sd = 200
+e <- as.numeric(arima.sim(model = list(ar = 0.3), n = n, sd = 200))
+
+# 结局：次均住院费用（元），内置真实效应
+y <- 12000 - 50*time_c - 600*level - 30*trend_after + e
+
+dat <- data.frame(time, time_c, level, trend_after, y)
+plot(y ~ time, data = dat, type = ""o"", pch = 16, cex = 0.7,
+     main = ""模拟月度序列：次均住院费用"", xlab = ""月份"", ylab = ""元"")
+abline(v = 24.5, lty = 2, col = ""gray50"")",skills/its-skill.md,模板；未逐项执行,89
+its-skill-5,第 2 步：分段回归模型,stata,"* 中心化版本（推荐）：β2 直接 = 干预时点即时效应
+regress y time_c level trend_after
+* 预计：_b[level] ≈ -600、_b[trend_after] ≈ -30（样本有噪声）
+
+* 对照：未中心化版本（time 与 time*level 交互）
+gen time_level = time * level
+regress y time level time_level
+* 此时 level 系数不再等于干预时点效应（是 time=0 处的跃变），须用组合计算",skills/its-skill.md,模板；未逐项执行,132
+its-skill-6,第 2 步：分段回归模型,r,"# 中心化版本（推荐）
+m0 <- lm(y ~ time_c + level + trend_after, data = dat)
+summary(m0)
+# 预计：level ≈ -600、trend_after ≈ -30（样本有噪声）
+
+# 组合效应（第 3 步换 HAC 协方差后正式报告）
+library(car)
+linearHypothesis(m0, ""time_c + trend_after = 0"")   # 干预后总斜率（β1+β3）
+deltaMethod(m0, ""level + 23*trend_after"")          # 期末（time_c=23）总效应",skills/its-skill.md,模板；未逐项执行,143
+its-skill-7,第 3 步：自相关处理,stata,"* ① 残差诊断
+regress y time_c level trend_after
+predict r, residuals
+tsline r, yline(0) title(""残差时序图"")
+ac r, lags(12) title(""残差 ACF"")
+
+estat dwatson                    // Durbin-Watson（一阶）
+actest, lags(4)                  // Cumby-Huizinga 一般检验（SSC；选项以 help actest 为准）
+wntestq r, lags(4)               // Ljung-Box Q 检验
+
+* 平稳性检查（结局本身）
+dfuller y, trend
+
+* ② Newey-West / HAC 标准误
+newey y time_c level trend_after, lag(1)
+* 默认滞后 = floor(4*(T/100)^(2/9))（T=48 → 3）；建议对 lag(1)–lag(4) 做敏感性
+
+* ③ 备选：Prais-Winsten AR(1)（选项以 help prais 为准）
+prais y time_c level trend_after, rhotype(tscorr)",skills/its-skill.md,模板；未逐项执行,172
+its-skill-8,第 3 步：自相关处理,r,"# ① 残差诊断
+m0 <- lm(y ~ time_c + level + trend_after, data = dat)
+plot(resid(m0), type = ""o"", pch = 16, cex = 0.7,
+     xlab = ""月份"", ylab = ""残差""); abline(h = 0)
+acf(resid(m0), lag.max = 12, main = ""残差 ACF"")
+
+library(lmtest)
+dwtest(m0)                    # Durbin-Watson（一阶）
+bgtest(m0, order = 4)         # Breusch-Godfrey LM（高阶）
+
+# ② Newey-West / HAC 标准误
+library(sandwich)
+summary(m0)                                                    # 普通 SE（参考）
+coeftest(m0, vcov = NeweyWest(m0, lag = 1, prewhite = FALSE))  # HAC SE，lag 固定为 1
+coeftest(m0, vcov = NeweyWest(m0))                             # 默认：自动带宽 + prewhite
+# 注：NeweyWest 默认 prewhite = TRUE 且自动选带宽；与 Stata lag(1) 对照时
+#     用 lag = 1, prewhite = FALSE（以 help(NeweyWest) 为准）
+
+# ③ 备选：AR(1) 误差模型（nlme）
+library(nlme)
+g1 <- gls(y ~ time_c + level + trend_after, data = dat,
+          correlation = corAR1(form = ~ time))
+summary(g1)",skills/its-skill.md,模板；未逐项执行,194
+its-skill-9,第 4 步：模型估计：Stata 与 R 实现（对照）,stata,"* ============ 4.1 手动分段回归 + Newey-West ============
+newey y time_c level trend_after, lag(1) force
+* 注：任务书简写 newey y time level trend, lag(1) force；此处 time 为干预时点
+*     中心化的 time_c；force 允许未 tsset 的数据仍按时间序列估计（已 tsset 可省略）
+estimates store its_manual
+
+* 组合效应（HAC 标准误下的线性组合检验）
+lincom time_c + trend_after              // 干预后总斜率（β1+β3）
+lincom level + 23*trend_after            // 期末（第 48 月）总效应（β2+23·β3）
+
+* ============ 4.2 itsa 命令（SSC，Ariel Linden）============
+* ssc install itsa, replace
+itsa y, single treatperiod(25) posttrend
+* 注：任务书示例写法 itsa y, single treat(25) 中的选项名，实际对应
+*     treatperiod(25)，以 help itsa 为准；itsa 默认 OLS + Newey-West 标准误。
+* 带滞后因变量的动态版本：itsa y, single treatperiod(25) lag(1) posttrend
+* 出图：itsa y, single treatperiod(25) posttrend figure",skills/its-skill.md,模板；未逐项执行,238
+its-skill-10,第 4 步：模型估计：Stata 与 R 实现（对照）,r,"# ============ R：lm + NeweyWest，与 Stata 对照 ============
+m <- lm(y ~ time_c + level + trend_after, data = dat)
+
+summary(m)                                                    # 普通 SE（参考）
+tab_hac <- coeftest(m, vcov = NeweyWest(m, lag = 1, prewhite = FALSE))
+print(tab_hac)                                                # HAC SE
+coefci(tab_hac)                                               # 基于 HAC 的 95% CI
+
+# 组合效应（HAC 协方差下的线性组合与 delta 方法）
+linearHypothesis(m, ""time_c + trend_after = 0"",
+                 vcov. = NeweyWest(m, lag = 1, prewhite = FALSE))   # 干预后总斜率
+deltaMethod(m, ""level + 23*trend_after"",
+            vcov. = NeweyWest(m, lag = 1, prewhite = FALSE))         # 期末总效应",skills/its-skill.md,模板；未逐项执行,258
+its-skill-11,第 5 步：图形呈现（原始序列 + 拟合 + 反事实）,stata,"newey y time_c level trend_after, lag(1)
+predict yhat, xb
+gen yhat_cf = _b[_cons] + _b[time_c]*time_c       // 反事实：延续干预前趋势
+
+twoway (scatter y time, msize(small) mcolor(gs8)) ///
+       (line yhat time, lcolor(navy) lwidth(medthick)) ///
+       (line yhat_cf time if time >= 25, lcolor(red) lpattern(dash) lwidth(medthick)) ///
+       , xline(24.5, lcolor(gs10) lpattern(dash)) ///
+         xtitle(""月份"") ytitle(""次均费用（元）"") ///
+         title(""ITS：DRG 改革对次均住院费用的影响"") ///
+         legend(order(1 ""观测值"" 2 ""模型拟合"" 3 ""反事实（无干预）"") position(6) rows(1))",skills/its-skill.md,模板；未逐项执行,284
+its-skill-12,第 5 步：图形呈现（原始序列 + 拟合 + 反事实）,r,"# R（基础包）
+m <- lm(y ~ time_c + level + trend_after, data = dat)
+dat$fit <- fitted(m)
+b <- coef(m)
+dat$cf  <- b[""(Intercept)""] + b[""time_c""] * dat$time_c     # 反事实
+
+plot(y ~ time, data = dat, type = ""o"", pch = 16, cex = 0.7, col = ""gray50"",
+     main = ""ITS：DRG 改革对次均住院费用的影响"",
+     xlab = ""月份"", ylab = ""次均费用（元）"")
+abline(v = 24.5, lty = 3, col = ""gray40"")
+lines(dat$time, dat$fit, col = ""navy"", lwd = 2)
+lines(dat$time[dat$time >= 25], dat$cf[dat$time >= 25], col = ""red"", lwd = 2, lty = 2)
+legend(""bottomleft"", legend = c(""观测值"", ""模型拟合"", ""反事实（无干预）""),
+       col = c(""gray50"", ""navy"", ""red""), lty = c(1, 1, 2),
+       lwd = c(1, 2, 2), bty = ""n"")
+
+# ggplot2 等价写法（ggplot2 ≥ 3.4 用 linewidth，低版本用 size）
+library(ggplot2)
+ggplot(dat, aes(time, y)) +
+  geom_point(colour = ""grey50"") +
+  geom_vline(xintercept = 24.5, linetype = 3) +
+  geom_line(aes(y = fit), colour = ""navy"", linewidth = 1) +
+  geom_line(data = subset(dat, time >= 25), aes(y = cf),
+            colour = ""red"", linetype = 2, linewidth = 1) +
+  labs(x = ""月份"", y = ""次均费用（元）"",
+       title = ""ITS：DRG 改革对次均住院费用的影响"") +
+  theme_minimal()",skills/its-skill.md,模板；未逐项执行,298
+its-skill-13,第 6 步：稳健性与检验,stata,"* ---- 6.1 安慰剂时点：假设干预发生在第 13 个月（实际无干预）----
+gen time_c13 = time - 13
+gen level13  = time >= 13
+gen trend13  = time_c13 * level13
+newey y time_c13 level13 trend13, lag(1)
+* 期望：level13、trend13 系数接近 0 且不显著
+
+* ---- 6.2 季节性：加入月度虚拟变量（参考月 = 1 月）----
+gen month = mod(time - 1, 12) + 1
+tab month, gen(md)                          // 生成 md1–md12
+newey y time_c level trend_after md2-md12, lag(1)
+* 期望：β2、β3 与主模型接近（以实际结果为准）
+
+* ---- 6.3 控制组 ITS（CITS）：双地区面板示意 ----
+* 面板长表：id（地区）、time、y；treat = 1（干预地区，第 25 个月起受干预）
+* 多组 itsa（语法与选项以 help itsa 为准）：
+*     xtset id time
+*     itsa y, treatperiod(25) treatid(treat) posttrend
+* 手动 DID 型交互模型（示意）：
+gen t_c   = time - 25
+gen lev   = time >= 25
+gen tr_a  = t_c * lev
+gen g_lev = treat * lev        // 水平变化的组间差（政策即时效应，DID）
+gen g_tr  = treat * tr_a       // 斜率变化的组间差（政策趋势效应，DID）
+newey y t_c treat lev tr_a g_lev g_tr, lag(1)
+* 关键系数：g_lev（相对对照组的即时水平变化）、g_tr（相对对照组的斜率变化）
+
+* ---- 6.4 异常值敏感性：1%/99% 缩尾 ----
+quietly summarize y, detail
+gen y_w = min(max(y, r(p1)), r(p99))
+newey y_w time_c level trend_after, lag(1)",skills/its-skill.md,模板；未逐项执行,342
+its-skill-14,第 6 步：稳健性与检验,r,"# ---- 6.1 安慰剂时点：假设干预发生在第 13 个月 ----
+dat$time_c13 <- dat$time - 13
+dat$level13  <- as.numeric(dat$time >= 13)
+dat$trend13  <- dat$time_c13 * dat$level13
+m_placebo <- lm(y ~ time_c13 + level13 + trend13, data = dat)
+coeftest(m_placebo, vcov = NeweyWest(m_placebo, lag = 1, prewhite = FALSE))
+# 期望：level13、trend13 接近 0 且不显著
+
+# ---- 6.2 季节性：加入月度虚拟变量 ----
+dat$month <- factor(((dat$time - 1) %% 12) + 1)
+m_season <- lm(y ~ time_c + level + trend_after + month, data = dat)
+coeftest(m_season, vcov = NeweyWest(m_season, lag = 1, prewhite = FALSE))
+# 更平滑的季节建模可用正弦/余弦对（Fourier terms），以数据周期为准
+
+# ---- 6.3 控制组 ITS（CITS）：面板数据交互项 ----
+# 面板长表 panel：id、time、y、treat（1 = 干预地区）
+panel$t_c  <- panel$time - 25
+panel$lev  <- as.numeric(panel$time >= 25)
+panel$tr_a <- panel$t_c * panel$lev
+m_cits <- lm(y ~ t_c + treat + lev + tr_a + treat:lev + treat:tr_a, data = panel)
+coeftest(m_cits, vcov = NeweyWest(m_cits, lag = 1, prewhite = FALSE))
+# 政策效应 = treat:lev（即时）与 treat:tr_a（斜率）的系数
+
+# ---- 6.4 异常值敏感性：1%/99% 缩尾 ----
+q <- quantile(dat$y, c(0.01, 0.99))
+dat$y_w <- pmin(pmax(dat$y, q[1]), q[2])
+m_w <- lm(y_w ~ time_c + level + trend_after, data = dat)
+coeftest(m_w, vcov = NeweyWest(m_w, lag = 1, prewhite = FALSE))",skills/its-skill.md,模板；未逐项执行,376
+its-skill-15,第 7 步：报告清单,stata,"* 主表：HAC 标准误（esttab，SSC estout）
+newey y time_c level trend_after, lag(1)
+estimates store its_main
+esttab its_main, b(%9.2f) se(%9.2f) p(%9.3f) stats(N r2, fmt(%9.0f %9.3f)) ///
+    title(""表 1：ITS 分段回归（Newey-West 标准误，lag(1)）"") ///
+    addnotes(""干预时点：第 25 个月；time_c 为干预时点中心化的月份。"")",skills/its-skill.md,模板；未逐项执行,415
+its-skill-16,第 7 步：报告清单,r,"# 主表：用 HAC 标准误覆盖（texreg；以包文档为准）
+library(texreg)
+hac_se <- sqrt(diag(NeweyWest(m, lag = 1, prewhite = FALSE)))
+screenreg(m, override.se = hac_se,
+          custom.model.names = ""ITS 分段回归（HAC 标准误）"")",skills/its-skill.md,模板；未逐项执行,424
+its-skill-17,输出格式（ITS 报告模板）,text,"【研究设计与数据】
+结局（次均住院费用，元/次）与时间单位（月）；序列区间（20XX 年 X 月–20XX 年 X 月，
+共 48 个月）；干预（DRG 付费改革）与实施时点（第 25 个月）；干预前后各 24 个月；
+数据来源、缺失/插补、异常值处理。
+模型：Y = β0 + β1·time_c + β2·level + β3·trend_after + ε；time_c 为干预时点中心化。
+
+【主要结果】
+- 序列描述：均值、SD、干预前趋势（β1）与干预时点基线（β0）。
+- 自相关诊断：残差 ACF、DW / actest（或 BG）结果 → 采用 Newey-West 修正的理由。
+- 表 1：ITS 分段回归（β0–β3，HAC 标准误、95% CI、p 值；注明滞后阶数及选择依据）。
+- 效应解读：β2 = 即时水平变化（元）；β3 = 斜率变化（元/月）；
+  干预后总斜率 = β1 + β3；期末总效应 = β2 + k·β3（注明 k）。
+- 图 1：原始序列 + 分段拟合 + 反事实虚线 + 干预时点竖线。
+
+【稳健性检验】
+- 表 2：安慰剂时点（第 X 个月）结果：β2、β3 应接近 0；
+- 季节调整（月度虚拟/Fourier）后核心系数变化；
+- 异常值敏感性（1%/99% 缩尾）；
+- CITS（如有对照）：treat:level 与 treat:trend_after 交互项系数。
+
+【结论与局限】
+- 政策含义：方向、大小、持续时间（如「DRG 改革使次均费用即时下降约 600 元，
+  且此后每月多降约 30 元」）。
+- 局限：单组设计无法排除同期事件；自相关结构与滞后选择；序列长度与检验力；
+  单一机构结果的外部效度。",skills/its-skill.md,模板；未逐项执行,451
+machine-learning-skill-1,软件准备,stata,"* Stata（联网安装一次）
+ssc install rforest, replace",skills/machine-learning-skill.md,模板；未逐项执行,29
+machine-learning-skill-2,软件准备,r,"# R
+install.packages(c(""glmnet"", ""ranger"", ""xgboost"", ""pROC"", ""shapviz"",
+                   ""caret"", ""rms"", ""mice"", ""Matrix"", ""DALEX""))",skills/machine-learning-skill.md,模板；未逐项执行,34
+machine-learning-skill-3,第 1 步：问题定义与数据准备,r,"# ---- R：生成模拟数据（N = 1000，可全程复现）----
+set.seed(2026)
+n <- 1000
+dat <- data.frame(
+  id        = 1:n,
+  age       = round(rnorm(n, 65, 12)),        # 年龄
+  sex       = rbinom(n, 1, 0.52),             # 1 = 女
+  comorb    = rpois(n, 1.5),                  # 合并症计数
+  insurance = sample(c(""城职"", ""城居"", ""新农合""), n, replace = TRUE,
+                     prob = c(0.4, 0.3, 0.3)),
+  los       = rpois(n, 7) + 1                 # 住院天数
+)
+dat$age    <- pmin(pmax(dat$age, 18), 95)
+dat$comorb <- pmin(dat$comorb, 8)
+for (k in 1:5) dat[[paste0(""z"", k)]] <- rnorm(n)   # 纯噪声特征
+
+# 结局：同一套真实信号驱动两个结局（分类 + 连续）
+lp <- -5 + 0.03 * dat$age + 0.45 * dat$comorb + 0.12 * dat$los +
+      0.40 * (dat$insurance == ""城职"") + 0.25 * dat$sex
+dat$highcost <- rbinom(n, 1, plogis(lp))      # 高费用 yes/no（约 25%）
+dat$cost <- exp(7.5 + 0.01 * dat$age + 0.18 * dat$comorb + 0.05 * dat$los +
+                0.25 * (dat$insurance == ""城职"") + 0.9 * dat$highcost +
+                rnorm(n, 0, 0.5))             # 总费用（元，右偏）
+table(dat$highcost); summary(dat)
+
+# ---- 人为制造 10% MCAR 缺失（演示缺失处理用）----
+set.seed(2)
+dat$comorb[sample(n, 100)] <- NA
+
+# ---- 70 / 15 / 15 拆分 ----
+set.seed(3)
+dat$split <- sample(rep(1:3, c(700, 150, 150)))   # 1=训练 2=验证 3=测试
+tr <- dat[dat$split == 1, ]; va <- dat[dat$split == 2, ]; te <- dat[dat$split == 3, ]
+
+# ---- 缺失值处理：用训练集中位数插补三组（演示；正式研究用 MICE 且在 CV 折内）----
+m_med <- median(tr$comorb, na.rm = TRUE)
+tr$comorb <- ifelse(is.na(tr$comorb), m_med, tr$comorb)
+va$comorb <- ifelse(is.na(va$comorb), m_med, va$comorb)
+te$comorb <- ifelse(is.na(te$comorb), m_med, te$comorb)
+
+# 多重插补示例（正式研究用；注意应在 CV 折内进行）
+# library(mice)
+# imp <- mice(dat[, c(""age"",""sex"",""comorb"",""los"",""highcost"",""cost"")], m = 5, seed = 4)
+# fit <- with(imp, glm(highcost ~ age + sex + comorb + los, family = binomial))
+# pool(fit)
+
+# ---- 标准化：只在训练集上计算均值 / SD，再套用到三组 ----
+for (v in c(""age"", ""comorb"", ""los"")) {
+  m <- mean(tr[[v]]); s <- sd(tr[[v]])
+  tr[[paste0(v, ""_s"")]] <- (tr[[v]] - m) / s
+  va[[paste0(v, ""_s"")]] <- (va[[v]] - m) / s
+  te[[paste0(v, ""_s"")]] <- (te[[v]] - m) / s
+}",skills/machine-learning-skill.md,模板；未逐项执行,59
+machine-learning-skill-4,---- 标准化：只在训练集上计算均值 / SD，再套用到三组 ----,stata,"* ---- Stata：生成同一套模拟数据 ----
+clear
+set seed 2026
+set obs 1000
+gen id = _n
+gen age = round(rnormal(65, 12))
+replace age = min(max(age, 18), 95)
+gen sex = rbinomial(1, 0.52)
+gen comorb = min(rpoisson(1.5), 8)
+gen u = runiform()
+gen ins = cond(u < 0.4, 1, cond(u < 0.7, 2, 3))   // 1=城职 2=城居 3=新农合
+label define inslab 1 ""城职"" 2 ""城居"" 3 ""新农合""
+label values ins inslab
+gen los = rpoisson(7) + 1
+forvalues k = 1/5 {
+    gen z`k' = rnormal()                         // 纯噪声特征
+}
+gen lp = -5 + 0.03*age + 0.45*comorb + 0.12*los + 0.40*(ins == 1) + 0.25*sex
+gen highcost = rbinomial(1, invlogit(lp))
+gen cost = exp(7.5 + 0.01*age + 0.18*comorb + 0.05*los + 0.25*(ins == 1) + 0.9*highcost + rnormal(0, 0.5))
+gen lncost = ln(cost)
+tab highcost
+
+* ---- 人为制造 10% MCAR 缺失 ----
+set seed 2026
+replace comorb = . if runiform() < 0.10
+
+* ---- 70 / 15 / 15 拆分（1=训练 2=验证 3=测试）----
+splitsample, generate(svar, replace) split(0.70 0.15 0.15) rseed(3)
+tab svar
+
+* ---- 缺失值处理：训练集中位数插补（演示；正式研究用 mi impute chained）----
+summarize comorb if svar == 1, detail
+replace comorb = r(p50) if missing(comorb)
+
+* 多重插补示例（正式研究用）
+* mi set mlong
+* mi register imputed comorb
+* mi impute chained (pmm) comorb = age sex los highcost cost, add(5) rseed(4)
+
+* ---- 标准化：以训练集均值 / SD 为基准 ----
+foreach v in age comorb los {
+    quietly summarize `v' if svar == 1
+    gen `v'_s = (`v' - r(mean)) / r(sd)
+}",skills/machine-learning-skill.md,模板；未逐项执行,115
+machine-learning-skill-5,第 2 步：基线模型与变量筛选,r,"# ---- 模型矩阵（glmnet 不接受因子，需 model.matrix；含噪声变量观察收缩效果）----
+library(glmnet)
+xvars <- c(""age_s"", ""sex"", ""comorb_s"", ""los_s"", ""z1"", ""z2"", ""z3"", ""z4"", ""z5"", ""insurance"")
+f <- as.formula(paste(""~"", paste(xvars, collapse = "" + "")))
+x_tr <- model.matrix(f, data = tr)[, -1]
+x_va <- model.matrix(f, data = va)[, -1]
+x_te <- model.matrix(f, data = te)[, -1]
+y_tr <- tr$highcost; y_te <- te$highcost
+
+# ---- 基线 logistic（不收缩，作为及格线）----
+base <- glm(highcost ~ age_s + sex + comorb_s + los_s + insurance + z1 + z2 + z3 + z4 + z5,
+            data = tr, family = binomial)
+summary(base)
+
+# 备选：逐步回归（仅作敏感性分析）
+# library(MASS)
+# stepAIC(base, direction = ""both"", trace = FALSE)
+
+# ---- 基线线性回归（连续费用，取对数）----
+lm_base <- lm(log(cost) ~ age_s + sex + comorb_s + los_s + insurance, data = tr)
+summary(lm_base)
+
+# ---- LASSO（alpha = 1），10 折 CV 选 λ ----
+set.seed(7)
+cv_lasso <- cv.glmnet(x_tr, y_tr, family = ""binomial"", alpha = 1, nfolds = 10)
+plot(cv_lasso)                                # CV 误差曲线（两条虚线 = lambda.min / 1se）
+coef(cv_lasso, s = ""lambda.min"")              # 噪声变量 z1–z5 应为 0
+coef(cv_lasso, s = ""lambda.1se"")              # 更保守（1-SE 法则，模型更小）
+
+# ---- 弹性网（alpha = 0.5）----
+set.seed(8)
+cv_en <- cv.glmnet(x_tr, y_tr, family = ""binomial"", alpha = 0.5, nfolds = 10)
+coef(cv_en, s = ""lambda.1se"")
+
+# ---- λ 路径图（系数随 log(λ) 增大被收缩至 0 的轨迹）----
+plot(cv_lasso$glmnet.fit, xvar = ""lambda"", label = TRUE)
+abline(v = log(cv_lasso$lambda.1se), lty = 2)
+
+# ---- 连续结局版：LASSO 回归（对数费用）----
+set.seed(9)
+cv_lasso_reg <- cv.glmnet(x_tr, log(tr$cost), alpha = 1, nfolds = 10)
+coef(cv_lasso_reg, s = ""lambda.1se"")",skills/machine-learning-skill.md,模板；未逐项执行,177
+machine-learning-skill-6,---- 连续结局版：LASSO 回归（对数费用）----,stata,"* ---- 基线 logistic（含噪声变量，作为及格线）----
+logit highcost age_s sex comorb_s los_s i.insurance z1-z5 if svar == 1
+est store base
+
+* ---- 基线线性回归（对数费用）----
+regress lncost age_s sex comorb_s los_s i.insurance if svar == 1
+
+* ---- LASSO（Stata 16+），CV 选 λ ----
+lasso logit highcost age_s sex comorb_s los_s i.insurance z1-z5 if svar == 1, selection(cv) rseed(7)
+cvplot                                     // CV 均方误差曲线
+coefpath                                    // λ 路径（系数收缩轨迹）
+lassocoef, display(coef, standardized)      // 选后系数：噪声变量应被剔除
+
+* ---- 自适应 LASSO：先 CV 选 λ，再加自适应权重重估 ----
+lasso, select(adaptive)
+lassocoef, display(coef, standardized)
+
+* ---- 弹性网（Stata 17+）----
+elasticnet logit highcost age_s sex comorb_s los_s i.insurance z1-z5 if svar == 1, selection(cv) alpha(0.5) rseed(8)
+lassocoef, display(coef, standardized)
+
+* ---- 连续结局版：LASSO 回归 ----
+lasso linear lncost age_s sex comorb_s los_s i.insurance z1-z5 if svar == 1, selection(cv) rseed(9)
+lassocoef, display(coef, standardized)",skills/machine-learning-skill.md,模板；未逐项执行,222
+machine-learning-skill-7,第 3 步：树模型与集成,r,"# ---- 统一建模数据框（特征 + 结局）----
+feats <- c(""age_s"", ""sex"", ""comorb_s"", ""los_s"", ""insurance"",
+           ""z1"", ""z2"", ""z3"", ""z4"", ""z5"", ""highcost"")
+tr_m <- tr[, feats]; va_m <- va[, feats]; te_m <- te[, feats]
+
+# ---- 随机森林（ranger；分类结局须为 factor）----
+library(ranger)
+set.seed(11)
+rf <- ranger(factor(highcost) ~ ., data = tr_m,
+             num.trees = 500, mtry = 3, min.node.size = 10,
+             importance = ""impurity"", probability = TRUE)
+rf                                          # OOB 预测误差
+rf$variable.importance                      # 变量重要性
+p_rf_va <- predict(rf, data = va_m)$predictions[, ""1""]   # 验证集概率（调参用）
+p_rf_te <- predict(rf, data = te_m)$predictions[, ""1""]   # 测试集概率（仅评估一次）
+
+# ---- XGBoost：xgb.cv 单组参数 + 早停 ----
+library(xgboost)
+library(Matrix)
+mtr <- sparse.model.matrix(highcost ~ . - 1, data = tr_m)
+mva <- sparse.model.matrix(highcost ~ . - 1, data = va_m)
+mte <- sparse.model.matrix(highcost ~ . - 1, data = te_m)
+dtrain <- xgb.DMatrix(mtr, label = tr_m$highcost)
+dval   <- xgb.DMatrix(mva, label = va_m$highcost)
+dtest  <- xgb.DMatrix(mte, label = te_m$highcost)
+
+set.seed(12)
+cvx <- xgb.cv(params = list(objective = ""binary:logistic"", eval_metric = ""auc"",
+                            eta = 0.05, max_depth = 3,
+                            subsample = 0.8, colsample_bytree = 0.8),
+              data = dtrain, nrounds = 500, nfold = 5,
+              early_stopping_rounds = 20, verbose = 0)
+cvx$best_iteration                                   # 最佳轮数
+max(cvx$evaluation_log$test_auc_mean)                # CV AUC
+
+# ---- XGBoost：手动小网格（验证集早停选参）----
+grid <- expand.grid(eta = c(0.05, 0.1), max_depth = c(2, 3, 4))
+res <- lapply(seq_len(nrow(grid)), function(i) {
+  p <- list(objective = ""binary:logistic"", eval_metric = ""auc"",
+            eta = grid$eta[i], max_depth = grid$max_depth[i],
+            subsample = 0.8, colsample_bytree = 0.8)
+  xgb.train(params = p, data = dtrain, nrounds = 500,
+            watchlist = list(val = dval), early_stopping_rounds = 20, verbose = 0)
+})
+va_auc <- sapply(res, function(m) m$best_score)       # 各组合验证集 AUC
+best_i <- which.max(va_auc)
+grid[best_i, ]                                        # 最优参数
+best_n <- res[[best_i]]$best_iteration                # 最优轮数
+
+# 用最优参数 + 最优轮数在「训练+验证」上重训，测试集只评估一次
+full <- xgb.DMatrix(rbind(mtr, mva), label = c(tr_m$highcost, va_m$highcost))
+bst <- xgb.train(params = res[[best_i]]$params, data = full, nrounds = best_n)
+p_xgb_te <- predict(bst, dtest)
+xgb.importance(model = bst)                           # Gain / Cover 重要性
+
+# ---- 等价写法：caret 网格调参（二选一）----
+library(caret)
+set.seed(13)
+cg <- expand.grid(nrounds = 300, max_depth = c(2, 3, 4), eta = c(0.05, 0.1),
+                  gamma = 0, colsample_bytree = 0.8,
+                  min_child_weight = 1, subsample = 0.8)
+ctrl <- trainControl(method = ""cv"", number = 5, classProbs = TRUE,
+                     summaryFunction = twoClassSummary)
+fit_caret <- train(x = tr_m[, -ncol(tr_m)], y = factor(tr_m$highcost),
+                   method = ""xgbTree"", trControl = ctrl, tuneGrid = cg,
+                   metric = ""ROC"")
+fit_caret$bestTune",skills/machine-learning-skill.md,模板；未逐项执行,261
+machine-learning-skill-8,---- 等价写法：caret 网格调参（二选一）----,stata,"* ---- 随机森林（rforest，SSC；不支持因子变量写法，先造虚拟变量）----
+tab ins if svar == 1, gen(ins_)
+rforest highcost age_s sex comorb_s los_s ins_2 ins_3 z1-z5 if svar == 1, type(class) iterations(500) numvars(3) seed(11) vimp
+* 预测概率的变量命名与后处理以 help rforest 为准；
+* 调参（numvars / depth / lsize）应在验证集（svar == 2）上比较 AUC 后进行
+
+* ---- 官方替代：梯度提升 boosting（Stata 17+）、svmachines（Stata 18）----
+* boosting highcost age_s sex comorb_s los_s ins_2 ins_3 z1-z5 if svar == 1
+* 语法与调参选项以 help boosting 为准",skills/machine-learning-skill.md,模板；未逐项执行,331
+machine-learning-skill-9,第 4 步：模型评估与比较,r,"library(pROC)
+
+# ---- 各模型在测试集的预测概率（基线 / LASSO 出自 glm 与 glmnet）----
+p_base_te  <- predict(base, newdata = te, type = ""response"")
+p_lasso_te <- drop(predict(cv_lasso, newx = x_te, s = ""lambda.1se"", type = ""response""))
+# p_rf_te、p_xgb_te 来自第 3 步
+
+roc_base  <- roc(y_te, p_base_te)
+roc_lasso <- roc(y_te, p_lasso_te)
+roc_rf    <- roc(y_te, p_rf_te)
+roc_xgb   <- roc(y_te, p_xgb_te)
+
+auc(roc_base); auc(roc_lasso); auc(roc_rf); auc(roc_xgb)
+ci.auc(roc_rf)                                   # bootstrap 95% CI（默认 2000 次）
+
+# ---- 模型比较：DeLong 检验（相关样本）----
+roc.test(roc_rf, roc_base, method = ""delong"")    # RF vs 基线 logistic
+roc.test(roc_xgb, roc_rf, method = ""delong"")     # XGB vs RF
+
+# ---- ROC 曲线叠加 ----
+plot(roc_base, col = ""grey50"", lwd = 2)
+plot(roc_lasso, add = TRUE, col = ""steelblue"", lwd = 2)
+plot(roc_rf, add = TRUE, col = ""firebrick"", lwd = 2)
+plot(roc_xgb, add = TRUE, col = ""darkgreen"", lwd = 2)
+legend(""bottomright"", legend = c(""logistic"", ""LASSO"", ""RF"", ""XGBoost""),
+       col = c(""grey50"", ""steelblue"", ""firebrick"", ""darkgreen""), lwd = 2)
+
+# ---- 阈值（Youden）与敏感性 / 特异性 ----
+coords(roc_xgb, ""best"", ret = c(""threshold"", ""sensitivity"", ""specificity""))
+
+# ---- 校准：Brier 分数 + 校准曲线（截距≈0、斜率≈1 为校准良好）----
+brier <- function(p, y) mean((p - y)^2)
+brier(p_base_te, y_te); brier(p_rf_te, y_te); brier(p_xgb_te, y_te)
+
+library(rms)
+val.prob(p_xgb_te, y_te, statloc = FALSE)        # 校准图 + Brier + 校准截距/斜率
+# 校准差 → Platt scaling / isotonic regression 等再校准，或回退简单模型
+
+# ---- 回归（对数费用）：RMSE / MAE / R² ----
+p_lm_te   <- predict(lm_base, newdata = te)
+p_lreg_te <- drop(predict(cv_lasso_reg, newx = x_te, s = ""lambda.1se""))
+y_cont <- log(te$cost)
+rmse <- function(p, y) sqrt(mean((p - y)^2))
+mae  <- function(p, y) mean(abs(p - y))
+rmse(p_lm_te, y_cont);   mae(p_lm_te, y_cont)
+rmse(p_lreg_te, y_cont); mae(p_lreg_te, y_cont)
+1 - sum((p_lreg_te - y_cont)^2) / sum((y_cont - mean(y_cont))^2)   # R²",skills/machine-learning-skill.md,模板；未逐项执行,356
+machine-learning-skill-10,---- 回归（对数费用）：RMSE / MAE / R² ----,stata,"* ---- 各模型预测概率（基线 / LASSO 用各自 predict 产出）----
+logit highcost age_s sex comorb_s los_s i.insurance z1-z5 if svar == 1
+predict p_base, pr
+lasso logit highcost age_s sex comorb_s los_s i.insurance z1-z5 if svar == 1, selection(cv) rseed(7)
+predict p_lasso, pr
+* （rforest / boosting 的预测变量按各自 postestimation 命令生成）
+
+* ---- 单模型 ROC 与 AUC ----
+roctab highcost p_base if svar == 3, graph
+* logit 拟合后可用 lroc（含 AUC 与 ROC 图）
+
+* ---- 多模型比较（DeLong 法与 Hanley–McNeil 法，只评估测试集）----
+roccomp highcost p_base p_lasso p_rf p_xgb if svar == 3, graph
+
+* ---- 校准：重拟合检验截距/斜率（应接近 0/1）+ Hosmer–Lemeshow + Brier ----
+logit highcost p_xgb if svar == 3
+estat gof, group(10)
+gen b2 = (highcost - p_xgb)^2 if svar == 3
+summarize b2                                // r(mean) 即 Brier 分数
+
+* ---- 回归指标：RMSE / MAE（对数费用）----
+gen e2 = (lncost - p_lreg)^2 if svar == 3
+summarize e2
+display ""RMSE = "" sqrt(r(mean))
+gen ae = abs(lncost - p_lreg) if svar == 3
+summarize ae
+display ""MAE = "" r(mean)",skills/machine-learning-skill.md,模板；未逐项执行,406
+machine-learning-skill-11,第 5 步：可解释性,r,"library(shapviz)
+
+# ---- SHAP 值（XGBoost，测试集）----
+sv <- shapviz(bst, X_pred = mte)
+sv_importance(sv, kind = ""both"")                 # 平均|SHAP|条形图 + 蜂群图
+sv_importance(sv, kind = ""beeswarm"")             # 蜂群图：颜色 = 特征取值方向
+sv_dependence(sv, v = ""age_s"")                   # 依赖图：年龄的非线性贡献
+
+# ---- 单个患者瀑布图 ----
+i_hi <- which.max(p_xgb_te)                      # 测试集中预测风险最高者
+sv_waterfall(sv, row_id = i_hi)
+
+# ---- 随机森林置换重要性（比杂质重要性更稳健）----
+set.seed(14)
+rf_p <- ranger(factor(highcost) ~ ., data = te_m, num.trees = 500,
+               importance = ""permutation"", probability = TRUE)
+rf_p$variable.importance
+
+# ---- 备选：DALEX（模型无关解释）----
+# library(DALEX)
+# ex <- explain(bst, data = as.data.frame(as.matrix(mte)), y = te_m$highcost)
+# plot(model_parts(ex))                        # 置换重要性",skills/machine-learning-skill.md,模板；未逐项执行,449
+machine-learning-skill-12,plot(model_parts(ex))                        # 置换重要性,stata,"* ---- Stata 侧可解释性 ----
+* rforest 变量重要性：vimp 选项生成的 _rf_v_* 变量（见 help rforest）
+* lasso / elasticnet 的标准化系数即一种可解释性输出
+lassocoef, display(coef, standardized)
+* 局限：Stata 官方目前无 SHAP 实现；完整的 SHAP 分析建议在 R（shapviz）侧完成",skills/machine-learning-skill.md,模板；未逐项执行,476
+machine-learning-skill-13,输出格式（预测建模报告模板）,text,"【问题与数据】
+预测目标（分类/回归）、结局定义与观察时点、数据来源与样本量、拆分方案（70/15/15 或 CV）、
+缺失比例与处理方法、标准化说明。
+
+【模型构建】
+表 1：基线 logistic / 线性回归（OR 或系数 + 95% CI）；
+表 2：LASSO / 弹性网（λ 选择法则、入选变量与系数）；
+表 3：RF 与 XGBoost（超参数、调参方式、早停轮数）。
+
+【模型表现】
+表 4：测试集 AUC（95% CI）、Brier、校准截距/斜率（分类）或 RMSE / MAE / R²（回归）；
+模型比较（DeLong p 值或 bootstrap CI）。
+
+【解释】
+变量重要性排序（注明方法）；1–2 名患者的 SHAP 瀑布图与临床解读。
+
+【结论与落地】
+TRIPOD 条目对照、防泄漏清单核对结果、局限（内部 vs 外部验证）、
+部署与校准漂移监控计划、预测 ≠ 因果声明。",skills/machine-learning-skill.md,模板；未逐项执行,549
+markov-model-skill-1,软件准备,stata,"* Stata：无需额外安装；确认版本 ≥ 17
+version",skills/markov-model-skill.md,模板；未逐项执行,25
+markov-model-skill-2,软件准备,r,"# R
+install.packages(c(""heemod"", ""expm""))   # expm 可选",skills/markov-model-skill.md,模板；未逐项执行,30
+markov-model-skill-3,第 1 步：定义健康状态与模型结构,text,"无并发症 ──卒中(0.0198)──▶ 卒中后 ──死亡(0.0952)──▶ 死亡
+    │                         │
+    └─────背景死亡(0.010)─────┘
+（死亡为吸收态，无回退、无恢复；数字见第 2 步）",skills/markov-model-skill.md,模板；未逐项执行,53
+markov-model-skill-4,第 1 步：定义健康状态与模型结构,stata,"* Stata：模型结构骨架（数值在第 2–4 步给出）
+* 状态编号：1 = 无并发症  2 = 卒中后  3 = 死亡（吸收态）
+* 周期 = 1 年；时间范围 T = 30（敏感性情景 40）；起始分布 (1, 0, 0)",skills/markov-model-skill.md,模板；未逐项执行,62
+markov-model-skill-5,第 1 步：定义健康状态与模型结构,r,"# R：结构参数集中定义，供后续各步复用
+states       <- c(""无并发症"", ""卒中后"", ""死亡"")
+cycle_length <- 1        # 年
+T            <- 30       # 时间范围（年）；敏感性情景取 40
+init         <- c(1, 0, 0)   # 起始：100% 无并发症
+names(init)  <- states",skills/markov-model-skill.md,模板；未逐项执行,68
+markov-model-skill-6,第 2 步：转移概率的来源与估计,stata,"* Stata：率 → 概率（t 为周期长度，按年）
+display 1 - exp(-0.02*1)        // 卒中年发生率 0.02 → 年概率 = 0.0198013
+display 1 - exp(-0.10*1)        // 卒中后死亡年率 0.10 → 年概率 = 0.0951626
+display 1 - exp(-0.02*0.5)      // 半年概率 = 0.0099502
+* 概率 → 率（反向）
+display -ln(1 - 0.0198013)/1
+* 由 5 年生存率 0.80 反推年率与年死亡概率（指数生存假设）
+display -ln(0.80)/5             // 年死亡率 = 0.0446287
+display 1 - exp(-(-ln(0.80)/5)) // 年死亡概率 = 0.0436481
+* 周期长度换算：1 年概率 0.0198013 → 3 个月（1/4 年）概率
+display 1 - (1-0.0198013)^(1/4)",skills/markov-model-skill.md,模板；未逐项执行,90
+markov-model-skill-7,第 2 步：转移概率的来源与估计,r,"# R：同样的换算
+1 - exp(-0.02*1)                    # 0.01980133
+1 - exp(-0.10*1)                    # 0.09516258
+-log(1 - 0.01980133)                # 概率 → 率
+S5 <- 0.80
+r_annual <- -log(S5)/5              # 5 年生存率反推年率
+1 - exp(-r_annual)                  # 年死亡概率
+# 周期长度换算
+1 - (1 - 0.01980133)^(1/4)",skills/markov-model-skill.md,模板；未逐项执行,104
+markov-model-skill-8,第 3 步：构建转移矩阵,stata,"* Stata：转移矩阵（策略 A；行：无并发症 / 卒中后 / 死亡）
+matrix PA = (0.9701987, 0.0198013, 0.0100000 \ ///
+             0.0000000, 0.9048374, 0.0951626 \ ///
+             0.0000000, 0.0000000, 1.0000000)
+matrix list PA, format(%9.4f)
+
+* Mata 校验：行和与 20 年状态分布
+mata:
+PA = (0.9701987, 0.0198013, 0.010 \ 0, 0.9048374, 0.0951626 \ 0, 0, 1)
+rowsum(PA)                     // 应为 (1, 1, 1)'
+(1, 0, 0) * PA^20              // 20 年后分布：非负且和为 1
+end",skills/markov-model-skill.md,模板；未逐项执行,134
+markov-model-skill-9,第 3 步：构建转移矩阵,r,"# R：转移矩阵（策略 A 与 B）
+PA <- matrix(c(0.9701987, 0.0198013, 0.0100000,
+               0.0000000, 0.9048374, 0.0951626,
+               0.0000000, 0.0000000, 1.0000000),
+             nrow = 3, byrow = TRUE)
+PB <- matrix(c(0.9760975, 0.0139025, 0.0100000,
+               0.0000000, 0.9048374, 0.0951626,
+               0.0000000, 0.0000000, 1.0000000),
+             nrow = 3, byrow = TRUE)
+rownames(PA) <- colnames(PA) <- c(""无并发症"", ""卒中后"", ""死亡"")
+rownames(PB) <- colnames(PB) <- c(""无并发症"", ""卒中后"", ""死亡"")
+rowSums(PA)                     # 1 1 1
+rowSums(PB)                     # 1 1 1
+# 20 年后分布（循环连乘；也可用 expm::`%^%`）
+trace <- c(1, 0, 0)
+for (i in 1:20) trace <- trace %*% PA
+trace",skills/markov-model-skill.md,模板；未逐项执行,149
+markov-model-skill-10,第 4 步：成本与健康效用参数,stata,"* Stata：由均值 / 区间反推 PSA 分布参数（矩法）
+* beta：效用 0.85、sd 0.03 → alpha、beta
+display 0.85*(0.85*(1-0.85)/0.03^2 - 1)          // alpha ≈ 119.57
+display (1-0.85)*(0.85*(1-0.85)/0.03^2 - 1)      // beta  ≈ 21.10
+* gamma：成本 3000、sd 600 → shape、scale
+display 3000^2/600^2                              // shape = 25
+display 600^2/3000                                // scale = 120
+* lognormal：率 95% CI [0.015, 0.03] → sdlog
+display (ln(0.03) - ln(0.015)) / (2*1.96)         // sdlog ≈ 0.177",skills/markov-model-skill.md,模板；未逐项执行,181
+markov-model-skill-11,第 4 步：成本与健康效用参数,r,"# R：同上（矩法）
+beta_mom  <- function(m, sd) { k <- m*(1-m)/sd^2 - 1; c(alpha = m*k, beta = (1-m)*k) }
+gamma_mom <- function(m, sd) c(shape = m^2/sd^2, scale = sd^2/m)
+beta_mom(0.85, 0.03)                     # alpha 119.57, beta 21.10
+gamma_mom(3000, 600)                     # shape 25, scale 120
+(log(0.03) - log(0.015)) / (2*1.96)      # sdlog 0.177",skills/markov-model-skill.md,模板；未逐项执行,193
+markov-model-skill-12,5.1 Stata 纯循环（完整代码）,stata,"* ============ 第 5 步：队列模拟（Stata 纯循环） ============
+local T = 30                     // 时间范围（年/周期）
+* 策略 A：常规治疗
+local p_hs1 = 1 - exp(-0.02)     // 无并发症→卒中（率 0.02/年）
+local p_hd1 = 0.010              // 无并发症→死亡
+local p_sd1 = 1 - exp(-0.10)     // 卒中后→死亡（率 0.10/年）
+local c_well1 = 3000             // 无并发症年成本
+local c_sick1 = 20000            // 卒中后年成本
+local u_well1 = 0.85             // 效用
+local u_sick1 = 0.62
+* 策略 B：干预（卒中风险降 30%）
+local p_hs2 = 1 - exp(-0.02*0.70)
+local p_hd2 = 0.010
+local p_sd2 = 1 - exp(-0.10)
+local c_well2 = 3500             // 无并发症年成本 + 500 元药费
+local c_sick2 = 20000
+local u_well2 = 0.85
+local u_sick2 = 0.62
+
+matrix R = J(0, 4, .)            // 收集两策略结果：成本/QALY × (5%, 3%)
+
+forvalues s = 1/2 {
+    * ---- 状态占位（行 1..T+1；行 1 为起始分布） ----
+    clear
+    set obs `=`T'+1'
+    gen healthy = .
+    gen sick    = .
+    gen dead    = .
+    replace healthy = 1 in 1       // 起始：100% 无并发症
+    replace sick    = 0 in 1
+    replace dead    = 0 in 1
+    * ---- 转移循环：trace(t+1) = trace(t) × P ----
+    forvalues t = 2/`=`T'+1' {
+        replace healthy = healthy[`t'-1]*(1-`p_hs`s''-`p_hd`s'') in `t'
+        replace sick    = healthy[`t'-1]*`p_hs`s'' + sick[`t'-1]*(1-`p_sd`s'') in `t'
+        replace dead    = dead[`t'-1] + healthy[`t'-1]*`p_hd`s'' + sick[`t'-1]*`p_sd`s'' in `t'
+    }
+    * ---- 每周期成本与 QALY（期初状态） ----
+    gen cost_cyc = healthy*`c_well`s'' + sick*`c_sick`s''
+    gen qaly_cyc = healthy*`u_well`s'' + sick*`u_sick`s''
+    * ---- 贴现 5%：半周期校正权重 1/(1+d)^(n-0.5)，只累加第 1..T 周期 ----
+    gen w05 = 1/(1+0.05)^(_n-0.5) if _n <= `T'
+    gen cost05 = cost_cyc*w05
+    gen qaly05 = qaly_cyc*w05
+    qui sum cost05
+    local c05_`s' = r(sum)
+    qui sum qaly05
+    local q05_`s' = r(sum)
+    * ---- 贴现 3%（敏感性情景） ----
+    gen w03 = 1/(1+0.03)^(_n-0.5) if _n <= `T'
+    gen cost03 = cost_cyc*w03
+    gen qaly03 = qaly_cyc*w03
+    qui sum cost03
+    local c03_`s' = r(sum)
+    qui sum qaly03
+    local q03_`s' = r(sum)
+    * ---- 30 年死亡比例（行 T+1 的 dead） ----
+    local d30_`s' = dead[`=`T'+1']
+    matrix R = R \ (`c05_`s'', `q05_`s'', `c03_`s'', `q03_`s'')
+}
+matrix rownames R = A B
+matrix colnames R = cost5 qaly5 cost3 qaly3
+matrix list R, format(%12.2f)
+display ""30 年死亡比例：A = "" %6.4f `d30_1' ""；B = "" %6.4f `d30_2'
+* 期望输出：A: cost5≈63186.10, qaly5≈10.7716；B: cost5≈63913.00, qaly5≈11.1113
+*           A: cost3≈80062.67, qaly3≈13.1935；B: cost3≈80588.47, qaly3≈13.6758
+*           30 年死亡比例：A≈0.4894，B≈0.4314",skills/markov-model-skill.md,模板；未逐项执行,229
+markov-model-skill-13,5.2 R 从头实现（完整代码）,r,"# ============ 第 5 步：队列模拟（R 从头写） ============
+T <- 30
+p_hsA <- 1 - exp(-0.02)          # 无并发症→卒中（对照）
+p_hsB <- 1 - exp(-0.02*0.70)     # 无并发症→卒中（干预）
+p_hd  <- 0.010                   # 背景死亡
+p_sd  <- 1 - exp(-0.10)          # 卒中后死亡
+PA <- matrix(c(1-p_hsA-p_hd, p_hsA, p_hd,
+               0,           1-p_sd, p_sd,
+               0,           0,      1), nrow = 3, byrow = TRUE)
+PB <- matrix(c(1-p_hsB-p_hd, p_hsB, p_hd,
+               0,           1-p_sd, p_sd,
+               0,           0,      1), nrow = 3, byrow = TRUE)
+
+# 队列模拟：trace(t+1) = trace(t) %*% P；奖励按周期期初状态、权重 1/(1+d)^(t-0.5)
+sim <- function(P, c_well, c_sick, u_well, u_sick, dr, T = 30) {
+  trace <- matrix(0, nrow = T + 1, ncol = 3)
+  trace[1, ] <- c(1, 0, 0)                      # 起始：100% 无并发症
+  for (t in seq_len(T)) trace[t + 1, ] <- trace[t, ] %*% P
+  w   <- 1 / (1 + dr)^(seq_len(T) - 0.5)        # 半周期校正 + 贴现权重
+  cyc <- trace[seq_len(T), ]                    # 第 1..T 周期的期初分布
+  cost <- sum((cyc[, 1] * c_well + cyc[, 2] * c_sick) * w)
+  qaly <- sum((cyc[, 1] * u_well + cyc[, 2] * u_sick) * w)
+  c(cost = cost, qaly = qaly, p_dead = trace[T + 1, 3])
+}
+
+resA5 <- sim(PA, 3000, 20000, 0.85, 0.62, 0.05, T)
+resB5 <- sim(PB, 3500, 20000, 0.85, 0.62, 0.05, T)
+resA3 <- sim(PA, 3000, 20000, 0.85, 0.62, 0.03, T)
+resB3 <- sim(PB, 3500, 20000, 0.85, 0.62, 0.03, T)
+round(rbind(""A(5%)"" = resA5, ""B(5%)"" = resB5,
+            ""A(3%)"" = resA3, ""B(3%)"" = resB3), 2)
+# 期望输出（与 5.1 的 Stata 结果一致）：
+#   A(5%): cost=63186.10, qaly=10.77, p_dead=0.4894
+#   B(5%): cost=63913.00, qaly=11.11, p_dead=0.4314
+#   A(3%): cost=80062.67, qaly=13.19；B(3%): cost=80588.47, qaly=13.68",skills/markov-model-skill.md,模板；未逐项执行,301
+markov-model-skill-14,5.3 R heemod 等价实现,r,"# ============ 第 5 步（heemod 等价实现，heemod ≥ 1.0 API） ============
+library(heemod)
+
+p_hsA <- 1 - exp(-0.02); p_hsB <- 1 - exp(-0.02*0.70)
+p_hd  <- 0.010; p_sd <- 1 - exp(-0.10)
+
+# 转移矩阵：C = 行内其余概率的补数（1 - 其他项之和），行和自动为 1
+matA <- define_transition(
+  C, p_hsA, p_hd,
+  0, C,     p_sd,
+  0, 0,     C)
+matB <- define_transition(
+  C, p_hsB, p_hd,
+  0, C,     p_sd,
+  0, 0,     C)
+
+# 状态值：discount() 在模型内按周期贴现；dispatch_strategy 区分策略成本
+# （策略名 std / intv 须与 run_model 中的名字一致）
+state_well <- define_state(
+  cost    = discount(dispatch_strategy(std = 3000, intv = 3500), .05),
+  utility = 0.85)
+state_sick <- define_state(
+  cost    = discount(20000, .05),
+  utility = 0.62)
+state_dead <- define_state(
+  cost    = 0,
+  utility = 0)
+
+stratA <- define_strategy(transition = matA,
+                          state_well, state_sick, state_dead)
+stratB <- define_strategy(transition = matB,
+                          state_well, state_sick, state_dead)
+
+res <- run_model(
+  std  = stratA,
+  intv = stratB,
+  cycles = 30,
+  init   = c(1, 0, 0),      # 按 1 人队列（默认 1000 人）
+  cost   = cost,            # 成本取状态值 cost
+  effect = utility,         # 效果取状态值 utility（QALY）
+  method = ""life-table"")    # 半周期校正；默认 ""beginning"" 不做半周期校正
+
+summary(res, threshold = c(100000, 300000))  # 阈值：1–3 倍人均 GDP（元/QALY）
+get_counts(res)                              # 各周期各状态人数
+plot(res, type = ""counts"", panels = ""by_strategy"")   # 状态分布图
+plot(res, type = ""ce"")                       # 成本-效果平面与效率前沿
+# 注：heemod 的贴现时点约定（discount() 默认首周期不打折）与 5.1/5.2 的
+# (t-0.5) 约定略有差异，结果会有小幅出入；报告时统一约定并注明实现。
+# heemod 1.0 起 run_model 已无 discount 参数，贴现写在 define_state 的
+# discount() 中（旧版 API 见 help(run_model)）。",skills/markov-model-skill.md,模板；未逐项执行,341
+markov-model-skill-15,第 6 步：计算 ICER,stata,"* ---------- ICER 与 NMB（5% 贴现；R 第 1、2 列） ----------
+display ""策略 A：成本 = "" %9.2f R[1,1] "" 元；QALY = "" %6.4f R[1,2]
+display ""策略 B：成本 = "" %9.2f R[2,1] "" 元；QALY = "" %6.4f R[2,2]
+display ""ΔC = "" %9.2f (R[2,1]-R[1,1]) "" 元；ΔE = "" %6.4f (R[2,2]-R[1,2]) "" QALY""
+display ""ICER(5%) = "" %9.2f ((R[2,1]-R[1,1])/(R[2,2]-R[1,2])) "" 元/QALY""
+display ""ICER(3%) = "" %9.2f ((R[2,3]-R[1,3])/(R[2,4]-R[1,4])) "" 元/QALY""
+* NMB（λ = 100000，1 倍人均 GDP）
+local lam = 100000
+display ""NMB_B - NMB_A (λ=100000) = "" %9.2f (`lam'*(R[2,2]-R[1,2]) - (R[2,1]-R[1,1]))
+* 期望输出：ΔC≈726.90，ΔE≈0.3397，ICER(5%)≈2139.80，ICER(3%)≈1090.04
+*           NMB 差 ≈ 33243（λ=100000）",skills/markov-model-skill.md,模板；未逐项执行,411
+markov-model-skill-16,第 6 步：计算 ICER,r,"# ---------- ICER 与 NMB ----------
+dC   <- resB5[""cost""] - resA5[""cost""]
+dE   <- resB5[""qaly""] - resA5[""qaly""]
+c(dC = dC, dE = dE, ICER = dC / dE)   # 期望：dC≈726.90, dE≈0.3397, ICER≈2139.80
+
+lam <- 100000                          # 阈值（1 倍人均 GDP）
+NMB_A <- lam * resA5[""qaly""] - resA5[""cost""]
+NMB_B <- lam * resB5[""qaly""] - resB5[""cost""]
+c(NMB_A = NMB_A, NMB_B = NMB_B, dNMB = NMB_B - NMB_A)   # dNMB≈33243
+
+# 象限与决策规则
+if (dE > 0 & dC < 0) {
+  ""东南象限：占优（更便宜且更有效）→ 采纳""
+} else if (dE < 0 & dC > 0) {
+  ""西北象限：被占优（更贵且更差）→ 拒绝""
+} else if (dE > 0) {
+  ifelse(dC/dE < lam, ""东北象限：ICER < λ → 采纳"", ""东北象限：ICER ≥ λ → 拒绝"")
+} else {
+  ifelse(dC/dE > lam,
+         ""西南象限：ICER > λ（节省的钱高于损失 QALY 的价值）→ 可采纳"",
+         ""西南象限：ICER ≤ λ → 拒绝"")
+}
+# 本例期望输出：dC>0 且 dE>0 → 东北象限，ICER≈2140 < 100000 → 采纳",skills/markov-model-skill.md,模板；未逐项执行,425
+markov-model-skill-17,7.1 单因素敏感性分析（tornado）,stata,"* ============ 第 7.1 步：tornado（Stata/Mata） ============
+* 把第 5 步的循环封装成 Mata 函数（敏感性分析需反复调用，Mata 更快）
+capture mata mata drop markov_ce()
+mata:
+real colvector markov_ce(real scalar phs, real scalar phd, real scalar psd,
+                         real scalar cw, real scalar cs,
+                         real scalar uw, real scalar us,
+                         real scalar d, real scalar T)
+{
+    real matrix  P, trace, cyc
+    real colvector w, c, q
+    P = ((1-phs-phd, phs, phd) \ (0, 1-psd, psd) \ (0, 0, 1))
+    trace = J(T+1, 3, 0)
+    trace[1, 1] = 1
+    for (t = 1; t <= T; t++) trace[t+1, .] = trace[t, .] * P
+    w   = 1 :/ (1+d) :^ ((1::T) :- 0.5)
+    cyc = trace[1..T, .]
+    c   = colsum((cyc[,1]*cw + cyc[,2]*cs) :* w)
+    q   = colsum((cyc[,1]*uw + cyc[,2]*us) :* w)
+    return((c \ q))
+}
+end
+
+mata:
+phsA = 1-exp(-0.02)
+phsB = 1-exp(-0.014)
+phd  = 0.010
+psd  = 1-exp(-0.10)
+bA = (phsA, phd, psd, 3000, 20000, 0.85, 0.62)    // 对照臂基线（1×7）
+bB = (phsB, phd, psd, 3500, 20000, 0.85, 0.62)    // 干预臂基线
+nm = (""对照卒中率"", ""干预卒中率"", ""背景死亡"", ""卒中后死亡"",
+      ""无并发症成本"", ""卒中后成本"", ""效用-无并发症"", ""效用-卒中后"")
+pair = J(0, 3, .)                                  // 参数序号、低值 ICER、高值 ICER
+for (i = 1; i <= 8; i++) {
+    loA = bA; loB = bB; hiA = bA; hiB = bB
+    if (i == 1) {
+        loA[1] = bA[1]*0.8; hiA[1] = bA[1]*1.2      // 仅对照臂变
+    }
+    else if (i == 2) {
+        loB[1] = bB[1]*0.8; hiB[1] = bB[1]*1.2      // 仅干预臂变
+    }
+    else {
+        j = i - 1                                    // 共用参数：两臂同变
+        loA[j] = bA[j]*0.8; loB[j] = bB[j]*0.8
+        hiA[j] = bA[j]*1.2; hiB[j] = bB[j]*1.2
+    }
+    ra = markov_ce(loA[1], loA[2], loA[3], loA[4], loA[5], loA[6], loA[7], 0.05, 30)
+    rb = markov_ce(loB[1], loB[2], loB[3], loB[4], loB[5], loB[6], loB[7], 0.05, 30)
+    icer_lo = (rb[1]-ra[1]) / (rb[2]-ra[2])
+    ra = markov_ce(hiA[1], hiA[2], hiA[3], hiA[4], hiA[5], hiA[6], hiA[7], 0.05, 30)
+    rb = markov_ce(hiB[1], hiB[2], hiB[3], hiB[4], hiB[5], hiB[6], hiB[7], 0.05, 30)
+    icer_hi = (rb[1]-ra[1]) / (rb[2]-ra[2])
+    pair = pair \ (i, icer_lo, icer_hi)
+}
+ra = markov_ce(bA[1], bA[2], bA[3], bA[4], bA[5], bA[6], bA[7], 0.05, 30)
+rb = markov_ce(bB[1], bB[2], bB[3], bB[4], bB[5], bB[6], bB[7], 0.05, 30)
+icer0 = (rb[1]-ra[1]) / (rb[2]-ra[2])
+(nm, pair[,2], pair[,3])                           // 打印结果表
+st_matrix(""TOR"", (pair[,2], pair[,3]))
+st_numscalar(""r_icer0"", icer0)
+end
+* 期望输出（基例 ICER ≈ 2140）：对照卒中率变化最大（ICER 约 -4734 ~ 37574）；
+* 负值表示该情景下干预占优或落入其他象限，绘图与报告需注明。
+
+* ---- tornado 图（横条 + 基线竖线；y 轴序号对应上述参数顺序） ----
+svmat TOR
+gen y = _n
+twoway (rcap TOR1 TOR2 y, horizontal lcolor(navy)) ///
+    (scatter y TOR1) (scatter y TOR2), ///
+    xline(`=scalar(r_icer0)', lpattern(dash) lcolor(red)) ///
+    ylabel(1(1)8) xtitle(""ICER（元/QALY）"") ytitle(""参数序号"") ///
+    legend(off) name(tornado, replace)",skills/markov-model-skill.md,模板；未逐项执行,462
+markov-model-skill-18,7.1 单因素敏感性分析（tornado）,r,"# ============ 第 7.1 步：tornado（R） ============
+phsA <- 1-exp(-0.02); phsB <- 1-exp(-0.014)
+phd <- 0.010; psd <- 1-exp(-0.10)
+bA <- c(phsA, phd, psd, 3000, 20000, 0.85, 0.62)   # 对照臂基线
+bB <- c(phsB, phd, psd, 3500, 20000, 0.85, 0.62)   # 干预臂基线
+nms <- c(""对照卒中率"", ""干预卒中率"", ""背景死亡"", ""卒中后死亡"",
+         ""无并发症成本"", ""卒中后成本"", ""效用-无并发症"", ""效用-卒中后"")
+
+makeP <- function(p) matrix(c(1-p[1]-p[2], p[1], p[2],
+                              0, 1-p[3], p[3],
+                              0, 0, 1), nrow = 3, byrow = TRUE)
+pair_icer <- function(pA, pB) {                    # 复用第 5.2 步的 sim()
+  rA <- sim(makeP(pA), pA[4], pA[5], pA[6], pA[7], 0.05, 30)
+  rB <- sim(makeP(pB), pB[4], pB[5], pB[6], pB[7], 0.05, 30)
+  (rB[""cost""] - rA[""cost""]) / (rB[""qaly""] - rA[""qaly""])
+}
+icer0 <- pair_icer(bA, bB)                         # ≈ 2139.80
+
+tor <- t(sapply(seq_along(nms), function(i) {
+  loA <- bA; loB <- bB; hiA <- bA; hiB <- bB
+  if (i == 1)      { loA[1] <- bA[1]*.8; hiA[1] <- bA[1]*1.2 }
+  else if (i == 2) { loB[1] <- bB[1]*.8; hiB[1] <- bB[1]*1.2 }
+  else {
+    j <- i - 1
+    loA[j] <- bA[j]*.8; loB[j] <- bB[j]*.8
+    hiA[j] <- bA[j]*1.2; hiB[j] <- bB[j]*1.2
+  }
+  c(lo = pair_icer(loA, loB), hi = pair_icer(hiA, hiB))
+}))
+tor_df <- data.frame(param = nms, lo = tor[, ""lo""], hi = tor[, ""hi""])
+tor_df
+
+# 基础 R tornado 图（横条 + 基线竖线）
+dotchart(tor_df$lo, labels = tor_df$param,
+         xlim = range(c(tor_df$lo, tor_df$hi, icer0)))
+segments(tor_df$lo, seq_along(nms), tor_df$hi, seq_along(nms))
+abline(v = icer0, lty = 2, col = ""red"")
+# 负 ICER：表示该情景下落入了占优 / 西南象限，见第 6 步象限规则，勿直接比较大小",skills/markov-model-skill.md,模板；未逐项执行,537
+markov-model-skill-19,7.2 概率敏感性分析（PSA）,stata,"* ============ 第 7.2 步：PSA（Stata：rbeta/rgamma/rnormal 循环） ============
+* 分布依据：概率→beta；率/RR→lognormal（exp(rnormal)）；成本→gamma；效用→beta
+* 注：1000 次 × 30 周期的 .do 循环较慢（数分钟）；可改调第 7.1 步的
+* Mata markov_ce() 提速（逻辑完全相同）。
+set seed 2026
+local N = 1000
+local T = 30
+matrix PSA = J(0, 4, .)                    // 每行：cA qA cB qB
+forvalues i = 1/`N' {
+    * ---- 参数抽样 ----
+    local p_hsA = 1 - exp(-exp(rnormal(ln(0.02), 0.20)))
+    local p_hsB = 1 - exp(-exp(rnormal(ln(0.02), 0.20))*exp(rnormal(ln(0.70), 0.10)))
+    local p_hd  = rbeta(24.74, 2449.26)
+    local p_sd  = 1 - exp(-exp(rnormal(ln(0.10), 0.15)))
+    local cA0   = rgamma(25, 120)
+    local cB0   = `cA0' + rgamma(25, 20)
+    local cS    = rgamma(25, 800)
+    local uW    = rbeta(119.6, 21.1)
+    local uS    = rbeta(57.8, 35.4)
+    * ---- 对照臂队列模拟（同第 5.1 步循环） ----
+    clear
+    set obs `=`T'+1'
+    gen healthy = .
+    gen sick = .
+    gen dead = .
+    replace healthy = 1 in 1
+    replace sick = 0 in 1
+    replace dead = 0 in 1
+    forvalues t = 2/`=`T'+1' {
+        replace healthy = healthy[`t'-1]*(1-`p_hsA'-`p_hd') in `t'
+        replace sick    = healthy[`t'-1]*`p_hsA' + sick[`t'-1]*(1-`p_sd') in `t'
+        replace dead    = dead[`t'-1] + healthy[`t'-1]*`p_hd' + sick[`t'-1]*`p_sd' in `t'
+    }
+    gen w = 1/(1+0.05)^(_n-0.5) if _n <= `T'
+    gen cA_c = (healthy*`cA0' + sick*`cS')*w
+    gen qA_c = (healthy*`uW'  + sick*`uS')*w
+    qui sum cA_c
+    local cA_t = r(sum)
+    qui sum qA_c
+    local qA_t = r(sum)
+    * ---- 干预臂队列模拟 ----
+    replace healthy = 1 in 1
+    replace sick = 0 in 1
+    replace dead = 0 in 1
+    forvalues t = 2/`=`T'+1' {
+        replace healthy = healthy[`t'-1]*(1-`p_hsB'-`p_hd') in `t'
+        replace sick    = healthy[`t'-1]*`p_hsB' + sick[`t'-1]*(1-`p_sd') in `t'
+        replace dead    = dead[`t'-1] + healthy[`t'-1]*`p_hd' + sick[`t'-1]*`p_sd' in `t'
+    }
+    gen cB_c = (healthy*`cB0' + sick*`cS')*w
+    gen qB_c = (healthy*`uW'  + sick*`uS')*w
+    qui sum cB_c
+    local cB_t = r(sum)
+    qui sum qB_c
+    local qB_t = r(sum)
+    matrix PSA = PSA \ (`cA_t', `qA_t', `cB_t', `qB_t')
+}
+matrix colnames PSA = cA qA cB qB
+
+* ---- 成本-效果散点图 ----
+svmat PSA, names(col)
+gen dC = cB - cA
+gen dE = qB - qA
+twoway (scatter dC dE, msize(tiny) mcolor(gs8%35)), ///
+    yline(0, lpattern(dash)) xline(0, lpattern(dash)) ///
+    xtitle(""增量 QALY"") ytitle(""增量成本（元）"") ///
+    title(""PSA 成本-效果散点图 (n=1000)"") name(ce_scatter, replace)
+
+* ---- CEAC ----
+matrix CEAC = J(0, 2, .)
+forvalues lam = 0(20000)300000 {
+    count if dC - `lam'*dE < 0
+    local pce = r(N)/_N
+    matrix CEAC = CEAC \ (`lam', `pce')
+}
+svmat CEAC
+line CEAC2 CEAC1, xtitle(""阈值 λ（元/QALY）"") ///
+    ytitle(""P(具有成本效果)"") name(ceac, replace)
+* 期望（示意，与随机种子有关）：本示例各阈值下 P(CE) > 0.99，P(占优) ≈ 0.36",skills/markov-model-skill.md,模板；未逐项执行,580
+markov-model-skill-20,7.2 概率敏感性分析（PSA）,r,"# ============ 第 7.2 步：PSA（R：基础循环 + 绘图） ============
+set.seed(2026)
+N <- 1000
+psa <- matrix(NA, nrow = N, ncol = 4,
+              dimnames = list(NULL, c(""cA"", ""qA"", ""cB"", ""qB"")))
+for (i in 1:N) {
+  r_hs <- rlnorm(1, meanlog = log(0.02), sdlog = 0.20)   # 卒中发生率
+  rr   <- rlnorm(1, meanlog = log(0.70), sdlog = 0.10)   # 干预 RR
+  p_hsA <- 1 - exp(-r_hs)
+  p_hsB <- 1 - exp(-r_hs * rr)
+  p_hd  <- rbeta(1, 24.74, 2449.26)                      # 背景死亡概率
+  p_sd  <- 1 - exp(-rlnorm(1, meanlog = log(0.10), sdlog = 0.15))
+  cA0   <- rgamma(1, shape = 25, scale = 120)            # 注意：scale= 必须显式
+  cB0   <- cA0 + rgamma(1, shape = 25, scale = 20)       #（默认第二参数是 rate）
+  cS    <- rgamma(1, shape = 25, scale = 800)
+  uW    <- rbeta(1, 119.6, 21.1)
+  uS    <- rbeta(1, 57.8, 35.4)
+  PAi <- matrix(c(1-p_hsA-p_hd, p_hsA, p_hd,
+                  0, 1-p_sd, p_sd,
+                  0, 0, 1), nrow = 3, byrow = TRUE)
+  PBi <- matrix(c(1-p_hsB-p_hd, p_hsB, p_hd,
+                  0, 1-p_sd, p_sd,
+                  0, 0, 1), nrow = 3, byrow = TRUE)
+  rA <- sim(PAi, cA0, cS, uW, uS, 0.05, 30)              # 复用第 5.2 步的 sim()
+  rB <- sim(PBi, cB0, cS, uW, uS, 0.05, 30)
+  psa[i, ] <- c(rA[""cost""], rA[""qaly""], rB[""cost""], rB[""qaly""])
+}
+head(psa)
+
+dC <- psa[, ""cB""] - psa[, ""cA""]
+dE <- psa[, ""qB""] - psa[, ""qA""]
+
+# 成本-效果散点图（含象限线与阈值线）
+plot(dE, dC, xlab = ""增量 QALY"", ylab = ""增量成本（元）"",
+     main = ""PSA 成本-效果散点图 (n = 1000)"",
+     pch = 16, col = rgb(0, 0, 0, 0.25))
+abline(h = 0, lty = 2); abline(v = 0, lty = 2)
+abline(a = 0, b = 100000, col = ""red"")   # λ = 100000 元/QALY 阈值线
+text(quantile(dE, 0.05), quantile(dC, 0.95),
+     paste0(""P(占优) = "", round(mean(dC < 0 & dE > 0), 3)))
+
+# CEAC
+lam_grid <- seq(0, 300000, by = 5000)
+ceac <- sapply(lam_grid, function(l) mean(dC - l*dE < 0))
+plot(lam_grid, ceac, type = ""l"", xlab = ""阈值 λ（元/QALY）"",
+     ylab = ""具有成本效果的概率"", main = ""CEAC"")
+abline(h = 0.5, lty = 3); abline(h = 0.95, lty = 3)
+# 期望（示意）：本示例各阈值下 P(CE) > 0.99，P(占优) ≈ 0.36；
+# heemod 集成版 PSA 见 vignette(""e-probabilistic"", ""heemod"")（define_psa + run_psa）",skills/markov-model-skill.md,模板；未逐项执行,662
+markov-model-skill-21,第 8 步：报告与校验,stata,"mata:
+// ① 卒中率 → 0：两臂 QALY 应完全相同
+markov_ce(0, 0.010, 1-exp(-0.10), 3000, 20000, 0.85, 0.62, 0.05, 30)[2]
+markov_ce(0, 0.010, 1-exp(-0.10), 3500, 20000, 0.85, 0.62, 0.05, 30)[2]
+//   期望输出：两值相同（≈ 12.0320）
+// ② 卒中率 = 0 且死亡率 = 1：第 1 周期后全灭，仅剩第 1 周期奖励
+markov_ce(0, 1, 1, 3000, 20000, 0.85, 0.62, 0.05, 30)
+//   期望输出：cost ≈ 2927.70（3000×0.9759），qaly ≈ 0.8295（0.85×0.9759）
+// ③ 效用全 = 1：QALY 应等于贴现生命年（≈ 13.0549）
+markov_ce(1-exp(-0.02), 0.010, 1-exp(-0.10), 0, 0, 1, 1, 0.05, 30)[2]
+end",skills/markov-model-skill.md,模板；未逐项执行,726
+markov-model-skill-22,第 8 步：报告与校验,r,"# R：同样的极端值检验（复用 sim() 与 makeP()）
+# ① 卒中率 → 0：两臂应完全相同
+P0 <- makeP(c(0, phd, psd))
+r01 <- sim(P0, 3000, 20000, 0.85, 0.62, 0.05)
+r02 <- sim(P0, 3500, 20000, 0.85, 0.62, 0.05)
+round(c(qaly_A = r01[""qaly""], qaly_B = r02[""qaly""], equal = r01[""qaly""] == r02[""qaly""]), 4)
+# ② 卒中率 = 0 且死亡率 = 1：第 1 周期后全灭
+sim(makeP(c(0, 1, 1)), 3000, 20000, 0.85, 0.62, 0.05)
+# ③ 效用全 = 1：QALY = 贴现生命年
+sim(makeP(c(phsA, phd, psd)), 0, 0, 1, 1, 0.05)[""qaly""]",skills/markov-model-skill.md,模板；未逐项执行,740
+markov-model-skill-23,输出格式（分析报告模板）,text,"【模型结构】
+问题、视角（卫生体系）、人群、干预与对照、时间范围；状态列表与状态图；周期长度；起始分布；关键结构假设。
+
+【参数】
+表 2：转移概率（含来源与率→概率换算）；表 3：成本与效用（点估计、区间、PSA 分布、来源）。
+
+【基例结果】
+表 4：两策略总成本、总 QALY、ΔC、ΔE、ICER（注明贴现率 3%/5% 与半周期校正）；阈值区间（1–3 倍人均 GDP）与判定。
+
+【敏感性分析】
+表 5：tornado（每参数低/高值与对应 ICER）；图 1：PSA 散点图（1000 次，注明分布与相关性假设）；图 2：CEAC。
+
+【校验与局限】
+face validity、内部一致性（行和、极端值、交叉验证结果）；与已发表研究的差异说明；局限（结构简化、参数外推、未纳入的疾病进程）。",skills/markov-model-skill.md,模板；未逐项执行,791
+meta-analysis-skill-1,软件准备,stata,"* Stata（联网安装一次；metafunnel 一般随 metan 附带，缺失时单独安装）
+ssc install metan, replace
+ssc install metareg, replace
+ssc install metabias, replace",skills/meta-analysis-skill.md,模板；未逐项执行,25
+meta-analysis-skill-2,软件准备,r,"# R
+install.packages(c(""meta"", ""metafor""))",skills/meta-analysis-skill.md,模板；未逐项执行,32
+meta-analysis-skill-3,第 1 步：研究问题与检索（PICO + PRISMA）,text,"PRISMA 2020 流程示例（虚构数字，与后文 8 项研究自洽）：
+识别：数据库检索 n = 2347（PubMed 812；Embase 1030；Cochrane Central 301；CBM/CNKI/万方 204）
+      去重后 n = 1682
+筛选：标题/摘要初筛排除 n = 1548（与研究问题无关 1201；综述/评论 210；非目标人群 137）
+纳入资格：全文评估 n = 134，排除 n = 126
+      （非 RCT 21；不报告目标结局 58；重复发表 12；无法获取数据 17；其他 18）
+纳入：进入定量合成 n = 8",skills/meta-analysis-skill.md,模板；未逐项执行,55
+meta-analysis-skill-4,第 1 步：研究问题与检索（PICO + PRISMA）,stata,"* Stata：示例数据录入（8 项 RCT，虚构演示数据）
+* et/nt = 试验组住院事件数/总数；ec/nc = 对照组住院事件数/总数
+* m_t/sd_t/m_c/sd_c = 两组 HbA1c 变化值(%)的均值/标准差
+* mode：1 = 个案管理+电话随访，0 = 单纯电话随访（第 5 步亚组用）
+clear
+input str10 study year et nt ec nc m_t sd_t m_c sd_c mode
+""Zhang"" 2018 45 150 68 150 -1.0  0.7  -0.30 0.8  1
+""Li""    2019 40 140 64 140 -1.1  0.75 -0.25 0.85 1
+""Wang""  2019 60 150 62 150 -0.4  0.8  -0.25 0.75 0
+""Chen""  2020 38 130 60 128 -0.9  0.7  -0.20 0.75 1
+""Liu""   2021 64 160 62 155 -0.35 0.85 -0.30 0.8  0
+""Zhao""  2022 36 100 37 100 -0.5  0.8  -0.30 0.8  0
+""Sun""   2023 48 130 50 130 -0.45 0.8  -0.25 0.75 0
+""Xu""    2024 42 135 63 132 -1.0  0.75 -0.25 0.8  1
+end
+label define mode_lb 1 ""个案管理+电话随访"" 0 ""单纯电话随访""
+label values mode mode_lb",skills/meta-analysis-skill.md,模板；未逐项执行,65
+meta-analysis-skill-5,第 1 步：研究问题与检索（PICO + PRISMA）,r,"# R：同一份示例数据
+dat <- data.frame(
+  study = c(""Zhang"", ""Li"", ""Wang"", ""Chen"", ""Liu"", ""Zhao"", ""Sun"", ""Xu""),
+  year  = c(2018, 2019, 2019, 2020, 2021, 2022, 2023, 2024),
+  et = c(45, 40, 60, 38, 64, 36, 48, 42),
+  nt = c(150, 140, 150, 130, 160, 100, 130, 135),
+  ec = c(68, 64, 62, 60, 62, 37, 50, 63),
+  nc = c(150, 140, 150, 128, 155, 100, 130, 132),
+  m_t  = c(-1.0, -1.1, -0.4, -0.9, -0.35, -0.5, -0.45, -1.0),
+  sd_t = c(0.7, 0.75, 0.8, 0.7, 0.85, 0.8, 0.8, 0.75),
+  m_c  = c(-0.3, -0.25, -0.25, -0.2, -0.3, -0.3, -0.25, -0.25),
+  sd_c = c(0.8, 0.85, 0.75, 0.75, 0.8, 0.8, 0.75, 0.8),
+  mode = c(1, 1, 0, 1, 0, 0, 0, 1))   # 1=个案管理+电话随访，0=单纯电话随访",skills/meta-analysis-skill.md,模板；未逐项执行,85
+meta-analysis-skill-6,第 2 步：效应量与标准误计算,stata,"* ---- 手工计算（先核对，再交给批量命令）----
+gen a = et                      // 试验组事件
+gen b = nt - et                 // 试验组非事件
+gen c = ec                      // 对照组事件
+gen d = nc - ec                 // 对照组非事件
+gen lnOR   = ln((a*d)/(b*c))
+gen selnOR = sqrt(1/a + 1/b + 1/c + 1/d)
+gen OR     = exp(lnOR)
+gen loOR   = exp(lnOR - 1.96*selnOR)
+gen hiOR   = exp(lnOR + 1.96*selnOR)
+gen lnRR   = ln((a/nt)/(c/nc))
+gen selnRR = sqrt(1/a - 1/nt + 1/c - 1/nc)
+* 零单元处理：a b c d 各 +0.5 后按上式重算（或 metan ..., peto）
+
+* ---- 连续：MD 与 Hedges' g ----
+gen MD    = m_t - m_c
+gen seMD  = sqrt(sd_t^2/nt + sd_c^2/nc)
+gen sp    = sqrt(((nt-1)*sd_t^2 + (nc-1)*sd_c^2)/(nt+nc-2))
+gen J     = 1 - 3/(4*(nt+nc) - 9)
+gen g     = MD/sp*J
+gen seg   = sqrt((nt+nc)/(nt*nc) + g^2/(2*(nt+nc)))
+list study year OR loOR hiOR MD seMD g seg
+
+* 单研究核对：esize 逐条 immediate 形式（语法以 help esize 为准）
+esize twosample 150 -1.0 0.7 150 -0.3 0.8, hedgesg",skills/meta-analysis-skill.md,模板；未逐项执行,119
+meta-analysis-skill-7,第 2 步：效应量与标准误计算,r,"# R：手工计算（与 Stata 公式一致）
+dat$a <- dat$et; dat$b <- dat$nt - dat$et
+dat$c <- dat$ec; dat$d <- dat$nc - dat$ec
+dat$lnOR   <- with(dat, log((a*d)/(b*c)))
+dat$selnOR <- with(dat, sqrt(1/a + 1/b + 1/c + 1/d))
+dat$MD   <- dat$m_t - dat$m_c
+dat$seMD <- with(dat, sqrt(sd_t^2/nt + sd_c^2/nc))
+sp <- with(dat, sqrt(((nt-1)*sd_t^2 + (nc-1)*sd_c^2)/(nt+nc-2)))
+J  <- with(dat, 1 - 3/(4*(nt+nc) - 9))
+dat$g   <- dat$MD/sp*J
+dat$seg <- with(dat, sqrt((nt+nc)/(nt*nc) + g^2/(2*(nt+nc))))
+
+# R：metafor::escalc（由原始数据直接计算，推荐；结果 yi/vi 与手工一致）
+library(metafor)
+dat.or  <- escalc(measure = ""OR"",  ai = et, n1i = nt, ci = ec, n2i = nc,
+                  data = dat, slab = study)
+dat.rr  <- escalc(measure = ""RR"",  ai = et, n1i = nt, ci = ec, n2i = nc,
+                  data = dat, slab = study)
+dat.md  <- escalc(measure = ""MD"",  m1i = m_t, sd1i = sd_t, n1i = nt,
+                  m2i = m_c, sd2i = sd_c, n2i = nc, data = dat, slab = study)
+dat.smd <- escalc(measure = ""SMD"", m1i = m_t, sd1i = sd_t, n1i = nt,
+                  m2i = m_c, sd2i = sd_c, n2i = nc, data = dat, slab = study)
+# 注：escalc 的 ""SMD"" 默认即 Hedges' g（含小样本校正）；参数名以 ?escalc 为准",skills/meta-analysis-skill.md,模板；未逐项执行,147
+meta-analysis-skill-8,第 3 步：固定效应与随机效应模型,stata,"* ---- 官方 meta 命令族（Stata 16+；fixed 为 common 的兼容旧称）----
+meta set lnOR selnOR, studylabel(study) esize(OR)
+meta summarize, fixed random                 // Q、I²、tau² + 合并估计
+meta esize, fixed random(dlaird)             // 合并估计；REML 用 random(reml)
+meta esize, random(reml)                     // 方法子选项以 help meta esize 为准
+
+* ---- SSC metan（经典）----
+* 二分类四变量顺序 = 试验组事件 试验组总数 对照组事件 对照组总数（不是四格表 a b c d！）
+metan et nt ec nc, or fixed random label(namevar=study, yearvar=year) sortby(year)
+
+* 连续六变量 = n1 mean1 sd1 n2 mean2 sd2；md 或 hedges（选项以 help metan 为准）
+metan nt m_t sd_t nc m_c sd_c, md fixed random label(namevar=study, yearvar=year)
+metan nt m_t sd_t nc m_c sd_c, hedges fixed random label(namevar=study, yearvar=year)",skills/meta-analysis-skill.md,模板；未逐项执行,186
+meta-analysis-skill-9,第 3 步：固定效应与随机效应模型,r,"# R：meta 包
+library(meta)
+m.or <- metagen(TE = lnOR, seTE = selnOR, studlab = study, data = dat,
+                sm = ""OR"", fixed = TRUE, random = TRUE,
+                method.tau = ""REML"", prediction = TRUE)
+m.md <- metacont(n.e = nt, mean.e = m_t, sd.e = sd_t,
+                 n.c = nc, mean.c = m_c, sd.c = sd_c,
+                 studlab = study, data = dat, sm = ""MD"",
+                 fixed = TRUE, random = TRUE, method.tau = ""REML"")
+m.smd <- update(m.md, sm = ""SMD"")            // 默认 Hedges' g
+summary(m.or)
+
+# 也可直接由四格表计数（metabin，参数名注意 event.e/n.e/event.c/n.c）
+m.or2 <- metabin(event.e = et, n.e = nt, event.c = ec, n.c = nc,
+                 studlab = study, data = dat, sm = ""OR"", method = ""MH"",
+                 fixed = TRUE, random = TRUE, method.tau = ""REML"")",skills/meta-analysis-skill.md,模板；未逐项执行,202
+meta-analysis-skill-10,第 4 步：森林图,stata,"* 官方
+meta forestplot, esrefline(1) fixed random          // OR 无效线 = 1
+* 连续结局：先 meta set g seg, studylabel(study) esize(hedgesg)，无效线 = 0
+meta forestplot, esrefline(0) random
+graph export forest_or.png, replace width(2000)     // 导出高清图
+
+* metan 自带森林图（lcols/rcols 控制列；favours 以 # 分隔左右文字）
+metan et nt ec nc, or random label(namevar=study, yearvar=year) sortby(year) ///
+    forestplot(lcols(study year) rcols(OR loOR hiOR) favours(慢病管理降低住院 # 常规照护降低住院))",skills/meta-analysis-skill.md,模板；未逐项执行,229
+meta-analysis-skill-11,第 4 步：森林图,r,"# R：meta 包
+forest(m.or, sortvar = year, leftcols = c(""studlab"", ""year""),
+       rightcols = c(""effect"", ""ci""), test.overall = TRUE)
+
+# R：metafor（atransf = exp 把对数尺度还原为 OR；refline = 1 为无效线）
+res <- rma(yi, vi, data = dat.or, method = ""REML"")
+forest(res, slab = dat.or$study, atransf = exp, refline = 1,
+       xlab = ""OR（对数尺度）"")",skills/meta-analysis-skill.md,模板；未逐项执行,241
+meta-analysis-skill-12,第 5 步：异质性检验与亚组分析、Meta 回归,stata,"* ---- 亚组（mode：1=个案管理+电话随访，0=单纯电话随访）----
+* 官方：subgroup() 森林图 + 分组合并
+meta forestplot, subgroup(mode) addoverall
+meta esize if mode == 1, random
+meta esize if mode == 0, random
+* 或 SSC metan 的 by()
+metan et nt ec nc, or random by(mode) label(namevar=study, yearvar=year)
+
+* ---- Meta 回归（协变量 year：发表年份趋势）----
+meta regress year                     // 官方：REML + Knapp–Hartung（以 help meta regress 为准）
+metareg lnOR year, wsse(selnOR) mm    // SSC metareg；REML 用 metareg ..., wsse(selnOR) reml
+* metareg 输出含 tau² 与 I²_res；语法细节以 help metareg 为准",skills/meta-analysis-skill.md,模板；未逐项执行,264
+meta-analysis-skill-13,第 5 步：异质性检验与亚组分析、Meta 回归,r,"# R：亚组（byvar 须在 metagen 的原始 data 中）
+update(m.or, byvar = mode)
+forest(update(m.or, byvar = mode))
+
+# R：meta 回归
+metareg(m.or, ~ year)                                # meta 包（默认 REML，以 help(metareg) 为准）
+rma(yi, vi, mods = ~ year, data = dat.or, method = ""REML"")   # metafor
+rma(yi, vi, mods = ~ mode, data = dat.or, method = ""REML"")   # 二分类协变量等价于亚组",skills/meta-analysis-skill.md,模板；未逐项执行,279
+meta-analysis-skill-14,第 6 步：发表偏倚评估,stata,"* 官方（Stata 16+/17+/18+）
+meta funnelplot, esrefline(1)
+confunnel                       // 轮廓增强漏斗图（Stata 17+；选项以 help confunnel 为准）
+meta bias, egger begg harbord   // Stata 18+；以 help meta bias 为准
+
+* SSC（metafunnel 一般随 metan 附带；以 ssc describe metan 为准）
+metafunnel _ES _seES
+metabias lnOR selnOR, egger     // Egger：效应量与 SE 两变量
+metabias lnOR selnOR, begg      // Begg 秩相关（选项名以 help metabias 为准）
+metabias a b c d, harbord       // Harbord：四格表单元 a b c d",skills/meta-analysis-skill.md,模板；未逐项执行,304
+meta-analysis-skill-15,第 6 步：发表偏倚评估,r,"# R：meta 包
+funnel(m.or)
+metabias(m.or, method.bias = ""linreg"")   // Egger（加权线性回归）
+metabias(m.or, method.bias = ""rank"")     // Begg 秩相关
+tf <- trimfill(m.or); summary(tf); funnel(tf)
+
+# R：metafor
+funnel(res)
+regtest(res, model = ""rma"")              // Egger（meta 回归法）
+trimfill(res)                            // 输出 k0 与调整后估计",skills/meta-analysis-skill.md,模板；未逐项执行,317
+meta-analysis-skill-16,第 7 步：报告清单与证据分级（PRISMA 2020 + GRADE）,stata,"* 汇总表所需数字（填入报告模板）
+meta summarize, fixed random
+meta forestplot, fixed random            // 报告用图；graph export 导出高清格式",skills/meta-analysis-skill.md,模板；未逐项执行,342
+meta-analysis-skill-17,第 7 步：报告清单与证据分级（PRISMA 2020 + GRADE）,r,"# R：一键提取汇总表关键数字（meta 包）
+with(m.or, c(Q = Q, df.Q = df.Q, p.Q = pval.Q, I2_pct = I2*100,
+             tau2 = tau2, tau = tau, OR_rand = exp(TE.random),
+             lo_rand = exp(lower.random), hi_rand = exp(upper.random),
+             p_rand = pval.random))
+m.or$w.random                            // 各研究随机效应权重（%）",skills/meta-analysis-skill.md,模板；未逐项执行,348
+meta-analysis-skill-18,输出格式（Meta 分析报告模板）,text,"【Meta 分析报告模板】
+
+一、背景与问题：PICO 一句话 + 注册号（如 PROSPERO CRD…）
+二、方法：数据库与检索式（附录）；纳入/排除标准；筛选流程（PRISMA 2020 流程图）；
+     偏倚风险工具（RoB 2 / ROBINS-I）；效应量定义（OR/RR/MD/SMD）；
+     合成模型（固定/随机 + τ² 估计方法 DL/REML）；异质性、亚组/敏感性、发表偏倚计划
+三、结果：
+   表 1 纳入研究特征（作者、年份、国家、设计、样本量、干预/对照、结局定义、随访时长）
+   表 2 每项研究效应量（95% CI）与权重（固定/随机）
+   表 3 汇总（示例输出，以实际运行结果为准）：
+       结局        研究数  合并效应量(95% CI)   模型        Q(df), p      I²    τ²
+       住院(OR)    8       0.69 (0.53–0.88)     随机(REML)  14.6(7), 0.04  52%   0.07
+       HbA1c(MD)   8       …                   随机(REML)  …              …     …
+   图 1/图 2 森林图（标注方向、模型与权重）
+   表 4 亚组 / meta 回归（如有）：分组效应量、组间差异 p、回归系数(95% CI)、I²_res
+   图 3 漏斗图（可加轮廓增强）+ Egger/Begg p 值 + trim-and-fill 调整估计
+四、讨论：异质性来源、临床/政策含义、局限（检索语言、灰色文献、研究数少、混杂）
+五、GRADE：每结局确定性（高/中/低/极低）与逐条理由。
+   示例（住院结局）：8 项 RCT 起点「高」；
+   - 偏倚风险 −1（多数未报告分配隐藏/盲法）；
+   - 不一致性 −1（I² ≈ 52%，方向一致但幅度差异大）；
+   → 确定性「低」。
+六、利益冲突与资金来源",skills/meta-analysis-skill.md,模板；未逐项执行,378
+sem-qca-qualitative-skill-1,软件准备,stata,"* Stata（联网安装一次）
+ssc install fuzzy, replace",skills/sem-qca-qualitative-skill.md,模板；未逐项执行,25
+sem-qca-qualitative-skill-2,软件准备,r,"# R
+install.packages(c(""lavaan"", ""QCA"", ""quanteda""))",skills/sem-qca-qualitative-skill.md,模板；未逐项执行,30
+sem-qca-qualitative-skill-3,专题 1：扎根理论（Grounded Theory）,r,"library(quanteda)
+# 示例访谈（虚构片段，演示用）
+interviews <- data.frame(
+  id = 1:6,
+  text = c(
+    ""医保报销比例提高以后，我们村慢病患者愿意按时复诊了，负担轻了很多。"",
+    ""村卫生室药品不全，想开的药经常没有，只能去镇上，路远还要排队。"",
+    ""签约的家庭医生上门测血压，老人觉得被重视，依从性好多了。"",
+    ""镇卫生院设备老化，有些检查做不了，来回县里要一整天。"",
+    ""报销手续以前要跑好几趟，现在村卫生室直接结算，方便多了。"",
+    ""宣传不够，很多老人根本不知道慢病门诊能报销多少。"")
+)
+corp <- corpus(interviews, text_field = ""text"", docid_field = ""id"")
+toks <- tokens(corp, remove_punct = TRUE)
+dfmat <- dfm(toks)
+textstat_frequency(dfmat, n = 20)               # 高频词 → 开放编码线索
+fcm(toks, context = ""window"", window = 5) |>    # 词共现 → 主轴编码线索
+  textplot_network(min_freq = 2)",skills/sem-qca-qualitative-skill.md,模板；未逐项执行,53
+sem-qca-qualitative-skill-4,专题 2：结构方程模型（SEM）,r,"library(lavaan)
+set.seed(2026)
+n <- 300
+HL <- rnorm(n); SE <- 0.6 * HL + rnorm(n, 0, sqrt(1 - 0.36)); AD <- 0.5 * SE + rnorm(n, 0, sqrt(1 - 0.25))
+d <- data.frame(
+  x1 = 0.7 * HL + rnorm(n, 0, 0.7), x2 = 0.8 * HL + rnorm(n, 0, 0.6), x3 = 0.75 * HL + rnorm(n, 0, 0.65),
+  y1 = 0.7 * SE + rnorm(n, 0, 0.7), y2 = 0.8 * SE + rnorm(n, 0, 0.6), y3 = 0.75 * SE + rnorm(n, 0, 0.65),
+  z1 = 0.7 * AD + rnorm(n, 0, 0.7), z2 = 0.8 * AD + rnorm(n, 0, 0.6), z3 = 0.75 * AD + rnorm(n, 0, 0.65))
+
+model <- '
+  HL =~ x1 + x2 + x3
+  SE =~ y1 + y2 + y3
+  AD =~ z1 + z2 + z3
+  SE ~ HL
+  AD ~ SE
+'
+fit <- sem(model, data = d)
+summary(fit, standardized = TRUE, fit.measures = TRUE)
+fitMeasures(fit, c(""chisq"", ""df"", ""cfi"", ""tli"", ""rmsea"", ""srmr""))",skills/sem-qca-qualitative-skill.md,模板；未逐项执行,91
+sem-qca-qualitative-skill-5,专题 2：结构方程模型（SEM）,stata,"* Stata：等价写法（数据需先导入）
+sem (HL -> x1 x2 x3) (SE -> y1 y2 y3) (AD -> z1 z2 z3) ///
+    (SE <- HL) (AD <- SE), method(mlmv) standardized
+estat gof, stats(all)",skills/sem-qca-qualitative-skill.md,模板；未逐项执行,113
+sem-qca-qualitative-skill-6,专题 3：多层 / 多重嵌套 SEM（Multilevel SEM）,r,"library(lavaan)
+set.seed(2026)
+H <- 30; m <- 20; n <- H * m
+d <- data.frame(hospital = rep(1:H, each = m))
+d$ueff <- rnorm(H, 0, 0.5)[d$hospital]          # 医院随机效应
+d$HL <- 0.4 * d$ueff + rnorm(n)
+d$SE <- 0.5 * d$HL + 0.3 * d$ueff + rnorm(n)
+d$x1 <- 0.7 * d$HL + rnorm(n, 0, 0.7); d$x2 <- 0.8 * d$HL + rnorm(n, 0, 0.6); d$x3 <- 0.75 * d$HL + rnorm(n, 0, 0.65)
+d$y1 <- 0.7 * d$SE + rnorm(n, 0, 0.7); d$y2 <- 0.8 * d$SE + rnorm(n, 0, 0.6); d$y3 <- 0.75 * d$SE + rnorm(n, 0, 0.65)
+
+model2 <- '
+  level: 1
+    HLw =~ x1 + x2 + x3
+    SEw =~ y1 + y2 + y3
+    SEw ~ HLw
+  level: 2
+    HLb =~ x1 + x2 + x3
+    SEb =~ y1 + y2 + y3
+    SEb ~ HLb
+'
+fit2 <- sem(model2, data = d, cluster = ""hospital"")
+summary(fit2)",skills/sem-qca-qualitative-skill.md,模板；未逐项执行,134
+sem-qca-qualitative-skill-7,专题 3：多层 / 多重嵌套 SEM（Multilevel SEM）,stata,"* Stata：gsem 多层（医院随机截距）；语法细节以 help gsem 为准
+gsem (HL -> x1 x2 x3) (SE -> y1 y2 y3) (SE <- HL M1[hospital]), vce(cluster hospital)
+estat icc",skills/sem-qca-qualitative-skill.md,模板；未逐项执行,159
+sem-qca-qualitative-skill-8,专题 4：fsQCA 模糊集定性比较分析,r,"library(QCA)
+set.seed(2026)
+n <- 30
+d <- data.frame(
+  score = rnorm(n, 70, 15),          # 成效评分
+  res   = rnorm(n, 20, 8),           # 资源投入
+  staff = rnorm(n, 10, 4),           # 人员配置
+  inc   = rnorm(n, 0.5, 0.2),        # 激励机制
+  it    = rnorm(n, 3, 1.2))          # 信息化
+d <- data.frame(
+  成效   = calibrate(d$score, c(60, 75, 90)),
+  资源   = calibrate(d$res, c(10, 20, 30)),
+  人员   = calibrate(d$staff, c(5, 10, 15)),
+  激励   = calibrate(d$inc, c(0.2, 0.5, 0.8)),
+  信息化 = calibrate(d$it, c(1, 3, 5)))
+
+tt <- truthTable(d, outcome = ""成效"", n.cut = 1, incl.cut = 0.8)
+tt
+sol <- minimize(tt, include = ""?"")   # 中间解
+sol
+XYplot(tt$tt$资源, d$成效, xlab = ""资源"", ylab = ""成效"")   # 必要条件散点（对单一条件判断必要性）",skills/sem-qca-qualitative-skill.md,模板；未逐项执行,180
+sem-qca-qualitative-skill-9,专题 4：fsQCA 模糊集定性比较分析,stata,"* Stata：SSC 的 fuzzy 包做模糊集校准与操作（以 help fuzzy 为准）
+ssc install fuzzy
+fzcalc zy, low(60) cross(75) high(90)",skills/sem-qca-qualitative-skill.md,模板；未逐项执行,204
+sem-qca-qualitative-skill-10,输出格式（专题报告模板）,text,"【研究问题与方法选择】
+为什么用这个方法（数据形态 + 研究问题的匹配说明）。
+
+【数据与变量】
+样本来源、嵌套结构（多层）、校准锚点（fsQCA）、访谈资料（扎根）。
+
+【结果】
+专题 2/3：模型图、标准化载荷与路径系数表、拟合指标表（判断标准并列）。
+专题 1：编码表 + 理论模型图 + 饱和度说明。
+专题 4：真值表 + 组态解表（一致性/覆盖率）+ 必要性检验。
+
+【讨论与局限】
+结合理论的解释；方法局限（如截面数据因果弱、锚点敏感性）。",skills/sem-qca-qualitative-skill.md,模板；未逐项执行,222

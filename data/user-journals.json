@@ -1,0 +1,303 @@
+[
+  {
+    "number": 1,
+    "name": "Nature",
+    "url": "https://www.nature.com/nature",
+    "provided_claims": "1 Nature 0028-0836 / 1476-4687 世界顶级综合科学期刊 Q1 多学科科学 1区 综合性科学 50.5 7 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 2,
+    "name": "Nature Medicine",
+    "url": "https://www.nature.com/nm",
+    "provided_claims": "2 Nature Medicine 1078-8956 / 1546-170X 临床与转化医学前沿 Q1 医学：研究与实验 1区 医学 58.7 3 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 3,
+    "name": "Nature Health",
+    "url": "https://www.nature.com/naturehealth",
+    "provided_claims": "3 Nature Health 3005-0693 健康科学新兴期刊（2026 创刊） — — — — ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 4,
+    "name": "Nature Aging",
+    "url": "https://www.nature.com/nataging",
+    "provided_claims": "4 Nature Aging 2662-8465 衰老与老龄化研究 Q1 老年医学 1区 老年医学 17 9 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 5,
+    "name": "Nature Mental Health",
+    "url": "https://www.nature.com/natmentalhealth",
+    "provided_claims": "5 Nature Mental Health 2731-6076 精神健康前沿研究 — — — — ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 6,
+    "name": "Nature Human Behaviour",
+    "url": "https://www.nature.com/nathumbehav",
+    "provided_claims": "6 Nature Human Behaviour 2397-3374 人类行为科学 Q1 心理学：实验 1区 心理学 21.4 8 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 7,
+    "name": "Nature Communications",
+    "url": "https://www.nature.com/ncomms",
+    "provided_claims": "7 Nature Communications 2041-1723 开放获取跨学科综合研究 Q1 多学科科学 1区 综合性科学 14.7 8 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 8,
+    "name": "npj Digital Medicine",
+    "url": "https://www.nature.com/npjdigimed",
+    "provided_claims": "8 npj Digital Medicine 2398-6352 数字健康与医疗信息学 Q1 医学信息学 1区 医学信息学 15.2 7 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 9,
+    "name": "Science",
+    "url": "https://www.science.org/",
+    "provided_claims": "9 Science 0036-8075 / 1095-9203 综合自然科学顶刊 Q1 多学科科学 1区 综合性科学 44.7 30 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 10,
+    "name": "Science Advances",
+    "url": "https://www.science.org/journal/sciadv",
+    "provided_claims": "10 Science Advances 2375-2548 开放获取跨学科研究 Q1 多学科科学 1区 综合性科学 13.6 ~60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 11,
+    "name": "The Lancet",
+    "url": "https://www.thelancet.com/",
+    "provided_claims": "11 The Lancet 0140-6736 医学综合权威期刊 Q1 内科 1区 医学 168.9 3 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 12,
+    "name": "Lancet HIV",
+    "url": "https://www.thelancet.com/journals/lanhiv",
+    "provided_claims": "12 Lancet HIV 2352-3018 HIV/AIDS 专业期刊 Q1 传染病学 1区 传染病学 14.1 60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 13,
+    "name": "Lancet Infectious Diseases",
+    "url": "https://www.thelancet.com/journals/laninf",
+    "provided_claims": "13 Lancet Infectious Diseases 1473-3099 传染病研究 Q1 传染病学 1区 传染病学 36.4 60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 14,
+    "name": "Lancet Public Health",
+    "url": "https://www.thelancet.com/journals/lanpub",
+    "provided_claims": "14 Lancet Public Health 2666-7762 公共卫生研究 Q1 公共卫生 1区 公共卫生 37.8 60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 15,
+    "name": "Lancet Healthy Longevity",
+    "url": "https://www.thelancet.com/journals/lanhl",
+    "provided_claims": "15 Lancet Healthy Longevity 2666-7568 健康长寿研究 Q1 老年医学 1区 老年医学 13.4 60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 16,
+    "name": "Lancet Planetary Health",
+    "url": "https://www.thelancet.com/journals/lanplh",
+    "provided_claims": "16 Lancet Planetary Health 2542-5196 行星健康与环境健康 Q1 公共卫生 1区 公共卫生 19.2 60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 17,
+    "name": "Lancet Psychiatry",
+    "url": "https://www.thelancet.com/journals/lanpsy",
+    "provided_claims": "17 Lancet Psychiatry 2215-0366 精神病学临床研究 Q1 精神病学 & 心理学 1区 心理学 25.8 60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 18,
+    "name": "Lancet Global Health",
+    "url": "https://www.thelancet.com/journals/langlo",
+    "provided_claims": "18 Lancet Global Health 2214-109X 全球健康与流行病学 Q1 公共卫生 1区 公共卫生 20.1 60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 19,
+    "name": "Lancet Regional Health – Western Pacific",
+    "url": "https://www.thelancet.com/journals/lanwpc",
+    "provided_claims": "19 Lancet Regional Health – Western Pacific 2666-3666 西太平洋地区健康 Q1 公共卫生 1区 公共卫生 7.6 60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 20,
+    "name": "Lancet Primary Care",
+    "url": "https://www.thelancet.com/primary-care",
+    "provided_claims": "20 Lancet Primary Care 待分配 初级医疗服务前沿 — — N/A ≈30 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 21,
+    "name": "NEJM",
+    "url": "https://www.nejm.org/",
+    "provided_claims": "21 NEJM 0028-4793 / 1533-4406 临床医学顶级期刊 Q1 内科 1区 医学 96.2 30 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 22,
+    "name": "NEJM Evidence",
+    "url": "https://evidence.nejm.org/",
+    "provided_claims": "22 NEJM Evidence 待分配 临床试验与证据评估 — — — — ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 23,
+    "name": "NEJM AI",
+    "url": "https://www.nejm.org/ai",
+    "provided_claims": "23 NEJM AI 待分配 医疗人工智能研究 — — — — ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 24,
+    "name": "NEJM Catalyst",
+    "url": "https://catalyst.nejm.org/",
+    "provided_claims": "24 NEJM Catalyst 待分配 医疗创新与实践 — — — — ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 25,
+    "name": "JAMA",
+    "url": "https://jamanetwork.com/journals/jama",
+    "provided_claims": "25 JAMA 0098-7484 / 2168-6106 医学综合权威期刊 Q1 内科 1区 医学 63.5 32 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 26,
+    "name": "JAMA Psychiatry",
+    "url": "https://jamanetwork.com/journals/jamapsychiatry",
+    "provided_claims": "26 JAMA Psychiatry 2168-622X 精神病学临床研究 Q1 精神病学 & 心理学 1区 心理学 22.5 33 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 27,
+    "name": "JAMA Health Forum",
+    "url": "https://jamanetwork.com/journals/jamahealthforum",
+    "provided_claims": "27 JAMA Health Forum 2692-3146 健康政策与服务研究 Q1 卫生保健科学与服务 1区 公共卫生 11.5 60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 28,
+    "name": "JAMA Network Open",
+    "url": "https://jamanetwork.com/journals/jamanetworkopen",
+    "provided_claims": "28 JAMA Network Open 2574-3805 开放获取综合医学期刊 Q1 内科 1区 医学 13.8 41 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 29,
+    "name": "JAMA AI",
+    "url": "https://jamanetwork.com/journals/jamaai",
+    "provided_claims": "29 JAMA AI 待分配 医学人工智能跨学科 — — — — ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 30,
+    "name": "The BMJ",
+    "url": "https://www.bmj.com/",
+    "provided_claims": "30 The BMJ 0959-8138 / 1756-1833 综合医学权威期刊 Q1 内科 1区 医学 93.7 21 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 31,
+    "name": "BMJ Medicine",
+    "url": "https://bmjmedicine.bmj.com/",
+    "provided_claims": "31 BMJ Medicine 待分配 多学科医学研究 — — — — ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 32,
+    "name": "BMJ Global Health",
+    "url": "https://gh.bmj.com/",
+    "provided_claims": "32 BMJ Global Health 2059-7908 全球卫生与公共健康 Q1 公共卫生 1区 公共卫生 7.6 47 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 33,
+    "name": "BMJ Public Health",
+    "url": "https://www.bmj.com/company/research/",
+    "provided_claims": "33 BMJ Public Health 待分配 公共卫生研究 — — — — ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 34,
+    "name": "BMJ Mental Health",
+    "url": "https://www.bmj.com/company/research/",
+    "provided_claims": "34 BMJ Mental Health 待分配 心理健康研究 — — — — ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 35,
+    "name": "American Journal of Public Health",
+    "url": "https://ajph.aphapublications.org/",
+    "provided_claims": "35 American Journal of Public Health 0090-0036 美国公共卫生协会期刊 Q1 公共卫生 1区 公共卫生 11.2 ~60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 36,
+    "name": "Bulletin of the World Health Organization",
+    "url": "https://www.who.int/bulletin",
+    "provided_claims": "36 Bulletin of the World Health Organization 0042-9686 WHO 公共卫生官方刊物 Q1 公共卫生 1区 公共卫生 8.4 ~90 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 37,
+    "name": "Health Affairs",
+    "url": "https://www.healthaffairs.org/",
+    "provided_claims": "37 Health Affairs 0278-2715 健康政策与管理领域领先期刊 Q1 卫生保健科学与服务 1区 公共卫生 9.7 ~60 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 38,
+    "name": "BMC Medicine",
+    "url": "https://bmcmedicine.biomedcentral.com/",
+    "provided_claims": "38 BMC Medicine 1741-7015 旗舰开放获取医学期刊 Q1 综合医学 1区 医学 10.4 6 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 39,
+    "name": "Social Science & Medicine",
+    "url": "https://www.sciencedirect.com/journal/social-science-and-medicine",
+    "provided_claims": "39 Social Science & Medicine 0277-9536 社会科学与健康交叉期刊 Q1 社会科学-生物医学 1区 公共卫生 12.7 ~45 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 40,
+    "name": "Journal of Global Health",
+    "url": "https://jogh.org/",
+    "provided_claims": "40 Journal of Global Health 2047-2978 / 2047-2986 全球卫生同行评审期刊 Q2 公共卫生 3区 公共卫生 4.5 ~50 天 ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 41,
+    "name": "The Lancet Digital Health",
+    "url": "https://www.thelancet.com/journals/landig",
+    "provided_claims": "41 The Lancet Digital Health | ISSN 2589‑7500 | 开放获取数字健康跨学科研究期刊 | Q1 医学信息学 / Medical Informatics | 中科院 1区 / 医学信息学 | IF 30.2 | ≈25 天 | ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 42,
+    "name": "eClinicalMedicine",
+    "url": "https://www.thelancet.com/journals/eclinm",
+    "provided_claims": "42 eClinicalMedicine | ISSN 2589‑5370 | The Lancet 旗下开放获取临床医学期刊 | Q1 内科 / General & Internal Medicine | 中科院 1区 / 医学 | IF 18.9 | ≈40 天 | ",
+    "metrics_status": "用户资料中的历史值，未重新核验；不用于当前排序"
+  },
+  {
+    "number": 43,
+    "name": "PNAS",
+    "url": "https://www.pnas.org/author-center/submitting-your-manuscript",
+    "provided_claims": "附加 PNAS 入口；原资料中的指标年份与审稿时长未经本轮核验",
+    "metrics_status": "历史指标未核验"
+  }
+]

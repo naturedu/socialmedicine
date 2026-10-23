@@ -1,0 +1,13 @@
+﻿name,category,description,url,tags
+主动健康与健康融入万策（总纲旗舰）,flagship,把健康融入万策、带到每一个人心中：主动健康策略 + 健康影响评估（PAF/集中指数）+ 理论·数据·选题·院校五大板块，学科建设总纲。,skills/active-health-hiap-skill.md,"[""旗舰"", ""HiAP"", ""主动健康""]"
+卫生经济学评价教程,hecon,CEA/CUA 总纲：研究问题、成本测算、QALY、贴现、ICER、不确定性、CHEERS 2022 报告清单，9 步带代码。,skills/health-economics-tutorial-skill.md,"[""教程"", ""卫生经济""]"
+DCE 设计助手,hecon,离散选择实验：正交/D-效率设计步骤 + clogit / mixlogit / lclogit2 潜类别分析，Stata 与 R 双轨。,skills/dce-design-assistant-skill.md,"[""偏好测量"", ""卫生经济""]"
+Markov 模型助手,hecon,队列模拟成本-效果分析：转移矩阵、半周期校正、贴现、ICER、tornado 与 PSA，Stata/R 全程代码。,skills/markov-model-skill.md,"[""卫生经济"", ""建模""]"
+机器学习助手,data,住院费用预测与风险分层：LASSO/弹性网、随机森林、XGBoost、SHAP 与 TRIPOD 报告。,skills/machine-learning-skill.md,"[""预测建模"", ""数据科学""]"
+DID 双重差分助手,policy,卫生政策效果评估：平行趋势、经典 2×2 DID、多期交错 DID（csdid）、事件研究、安慰剂检验。,skills/did-skill.md,"[""因果推断"", ""政策评估""]"
+ITS 间断时间序列助手,policy,单序列干预的水平变化与趋势变化：分段回归、Newey-West 自相关校正、反事实图。,skills/its-skill.md,"[""政策评估"", ""时间序列""]"
+DDD 三重差分助手,policy,双重差分之差：三维交互识别（如集采×医院类型×品种类型），与 DID 的分解对照。,skills/ddd-skill.md,"[""因果推断"", ""政策评估""]"
+Meta 分析助手,stats,系统评价效应合并：OR/RR/SMD、固定与随机效应、异质性、森林图、发表偏倚、PRISMA。,skills/meta-analysis-skill.md,"[""证据综合""]"
+定性方法与结构方程专题,theory,扎根理论 / SEM / 多层SEM / fsQCA：lavaan、QCA 与 Stata sem/gsem/fuzzy 全程代码。,skills/sem-qca-qualitative-skill.md,"[""质性研究"", ""SEM/fsQCA""]"
+socialmedicineskills 方法学速查手册,stats,54 个方法速查：适用 / 要点 / Stata-R 核心代码 / 报告要点 / 常见错误；含理论框架 F 类与专题 G 类。,skills/socialmedicineskills.md,"[""速查"", ""54 条""]"
+学术写作规范润色,writing,中文学术文本标点、句式、冗余与结构规范；写作质量工具，明确不做检测器规避。,skills/academic-copyediting-skill.md,"[""写作""]"
