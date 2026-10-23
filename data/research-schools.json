@@ -1,0 +1,463 @@
+[
+  {
+    "id": "sysu-guangzhou",
+    "school": "中山大学",
+    "department": "公共卫生学院（广州校区）·卫生管理学系",
+    "region": "广东·广州",
+    "focus": [
+      "卫生经济与政策",
+      "医疗保障政策评价",
+      "整合型卫生服务",
+      "卫生健康战略与规划",
+      "药物政策与药物经济学"
+    ],
+    "programs": [
+      "社会医学与卫生事业管理（120402，学术学位博士；2026年招生简章已核实）"
+    ],
+    "officialUrl": "https://sph.sysu.edu.cn/node/366",
+    "admissionsUrl": "https://sph.sysu.edu.cn/node/2940",
+    "admissionsNote": "广州公共卫生学院与原公共卫生学院（深圳）是不同培养单位。2026年简章明确包含社会医学与卫生事业管理；不将该年度已结束的申请时间当作当前开放窗口。2027年具体方向、招生名额与截止日期请核对研究生招生网。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "卫生管理学系官方介绍",
+        "url": "https://sph.sysu.edu.cn/node/366"
+      },
+      {
+        "label": "2026年学术学位博士招生简章",
+        "url": "https://sph.sysu.edu.cn/node/2940"
+      },
+      {
+        "label": "学校博士招生入口",
+        "url": "https://graduate.sysu.edu.cn/zsw/doctor"
+      }
+    ],
+    "route": "内地"
+  },
+  {
+    "id": "cuhk-public-health",
+    "school": "香港中文大学",
+    "department": "医学院·赛马会公共卫生及基层医疗学院",
+    "region": "中国香港·沙田",
+    "focus": [
+      "卫生体系与政策",
+      "卫生服务管理",
+      "基层医疗",
+      "健康公平",
+      "患者体验与健康相关生命质量"
+    ],
+    "programs": [
+      "MPhil-PhD in Public Health（PhD Stream）"
+    ],
+    "officialUrl": "https://sphpc.cuhk.edu.hk/rpg-programme/",
+    "admissionsUrl": "https://www.gs.cuhk.edu.hk/programmes/medicine/mphil-phd-public-health",
+    "admissionsNote": "这是香港中文大学沙田校本部项目，不是香港中文大学（深圳）。研究院官网已公布2027/28入学申请：主轮截至2026年12月1日；补录轮截至2027年3月31日，是否考虑取决于余位。HKPFS另有RGC初申请及CUHK完整申请要求，具体时间见项目官网。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "研究生项目及研究方向",
+        "url": "https://sphpc.cuhk.edu.hk/rpg-programme/"
+      },
+      {
+        "label": "研究院项目、申请轮次及截止日期",
+        "url": "https://www.gs.cuhk.edu.hk/programmes/medicine/mphil-phd-public-health"
+      }
+    ],
+    "route": "港澳及海外"
+  },
+  {
+    "id": "hku-public-health",
+    "school": "香港大学",
+    "department": "李嘉诚医学院·公共卫生学院；卫生经济、政策与管理学分部",
+    "region": "中国香港·薄扶林",
+    "focus": [
+      "卫生经济与卫生技术评估",
+      "卫生筹资",
+      "基层医疗",
+      "健康公平",
+      "卫生资源配置"
+    ],
+    "programs": [
+      "Doctor of Philosophy (PhD)（公共卫生学院研究式研究生；3年或4年制按入学资格区分）"
+    ],
+    "officialUrl": "https://sph.hku.hk/zh-CN/About-Us/School-Structure/Academic-Divisions/Division-of-Health-Economics-Policy-and-Management",
+    "admissionsUrl": "https://sph.hku.hk/en/Teaching-and-Learning/Research-Postgraduate",
+    "admissionsNote": "官网列示2027/28申请主轮截至2026年12月1日，第一轮补录截至2027年4月30日，第二轮截至2027年8月31日；奖学金申请另有要求。PhD为正式学位名称，不自行改称“社会医学与卫生事业管理博士”。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "卫生经济、政策与管理学分部",
+        "url": "https://sph.hku.hk/zh-CN/About-Us/School-Structure/Academic-Divisions/Division-of-Health-Economics-Policy-and-Management"
+      },
+      {
+        "label": "公共卫生学院研究生申请",
+        "url": "https://sph.hku.hk/en/Teaching-and-Learning/Research-Postgraduate"
+      },
+      {
+        "label": "研究院PhD学位说明",
+        "url": "https://gradsch.hku.hk/prospective_students/programmes/doctor_of_philosophy"
+      }
+    ],
+    "route": "港澳及海外"
+  },
+  {
+    "id": "smu-health-management",
+    "school": "南方医科大学",
+    "department": "卫生管理学院",
+    "region": "广东·广州",
+    "focus": [
+      "公共卫生政策与管理",
+      "基层卫生服务质量",
+      "实施科学",
+      "健康管理与健康促进",
+      "医疗保险与长期照护"
+    ],
+    "programs": [
+      "公共卫生政策与管理（二级学科博士学位授权点；学院官网已核实）"
+    ],
+    "officialUrl": "https://portal.smu.edu.cn/wsglxy/xygk1/xyjj.htm",
+    "admissionsUrl": "https://portal.smu.edu.cn/wsglxy/zszl/yjs.htm",
+    "admissionsNote": "本条对应卫生管理学院，不与公共卫生学院混用。学院另有与葡萄牙里斯本大学学院合作培养的博士项目，须区分普通博士与中外合作项目。已核实学位授权点；本次未核实2027年招生名额、报名截止日期，不据官网旧培养方案填报当年条件。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "学院学科建设与项目介绍",
+        "url": "https://portal.smu.edu.cn/wsglxy/xygk1/xyjj.htm"
+      },
+      {
+        "label": "学院招生入口",
+        "url": "https://portal.smu.edu.cn/wsglxy/zszl/yjs.htm"
+      }
+    ],
+    "route": "内地"
+  },
+  {
+    "id": "csu-xiangya-public-health",
+    "school": "中南大学",
+    "department": "湘雅公共卫生学院·社会医学与卫生事业管理学系",
+    "region": "湖南·长沙",
+    "focus": [
+      "社会行为与健康",
+      "公共精神卫生",
+      "卫生政策与管理",
+      "社会流行病学",
+      "皮肤病疾病负担"
+    ],
+    "programs": [
+      "公共卫生与预防医学（博士学位授权点）",
+      "公共卫生（博士学位授权点）"
+    ],
+    "officialUrl": "https://sph.csu.edu.cn/xszx2/shyxywssyglxx/xsjj.htm",
+    "admissionsUrl": "https://yz.csu.edu.cn/bszs.htm",
+    "admissionsNote": "学院官网确认“公共卫生与预防医学”“公共卫生”博士学位授权点；本次未确认当年度是否以“社会医学与卫生事业管理”这一独立博士专业名称招生，须按招生目录选择。2027年名额与申请期限待当年度公告。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "学院简介与博士授权点",
+        "url": "https://sph.csu.edu.cn/xygk/xyjj.htm"
+      },
+      {
+        "label": "社医卫管学系介绍",
+        "url": "https://sph.csu.edu.cn/xszx2/shyxywssyglxx/xsjj.htm"
+      },
+      {
+        "label": "学校博士招生入口",
+        "url": "https://yz.csu.edu.cn/bszs.htm"
+      }
+    ],
+    "route": "内地"
+  },
+  {
+    "id": "sjtu-public-health",
+    "school": "上海交通大学",
+    "department": "公共卫生学院·社会医学与卫生事业管理系",
+    "region": "上海",
+    "focus": [
+      "卫生经济与政策评估",
+      "健康的社会决定因素",
+      "健康老龄化与养老照护",
+      "医保支付",
+      "安宁疗护"
+    ],
+    "programs": [
+      "公共卫生与预防医学（100400，博士）",
+      "公共卫生（105300，博士）"
+    ],
+    "officialUrl": "https://www.shsmu.edu.cn/sph/",
+    "admissionsUrl": "https://www.shsmu.edu.cn/__local/1/3E/21/A76FF6BF372EA5DF69F3599269F_94644C37_4D37C.pdf?e=.pdf",
+    "admissionsNote": "2026年医学院博士招生简章已列公共卫生与预防医学和公共卫生两个博士专业；不把系名直接当成当年度独立博士招生专业。2027年具体方向、招生名额与截止时间尚未在本次核实。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "学院简介",
+        "url": "https://www.shsmu.edu.cn/sph/xxgk/xyjj.htm"
+      },
+      {
+        "label": "2026年医学院博士招生简章",
+        "url": "https://www.shsmu.edu.cn/__local/1/3E/21/A76FF6BF372EA5DF69F3599269F_94644C37_4D37C.pdf?e=.pdf"
+      }
+    ],
+    "route": "内地"
+  },
+  {
+    "id": "sysu-shenzhen-biosafety",
+    "school": "中山大学（深圳校区）",
+    "department": "生物安全学院（原公共卫生学院〔深圳〕）",
+    "region": "广东·深圳",
+    "focus": [
+      "传染病防控",
+      "生物安全",
+      "传染病系统建模",
+      "公共卫生与医学大数据"
+    ],
+    "programs": [
+      "更名后博士专业完整名称与招生代码本次未完整核实；请以学校当年度博士专业目录为准"
+    ],
+    "officialUrl": "https://phs.sysu.edu.cn/zh-hans/node/1378",
+    "admissionsUrl": "https://graduate.sysu.edu.cn/zsw/doctor",
+    "admissionsNote": "2026年5月25日会议宣布原公共卫生学院（深圳）更名为生物安全学院，官网于5月30日发布公告。本条作为邻近公共卫生方向与院系沿革入口，不将其等同于广州卫生管理学系，也不据旧硕士目录推断有同名社医卫管博士招生。",
+    "checked": "2026-10-23",
+    "sources": [
+      {
+        "label": "2026年院系更名官方公告",
+        "url": "https://phs.sysu.edu.cn/zh-hans/node/1378"
+      },
+      {
+        "label": "深圳校区学院清单",
+        "url": "https://shenzhen.sysu.edu.cn/Schools"
+      }
+    ],
+    "route": "内地"
+  },
+  {
+    "id": "legacy-0",
+    "school": "北京大学",
+    "department": "北京大学公共卫生学院",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "流行病与卫生统计",
+      "全球卫生",
+      "卫生政策与管理",
+      "营养与食品卫生"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://sph.pku.edu.cn/",
+    "admissionsUrl": "https://sph.pku.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  },
+  {
+    "id": "legacy-1",
+    "school": "复旦大学",
+    "department": "复旦大学公共卫生学院",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "卫生经济学与卫生技术评估",
+      "传染病流行病学",
+      "生物统计"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://sph.fudan.edu.cn/",
+    "admissionsUrl": "https://sph.fudan.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  },
+  {
+    "id": "legacy-2",
+    "school": "华中科技大学同济医学院",
+    "department": "医药卫生管理学院",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "医院管理",
+      "卫生政策",
+      "医药信息管理",
+      "农村卫生"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://mhm.hust.edu.cn/",
+    "admissionsUrl": "https://mhm.hust.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  },
+  {
+    "id": "legacy-3",
+    "school": "浙江大学",
+    "department": "浙江大学公共卫生学院",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "大数据健康科学",
+      "流行病学",
+      "环境健康"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://phs.zju.edu.cn/",
+    "admissionsUrl": "https://phs.zju.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  },
+  {
+    "id": "legacy-4",
+    "school": "中国人民大学",
+    "department": "公共管理学院",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "公共政策",
+      "社会保障",
+      "卫生政策与管理"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://spap.ruc.edu.cn/",
+    "admissionsUrl": "https://spap.ruc.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  },
+  {
+    "id": "legacy-5",
+    "school": "中国人民大学",
+    "department": "人口与健康学院",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "人口学",
+      "老年健康",
+      "健康经济学",
+      "人口健康政策"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://www.ruc.edu.cn/",
+    "admissionsUrl": "https://www.ruc.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  },
+  {
+    "id": "legacy-6",
+    "school": "武汉大学",
+    "department": "政治与公共管理学院",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "公共管理",
+      "社会保障",
+      "卫生政策与医保"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://psr.whu.edu.cn/",
+    "admissionsUrl": "https://psr.whu.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  },
+  {
+    "id": "legacy-7",
+    "school": "安徽医科大学",
+    "department": "卫生管理学院",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "卫生事业管理",
+      "卫生经济",
+      "基层卫生政策"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://www.ahmu.edu.cn/",
+    "admissionsUrl": "https://www.ahmu.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  },
+  {
+    "id": "legacy-8",
+    "school": "山东大学",
+    "department": "公共卫生学院",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "卫生政策与管理",
+      "医疗保障",
+      "卫生经济"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://sph.sdu.edu.cn/",
+    "admissionsUrl": "https://sph.sdu.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  },
+  {
+    "id": "legacy-9",
+    "school": "四川大学",
+    "department": "华西公共卫生学院",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "卫生经济",
+      "卫生政策与管理",
+      "职业卫生"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://wcph.scu.edu.cn/",
+    "admissionsUrl": "https://wcph.scu.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  },
+  {
+    "id": "legacy-10",
+    "school": "西安交通大学",
+    "department": "公共政策与管理学院",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "卫生政策",
+      "医疗保障",
+      "公共管理"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://sppa.xjtu.edu.cn/",
+    "admissionsUrl": "https://sppa.xjtu.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  },
+  {
+    "id": "legacy-11",
+    "school": "南京医科大学",
+    "department": "公共卫生学院（医政方向）",
+    "region": "中国内地 · 原站导航",
+    "route": "内地",
+    "focus": [
+      "卫生政策与管理",
+      "医政管理",
+      "卫生经济"
+    ],
+    "programs": [
+      "原站院系介绍；博士项目名称及当年招生条件待官方核对"
+    ],
+    "officialUrl": "https://www.njmu.edu.cn/",
+    "admissionsUrl": "https://www.njmu.edu.cn/",
+    "admissionsNote": "原站方向导航已保留。本次未逐一更新院系名称、招生项目和截止日期，进入官网后请查当年正式招生通知。",
+    "legacy": true
+  }
+]

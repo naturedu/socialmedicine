@@ -1,0 +1,45 @@
+[
+  {
+    "id": "jama",
+    "name": "JAMA Health Forum",
+    "asof": "官方作者页更新于 2026-07；本站核对 2026-10-23",
+    "url": "https://jamanetwork.com/journals/jama-health-forum/pages/for-authors",
+    "frequency": "每周五在线发表",
+    "first": "3 天（中位数，所有稿件）",
+    "review": "43 天（中位数，经过外审）",
+    "accept": "58 天（中位数）",
+    "publish": "67 天（中位数）",
+    "impact": "12.5；官方页面未注明对应 JIF 数据年份",
+    "jcr": "待核实 JCR 版本与分区。官方作者页称 Health Policy & Services 排名第一，不能据此填造年度分区记录。",
+    "cas": "尚未取得带年份的官方分区记录"
+  },
+  {
+    "id": "lancet",
+    "name": "The Lancet Public Health",
+    "asof": "核对尝试 2026-10-23；官方指标页访问受限",
+    "url": "https://www.sciencedirect.com/journal/the-lancet-public-health/about/insights",
+    "frequency": "请在期刊官网核对",
+    "first": "暂未核实官方数值",
+    "review": "暂未核实官方数值",
+    "accept": "暂未核实官方数值",
+    "publish": "暂未核实官方数值",
+    "impact": "暂不填入未经核实的年度指标",
+    "jcr": "待核实：需要 JCR 年份、学科类别及该类别分区",
+    "cas": "待核实：需要分区表版本、大小类与分区"
+  },
+  {
+    "id": "nature",
+    "name": "Nature Health",
+    "asof": "核对 2026-10-23；新刊不依据品牌推定分区",
+    "url": "https://www.nature.com/naturehealth/journal-information",
+    "frequency": "2026 年首期；更新节奏请核对官网",
+    "first": "暂未核实官方数值",
+    "review": "暂未核实官方数值",
+    "accept": "暂未核实官方数值",
+    "publish": "暂未核实官方数值",
+    "impact": "暂未取得可核实的 JIF 记录",
+    "jcr": "暂未取得可核实的 JCR 分区记录",
+    "cas": "暂未取得可核实的中科院分区记录",
+    "extraUrl": "https://www.nature.com/articles/d41586-026-00073-2"
+  }
+]

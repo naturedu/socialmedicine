@@ -1,0 +1,79 @@
+[
+  {
+    "year": "1963",
+    "zh": "医疗的不确定性与福利经济学",
+    "title": "Uncertainty and the Welfare Economics of Medical Care",
+    "author": "Kenneth J. Arrow",
+    "domain": "医疗市场",
+    "idea": "疾病和疗效的不确定性、信息差异及信任使医疗市场不同于一般商品市场。",
+    "application": "用于分析保险、专业规范与制度安排；理论不能直接当作实证因果证据。",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2585909/",
+    "edition": "原作 AER 1963；链接为公开重印版"
+  },
+  {
+    "year": "1942",
+    "zh": "社会保险及相关服务（Beveridge 报告）",
+    "title": "Social Insurance and Allied Services",
+    "author": "William Beveridge",
+    "domain": "医疗保障制度",
+    "idea": "以系统性社会保障安排回应生活风险，构成理解英国战后福利制度的重要历史文本。",
+    "application": "比较筹资、覆盖、待遇和治理时先明确历史背景，不把所有税收筹资制度等同一种模式。",
+    "url": "https://www.parliament.uk/about/living-heritage/transformingsociety/livinglearning/coll-9-health1/coll-9-health/",
+    "edition": "英国议会档案入口"
+  },
+  {
+    "year": "1966",
+    "zh": "医疗质量评价",
+    "title": "Evaluating the Quality of Medical Care",
+    "author": "Avedis Donabedian",
+    "domain": "医疗质量",
+    "idea": "从结构、过程和结果组织医疗质量评价。",
+    "application": "把机构资源、诊疗行为与患者结局分别转成指标；不以结构指标替代实际效果。",
+    "url": "https://www.milbank.org/quarterly/articles/evaluating-quality-medical-care/",
+    "edition": "1966 原作；出版方重印入口"
+  },
+  {
+    "year": "1972",
+    "zh": "健康资本概念与健康需求",
+    "title": "On the Concept of Health Capital and the Demand for Health",
+    "author": "Michael Grossman",
+    "domain": "健康经济学",
+    "idea": "将健康视为会折旧、可投资的资本，区分健康需求与医疗服务需求。",
+    "application": "适合讨论教育、收入、时间投入与健康；具体测量和识别需要额外设计。",
+    "url": "https://www.journals.uchicago.edu/doi/abs/10.1086/259880",
+    "edition": "Journal of Political Economy 80(2)，1972"
+  },
+  {
+    "year": "1974",
+    "zh": "加拿大人健康的新视角（Lalonde 报告）",
+    "title": "A New Perspective on the Health of Canadians",
+    "author": "Marc Lalonde",
+    "domain": "社会医学",
+    "idea": "把生物、环境、生活方式与卫生服务组织共同纳入健康视野。",
+    "application": "用于主动健康的多因素框架；避免把健康问题全部归因于个人行为。",
+    "url": "https://www.canada.ca/en/public-health/services/health-promotion/population-health/a-new-perspective-on-health-canadians.html",
+    "edition": "加拿大政府原始报告入口"
+  },
+  {
+    "year": "1995",
+    "zh": "再访卫生服务利用行为模型",
+    "title": "Revisiting the Behavioral Model and Access to Medical Care: Does It Matter?",
+    "author": "Ronald M. Andersen",
+    "domain": "服务利用",
+    "idea": "以倾向、使能与需要因素组织卫生服务利用及可及性问题。",
+    "application": "先映射构念与变量，再确定混杂、中介和结局；模型框架不能替代因果图。",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/7738325/",
+    "edition": "1995 修订论述；不要误当作模型首次提出年份"
+  },
+  {
+    "year": "2008",
+    "zh": "用一代人的时间弥合差距",
+    "title": "Closing the Gap in a Generation",
+    "author": "WHO Commission on Social Determinants of Health",
+    "domain": "健康公平",
+    "idea": "把日常生活条件以及权力、资金和资源分配纳入健康公平行动。",
+    "application": "适合构建结构因素—中间因素—健康结果路径，并提出可测量的公平指标。",
+    "url": "https://www.who.int/publications/i/item/9789241563703",
+    "edition": "WHO 2008 委员会报告"
+  }
+]
