@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>生存分析与竞争风险 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/survival-studio.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">边界</a></li>
+<li><a href="#r">R 模板</a></li>
+<li><a href="#stata">STATA 模板</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">生存分析与竞争风险</h1>
+<p>定义时间零点、事件与删失；竞争风险不是简单独立删失。</p>
+<h2 id="_2">边界</h2>
+<p>所有代码为教学模板，未在真实数据执行；请核对数据字典、版本和包依赖。</p>
+<h2 id="r">R 模板</h2>
+<pre><code class="language-r">library(survival)
+# event: 1事件 0删失；df为研究者数据
+fit &lt;- coxph(Surv(time,event) ~ exposure + age, data=df)
+summary(fit); cox.zph(fit)
+plot(survfit(Surv(time,event) ~ exposure,data=df))
+# 竞争事件用累积发生函数/适当竞争风险模型，不将1-KM当作累积发生率
+</code></pre>
+<h2 id="stata">STATA 模板</h2>
+<pre><code class="language-stata">stset time, failure(event==1)
+sts graph, by(exposure)
+stcox exposure age
+estat phtest, detail
+* 若 event==2 为竞争事件，明确目标后考虑：
+* stcrreg exposure age, compete(event==2)
+</code></pre><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

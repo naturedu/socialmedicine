@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>合成双重差分 · Synthetic DID · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/sdid-studio.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">边界</a></li>
+<li><a href="#r">R 模板</a></li>
+<li><a href="#stata">STATA 模板</a></li>
+</ul>
+</div>
+</aside><article><h1 id="synthetic-did">合成双重差分 · Synthetic DID</h1>
+<p>结合单位与时间权重；要求适合的面板结构和有效对照。</p>
+<h2 id="_1">边界</h2>
+<p>所有代码为教学模板，未在真实数据执行；请核对数据字典、版本和包依赖。</p>
+<h2 id="r">R 模板</h2>
+<pre><code class="language-r"># 依赖 synthdid；df: unit,time,outcome,treated（处理后为1）
+library(synthdid)
+pm &lt;- panel.matrices(df, unit=&quot;unit&quot;, time=&quot;time&quot;,
+                     outcome=&quot;outcome&quot;, treatment=&quot;treated&quot;)
+tau &lt;- synthdid_estimate(pm$Y, pm$N0, pm$T0)
+print(tau); plot(tau)
+se &lt;- sqrt(vcov(tau, method=&quot;placebo&quot;))
+print(se)
+# 此模板针对包支持的块状处理，不能直接套用任意交错实施
+</code></pre>
+<h2 id="stata">STATA 模板</h2>
+<pre><code class="language-stata">* 依赖 sdid；balanced panel，treated为实际受处理的单位-时间状态
+sdid outcome unit time treated, vce(placebo) seed(2026)
+* 检查对照池、处理前拟合、同期冲击和推断方法有效性
+</code></pre><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

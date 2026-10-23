@@ -1,0 +1,67 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>☂️ meta-meta / 伞状综述：先看伞下有没有重复的人 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/umbrella-review-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">名称与研究单位</a></li>
+<li><a href="#_2">输入与交付</a></li>
+<li><a href="#_3">从检索走到结论</a></li>
+<li><a href="#cca">重叠：CCA 的可运行计算</a></li>
+<li><a href="#_4">质量评价与二阶合并</a></li>
+<li><a href="#_5">结论模板</a></li>
+<li><a href="#_6">小心这几个坑 🐾</a></li>
+<li><a href="#_7">可复制请求</a></li>
+</ul>
+</div>
+</aside><article><h1 id="meta-meta">☂️ meta-meta / 伞状综述：先看伞下有没有重复的人</h1>
+<h2 id="_1">名称与研究单位</h2>
+<p>“meta-meta”用法并不统一。默认先澄清：是系统综述的综述（overview of reviews / umbrella review），还是正式合并多个 Meta 的二阶统计分析？前者以系统综述为检索与纳入单位；后者还要求解决估计量之间的依赖，不能机械地把多个合并效应再次输入普通 Meta。依据 <a href="https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-v">Cochrane Overviews</a>。</p>
+<p>适合问题：“数字健康干预对老年人认知、功能与生活质量的证据版图如何？”若要更新单一干预的最新效应，可能更适合回到原始研究开展更新的系统评价。</p>
+<h2 id="_2">输入与交付</h2>
+<p>输入：范围、综述纳入标准、结局与时间窗、数据库/日期、纳入综述的全文及其原始研究清单。交付：综述特征表、原始研究×综述矩阵、重叠诊断、AMSTAR 2/ROBIS 判断、结局证据图谱和冲突解释表。</p>
+<h2 id="_3">从检索走到结论</h2>
+<ol>
+<li>定义何谓系统综述，预先说明是否纳入无 Meta 的综述、预印本、更新版与重复发表。</li>
+<li>对同一综述家族标记 <code>review_family</code>，保留版本、检索日期和被替代关系，避免把更新版与旧版当独立证据。</li>
+<li>提取 PICO、研究设计、样本、效应、区间、异质性、检索截止时间及作者的证据确定性；OR、RR、HR 不直接混合。</li>
+<li>按“结局×时间点×人群×比较”建立重叠矩阵。同一试验不同发表先归并到统一 <code>study_id</code>。</li>
+<li>评估综述方法质量与偏倚风险，再解释各综述结论为何不同。优先调查检索日期、纳入范围、偏倚处理和结局定义差异。</li>
+<li>预设重叠处理策略：选择最适配/最新且质量较好的综述，或保留全部并分层展示。若回到原始研究重做综合，需如实说明设计变化及检索完整性。</li>
+</ol>
+<h2 id="cca">重叠：CCA 的可运行计算</h2>
+<p>矩阵行是唯一原始研究，列是综述；1=纳入，0=未纳入。<code>N</code> 是全部纳入次数，<code>r</code> 是唯一研究数，<code>c</code> 是综述数：CCA=(N-r)/(r×c-r)。当只有一份综述时该指标无定义。CCA 描述重复程度，不校正效应量相关。</p>
+<pre><code class="language-r">M &lt;- matrix(c(1,1,0, 1,0,1, 0,1,1, 1,1,1), nrow=4, byrow=TRUE)
+rownames(M) &lt;- paste0(&quot;study&quot;,1:4)
+colnames(M) &lt;- paste0(&quot;review&quot;,1:3)
+M &lt;- M[rowSums(M)&gt;0,,drop=FALSE]
+N &lt;- sum(M); r &lt;- nrow(M); c &lt;- ncol(M)
+cca &lt;- if(c&gt;1) (N-r)/(r*c-r) else NA_real_
+cca
+pair_overlap &lt;- crossprod(M)
+pair_overlap
+</code></pre>
+<pre><code class="language-stata">* 当前数据：每行一个去重后的原始研究，rev1-rev3 为0/1
+egen n_reviews = rowtotal(rev1-rev3)
+keep if n_reviews &gt; 0
+quietly count
+scalar r = r(N)
+quietly summarize n_reviews
+scalar N = r(sum)
+scalar c = 3
+display (N-r)/(r*c-r)
+</code></pre>
+<h2 id="_4">质量评价与二阶合并</h2>
+<p><a href="https://amstar.ca/FAQs.php">AMSTAR 2</a> 依据关键领域的缺陷模式形成总体信心判断，不宜简单加总成“满分16分”。ROBIS 评估系统综述的偏倚风险；两者都不等于某个结局的证据确定性。</p>
+<p>若确需二阶合并，先统一估计目标、时间点和效应尺度，核实原始研究重叠及协方差来源。只有在依赖结构可说明、估计与小样本推断有依据时，才考虑多层或稳健方差模型。仅加一个“综述随机截距”并不能自动消除跨综述重复试验的相关。</p>
+<h2 id="_5">结论模板</h2>
+<blockquote>
+<p>本综述纳入〔数量〕份系统综述，涉及〔去重后数量〕项原始研究。对〔结局/比较〕的判断主要来自〔范围与质量〕证据。综述之间的差异与〔检索时间、纳入标准或偏倚处理〕有关。由于〔重叠/间接性/不精确性〕，当前证据支持〔限定结论〕。</p>
+</blockquote>
+<h2 id="_6">小心这几个坑 🐾</h2>
+<ul>
+<li>用综述数量投票：“8篇有效、2篇无效，所以肯定有效”。</li>
+<li>用 P&lt;0.05 与否解释两份综述是否相互矛盾，而不比较效应与区间。</li>
+<li>把重叠矩阵做完就当依赖已经处理，或者把各综述样本量直接相加。</li>
+<li>把综述作者原来的 GRADE 无条件搬到不同问题、人群或时间点。</li>
+</ul>
+<h2 id="_7">可复制请求</h2>
+<blockquote>
+<p>请把 meta-meta 的研究单位写清楚。先建立综述家族及原始研究重叠矩阵，按结局计算 CCA，评价 AMSTAR 2/ROBIS，再决定图谱展示、综述选择或依赖校正；不默认再次合并所有合并效应。</p>
+</blockquote><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

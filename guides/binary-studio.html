@@ -1,0 +1,26 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>二元结局与边际效应 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/binary-studio.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">边界</a></li>
+<li><a href="#r">R 模板</a></li>
+<li><a href="#stata">STATA 模板</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">二元结局与边际效应</h1>
+<p>区分优势比、风险比与风险差；报告有解释性的绝对概率。</p>
+<h2 id="_2">边界</h2>
+<p>所有代码为教学模板，未在真实数据执行；请核对数据字典、版本和包依赖。</p>
+<h2 id="r">R 模板</h2>
+<pre><code class="language-r"># df包含二元y、exposure、age
+fit &lt;- glm(y ~ exposure + age, family=binomial(), data=df)
+summary(fit)
+exp(cbind(OR=coef(fit), confint(fit)))
+df0 &lt;- transform(df,exposure=0); df1 &lt;- transform(df,exposure=1)
+mean(predict(fit,df1,type=&quot;response&quot;)-predict(fit,df0,type=&quot;response&quot;))
+# 上式为模型标准化差异，因果解释需额外识别假设；区间另用适当bootstrap
+</code></pre>
+<h2 id="stata">STATA 模板</h2>
+<pre><code class="language-stata">logit y i.exposure c.age, vce(robust)
+margins exposure
+margins, dydx(exposure)
+* 优势比不等于风险比；设计、混杂控制和聚类层级需先确定
+</code></pre><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

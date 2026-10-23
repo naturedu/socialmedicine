@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>交错 DID 与多时点事件研究 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/event-study-studio.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">边界</a></li>
+<li><a href="#r">R 模板</a></li>
+<li><a href="#stata">STATA 模板</a></li>
+</ul>
+</div>
+</aside><article><h1 id="did">交错 DID 与多时点事件研究</h1>
+<p>区分分组和时间效应；常规双向固定效应并不适用于所有异质交错处理。</p>
+<h2 id="_1">边界</h2>
+<p>所有代码为教学模板，未在真实数据执行；请核对数据字典、版本和包依赖。</p>
+<h2 id="r">R 模板</h2>
+<pre><code class="language-r"># 依赖 did；g 为首次处理年，未处理者为 0
+library(did)
+fit &lt;- att_gt(yname=&quot;y&quot;, tname=&quot;year&quot;, idname=&quot;id&quot;, gname=&quot;g&quot;,
+              data=df, control_group=&quot;notyettreated&quot;, panel=TRUE,
+              clustervars=&quot;id&quot;, bstrap=TRUE)
+es &lt;- aggte(fit, type=&quot;dynamic&quot;)
+summary(es); ggdid(es)
+# 另检查提前反应、样本组成、同期政策与平行趋势；更高政策层级需相应聚类
+</code></pre>
+<h2 id="stata">STATA 模板</h2>
+<pre><code class="language-stata">* 需 csdid 与 drdid；g=首次处理年份，未处理为0
+csdid y, ivar(id) time(year) gvar(g) notyet method(dripw)
+estat event
+csdid_plot
+* 聚类层级、控制组与协变量需按具体政策分配结构设置
+</code></pre><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

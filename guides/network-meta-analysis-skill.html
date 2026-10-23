@@ -1,0 +1,63 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>🕸️ 网状 Meta：让没有直接交手的干预，也能谨慎比较 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/network-meta-analysis-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">适用与边界</a></li>
+<li><a href="#_2">启动时先确认</a></li>
+<li><a href="#_3">操作路线</a></li>
+<li><a href="#r">R：可复现的玩具网络</a></li>
+<li><a href="#_4">证据确定性与报告</a></li>
+<li><a href="#_5">小心这几个坑 🐾</a></li>
+<li><a href="#_6">可复制请求</a></li>
+</ul>
+</div>
+</aside><article><h1 id="meta">🕸️ 网状 Meta：让没有直接交手的干预，也能谨慎比较</h1>
+<h2 id="_1">适用与边界</h2>
+<p>当问题是“健康教育、数字随访、家庭医生和常规管理，哪种更能改善血压控制？”且存在共同对照连接各干预时，可考虑 network meta-analysis（NMA）。它整合直接与间接证据；不能靠统计软件把临床上不可比的研究变得可比。只有两个干预时通常先做常规成对 Meta。见 <a href="https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-11">Cochrane 第11章</a>。</p>
+<h2 id="_2">启动时先确认</h2>
+<p>收集 PICO、方案/注册信息、检索截止日期、干预节点定义、结局与时间点、每臂样本量及事件数或均数/SD。先写节点划分规则：数字管理的频率、是否含医生决策、干预持续时间不同，能否合并须有临床理由。</p>
+<p>交付：研究筛选表、臂级数据、效应修饰因素表、网络图、联赛表、诊断结果与逐比较证据评价。缺少数据就标记缺口，不补造 SD、样本量或比较关系。</p>
+<h2 id="_3">操作路线</h2>
+<ol>
+<li><strong>先画可比性地图。</strong> 按比较组列出基线风险、年龄、疾病严重度、干预强度、背景治疗及随访时间；解释这些效应修饰因素为何足够接近。传递性是实质判断，不能用一个不显著的检验替代。</li>
+<li><strong>保留原始试验结构。</strong> 同一试验不同论文合并识别；多臂试验共用 <code>study_id</code>，不能把共享对照当作独立重复样本。结局方向统一，OR/RR/HR 先转到对数尺度。</li>
+<li><strong>检查网络。</strong> 不连通的子网络不能直接比较；节点稀疏、单一小试验支撑的比较应特别标注。检查零事件和连续性校正方案。</li>
+<li><strong>设定模型。</strong> 依据临床异质性、研究数量与方案选择共同效应或随机效应；明确 τ² 估计方法和共同异质性假设。不要仅凭 Q 检验决定模型。</li>
+<li><strong>诊断来源分歧。</strong> 检查全局不一致性与局部直接/间接分歧；无闭环或证据很少时，部分诊断不可识别或功效不足，应报告“无法充分检验”。</li>
+<li><strong>最后才讨论排序。</strong> 同时给相对效应、区间、绝对获益及证据确定性。P-score/SUCRA 是排序摘要，不能独立证明临床优势。</li>
+</ol>
+<h2 id="r">R：可复现的玩具网络</h2>
+<p>以下数据完全为教学构造。每条是一个独立双臂试验，<code>TE</code> 为 log(OR)，事件表示不良结局；示例不含多臂研究。</p>
+<pre><code class="language-r">library(netmeta)
+d &lt;- data.frame(
+  study = paste0(&quot;trial&quot;, 1:6),
+  t1 = c(&quot;education&quot;,&quot;digital&quot;,&quot;family&quot;,&quot;digital&quot;,&quot;family&quot;,&quot;family&quot;),
+  t2 = c(&quot;usual&quot;,&quot;usual&quot;,&quot;usual&quot;,&quot;education&quot;,&quot;education&quot;,&quot;digital&quot;),
+  TE = log(c(.85,.72,.76,.87,.91,1.05)),
+  seTE = c(.14,.16,.17,.19,.20,.18)
+)
+fit &lt;- netmeta(TE, seTE, t1, t2, studlab=study, data=d,
+  sm=&quot;OR&quot;, reference.group=&quot;usual&quot;, common=FALSE, random=TRUE,
+  method.tau=&quot;REML&quot;, small.values=&quot;desirable&quot;)
+summary(fit)
+netgraph(fit)
+netleague(fit)
+netsplit(fit)
+decomp.design(fit)
+netrank(fit, small.values=&quot;good&quot;)
+sessionInfo()
+</code></pre>
+<p>臂级真实数据应使用 <code>pairwise()</code> 等受支持的转换保留多臂协方差；不要照搬此玩具表人为拆分三臂试验。参数与诊断函数以所装版本 <a href="https://search.r-project.org/CRAN/refmans/netmeta/html/netmeta.html">netmeta 官方文档</a> 为准。</p>
+<p>Stata 项目先记录版本并核对 <code>help network</code> 或所用实现的帮助页；<code>network</code> 扩展与 Stata 内置 <code>meta</code> 不是同一套接口。无法确认命令版本时，提供数据结构与 R 路线，不杜撰可运行的 Stata 语句。</p>
+<h2 id="_4">证据确定性与报告</h2>
+<p>按照 <a href="https://www.prisma-statement.org/nma">PRISMA-NMA</a> 报告。可用 <a href="https://cinema.ispm.unibe.ch/">CINeMA</a> 逐比较评价：研究内偏倚、报告偏倚、间接性、不精确性、异质性与不一致性；保留判断理由，不只填颜色。</p>
+<p>方法段写清节点定义、效应指标、多臂处理、零事件规则、异质性模型与诊断。结果段同时解释网络薄弱位置、直接/间接证据分歧和绝对效应；若结局是血压下降而非不良事件，须重新核对“数值越大/越小越好”的方向。</p>
+<h2 id="_5">小心这几个坑 🐾</h2>
+<ul>
+<li>把健康人、重症患者、不同随访终点接到同一网络，缺乏效应修饰因素核对。</li>
+<li>拿最高排序直接写“最佳干预”，忽略区间重叠与低确定性。</li>
+<li>把不一致性检验不显著写成“已证明一致”。</li>
+<li>混合 RCT 与观察性研究却不说明设计差异、偏倚及分层方案。</li>
+</ul>
+<h2 id="_6">可复制请求</h2>
+<blockquote>
+<p>请先检查我的节点定义、传递性和网络连通性，再提出 NMA 方案。按研究保留多臂相关；输出效应表、诊断、证据确定性和解释边界。若不适合合并，请给分层或叙述综合方案。</p>
+</blockquote><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

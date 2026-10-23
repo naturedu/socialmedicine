@@ -1,0 +1,200 @@
+[
+  {
+    "id": "network",
+    "title": "Cochrane Handbook, Chapter 11",
+    "url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-11",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "NMA的可比性与不一致性；Key Points / 11.4.4"
+  },
+  {
+    "id": "netmeta",
+    "title": "netmeta: Network meta-analysis using graph-theoretical method",
+    "url": "https://search.r-project.org/CRAN/refmans/netmeta/html/netmeta.html",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "Usage / Arguments；接口与多臂结构"
+  },
+  {
+    "id": "cinema",
+    "title": "CINeMA",
+    "url": "https://cinema.ispm.unibe.ch/",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "证据确定性框架，配套官方手册"
+  },
+  {
+    "id": "prisma-nma",
+    "title": "PRISMA-NMA",
+    "url": "https://www.prisma-statement.org/nma",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "网状Meta报告清单"
+  },
+  {
+    "id": "overview",
+    "title": "Cochrane Handbook, Chapter V: Overviews of Reviews",
+    "url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-v",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "研究单位、重叠与CCA；V.4.4 / V.4.7"
+  },
+  {
+    "id": "amstar",
+    "title": "AMSTAR official FAQs",
+    "url": "https://amstar.ca/FAQs.php",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "方法质量与关键领域"
+  },
+  {
+    "id": "target",
+    "title": "TARGET guideline",
+    "url": "https://target-guideline.org/",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "协议对应表、流程与透明报告"
+  },
+  {
+    "id": "tte",
+    "title": "The Target Trial Framework for Causal Inference From Observational Data: Why and When Is It Helpful?",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/39961105/",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "框架定义与识别假设；Abstract"
+  },
+  {
+    "id": "ademp",
+    "title": "Using simulation studies to evaluate statistical methods",
+    "url": "https://doi.org/10.1002/sim.8086",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "ADEMP、性能与MCSE；3 / 5 / 6"
+  },
+  {
+    "id": "ispor",
+    "title": "Model Parameter Estimation and Uncertainty: ISPOR-SMDM Task Force-6",
+    "url": "https://www.ispor.org/publications/journals/value-in-health/abstract/Volume-15--Issue-6/Model-Parameter-Estimation-and-Uncertainty--A-Report-of-the-ISPOR-SMDM-Modeling-Good-Research-Practices-Task-Force-6",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "参数不确定性、PSA"
+  },
+  {
+    "id": "ahrq",
+    "title": "Guidance for the Conduct and Reporting of Modeling and Simulation Studies in HTA",
+    "url": "https://effectivehealthcare.ahrq.gov/products/decision-models-guidance/methods",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "结构、验证与不确定性"
+  },
+  {
+    "id": "did",
+    "title": "Getting Started with the did Package",
+    "url": "https://bcallaway11.github.io/did/articles/did-basics.html",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "ATT(g,t)、聚合与示例"
+  },
+  {
+    "id": "sunab",
+    "title": "Sun and Abraham interactions — sunab",
+    "url": "https://lrberge.github.io/fixest/reference/sunab.html",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "Usage / cohort / ref.c；编码差异"
+  },
+  {
+    "id": "matchit",
+    "title": "MatchIt: Getting Started",
+    "url": "https://kosukeimai.github.io/MatchIt/articles/MatchIt.html",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "匹配流程与平衡诊断"
+  },
+  {
+    "id": "kmeans",
+    "title": "R stats: K-Means Clustering",
+    "url": "https://stat.ethz.ch/R-manual/R-devel/library/stats/html/kmeans.html",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "Usage / Arguments / Details"
+  },
+  {
+    "id": "doubleml",
+    "title": "DoubleML sample splitting and cross-fitting",
+    "url": "https://docs.doubleml.org/stable/guide/resampling.html",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "折分与交叉拟合"
+  },
+  {
+    "id": "synthdid",
+    "title": "Synthetic Difference-in-Difference Estimation",
+    "url": "https://synth-inference.github.io/synthdid/",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "同时处理的块状结构与示例"
+  },
+  {
+    "id": "tripod",
+    "title": "TRIPOD-LLM",
+    "url": "https://www.tripod-statement.org/tripod-llm/",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "医疗LLM报告规范"
+  },
+  {
+    "id": "cfir",
+    "title": "CFIR official guide",
+    "url": "https://cfirguide.org/",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "框架与版本入口"
+  },
+  {
+    "id": "reaim",
+    "title": "RE-AIM official guide",
+    "url": "https://re-aim.org/",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "五维结局及公平、实施语境"
+  },
+  {
+    "id": "prisma-scr",
+    "title": "PRISMA Scoping Reviews",
+    "url": "https://www.prisma-statement.org/scoping",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "范围综述报告清单"
+  },
+  {
+    "id": "codebook",
+    "title": "Codebook LLMs: Evaluating LLMs as Measurement Tools for Political Science Concepts",
+    "url": "https://doi.org/10.1017/pan.2025.10017",
+    "checked_date": "2026-10-23",
+    "verification_state": "verified",
+    "verification_scope": "官方页面/文档内容；不是所有代码的运行验证",
+    "location": "测量定义与验证；出版社题名/正文核对"
+  }
+]

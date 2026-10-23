@@ -1,0 +1,894 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skill：Markov 模型助手（卫生经济学成本-效果分析，Stata / R） · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/markov-model-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">用途</a></li>
+<li><a href="#_2">适用范围（明确边界）</a></li>
+<li><a href="#_3">软件准备</a></li>
+<li><a href="#8">工作流程总览（8 步）</a><ul>
+<li><a href="#1">第 1 步：定义健康状态与模型结构</a></li>
+<li><a href="#2">第 2 步：转移概率的来源与估计</a></li>
+<li><a href="#3">第 3 步：构建转移矩阵</a></li>
+<li><a href="#4">第 4 步：成本与健康效用参数</a></li>
+<li><a href="#5-cohort-simulation">第 5 步：队列模拟（cohort simulation）</a></li>
+<li><a href="#6-icer">第 6 步：计算 ICER</a></li>
+<li><a href="#7">第 7 步：敏感性分析</a></li>
+<li><a href="#8_1">第 8 步：报告与校验</a></li>
+</ul>
+</li>
+<li><a href="#_4">常见错误清单</a></li>
+<li><a href="#_5">输出格式（分析报告模板）</a></li>
+<li><a href="#_6">使用提示</a></li>
+<li><a href="#citation">引用 / Citation</a></li>
+</ul>
+</div>
+</aside><article><h1 id="skillmarkov-stata-r">Skill：Markov 模型助手（卫生经济学成本-效果分析，Stata / R）</h1>
+<p><strong>版本</strong> 1.0 · <strong>作者</strong> 杜思娴 (Du Sixian) · <strong>许可</strong> MIT · <strong>更新</strong> 2026-10-23</p>
+<h2 id="_1">用途</h2>
+<p>一份可复用的「Markov 模型（队列模拟）」成本-效果分析（CEA）工作流：从健康状态定义、转移概率的来源与估计（率 → 概率换算）、转移矩阵构建、成本与效用参数设定，到 Stata / R 的队列模拟（含半周期校正与 3% / 5% 贴现）、ICER 计算与阈值比较、单因素（tornado）与概率敏感性分析（PSA），再到结果报告与模型校验。<strong>每一步都给出「方法 + 代码」</strong>（Stata 与 R 双实现，R 侧另给 heemod 包的等价写法）。全程使用同一示例：<strong>高血压 / 卒中预防干预</strong>（常规治疗 vs 强化降压干预；3 个状态、1 年周期、30 年时间范围），所有代码为可直接运行的具体示例、数值自洽。既可作为提示词喂给大语言模型，也可作为操作手册照做。</p>
+<h2 id="_2">适用范围（明确边界）</h2>
+<p>允许：
+- 帮助社会医学与卫生经济学研究者完成 Markov 队列模型的 CEA 全流程（药物、筛查、慢病管理等干预的建模）
+- 给出率 → 概率换算、转移矩阵构建、半周期校正、贴现、ICER / NMB、tornado 与 PSA 的方法与 Stata / R 代码
+- 用 heemod（R）、Mata（Stata）等工具复现与交叉验证同一模型</p>
+<p><strong>不允许：</strong>
+- 替研究者决定状态结构、转移概率、成本与效用取值及临床假设（需临床专家、流行病学与卫生经济学证据支撑）
+- 承诺模型结果一定可发表；不替代《中国药物经济学评价指南（2020）》、ISPOR-SMDM 建模良好实践与教科书（如 Briggs et al. 2006）及期刊审稿要求
+- 在没有参数来源、没有做模型校验（face validity、极端值检验）的情况下直接给出结论</p>
+<h2 id="_3">软件准备</h2>
+<p>方法：Stata 17 及以上（本 Skill 只用内置命令与 Mata，无需安装外部包）；R ≥ 4.2 + heemod（CRAN；heemod ≥ 1.0 的新版 API，贴现通过 <code>discount()</code> 写入状态值）。PSA 绘图用基础 R 即可；矩阵幂（可选）用 <code>expm</code>。</p>
+<pre><code class="language-stata">* Stata：无需额外安装；确认版本 ≥ 17
+version
+</code></pre>
+<pre><code class="language-r"># R
+install.packages(c(&quot;heemod&quot;, &quot;expm&quot;))   # expm 可选
+</code></pre>
+<h2 id="8">工作流程总览（8 步）</h2>
+<ol>
+<li>定义健康状态与模型结构 → 2. 转移概率的来源与估计 → 3. 构建转移矩阵 → 4. 成本与健康效用参数 → 5. 队列模拟（半周期校正 + 贴现） → 6. 计算 ICER 与阈值比较 → 7. 敏感性分析（tornado + PSA） → 8. 报告与校验。以下每一步均为「方法 + 代码」。</li>
+</ol>
+<hr />
+<h3 id="1">第 1 步：定义健康状态与模型结构</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>健康状态</strong>：互斥（mutually exclusive）、穷尽（collectively exhaustive）、有临床意义，且各状态的成本 / 效用应明显不同。本示例（卒中预防干预）设 3 个状态：① 无并发症（未发生卒中）；② 卒中后；③ 死亡（吸收态）。</li>
+<li><strong>周期长度</strong>：与干预作用与疾病自然史匹配，慢性病常用 1 年（急性期模型可用 3 个月或 1 个月）；周期内至多允许一次事件，若事件密集需缩短周期或改用微模拟。</li>
+<li><strong>时间范围（horizon）</strong>：足够长使队列绝大部分进入吸收态，通常 30–40 年或至 100 岁；本例取 30 年（敏感性分析可作 40 年）。</li>
+<li><strong>起始分布</strong>：本例 100% 处于「无并发症」（trace = (1, 0, 0)）；其他研究可按年龄 / 分期分布设定。</li>
+<li><strong>队列规模</strong>：按 1 人（比例）模拟，结果按「每人」报告；也可乘 1000 等人数。</li>
+</ul>
+<p>状态图（文字描述）：</p>
+<pre><code>无并发症 ──卒中(0.0198)──▶ 卒中后 ──死亡(0.0952)──▶ 死亡
+    │                         │
+    └─────背景死亡(0.010)─────┘
+（死亡为吸收态，无回退、无恢复；数字见第 2 步）
+</code></pre>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：模型结构骨架（数值在第 2–4 步给出）
+* 状态编号：1 = 无并发症  2 = 卒中后  3 = 死亡（吸收态）
+* 周期 = 1 年；时间范围 T = 30（敏感性情景 40）；起始分布 (1, 0, 0)
+</code></pre>
+<pre><code class="language-r"># R：结构参数集中定义，供后续各步复用
+states       &lt;- c(&quot;无并发症&quot;, &quot;卒中后&quot;, &quot;死亡&quot;)
+cycle_length &lt;- 1        # 年
+T            &lt;- 30       # 时间范围（年）；敏感性情景取 40
+init         &lt;- c(1, 0, 0)   # 起始：100% 无并发症
+names(init)  &lt;- states
+</code></pre>
+<hr />
+<h3 id="2">第 2 步：转移概率的来源与估计</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>来源</strong>：① 已发表模型（引用并做币值 / 时间通胀与周期长度换算）；② RCT / 队列的生存分析（Kaplan-Meier → 参数生存模型：指数 / Weibull / Gompertz，指数假设下年率 r = −ln S(t)/t）；③ 疾病登记与生命表（背景死亡按年龄别生命表）。</li>
+<li><strong>率 → 概率换算（周期 t，率与 t 单位一致）</strong>：p = 1 − exp(−r·t)；反向：r = −ln(1 − p)/t。不同周期长度换算：p_t = 1 − (1 − p_1)^t。</li>
+<li>注意：年发生率 0.02 ≠ 年概率 0.02（正确值 0.0198）；率越高二者差异越大。同一状态多个竞争事件先合并率再换算，或在离散框架内用「互补出对角线」保持行和为 1。</li>
+<li>示例数值：卒中年发生率 0.02 → 概率 0.0198；干预使卒中风险降 30%（RR = 0.70）→ 率 0.014 → 概率 0.0139；卒中后死亡年率 0.10 → 概率 0.0952；无并发症背景死亡概率 0.010（生命表）。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：率 → 概率（t 为周期长度，按年）
+display 1 - exp(-0.02*1)        // 卒中年发生率 0.02 → 年概率 = 0.0198013
+display 1 - exp(-0.10*1)        // 卒中后死亡年率 0.10 → 年概率 = 0.0951626
+display 1 - exp(-0.02*0.5)      // 半年概率 = 0.0099502
+* 概率 → 率（反向）
+display -ln(1 - 0.0198013)/1
+* 由 5 年生存率 0.80 反推年率与年死亡概率（指数生存假设）
+display -ln(0.80)/5             // 年死亡率 = 0.0446287
+display 1 - exp(-(-ln(0.80)/5)) // 年死亡概率 = 0.0436481
+* 周期长度换算：1 年概率 0.0198013 → 3 个月（1/4 年）概率
+display 1 - (1-0.0198013)^(1/4)
+</code></pre>
+<pre><code class="language-r"># R：同样的换算
+1 - exp(-0.02*1)                    # 0.01980133
+1 - exp(-0.10*1)                    # 0.09516258
+-log(1 - 0.01980133)                # 概率 → 率
+S5 &lt;- 0.80
+r_annual &lt;- -log(S5)/5              # 5 年生存率反推年率
+1 - exp(-r_annual)                  # 年死亡概率
+# 周期长度换算
+1 - (1 - 0.01980133)^(1/4)
+</code></pre>
+<p>转移概率表（年概率，4 位小数展示；代码中使用精确值，对角线 = 1 − 其余项）：</p>
+<table>
+<thead>
+<tr>
+<th>从 \ 到（策略 A：常规治疗）</th>
+<th>无并发症</th>
+<th>卒中后</th>
+<th>死亡</th>
+<th>行和</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无并发症</td>
+<td>0.9702</td>
+<td>0.0198</td>
+<td>0.0100</td>
+<td>1.0000</td>
+</tr>
+<tr>
+<td>卒中后</td>
+<td>0.0000</td>
+<td>0.9048</td>
+<td>0.0952</td>
+<td>1.0000</td>
+</tr>
+<tr>
+<td>死亡</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>1.0000</td>
+<td>1.0000</td>
+</tr>
+</tbody>
+</table>
+<p>策略 B（干预）仅第一行不同：0.9761 / 0.0139 / 0.0100（卒中风险降 30%）。</p>
+<hr />
+<h3 id="3">第 3 步：构建转移矩阵</h3>
+<p><strong>方法</strong>：行 = 周期初状态，列 = 周期末状态；<strong>每行和为 1</strong>；死亡为吸收态（死亡行 = (0, 0, 1)）；对角线用「1 − 行内其余项」计算以保证行和恒为 1。构建后用 <code>rowsum</code> / <code>rowSums</code> 校验，并用矩阵幂检查 20 年后的状态分布（非负、和为 1）。</p>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：转移矩阵（策略 A；行：无并发症 / 卒中后 / 死亡）
+matrix PA = (0.9701987, 0.0198013, 0.0100000 \ ///
+             0.0000000, 0.9048374, 0.0951626 \ ///
+             0.0000000, 0.0000000, 1.0000000)
+matrix list PA, format(%9.4f)
+
+* Mata 校验：行和与 20 年状态分布
+mata:
+PA = (0.9701987, 0.0198013, 0.010 \ 0, 0.9048374, 0.0951626 \ 0, 0, 1)
+rowsum(PA)                     // 应为 (1, 1, 1)'
+(1, 0, 0) * PA^20              // 20 年后分布：非负且和为 1
+end
+</code></pre>
+<pre><code class="language-r"># R：转移矩阵（策略 A 与 B）
+PA &lt;- matrix(c(0.9701987, 0.0198013, 0.0100000,
+               0.0000000, 0.9048374, 0.0951626,
+               0.0000000, 0.0000000, 1.0000000),
+             nrow = 3, byrow = TRUE)
+PB &lt;- matrix(c(0.9760975, 0.0139025, 0.0100000,
+               0.0000000, 0.9048374, 0.0951626,
+               0.0000000, 0.0000000, 1.0000000),
+             nrow = 3, byrow = TRUE)
+rownames(PA) &lt;- colnames(PA) &lt;- c(&quot;无并发症&quot;, &quot;卒中后&quot;, &quot;死亡&quot;)
+rownames(PB) &lt;- colnames(PB) &lt;- c(&quot;无并发症&quot;, &quot;卒中后&quot;, &quot;死亡&quot;)
+rowSums(PA)                     # 1 1 1
+rowSums(PB)                     # 1 1 1
+# 20 年后分布（循环连乘；也可用 expm::`%^%`）
+trace &lt;- c(1, 0, 0)
+for (i in 1:20) trace &lt;- trace %*% PA
+trace
+</code></pre>
+<hr />
+<h3 id="4">第 4 步：成本与健康效用参数</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>成本</strong>：按研究视角（本示例为卫生体系视角，直接医疗成本）。示例：无并发症年成本 3000 元；干预追加药费 500 元/年（即干预组无并发症年成本 3500 元）；卒中后年成本 20000 元；死亡成本 0。可另加一次性事件成本（卒中急性期），本例从简。</li>
+<li><strong>效用</strong>：EQ-5D 等偏好基础工具测量（优先中国人群值集）。示例：无并发症 0.85、卒中后 0.62、死亡 0；QALY = Σ 状态效用 × 生存时间。</li>
+<li><strong>区间</strong>：无区间时常用点估计 ±20%（结构式敏感性分析）；有 95% CI 时按 CI 边界。由均值 / CI 反推 PSA 分布参数的矩法：beta（均值 m、标准差 sd）：α = m·(m(1−m)/sd² − 1)，β = (1−m)·(m(1−m)/sd² − 1)；gamma：shape = m²/sd²，scale = sd²/m；lognormal：sdlog = (ln UL − ln LL)/(2×1.96)。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：由均值 / 区间反推 PSA 分布参数（矩法）
+* beta：效用 0.85、sd 0.03 → alpha、beta
+display 0.85*(0.85*(1-0.85)/0.03^2 - 1)          // alpha ≈ 119.57
+display (1-0.85)*(0.85*(1-0.85)/0.03^2 - 1)      // beta  ≈ 21.10
+* gamma：成本 3000、sd 600 → shape、scale
+display 3000^2/600^2                              // shape = 25
+display 600^2/3000                                // scale = 120
+* lognormal：率 95% CI [0.015, 0.03] → sdlog
+display (ln(0.03) - ln(0.015)) / (2*1.96)         // sdlog ≈ 0.177
+</code></pre>
+<pre><code class="language-r"># R：同上（矩法）
+beta_mom  &lt;- function(m, sd) { k &lt;- m*(1-m)/sd^2 - 1; c(alpha = m*k, beta = (1-m)*k) }
+gamma_mom &lt;- function(m, sd) c(shape = m^2/sd^2, scale = sd^2/m)
+beta_mom(0.85, 0.03)                     # alpha 119.57, beta 21.10
+gamma_mom(3000, 600)                     # shape 25, scale 120
+(log(0.03) - log(0.015)) / (2*1.96)      # sdlog 0.177
+</code></pre>
+<p>参数总表（本 Skill 全程使用；区间与分布为示例，实际取值以证据为准）：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>基线值</th>
+<th>区间（示例）</th>
+<th>PSA 分布</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>卒中年发生率（对照）</td>
+<td>0.020</td>
+<td>0.015–0.025</td>
+<td>lognormal（sdlog≈0.18）</td>
+<td>队列 / 文献</td>
+</tr>
+<tr>
+<td>干预 RR</td>
+<td>0.70</td>
+<td>0.56–0.84</td>
+<td>lognormal（sdlog≈0.10）</td>
+<td>RCT / 荟萃</td>
+</tr>
+<tr>
+<td>背景死亡年概率</td>
+<td>0.010</td>
+<td>±20%</td>
+<td>beta(24.74, 2449.26)</td>
+<td>生命表</td>
+</tr>
+<tr>
+<td>卒中后死亡年率</td>
+<td>0.10</td>
+<td>0.08–0.12</td>
+<td>lognormal（sdlog≈0.15）</td>
+<td>卒中登记</td>
+</tr>
+<tr>
+<td>无并发症年成本（元）</td>
+<td>3000</td>
+<td>2400–3600</td>
+<td>gamma(25, 120)</td>
+<td>医院 / 医保数据</td>
+</tr>
+<tr>
+<td>干预追加药费（元/年）</td>
+<td>500</td>
+<td>400–600</td>
+<td>gamma(25, 20)</td>
+<td>药品价格</td>
+</tr>
+<tr>
+<td>卒中后年成本（元）</td>
+<td>20000</td>
+<td>16000–24000</td>
+<td>gamma(25, 800)</td>
+<td>病历 / 医保</td>
+</tr>
+<tr>
+<td>效用：无并发症</td>
+<td>0.85</td>
+<td>0.80–0.90</td>
+<td>beta(119.6, 21.1)</td>
+<td>EQ-5D（中国值集）</td>
+</tr>
+<tr>
+<td>效用：卒中后</td>
+<td>0.62</td>
+<td>0.50–0.72</td>
+<td>beta(57.8, 35.4)</td>
+<td>EQ-5D 卒中队列</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="5-cohort-simulation">第 5 步：队列模拟（cohort simulation）</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>核心迭代</strong>：trace(t+1) = trace(t) × P。数据行 1 为起始分布；行 _n（n = 1..T）即第 n 个周期的期初状态分布，配权重 1/(1+d)^(n−0.5)。</li>
+<li><strong>奖励累积</strong>：每周期成本 = Σ 状态人数 × 状态年成本；QALY 同理（死亡状态成本 / 效用为 0）。</li>
+<li><strong>半周期校正</strong>：假设事件在周期内均匀发生，用 (t−0.5) 的指数权重近似（相当于把期初计数折到周期中点）；不做校正会系统性高估成本与效果（本例约高 2.4%，即 ×√(1+d)）。</li>
+<li><strong>贴现</strong>：《中国药物经济学评价指南（2020）》要求成本与效果<strong>同率贴现</strong>，基例 5%，另作 3% 情景（本 Skill 同时给出 5% 与 3% 两套结果；敏感性分析可再加 0%）。</li>
+</ul>
+<h4 id="51-stata">5.1 Stata 纯循环（完整代码）</h4>
+<pre><code class="language-stata">* ============ 第 5 步：队列模拟（Stata 纯循环） ============
+local T = 30                     // 时间范围（年/周期）
+* 策略 A：常规治疗
+local p_hs1 = 1 - exp(-0.02)     // 无并发症→卒中（率 0.02/年）
+local p_hd1 = 0.010              // 无并发症→死亡
+local p_sd1 = 1 - exp(-0.10)     // 卒中后→死亡（率 0.10/年）
+local c_well1 = 3000             // 无并发症年成本
+local c_sick1 = 20000            // 卒中后年成本
+local u_well1 = 0.85             // 效用
+local u_sick1 = 0.62
+* 策略 B：干预（卒中风险降 30%）
+local p_hs2 = 1 - exp(-0.02*0.70)
+local p_hd2 = 0.010
+local p_sd2 = 1 - exp(-0.10)
+local c_well2 = 3500             // 无并发症年成本 + 500 元药费
+local c_sick2 = 20000
+local u_well2 = 0.85
+local u_sick2 = 0.62
+
+matrix R = J(0, 4, .)            // 收集两策略结果：成本/QALY × (5%, 3%)
+
+forvalues s = 1/2 {
+    * ---- 状态占位（行 1..T+1；行 1 为起始分布） ----
+    clear
+    set obs `=`T'+1'
+    gen healthy = .
+    gen sick    = .
+    gen dead    = .
+    replace healthy = 1 in 1       // 起始：100% 无并发症
+    replace sick    = 0 in 1
+    replace dead    = 0 in 1
+    * ---- 转移循环：trace(t+1) = trace(t) × P ----
+    forvalues t = 2/`=`T'+1' {
+        replace healthy = healthy[`t'-1]*(1-`p_hs`s''-`p_hd`s'') in `t'
+        replace sick    = healthy[`t'-1]*`p_hs`s'' + sick[`t'-1]*(1-`p_sd`s'') in `t'
+        replace dead    = dead[`t'-1] + healthy[`t'-1]*`p_hd`s'' + sick[`t'-1]*`p_sd`s'' in `t'
+    }
+    * ---- 每周期成本与 QALY（期初状态） ----
+    gen cost_cyc = healthy*`c_well`s'' + sick*`c_sick`s''
+    gen qaly_cyc = healthy*`u_well`s'' + sick*`u_sick`s''
+    * ---- 贴现 5%：半周期校正权重 1/(1+d)^(n-0.5)，只累加第 1..T 周期 ----
+    gen w05 = 1/(1+0.05)^(_n-0.5) if _n &lt;= `T'
+    gen cost05 = cost_cyc*w05
+    gen qaly05 = qaly_cyc*w05
+    qui sum cost05
+    local c05_`s' = r(sum)
+    qui sum qaly05
+    local q05_`s' = r(sum)
+    * ---- 贴现 3%（敏感性情景） ----
+    gen w03 = 1/(1+0.03)^(_n-0.5) if _n &lt;= `T'
+    gen cost03 = cost_cyc*w03
+    gen qaly03 = qaly_cyc*w03
+    qui sum cost03
+    local c03_`s' = r(sum)
+    qui sum qaly03
+    local q03_`s' = r(sum)
+    * ---- 30 年死亡比例（行 T+1 的 dead） ----
+    local d30_`s' = dead[`=`T'+1']
+    matrix R = R \ (`c05_`s'', `q05_`s'', `c03_`s'', `q03_`s'')
+}
+matrix rownames R = A B
+matrix colnames R = cost5 qaly5 cost3 qaly3
+matrix list R, format(%12.2f)
+display &quot;30 年死亡比例：A = &quot; %6.4f `d30_1' &quot;；B = &quot; %6.4f `d30_2'
+* 期望输出：A: cost5≈63186.10, qaly5≈10.7716；B: cost5≈63913.00, qaly5≈11.1113
+*           A: cost3≈80062.67, qaly3≈13.1935；B: cost3≈80588.47, qaly3≈13.6758
+*           30 年死亡比例：A≈0.4894，B≈0.4314
+</code></pre>
+<h4 id="52-r">5.2 R 从头实现（完整代码）</h4>
+<pre><code class="language-r"># ============ 第 5 步：队列模拟（R 从头写） ============
+T &lt;- 30
+p_hsA &lt;- 1 - exp(-0.02)          # 无并发症→卒中（对照）
+p_hsB &lt;- 1 - exp(-0.02*0.70)     # 无并发症→卒中（干预）
+p_hd  &lt;- 0.010                   # 背景死亡
+p_sd  &lt;- 1 - exp(-0.10)          # 卒中后死亡
+PA &lt;- matrix(c(1-p_hsA-p_hd, p_hsA, p_hd,
+               0,           1-p_sd, p_sd,
+               0,           0,      1), nrow = 3, byrow = TRUE)
+PB &lt;- matrix(c(1-p_hsB-p_hd, p_hsB, p_hd,
+               0,           1-p_sd, p_sd,
+               0,           0,      1), nrow = 3, byrow = TRUE)
+
+# 队列模拟：trace(t+1) = trace(t) %*% P；奖励按周期期初状态、权重 1/(1+d)^(t-0.5)
+sim &lt;- function(P, c_well, c_sick, u_well, u_sick, dr, T = 30) {
+  trace &lt;- matrix(0, nrow = T + 1, ncol = 3)
+  trace[1, ] &lt;- c(1, 0, 0)                      # 起始：100% 无并发症
+  for (t in seq_len(T)) trace[t + 1, ] &lt;- trace[t, ] %*% P
+  w   &lt;- 1 / (1 + dr)^(seq_len(T) - 0.5)        # 半周期校正 + 贴现权重
+  cyc &lt;- trace[seq_len(T), ]                    # 第 1..T 周期的期初分布
+  cost &lt;- sum((cyc[, 1] * c_well + cyc[, 2] * c_sick) * w)
+  qaly &lt;- sum((cyc[, 1] * u_well + cyc[, 2] * u_sick) * w)
+  c(cost = cost, qaly = qaly, p_dead = trace[T + 1, 3])
+}
+
+resA5 &lt;- sim(PA, 3000, 20000, 0.85, 0.62, 0.05, T)
+resB5 &lt;- sim(PB, 3500, 20000, 0.85, 0.62, 0.05, T)
+resA3 &lt;- sim(PA, 3000, 20000, 0.85, 0.62, 0.03, T)
+resB3 &lt;- sim(PB, 3500, 20000, 0.85, 0.62, 0.03, T)
+round(rbind(&quot;A(5%)&quot; = resA5, &quot;B(5%)&quot; = resB5,
+            &quot;A(3%)&quot; = resA3, &quot;B(3%)&quot; = resB3), 2)
+# 期望输出（与 5.1 的 Stata 结果一致）：
+#   A(5%): cost=63186.10, qaly=10.77, p_dead=0.4894
+#   B(5%): cost=63913.00, qaly=11.11, p_dead=0.4314
+#   A(3%): cost=80062.67, qaly=13.19；B(3%): cost=80588.47, qaly=13.68
+</code></pre>
+<h4 id="53-r-heemod">5.3 R heemod 等价实现</h4>
+<pre><code class="language-r"># ============ 第 5 步（heemod 等价实现，heemod ≥ 1.0 API） ============
+library(heemod)
+
+p_hsA &lt;- 1 - exp(-0.02); p_hsB &lt;- 1 - exp(-0.02*0.70)
+p_hd  &lt;- 0.010; p_sd &lt;- 1 - exp(-0.10)
+
+# 转移矩阵：C = 行内其余概率的补数（1 - 其他项之和），行和自动为 1
+matA &lt;- define_transition(
+  C, p_hsA, p_hd,
+  0, C,     p_sd,
+  0, 0,     C)
+matB &lt;- define_transition(
+  C, p_hsB, p_hd,
+  0, C,     p_sd,
+  0, 0,     C)
+
+# 状态值：discount() 在模型内按周期贴现；dispatch_strategy 区分策略成本
+# （策略名 std / intv 须与 run_model 中的名字一致）
+state_well &lt;- define_state(
+  cost    = discount(dispatch_strategy(std = 3000, intv = 3500), .05),
+  utility = 0.85)
+state_sick &lt;- define_state(
+  cost    = discount(20000, .05),
+  utility = 0.62)
+state_dead &lt;- define_state(
+  cost    = 0,
+  utility = 0)
+
+stratA &lt;- define_strategy(transition = matA,
+                          state_well, state_sick, state_dead)
+stratB &lt;- define_strategy(transition = matB,
+                          state_well, state_sick, state_dead)
+
+res &lt;- run_model(
+  std  = stratA,
+  intv = stratB,
+  cycles = 30,
+  init   = c(1, 0, 0),      # 按 1 人队列（默认 1000 人）
+  cost   = cost,            # 成本取状态值 cost
+  effect = utility,         # 效果取状态值 utility（QALY）
+  method = &quot;life-table&quot;)    # 半周期校正；默认 &quot;beginning&quot; 不做半周期校正
+
+summary(res, threshold = c(100000, 300000))  # 阈值：1–3 倍人均 GDP（元/QALY）
+get_counts(res)                              # 各周期各状态人数
+plot(res, type = &quot;counts&quot;, panels = &quot;by_strategy&quot;)   # 状态分布图
+plot(res, type = &quot;ce&quot;)                       # 成本-效果平面与效率前沿
+# 注：heemod 的贴现时点约定（discount() 默认首周期不打折）与 5.1/5.2 的
+# (t-0.5) 约定略有差异，结果会有小幅出入；报告时统一约定并注明实现。
+# heemod 1.0 起 run_model 已无 discount 参数，贴现写在 define_state 的
+# discount() 中（旧版 API 见 help(run_model)）。
+</code></pre>
+<hr />
+<h3 id="6-icer">第 6 步：计算 ICER</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>ICER = ΔC / ΔE =（干预成本 − 对照成本）/（干预 QALY − 对照 QALY）</strong>。</li>
+<li><strong>阈值</strong>：《中国药物经济学评价指南（2020）》以 1–3 倍人均 GDP 作为阈值参考区间（2020 年中国人均 GDP ≈ 7.2 万元；用研究当年最新统计，本例取人均 GDP ≈ 10 万元 → 阈值区间 10 万–30 万元/QALY）。ICER &lt; 1×GDP：极具成本效果；1–3×：具成本效果；&gt; 3×：不具成本效果。</li>
+<li><strong>ICER 象限与决策规则</strong>（ΔC 为纵轴、ΔE 为横轴）：</li>
+<li>东北（ΔC&gt;0, ΔE&gt;0）：更贵更有效 → ICER &lt; λ 采纳，≥ λ 拒绝；</li>
+<li>东南（ΔC&lt;0, ΔE&gt;0）：更便宜更有效 → <strong>占优（dominant），采纳</strong>；</li>
+<li>西北（ΔC&gt;0, ΔE&lt;0）：更贵更差 → <strong>被占优（dominated），拒绝</strong>；</li>
+<li>西南（ΔC&lt;0, ΔE&lt;0）：更便宜更差 → ICER（为正）&gt; λ 时采纳（每节省的钱高于损失 QALY 的价值），≤ λ 拒绝。</li>
+<li><strong>负 ICER 不能直接按数值比大小</strong>，必须先判象限；ΔE ≈ 0 时 ICER 不稳定，改用净货币效益 <strong>NMB = λ·ΔE − ΔC</strong>（NMB &gt; 0 采纳）。</li>
+</ul>
+<p><strong>代码</strong>（沿用第 5 步的矩阵 R 与 resA5/resB5）：</p>
+<pre><code class="language-stata">* ---------- ICER 与 NMB（5% 贴现；R 第 1、2 列） ----------
+display &quot;策略 A：成本 = &quot; %9.2f R[1,1] &quot; 元；QALY = &quot; %6.4f R[1,2]
+display &quot;策略 B：成本 = &quot; %9.2f R[2,1] &quot; 元；QALY = &quot; %6.4f R[2,2]
+display &quot;ΔC = &quot; %9.2f (R[2,1]-R[1,1]) &quot; 元；ΔE = &quot; %6.4f (R[2,2]-R[1,2]) &quot; QALY&quot;
+display &quot;ICER(5%) = &quot; %9.2f ((R[2,1]-R[1,1])/(R[2,2]-R[1,2])) &quot; 元/QALY&quot;
+display &quot;ICER(3%) = &quot; %9.2f ((R[2,3]-R[1,3])/(R[2,4]-R[1,4])) &quot; 元/QALY&quot;
+* NMB（λ = 100000，1 倍人均 GDP）
+local lam = 100000
+display &quot;NMB_B - NMB_A (λ=100000) = &quot; %9.2f (`lam'*(R[2,2]-R[1,2]) - (R[2,1]-R[1,1]))
+* 期望输出：ΔC≈726.90，ΔE≈0.3397，ICER(5%)≈2139.80，ICER(3%)≈1090.04
+*           NMB 差 ≈ 33243（λ=100000）
+</code></pre>
+<pre><code class="language-r"># ---------- ICER 与 NMB ----------
+dC   &lt;- resB5[&quot;cost&quot;] - resA5[&quot;cost&quot;]
+dE   &lt;- resB5[&quot;qaly&quot;] - resA5[&quot;qaly&quot;]
+c(dC = dC, dE = dE, ICER = dC / dE)   # 期望：dC≈726.90, dE≈0.3397, ICER≈2139.80
+
+lam &lt;- 100000                          # 阈值（1 倍人均 GDP）
+NMB_A &lt;- lam * resA5[&quot;qaly&quot;] - resA5[&quot;cost&quot;]
+NMB_B &lt;- lam * resB5[&quot;qaly&quot;] - resB5[&quot;cost&quot;]
+c(NMB_A = NMB_A, NMB_B = NMB_B, dNMB = NMB_B - NMB_A)   # dNMB≈33243
+
+# 象限与决策规则
+if (dE &gt; 0 &amp; dC &lt; 0) {
+  &quot;东南象限：占优（更便宜且更有效）→ 采纳&quot;
+} else if (dE &lt; 0 &amp; dC &gt; 0) {
+  &quot;西北象限：被占优（更贵且更差）→ 拒绝&quot;
+} else if (dE &gt; 0) {
+  ifelse(dC/dE &lt; lam, &quot;东北象限：ICER &lt; λ → 采纳&quot;, &quot;东北象限：ICER ≥ λ → 拒绝&quot;)
+} else {
+  ifelse(dC/dE &gt; lam,
+         &quot;西南象限：ICER &gt; λ（节省的钱高于损失 QALY 的价值）→ 可采纳&quot;,
+         &quot;西南象限：ICER ≤ λ → 拒绝&quot;)
+}
+# 本例期望输出：dC&gt;0 且 dE&gt;0 → 东北象限，ICER≈2140 &lt; 100000 → 采纳
+</code></pre>
+<hr />
+<h3 id="7">第 7 步：敏感性分析</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>单因素（tornado）</strong>：每个参数单独取低 / 高值（±20% 或 95% CI 边界），其余固定，重算 ICER；两臂共用的参数（背景死亡、卒中后死亡、卒中后成本、效用）两臂同步变动。按 ICER 变化范围排序作图；负值表示该情景下落入占优或其他象限，报告中注明符号含义。</li>
+<li><strong>PSA 分布选择依据</strong>：概率参数（0–1）→ <strong>beta</strong>；率与 RR（&gt;0）→ <strong>lognormal</strong>（R 用 rlnorm / exp(rnorm)，Stata 用 exp(rnormal)）；成本（&gt;0，偏态）→ <strong>gamma</strong>；效用（0–1）→ <strong>beta</strong>。参数由第 4 步矩法给出。循环 1000 次蒙特卡洛，输出 ΔC–ΔE 散点图与 CEAC（P(ΔC − λ·ΔE &lt; 0) 对 λ 的曲线）。</li>
+</ul>
+<h4 id="71-tornado">7.1 单因素敏感性分析（tornado）</h4>
+<pre><code class="language-stata">* ============ 第 7.1 步：tornado（Stata/Mata） ============
+* 把第 5 步的循环封装成 Mata 函数（敏感性分析需反复调用，Mata 更快）
+capture mata mata drop markov_ce()
+mata:
+real colvector markov_ce(real scalar phs, real scalar phd, real scalar psd,
+                         real scalar cw, real scalar cs,
+                         real scalar uw, real scalar us,
+                         real scalar d, real scalar T)
+{
+    real matrix  P, trace, cyc
+    real colvector w, c, q
+    P = ((1-phs-phd, phs, phd) \ (0, 1-psd, psd) \ (0, 0, 1))
+    trace = J(T+1, 3, 0)
+    trace[1, 1] = 1
+    for (t = 1; t &lt;= T; t++) trace[t+1, .] = trace[t, .] * P
+    w   = 1 :/ (1+d) :^ ((1::T) :- 0.5)
+    cyc = trace[1..T, .]
+    c   = colsum((cyc[,1]*cw + cyc[,2]*cs) :* w)
+    q   = colsum((cyc[,1]*uw + cyc[,2]*us) :* w)
+    return((c \ q))
+}
+end
+
+mata:
+phsA = 1-exp(-0.02)
+phsB = 1-exp(-0.014)
+phd  = 0.010
+psd  = 1-exp(-0.10)
+bA = (phsA, phd, psd, 3000, 20000, 0.85, 0.62)    // 对照臂基线（1×7）
+bB = (phsB, phd, psd, 3500, 20000, 0.85, 0.62)    // 干预臂基线
+nm = (&quot;对照卒中率&quot;, &quot;干预卒中率&quot;, &quot;背景死亡&quot;, &quot;卒中后死亡&quot;,
+      &quot;无并发症成本&quot;, &quot;卒中后成本&quot;, &quot;效用-无并发症&quot;, &quot;效用-卒中后&quot;)
+pair = J(0, 3, .)                                  // 参数序号、低值 ICER、高值 ICER
+for (i = 1; i &lt;= 8; i++) {
+    loA = bA; loB = bB; hiA = bA; hiB = bB
+    if (i == 1) {
+        loA[1] = bA[1]*0.8; hiA[1] = bA[1]*1.2      // 仅对照臂变
+    }
+    else if (i == 2) {
+        loB[1] = bB[1]*0.8; hiB[1] = bB[1]*1.2      // 仅干预臂变
+    }
+    else {
+        j = i - 1                                    // 共用参数：两臂同变
+        loA[j] = bA[j]*0.8; loB[j] = bB[j]*0.8
+        hiA[j] = bA[j]*1.2; hiB[j] = bB[j]*1.2
+    }
+    ra = markov_ce(loA[1], loA[2], loA[3], loA[4], loA[5], loA[6], loA[7], 0.05, 30)
+    rb = markov_ce(loB[1], loB[2], loB[3], loB[4], loB[5], loB[6], loB[7], 0.05, 30)
+    icer_lo = (rb[1]-ra[1]) / (rb[2]-ra[2])
+    ra = markov_ce(hiA[1], hiA[2], hiA[3], hiA[4], hiA[5], hiA[6], hiA[7], 0.05, 30)
+    rb = markov_ce(hiB[1], hiB[2], hiB[3], hiB[4], hiB[5], hiB[6], hiB[7], 0.05, 30)
+    icer_hi = (rb[1]-ra[1]) / (rb[2]-ra[2])
+    pair = pair \ (i, icer_lo, icer_hi)
+}
+ra = markov_ce(bA[1], bA[2], bA[3], bA[4], bA[5], bA[6], bA[7], 0.05, 30)
+rb = markov_ce(bB[1], bB[2], bB[3], bB[4], bB[5], bB[6], bB[7], 0.05, 30)
+icer0 = (rb[1]-ra[1]) / (rb[2]-ra[2])
+(nm, pair[,2], pair[,3])                           // 打印结果表
+st_matrix(&quot;TOR&quot;, (pair[,2], pair[,3]))
+st_numscalar(&quot;r_icer0&quot;, icer0)
+end
+* 期望输出（基例 ICER ≈ 2140）：对照卒中率变化最大（ICER 约 -4734 ~ 37574）；
+* 负值表示该情景下干预占优或落入其他象限，绘图与报告需注明。
+
+* ---- tornado 图（横条 + 基线竖线；y 轴序号对应上述参数顺序） ----
+svmat TOR
+gen y = _n
+twoway (rcap TOR1 TOR2 y, horizontal lcolor(navy)) ///
+    (scatter y TOR1) (scatter y TOR2), ///
+    xline(`=scalar(r_icer0)', lpattern(dash) lcolor(red)) ///
+    ylabel(1(1)8) xtitle(&quot;ICER（元/QALY）&quot;) ytitle(&quot;参数序号&quot;) ///
+    legend(off) name(tornado, replace)
+</code></pre>
+<pre><code class="language-r"># ============ 第 7.1 步：tornado（R） ============
+phsA &lt;- 1-exp(-0.02); phsB &lt;- 1-exp(-0.014)
+phd &lt;- 0.010; psd &lt;- 1-exp(-0.10)
+bA &lt;- c(phsA, phd, psd, 3000, 20000, 0.85, 0.62)   # 对照臂基线
+bB &lt;- c(phsB, phd, psd, 3500, 20000, 0.85, 0.62)   # 干预臂基线
+nms &lt;- c(&quot;对照卒中率&quot;, &quot;干预卒中率&quot;, &quot;背景死亡&quot;, &quot;卒中后死亡&quot;,
+         &quot;无并发症成本&quot;, &quot;卒中后成本&quot;, &quot;效用-无并发症&quot;, &quot;效用-卒中后&quot;)
+
+makeP &lt;- function(p) matrix(c(1-p[1]-p[2], p[1], p[2],
+                              0, 1-p[3], p[3],
+                              0, 0, 1), nrow = 3, byrow = TRUE)
+pair_icer &lt;- function(pA, pB) {                    # 复用第 5.2 步的 sim()
+  rA &lt;- sim(makeP(pA), pA[4], pA[5], pA[6], pA[7], 0.05, 30)
+  rB &lt;- sim(makeP(pB), pB[4], pB[5], pB[6], pB[7], 0.05, 30)
+  (rB[&quot;cost&quot;] - rA[&quot;cost&quot;]) / (rB[&quot;qaly&quot;] - rA[&quot;qaly&quot;])
+}
+icer0 &lt;- pair_icer(bA, bB)                         # ≈ 2139.80
+
+tor &lt;- t(sapply(seq_along(nms), function(i) {
+  loA &lt;- bA; loB &lt;- bB; hiA &lt;- bA; hiB &lt;- bB
+  if (i == 1)      { loA[1] &lt;- bA[1]*.8; hiA[1] &lt;- bA[1]*1.2 }
+  else if (i == 2) { loB[1] &lt;- bB[1]*.8; hiB[1] &lt;- bB[1]*1.2 }
+  else {
+    j &lt;- i - 1
+    loA[j] &lt;- bA[j]*.8; loB[j] &lt;- bB[j]*.8
+    hiA[j] &lt;- bA[j]*1.2; hiB[j] &lt;- bB[j]*1.2
+  }
+  c(lo = pair_icer(loA, loB), hi = pair_icer(hiA, hiB))
+}))
+tor_df &lt;- data.frame(param = nms, lo = tor[, &quot;lo&quot;], hi = tor[, &quot;hi&quot;])
+tor_df
+
+# 基础 R tornado 图（横条 + 基线竖线）
+dotchart(tor_df$lo, labels = tor_df$param,
+         xlim = range(c(tor_df$lo, tor_df$hi, icer0)))
+segments(tor_df$lo, seq_along(nms), tor_df$hi, seq_along(nms))
+abline(v = icer0, lty = 2, col = &quot;red&quot;)
+# 负 ICER：表示该情景下落入了占优 / 西南象限，见第 6 步象限规则，勿直接比较大小
+</code></pre>
+<h4 id="72-psa">7.2 概率敏感性分析（PSA）</h4>
+<pre><code class="language-stata">* ============ 第 7.2 步：PSA（Stata：rbeta/rgamma/rnormal 循环） ============
+* 分布依据：概率→beta；率/RR→lognormal（exp(rnormal)）；成本→gamma；效用→beta
+* 注：1000 次 × 30 周期的 .do 循环较慢（数分钟）；可改调第 7.1 步的
+* Mata markov_ce() 提速（逻辑完全相同）。
+set seed 2026
+local N = 1000
+local T = 30
+matrix PSA = J(0, 4, .)                    // 每行：cA qA cB qB
+forvalues i = 1/`N' {
+    * ---- 参数抽样 ----
+    local p_hsA = 1 - exp(-exp(rnormal(ln(0.02), 0.20)))
+    local p_hsB = 1 - exp(-exp(rnormal(ln(0.02), 0.20))*exp(rnormal(ln(0.70), 0.10)))
+    local p_hd  = rbeta(24.74, 2449.26)
+    local p_sd  = 1 - exp(-exp(rnormal(ln(0.10), 0.15)))
+    local cA0   = rgamma(25, 120)
+    local cB0   = `cA0' + rgamma(25, 20)
+    local cS    = rgamma(25, 800)
+    local uW    = rbeta(119.6, 21.1)
+    local uS    = rbeta(57.8, 35.4)
+    * ---- 对照臂队列模拟（同第 5.1 步循环） ----
+    clear
+    set obs `=`T'+1'
+    gen healthy = .
+    gen sick = .
+    gen dead = .
+    replace healthy = 1 in 1
+    replace sick = 0 in 1
+    replace dead = 0 in 1
+    forvalues t = 2/`=`T'+1' {
+        replace healthy = healthy[`t'-1]*(1-`p_hsA'-`p_hd') in `t'
+        replace sick    = healthy[`t'-1]*`p_hsA' + sick[`t'-1]*(1-`p_sd') in `t'
+        replace dead    = dead[`t'-1] + healthy[`t'-1]*`p_hd' + sick[`t'-1]*`p_sd' in `t'
+    }
+    gen w = 1/(1+0.05)^(_n-0.5) if _n &lt;= `T'
+    gen cA_c = (healthy*`cA0' + sick*`cS')*w
+    gen qA_c = (healthy*`uW'  + sick*`uS')*w
+    qui sum cA_c
+    local cA_t = r(sum)
+    qui sum qA_c
+    local qA_t = r(sum)
+    * ---- 干预臂队列模拟 ----
+    replace healthy = 1 in 1
+    replace sick = 0 in 1
+    replace dead = 0 in 1
+    forvalues t = 2/`=`T'+1' {
+        replace healthy = healthy[`t'-1]*(1-`p_hsB'-`p_hd') in `t'
+        replace sick    = healthy[`t'-1]*`p_hsB' + sick[`t'-1]*(1-`p_sd') in `t'
+        replace dead    = dead[`t'-1] + healthy[`t'-1]*`p_hd' + sick[`t'-1]*`p_sd' in `t'
+    }
+    gen cB_c = (healthy*`cB0' + sick*`cS')*w
+    gen qB_c = (healthy*`uW'  + sick*`uS')*w
+    qui sum cB_c
+    local cB_t = r(sum)
+    qui sum qB_c
+    local qB_t = r(sum)
+    matrix PSA = PSA \ (`cA_t', `qA_t', `cB_t', `qB_t')
+}
+matrix colnames PSA = cA qA cB qB
+
+* ---- 成本-效果散点图 ----
+svmat PSA, names(col)
+gen dC = cB - cA
+gen dE = qB - qA
+twoway (scatter dC dE, msize(tiny) mcolor(gs8%35)), ///
+    yline(0, lpattern(dash)) xline(0, lpattern(dash)) ///
+    xtitle(&quot;增量 QALY&quot;) ytitle(&quot;增量成本（元）&quot;) ///
+    title(&quot;PSA 成本-效果散点图 (n=1000)&quot;) name(ce_scatter, replace)
+
+* ---- CEAC ----
+matrix CEAC = J(0, 2, .)
+forvalues lam = 0(20000)300000 {
+    count if dC - `lam'*dE &lt; 0
+    local pce = r(N)/_N
+    matrix CEAC = CEAC \ (`lam', `pce')
+}
+svmat CEAC
+line CEAC2 CEAC1, xtitle(&quot;阈值 λ（元/QALY）&quot;) ///
+    ytitle(&quot;P(具有成本效果)&quot;) name(ceac, replace)
+* 期望（示意，与随机种子有关）：本示例各阈值下 P(CE) &gt; 0.99，P(占优) ≈ 0.36
+</code></pre>
+<pre><code class="language-r"># ============ 第 7.2 步：PSA（R：基础循环 + 绘图） ============
+set.seed(2026)
+N &lt;- 1000
+psa &lt;- matrix(NA, nrow = N, ncol = 4,
+              dimnames = list(NULL, c(&quot;cA&quot;, &quot;qA&quot;, &quot;cB&quot;, &quot;qB&quot;)))
+for (i in 1:N) {
+  r_hs &lt;- rlnorm(1, meanlog = log(0.02), sdlog = 0.20)   # 卒中发生率
+  rr   &lt;- rlnorm(1, meanlog = log(0.70), sdlog = 0.10)   # 干预 RR
+  p_hsA &lt;- 1 - exp(-r_hs)
+  p_hsB &lt;- 1 - exp(-r_hs * rr)
+  p_hd  &lt;- rbeta(1, 24.74, 2449.26)                      # 背景死亡概率
+  p_sd  &lt;- 1 - exp(-rlnorm(1, meanlog = log(0.10), sdlog = 0.15))
+  cA0   &lt;- rgamma(1, shape = 25, scale = 120)            # 注意：scale= 必须显式
+  cB0   &lt;- cA0 + rgamma(1, shape = 25, scale = 20)       #（默认第二参数是 rate）
+  cS    &lt;- rgamma(1, shape = 25, scale = 800)
+  uW    &lt;- rbeta(1, 119.6, 21.1)
+  uS    &lt;- rbeta(1, 57.8, 35.4)
+  PAi &lt;- matrix(c(1-p_hsA-p_hd, p_hsA, p_hd,
+                  0, 1-p_sd, p_sd,
+                  0, 0, 1), nrow = 3, byrow = TRUE)
+  PBi &lt;- matrix(c(1-p_hsB-p_hd, p_hsB, p_hd,
+                  0, 1-p_sd, p_sd,
+                  0, 0, 1), nrow = 3, byrow = TRUE)
+  rA &lt;- sim(PAi, cA0, cS, uW, uS, 0.05, 30)              # 复用第 5.2 步的 sim()
+  rB &lt;- sim(PBi, cB0, cS, uW, uS, 0.05, 30)
+  psa[i, ] &lt;- c(rA[&quot;cost&quot;], rA[&quot;qaly&quot;], rB[&quot;cost&quot;], rB[&quot;qaly&quot;])
+}
+head(psa)
+
+dC &lt;- psa[, &quot;cB&quot;] - psa[, &quot;cA&quot;]
+dE &lt;- psa[, &quot;qB&quot;] - psa[, &quot;qA&quot;]
+
+# 成本-效果散点图（含象限线与阈值线）
+plot(dE, dC, xlab = &quot;增量 QALY&quot;, ylab = &quot;增量成本（元）&quot;,
+     main = &quot;PSA 成本-效果散点图 (n = 1000)&quot;,
+     pch = 16, col = rgb(0, 0, 0, 0.25))
+abline(h = 0, lty = 2); abline(v = 0, lty = 2)
+abline(a = 0, b = 100000, col = &quot;red&quot;)   # λ = 100000 元/QALY 阈值线
+text(quantile(dE, 0.05), quantile(dC, 0.95),
+     paste0(&quot;P(占优) = &quot;, round(mean(dC &lt; 0 &amp; dE &gt; 0), 3)))
+
+# CEAC
+lam_grid &lt;- seq(0, 300000, by = 5000)
+ceac &lt;- sapply(lam_grid, function(l) mean(dC - l*dE &lt; 0))
+plot(lam_grid, ceac, type = &quot;l&quot;, xlab = &quot;阈值 λ（元/QALY）&quot;,
+     ylab = &quot;具有成本效果的概率&quot;, main = &quot;CEAC&quot;)
+abline(h = 0.5, lty = 3); abline(h = 0.95, lty = 3)
+# 期望（示意）：本示例各阈值下 P(CE) &gt; 0.99，P(占优) ≈ 0.36；
+# heemod 集成版 PSA 见 vignette(&quot;e-probabilistic&quot;, &quot;heemod&quot;)（define_psa + run_psa）
+</code></pre>
+<hr />
+<h3 id="8_1">第 8 步：报告与校验</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>结果表</strong>：两策略并列报总成本、总 QALY，再报 ΔC、ΔE、ICER，注明贴现率与阈值；本示例（5% 贴现）ICER ≈ 2,140 元/QALY &lt; 10 万元，结论为「极具成本效果」。</li>
+<li><strong>ISPOR-SMDM 建模良好实践要点</strong>（Caro et al. 2012）：① 概念模型——明确问题、视角、人群、干预、时间范围，状态互斥穷尽且有临床意义；② 结构假设——简化需合理并与临床路径一致；③ 数据——参数识别、估计与来源透明，换算（率→概率、币值/时间通胀）记录在案；④ 一致性与质量——内部一致性（行和、极端值、半周期校正、与独立实现交叉验证）与 face validity；⑤ 不确定性——单因素 + PSA，报告分布与相关性假设；⑥ 报告透明——按 CHEERS 2022 清单完整披露。</li>
+<li><strong>模型校验清单</strong>：face validity（临床专家确认状态、箭头方向与量级）；内部一致性（行和 = 1；极端值：卒中率 → 0 时两臂相同、死亡率 = 1 时第 1 周期后全灭、效用全 1 时 QALY = 贴现生命年）；交叉验证（Stata / R / heemod 结果互相印证，差异仅为贴现时点约定）；外部验证（与已发表模型或登记数据对照）。</li>
+</ul>
+<p><strong>代码</strong>（极端值检验；Stata 调用第 7.1 步的 markov_ce()）：</p>
+<pre><code class="language-stata">mata:
+// ① 卒中率 → 0：两臂 QALY 应完全相同
+markov_ce(0, 0.010, 1-exp(-0.10), 3000, 20000, 0.85, 0.62, 0.05, 30)[2]
+markov_ce(0, 0.010, 1-exp(-0.10), 3500, 20000, 0.85, 0.62, 0.05, 30)[2]
+//   期望输出：两值相同（≈ 12.0320）
+// ② 卒中率 = 0 且死亡率 = 1：第 1 周期后全灭，仅剩第 1 周期奖励
+markov_ce(0, 1, 1, 3000, 20000, 0.85, 0.62, 0.05, 30)
+//   期望输出：cost ≈ 2927.70（3000×0.9759），qaly ≈ 0.8295（0.85×0.9759）
+// ③ 效用全 = 1：QALY 应等于贴现生命年（≈ 13.0549）
+markov_ce(1-exp(-0.02), 0.010, 1-exp(-0.10), 0, 0, 1, 1, 0.05, 30)[2]
+end
+</code></pre>
+<pre><code class="language-r"># R：同样的极端值检验（复用 sim() 与 makeP()）
+# ① 卒中率 → 0：两臂应完全相同
+P0 &lt;- makeP(c(0, phd, psd))
+r01 &lt;- sim(P0, 3000, 20000, 0.85, 0.62, 0.05)
+r02 &lt;- sim(P0, 3500, 20000, 0.85, 0.62, 0.05)
+round(c(qaly_A = r01[&quot;qaly&quot;], qaly_B = r02[&quot;qaly&quot;], equal = r01[&quot;qaly&quot;] == r02[&quot;qaly&quot;]), 4)
+# ② 卒中率 = 0 且死亡率 = 1：第 1 周期后全灭
+sim(makeP(c(0, 1, 1)), 3000, 20000, 0.85, 0.62, 0.05)
+# ③ 效用全 = 1：QALY = 贴现生命年
+sim(makeP(c(phsA, phd, psd)), 0, 0, 1, 1, 0.05)[&quot;qaly&quot;]
+</code></pre>
+<p>结果表模板（本示例的实际数值，5% 贴现）：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>策略 A（常规）</th>
+<th>策略 B（干预）</th>
+<th>差值（B − A）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总成本（元）</td>
+<td>63,186</td>
+<td>63,913</td>
+<td>+727</td>
+</tr>
+<tr>
+<td>总 QALY</td>
+<td>10.77</td>
+<td>11.11</td>
+<td>+0.34</td>
+</tr>
+<tr>
+<td>ICER（元/QALY）</td>
+<td>—</td>
+<td>—</td>
+<td>2,140</td>
+</tr>
+<tr>
+<td>总成本（3% 贴现，元）</td>
+<td>80,063</td>
+<td>80,588</td>
+<td>+526</td>
+</tr>
+<tr>
+<td>总 QALY（3% 贴现）</td>
+<td>13.19</td>
+<td>13.68</td>
+<td>+0.48</td>
+</tr>
+<tr>
+<td>ICER（3%，元/QALY）</td>
+<td>—</td>
+<td>—</td>
+<td>1,090</td>
+</tr>
+<tr>
+<td>30 年死亡比例</td>
+<td>0.489</td>
+<td>0.431</td>
+<td>−0.058</td>
+</tr>
+</tbody>
+</table>
+<p>结论：ICER（基例 5%）≈ 2,140 元/QALY，远低于 1 倍人均 GDP（≈ 10 万元），干预极具成本效果；PSA 显示 P(CE) &gt; 0.99、P(占优) ≈ 0.36，结论稳健。</p>
+<hr />
+<h2 id="_4">常见错误清单</h2>
+<ul>
+<li>[ ] 把「率」直接当「概率」用（0.02/年 ≠ 0.02；正确 p = 1 − exp(−0.02) ≈ 0.0198；率越高偏差越大）</li>
+<li>[ ] 转移矩阵行和 ≠ 1（对角线应 = 1 − 行内其余项；死亡行必须为 (0, 0, 1) 吸收态）</li>
+<li>[ ] 忘记半周期校正（权重用了 (t−1) 而非 (t−0.5)，系统性高估成本与效果约 ×√(1+d)）或重复校正</li>
+<li>[ ] 贴现只贴成本不贴效果（指南要求成本与效果同率贴现；敏感性另做 0%/3% 情景）</li>
+<li>[ ] 循环次数与时间范围不一致（T 个周期需 T 次转移、数据 T+1 行；奖励只累加第 1..T 行）</li>
+<li>[ ] 「期初 vs 期末」状态取值与权重错位（第 t 周期的奖励必须配第 t 周期期初的状态行）</li>
+<li>[ ] ICER 解读错误：ΔE &lt; 0 时把负 ICER 直接比大小；应先判象限（东南占优 / 西北被占优 / 西南用「ICER &gt; λ 才采纳」规则）</li>
+<li>[ ] ΔE ≈ 0 时仍报告 ICER（数值不稳定），应改用 NMB = λ·ΔE − ΔC</li>
+<li>[ ] PSA 分布选错：概率用 normal（可能 &lt; 0 或 &gt; 1）、成本用 normal（可能 &lt; 0）、RR 用 gamma / 率用 beta（应 lognormal / beta）</li>
+<li>[ ] R 的 <code>rgamma()</code> 忘记写 <code>scale =</code>（默认第二参数是 rate，结果量级全错）</li>
+<li>[ ] Stata <code>rgamma(a, b)</code> 与 R 参数含义不同（Stata 第二参数是 scale，R 是 rate）——两边代码已按各自语法写对，移植时勿混用</li>
+<li>[ ] R <code>matrix(..., byrow = TRUE)</code> 忘记 byrow 导致矩阵转置（行和检查仍会通过，但模型方向全错）</li>
+<li>[ ] 时间范围太短（队列尚未进入吸收态），成本与效果被截断</li>
+<li>[ ] 忘记 <code>set seed</code> / <code>set.seed</code>，PSA 结果不可复现</li>
+<li>[ ] 参数无来源、无区间、无分布依据；不做 face validity 与极端值检验</li>
+<li>[ ] Stata：replace 的范围（in 行号）写错只更新了一行；循环边界差 1（T 个周期要循环到第 T+1 行）；矩阵追加忘记 J(0, k, .) 初始化</li>
+<li>[ ] heemod：<code>run_model</code> 未指定 <code>effect = utility</code>；未用 <code>method = "life-table"</code> 却说做了半周期校正；<code>dispatch_strategy</code> 的策略名与 <code>run_model</code> 的名字不一致</li>
+</ul>
+<h2 id="_5">输出格式（分析报告模板）</h2>
+<pre><code>【模型结构】
+问题、视角（卫生体系）、人群、干预与对照、时间范围；状态列表与状态图；周期长度；起始分布；关键结构假设。
+
+【参数】
+表 2：转移概率（含来源与率→概率换算）；表 3：成本与效用（点估计、区间、PSA 分布、来源）。
+
+【基例结果】
+表 4：两策略总成本、总 QALY、ΔC、ΔE、ICER（注明贴现率 3%/5% 与半周期校正）；阈值区间（1–3 倍人均 GDP）与判定。
+
+【敏感性分析】
+表 5：tornado（每参数低/高值与对应 ICER）；图 1：PSA 散点图（1000 次，注明分布与相关性假设）；图 2：CEAC。
+
+【校验与局限】
+face validity、内部一致性（行和、极端值、交叉验证结果）；与已发表研究的差异说明；局限（结构简化、参数外推、未纳入的疾病进程）。
+</code></pre>
+<h2 id="_6">使用提示</h2>
+<ul>
+<li>命令与选项随版本更新：Stata 运行 <code>help matrix</code> / <code>help forvalues</code> / Mata 手册核对；R 侧 <code>help(run_model)</code>、<code>help(discount)</code>、<code>help(define_transition)</code> 核对 heemod API（本 Skill 按 heemod ≥ 1.0 新版 API 编写，贴现写在 <code>define_state</code> 的 <code>discount()</code> 中）。</li>
+<li>贴现与半周期校正的约定（期初计数 + (t−0.5) 权重）必须写进报告；与 heemod 等其他软件对照时先统一贴现时点与 <code>method</code> 约定，再比较结果。</li>
+<li>转移概率在代码中一律用精确值计算（行和自动为 1），表格只展示 4 位小数。</li>
+<li>阈值用研究当年最新人均 GDP 的 1–3 倍区间，并配合 CEAC 报告，而非只做单点比较。</li>
+<li>本 Skill 提供方法与代码模板；状态结构、参数取值与临床假设由研究者依据证据确定并负责。</li>
+</ul>
+<hr />
+<h2 id="citation">引用 / Citation</h2>
+<p>中文：杜思娴. Markov 模型助手：卫生经济学成本-效果分析 Skill [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.</p>
+<p>English: Du, S. (2026). <em>Markov Model Assistant: Cost-effectiveness analysis in health economics skill</em> [Skill definition]. https://naturedu.github.io/socialmedicine/.</p>
+<p>方法学参考：</p>
+<ul>
+<li>刘国恩, 胡善联, 吴久鸿, 等. 中国药物经济学评价指南（2020）[S]. 北京: 中国市场出版社, 2020.（China Guidelines for Pharmacoeconomic Evaluations, 2020）</li>
+<li>Briggs, A., Sculpher, M., &amp; Claxton, K. (2006). <em>Decision Modelling for Health Economic Evaluation</em>. Oxford: Oxford University Press.</li>
+<li>Caro, J. J., Briggs, A. H., Siebert, U., &amp; Kuntz, K. M. (2012). Modeling good research practices—overview: a report of the ISPOR-SMDM Modeling Good Research Practices Task Force-1. <em>Value in Health</em>, 15(6), 796–803.</li>
+<li>Husereau, D., Drummond, M., Augustovski, F., et al. (2022). Consolidated Health Economic Evaluation Reporting Standards 2022 (CHEERS 2022) statement: updated reporting guidance for health economic evaluations. <em>Value in Health</em>, 25(1), 3–9.</li>
+<li>Filipović-Pierucci, A., Zarca, K., &amp; Durand-Zaleski, I. (2017). Markov models for health economic evaluations: The R package heemod. <em>arXiv preprint arXiv:1702.03252</em>.</li>
+</ul><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

@@ -1,0 +1,221 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skill：定性方法与结构方程专题（扎根理论 / SEM / 多层SEM / fsQCA，R / Stata） · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/sem-qca-qualitative-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">用途</a></li>
+<li><a href="#_2">适用范围（明确边界）</a></li>
+<li><a href="#_3">软件准备</a></li>
+<li><a href="#4">工作流程总览（4 个专题）</a><ul>
+<li><a href="#1grounded-theory">专题 1：扎根理论（Grounded Theory）</a></li>
+<li><a href="#2sem">专题 2：结构方程模型（SEM）</a></li>
+<li><a href="#3-semmultilevel-sem">专题 3：多层 / 多重嵌套 SEM（Multilevel SEM）</a></li>
+<li><a href="#4fsqca">专题 4：fsQCA 模糊集定性比较分析</a></li>
+</ul>
+</li>
+<li><a href="#_4">常见错误清单</a></li>
+<li><a href="#_5">输出格式（专题报告模板）</a></li>
+<li><a href="#_6">使用提示</a></li>
+<li><a href="#citation">引用 / Citation</a></li>
+</ul>
+</div>
+</aside><article><h1 id="skill-sem-sem-fsqcar-stata">Skill：定性方法与结构方程专题（扎根理论 / SEM / 多层SEM / fsQCA，R / Stata）</h1>
+<p><strong>版本</strong> 1.0 · <strong>作者</strong> 杜思娴 (Du Sixian) · <strong>许可</strong> MIT · <strong>更新</strong> 2026-10-23</p>
+<h2 id="_1">用途</h2>
+<p>一份可复用的「定性方法与结构方程」专题教程，覆盖社会医学与卫生管理研究中四个高频方法：<strong>扎根理论</strong>（质性理论建构）、<strong>结构方程模型 SEM</strong>（潜变量测量与路径）、<strong>多层/多重嵌套 SEM</strong>（嵌套数据）、<strong>fsQCA 模糊集定性比较分析</strong>（组态因果）。每个专题都是「方法 + 代码」，R 与 Stata 双轨，可作为提示词喂给大语言模型，也可作为操作手册照做。</p>
+<h2 id="_2">适用范围（明确边界）</h2>
+<p>允许：
+- 指导研究者完成四个专题的建模、估计、解读与报告
+- 给出可运行的 R（lavaan / QCA / quanteda）与 Stata（sem / gsem / fuzzy）代码
+- 帮助理解方法适用条件与常见错误</p>
+<p><strong>不允许：</strong>
+- 替研究者做理论建构与质性编码（扎根理论以人工编码为主，软件只是辅助）
+- 保证模型拟合一定达标；不替代教科书与期刊审稿要求
+- 把探索性结果当作验证性结论发表</p>
+<h2 id="_3">软件准备</h2>
+<p>方法：R ≥ 4.2（lavaan、QCA、quanteda）；Stata 16+（sem、gsem 内置，fuzzy 来自 SSC）。质性编码软件可选 NVivo / MAXQDA / Atlas.ti（中国场景常用 NVivo）。</p>
+<pre><code class="language-stata">* Stata（联网安装一次）
+ssc install fuzzy, replace
+</code></pre>
+<pre><code class="language-r"># R
+install.packages(c(&quot;lavaan&quot;, &quot;QCA&quot;, &quot;quanteda&quot;))
+</code></pre>
+<h2 id="4">工作流程总览（4 个专题）</h2>
+<ol>
+<li>扎根理论 → 2. SEM → 3. 多层 SEM → 4. fsQCA。选型建议：有访谈/文本想<strong>建构理论</strong>用专题 1；有量表与理论模型想<strong>检验潜变量关系</strong>用专题 2；数据<strong>嵌套</strong>（患者-科室-医院）用专题 3；中小样本想回答<strong>哪些条件组合</strong>导致结果用专题 4。</li>
+</ol>
+<hr />
+<h3 id="1grounded-theory">专题 1：扎根理论（Grounded Theory）</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>三级编码</strong>：开放式编码（逐句贴标签）→ 主轴编码（范畴归类与关系，如因果/情境/策略/结果）→ 选择性编码（核心范畴与故事线）。</li>
+<li><strong>理论抽样与饱和</strong>：按新出现的范畴决定下一步采谁；新资料不再产生新范畴即饱和。</li>
+<li><strong>备忘录</strong>：编码全程记录想法，是理论的原料。</li>
+<li><strong>流派</strong>：Strauss-Corbin 偏结构化程序（编码范式）；Charmaz 偏建构主义（理论是研究者与资料共建的）。报告注明所循流派。</li>
+<li><strong>报告规范</strong>：COREQ 清单（研究团队与反思性、研究设计、分析发现三大域）。质性分析以<strong>人工编码为主</strong>；文本挖掘只做词频/共现提示。</li>
+</ul>
+<p><strong>代码</strong>（R 文本辅助，编码仍由人完成）：</p>
+<pre><code class="language-r">library(quanteda)
+# 示例访谈（虚构片段，演示用）
+interviews &lt;- data.frame(
+  id = 1:6,
+  text = c(
+    &quot;医保报销比例提高以后，我们村慢病患者愿意按时复诊了，负担轻了很多。&quot;,
+    &quot;村卫生室药品不全，想开的药经常没有，只能去镇上，路远还要排队。&quot;,
+    &quot;签约的家庭医生上门测血压，老人觉得被重视，依从性好多了。&quot;,
+    &quot;镇卫生院设备老化，有些检查做不了，来回县里要一整天。&quot;,
+    &quot;报销手续以前要跑好几趟，现在村卫生室直接结算，方便多了。&quot;,
+    &quot;宣传不够，很多老人根本不知道慢病门诊能报销多少。&quot;)
+)
+corp &lt;- corpus(interviews, text_field = &quot;text&quot;, docid_field = &quot;id&quot;)
+toks &lt;- tokens(corp, remove_punct = TRUE)
+dfmat &lt;- dfm(toks)
+textstat_frequency(dfmat, n = 20)               # 高频词 → 开放编码线索
+fcm(toks, context = &quot;window&quot;, window = 5) |&gt;    # 词共现 → 主轴编码线索
+  textplot_network(min_freq = 2)
+</code></pre>
+<p><strong>输出要求</strong>：编码表（范畴—子范畴—原始引文）、理论模型图（核心范畴与关系）、饱和度说明、研究者立场（反思性）。</p>
+<hr />
+<h3 id="2sem">专题 2：结构方程模型（SEM）</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>测量模型（CFA）</strong>：潜变量由多个条目测量；看标准化载荷（≥0.5，理想 ≥0.7）、组合信度 CR（≥0.7）、平均方差抽取 AVE（≥0.5）。</li>
+<li><strong>结构模型</strong>：潜变量间的路径系数与显著性。</li>
+<li><strong>拟合指标</strong>：CFI/TLI ≥ 0.90（理想 ≥0.95）、RMSEA &lt; 0.08（理想 &lt;0.06）、SRMR &lt; 0.08；卡方显著不单独作为拒绝依据（大样本敏感）。</li>
+<li><strong>修正指数</strong>：只在理论允许时加路径/相关；禁止数据驱动乱改。</li>
+<li><strong>样本量</strong>：经验规则每个自由参数 10–20 例；至少 200 例为宜。</li>
+<li><strong>注意</strong>：探索性与验证性不能混用同一数据（理想：EFA 定结构 → CFA 验证；或拆分样本）。</li>
+</ul>
+<p><strong>代码</strong>（示例：健康素养 HL → 自我效能 SE → 依从性 AD）：</p>
+<pre><code class="language-r">library(lavaan)
+set.seed(2026)
+n &lt;- 300
+HL &lt;- rnorm(n); SE &lt;- 0.6 * HL + rnorm(n, 0, sqrt(1 - 0.36)); AD &lt;- 0.5 * SE + rnorm(n, 0, sqrt(1 - 0.25))
+d &lt;- data.frame(
+  x1 = 0.7 * HL + rnorm(n, 0, 0.7), x2 = 0.8 * HL + rnorm(n, 0, 0.6), x3 = 0.75 * HL + rnorm(n, 0, 0.65),
+  y1 = 0.7 * SE + rnorm(n, 0, 0.7), y2 = 0.8 * SE + rnorm(n, 0, 0.6), y3 = 0.75 * SE + rnorm(n, 0, 0.65),
+  z1 = 0.7 * AD + rnorm(n, 0, 0.7), z2 = 0.8 * AD + rnorm(n, 0, 0.6), z3 = 0.75 * AD + rnorm(n, 0, 0.65))
+
+model &lt;- '
+  HL =~ x1 + x2 + x3
+  SE =~ y1 + y2 + y3
+  AD =~ z1 + z2 + z3
+  SE ~ HL
+  AD ~ SE
+'
+fit &lt;- sem(model, data = d)
+summary(fit, standardized = TRUE, fit.measures = TRUE)
+fitMeasures(fit, c(&quot;chisq&quot;, &quot;df&quot;, &quot;cfi&quot;, &quot;tli&quot;, &quot;rmsea&quot;, &quot;srmr&quot;))
+</code></pre>
+<pre><code class="language-stata">* Stata：等价写法（数据需先导入）
+sem (HL -&gt; x1 x2 x3) (SE -&gt; y1 y2 y3) (AD -&gt; z1 z2 z3) ///
+    (SE &lt;- HL) (AD &lt;- SE), method(mlmv) standardized
+estat gof, stats(all)
+</code></pre>
+<hr />
+<h3 id="3-semmultilevel-sem">专题 3：多层 / 多重嵌套 SEM（Multilevel SEM）</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>适用</strong>：数据嵌套（患者—科室—医院、居民—社区），观测不独立。</li>
+<li><strong>先验检验</strong>：计算 ICC（组内相关），ICC 明显大于 0（如 &gt;0.05）才需要多层。</li>
+<li><strong>分解</strong>：组内（within，个体层面）与组间（between，机构层面）关系分别估计；组间结论不能套到个体。</li>
+<li><strong>样本量经验</strong>：组数至少 30–50（组数是多层的关键），每组个体可少（如 10–20）。</li>
+<li><strong>随机设定</strong>：随机截距最常见；随机斜率需理论与似然比检验支持。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-r">library(lavaan)
+set.seed(2026)
+H &lt;- 30; m &lt;- 20; n &lt;- H * m
+d &lt;- data.frame(hospital = rep(1:H, each = m))
+d$ueff &lt;- rnorm(H, 0, 0.5)[d$hospital]          # 医院随机效应
+d$HL &lt;- 0.4 * d$ueff + rnorm(n)
+d$SE &lt;- 0.5 * d$HL + 0.3 * d$ueff + rnorm(n)
+d$x1 &lt;- 0.7 * d$HL + rnorm(n, 0, 0.7); d$x2 &lt;- 0.8 * d$HL + rnorm(n, 0, 0.6); d$x3 &lt;- 0.75 * d$HL + rnorm(n, 0, 0.65)
+d$y1 &lt;- 0.7 * d$SE + rnorm(n, 0, 0.7); d$y2 &lt;- 0.8 * d$SE + rnorm(n, 0, 0.6); d$y3 &lt;- 0.75 * d$SE + rnorm(n, 0, 0.65)
+
+model2 &lt;- '
+  level: 1
+    HLw =~ x1 + x2 + x3
+    SEw =~ y1 + y2 + y3
+    SEw ~ HLw
+  level: 2
+    HLb =~ x1 + x2 + x3
+    SEb =~ y1 + y2 + y3
+    SEb ~ HLb
+'
+fit2 &lt;- sem(model2, data = d, cluster = &quot;hospital&quot;)
+summary(fit2)
+</code></pre>
+<pre><code class="language-stata">* Stata：gsem 多层（医院随机截距）；语法细节以 help gsem 为准
+gsem (HL -&gt; x1 x2 x3) (SE -&gt; y1 y2 y3) (SE &lt;- HL M1[hospital]), vce(cluster hospital)
+estat icc
+</code></pre>
+<hr />
+<h3 id="4fsqca">专题 4：fsQCA 模糊集定性比较分析</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>思想</strong>：组态视角——同一结果可由<strong>多条路径</strong>（条件组合）达成；非对称因果（有 A 导致 Y，不意味无 A 导致无 Y）。与回归互补：回归问净效应，fsQCA 问组合。</li>
+<li><strong>校准</strong>：直接法三锚点（完全隶属 = 0.95、交叉点 = 0.5、完全不隶属 = 0.05），锚点要有理论与样本分布依据；常用样本 5%/50%/95% 分位或量表既定标准。</li>
+<li><strong>必要性</strong>：单一条件一致性 ≥ 0.9 视为必要条件；覆盖率高说明必要但不足以充分。</li>
+<li><strong>充分性</strong>：真值表（频率阈值与一致性阈值，通常 0.75–0.8）→ 布尔最小化得到复杂解/简约解/中间解；报告中间解（结合理论方向性假设），一致性与原始/唯一覆盖率。</li>
+<li><strong>样本</strong>：中小样本（10–50 例）组态研究；条件数 4–6 个为宜（条件多则组合爆炸）。</li>
+<li><strong>稳健性</strong>：锚点微调、一致性阈值 ±0.05、增删案例，看组态是否稳定。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-r">library(QCA)
+set.seed(2026)
+n &lt;- 30
+d &lt;- data.frame(
+  score = rnorm(n, 70, 15),          # 成效评分
+  res   = rnorm(n, 20, 8),           # 资源投入
+  staff = rnorm(n, 10, 4),           # 人员配置
+  inc   = rnorm(n, 0.5, 0.2),        # 激励机制
+  it    = rnorm(n, 3, 1.2))          # 信息化
+d &lt;- data.frame(
+  成效   = calibrate(d$score, c(60, 75, 90)),
+  资源   = calibrate(d$res, c(10, 20, 30)),
+  人员   = calibrate(d$staff, c(5, 10, 15)),
+  激励   = calibrate(d$inc, c(0.2, 0.5, 0.8)),
+  信息化 = calibrate(d$it, c(1, 3, 5)))
+
+tt &lt;- truthTable(d, outcome = &quot;成效&quot;, n.cut = 1, incl.cut = 0.8)
+tt
+sol &lt;- minimize(tt, include = &quot;?&quot;)   # 中间解
+sol
+XYplot(tt$tt$资源, d$成效, xlab = &quot;资源&quot;, ylab = &quot;成效&quot;)   # 必要条件散点（对单一条件判断必要性）
+</code></pre>
+<pre><code class="language-stata">* Stata：SSC 的 fuzzy 包做模糊集校准与操作（以 help fuzzy 为准）
+ssc install fuzzy
+fzcalc zy, low(60) cross(75) high(90)
+</code></pre>
+<hr />
+<h2 id="_4">常见错误清单</h2>
+<ul>
+<li>[ ] 扎根理论：只贴词频不做理论建构；小样本宣称饱和；混淆描述与理论；不写反思性</li>
+<li>[ ] SEM：把探索性结果当验证性报告；只看卡方显著性；无理论依据按修正指数乱加路径；载荷不达标仍强解</li>
+<li>[ ] 多层 SEM：组数很少却做多层；把组间系数套到个体；忽略聚类稳健标准误；不做 ICC 先验</li>
+<li>[ ] fsQCA：校准锚点拍脑袋不给理由；把组态解当净效应；条件数与样本量失衡；只报覆盖率不报一致性；不报告反事实分析</li>
+<li>[ ] 通用：代码与数据不可复现；把 R/Stata 输出原样贴进论文而不做文字解读</li>
+</ul>
+<h2 id="_5">输出格式（专题报告模板）</h2>
+<pre><code>【研究问题与方法选择】
+为什么用这个方法（数据形态 + 研究问题的匹配说明）。
+
+【数据与变量】
+样本来源、嵌套结构（多层）、校准锚点（fsQCA）、访谈资料（扎根）。
+
+【结果】
+专题 2/3：模型图、标准化载荷与路径系数表、拟合指标表（判断标准并列）。
+专题 1：编码表 + 理论模型图 + 饱和度说明。
+专题 4：真值表 + 组态解表（一致性/覆盖率）+ 必要性检验。
+
+【讨论与局限】
+结合理论的解释；方法局限（如截面数据因果弱、锚点敏感性）。
+</code></pre>
+<h2 id="_6">使用提示</h2>
+<ul>
+<li>四个专题与 <code>socialmedicineskills.md</code> 速查手册的 G 类条目互相链接；理论框架部分（Andersen、TPB 等）见手册 F 类。</li>
+<li>R 包与 Stata 命令随版本更新，运行前核对帮助文档；lavaan 多层模型参数较多时留意收敛警告。</li>
+<li>本 Skill 提供方法与代码模板；理论建构、编码与最终结论由研究者负责。</li>
+</ul>
+<hr />
+<h2 id="citation">引用 / Citation</h2>
+<p>中文：杜思娴. 定性方法与结构方程专题教程：扎根理论 / SEM / 多层SEM / fsQCA Skill [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.</p>
+<p>English: Du, S. (2026). <em>Qualitative methods and structural equation modeling: Grounded theory, SEM, multilevel SEM, and fsQCA</em> [Skill definition]. https://naturedu.github.io/socialmedicine/.</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

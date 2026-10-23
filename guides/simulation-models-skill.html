@@ -1,0 +1,78 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>🧩 模拟模型选型：先描述世界怎样运转 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/simulation-models-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">模型地图</a></li>
+<li><a href="#_3">任务书与交付</a></li>
+<li><a href="#r">一个很小的R排队实验</a></li>
+<li><a href="#_4">健康经济连接</a></li>
+<li><a href="#_5">小心这几个坑 🐾</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">🧩 模拟模型选型：先描述世界怎样运转</h1>
+<h2 id="_2">模型地图</h2>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>适合的机制</th>
+<th>社医卫管例子</th>
+<th>特别检查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>队列Markov</td>
+<td>人群在状态间按周期转移</td>
+<td>慢病筛查的长期成本效果</td>
+<td>状态是否充分表达历史</td>
+</tr>
+<tr>
+<td>个体微观模拟</td>
+<td>个体异质、既往史影响风险</td>
+<td>多病共存与终身费用</td>
+<td>事件风险、路径记忆、个体噪声</td>
+</tr>
+<tr>
+<td>离散事件 DES</td>
+<td>时间连续、排队与资源容量</td>
+<td>门诊等待、床位与转诊</td>
+<td>到达/服务分布、暖机期、拥堵</td>
+</tr>
+<tr>
+<td>系统动力学 SD</td>
+<td>总量存量流量与反馈</td>
+<td>医生供给、服务需求和财政循环</td>
+<td>量纲、反馈延迟与可辨识性</td>
+</tr>
+<tr>
+<td>多主体 ABM</td>
+<td>异质主体互动与适应</td>
+<td>患者择医、医院竞争、风险扩散</td>
+<td>交互规则、行为依据、涌现验证</td>
+</tr>
+</tbody>
+</table>
+<p>ABM中的agent是模型主体，与执行检索/编码任务的AI Agent不是同一概念。没有交互机制时，不能仅因逐人模拟就称ABM。</p>
+<h2 id="_3">任务书与交付</h2>
+<p>先写决策问题、视角、目标人群、时间尺度、政策情景、状态/事件、干预作用点和校准目标。参数表记录单位、来源、估计误差、相关性及可迁移性。给出可执行的最小模型后再扩展，不凭空增加行为机制。</p>
+<p>校准使用部分观测目标约束未知参数，验证尽可能使用独立时期/地区/结局。拟合与验证同一批数据只能说明内部重现；多个参数组合都拟合良好时应讨论不可辨识。按 <a href="https://effectivehealthcare.ahrq.gov/products/decision-models-guidance/methods">AHRQ模型指南</a> 组织模型透明度和验证说明。</p>
+<h2 id="r">一个很小的R排队实验</h2>
+<pre><code class="language-r">set.seed(20261023)
+n &lt;- 1000
+arrival &lt;- cumsum(rexp(n,rate=4))
+service &lt;- rexp(n,rate=5)
+start &lt;- finish &lt;- numeric(n)
+for(i in seq_len(n)){
+  start[i] &lt;- max(arrival[i],if(i==1) 0 else finish[i-1])
+  finish[i] &lt;- start[i]+service[i]
+}
+wait &lt;- start-arrival
+c(mean_wait=mean(wait),p95_wait=unname(quantile(wait,.95)))
+</code></pre>
+<p>这里是假定单服务台、指数到达/服务、先到先服务的教学模型；一次运行不能给出可靠政策比较。正式应用要核对时间单位、到达率稳定性、多个服务台、优先级、暖机期、独立重复与区间。</p>
+<h2 id="_4">健康经济连接</h2>
+<p>若目标为成本效果，模型还需累计成本、效用、生存与贴现，再按参数联合分布做PSA；若比较资源排队，拥堵反馈可能让简单队列Markov不足。详见Markov、卫生经济及蒙特卡洛Skill。先检查模型边界是否覆盖决定性机制，再决定复杂度。</p>
+<h2 id="_5">小心这几个坑 🐾</h2>
+<p>把拟合叫验证；用任意规则生成“政策一定有效”的结论；只报一次运行；忽视资源容量与跨主体干扰；把结构不确定性压缩成参数置信区间；画了复杂流程却没有可执行的事件与状态规则。</p>
+<blockquote>
+<p>可复制请求：请从研究问题、历史依赖、资源约束与主体交互出发比较五类模型，给最小可验证结构、参数清单与缺口，区分校准、验证、个体随机性和参数不确定性。</p>
+</blockquote><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

@@ -1,0 +1,108 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>🎯 目标试验模拟：先写想做的试验，再看数据够不够 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/target-trial-emulation-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">它回答什么</a></li>
+<li><a href="#_3">先交付一张协议对应表</a></li>
+<li><a href="#_4">选择分析路线</a></li>
+<li><a href="#_5">最低数据清单</a></li>
+<li><a href="#r12">R：固定12个月结局的教学估计</a></li>
+<li><a href="#_6">输出与报告</a></li>
+<li><a href="#_7">小心这几个坑 🐾</a></li>
+<li><a href="#_8">可复制请求</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">🎯 目标试验模拟：先写想做的试验，再看数据够不够</h1>
+<h2 id="_2">它回答什么</h2>
+<p>目标试验模拟（target trial emulation，TTE；常被称为“目标实验模拟”）先明确假想随机试验，再用观察性数据尝试模拟协议。它是一套设计框架，PSM、IPW、g-formula 等是可能的估计工具。它不会让数据自动具备随机性，也不意味着所有研究都要做克隆。参见 <a href="https://pubmed.ncbi.nlm.nih.gov/39961105/">Hernán 等的方法论文</a>。</p>
+<p>教学问题：对符合条件且既往未接受两方案的高血压患者，开始数字随访相较开始常规随访，12个月血压控制率如何变化？这只是设计示例，不代表真实干预效果。</p>
+<h2 id="_3">先交付一张协议对应表</h2>
+<table>
+<thead>
+<tr>
+<th>要素</th>
+<th>目标试验</th>
+<th>数据中的模拟</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>纳入标准</td>
+<td>何人、何时符合资格</td>
+<td>可观测病史、年龄、排除条件与回溯窗</td>
+</tr>
+<tr>
+<td>策略</td>
+<td>具体方案、剂量/频率、持续或开始策略</td>
+<td>处方/服务记录对应的操作定义</td>
+</tr>
+<tr>
+<td>分配</td>
+<td>随机分配</td>
+<td>基于基线混杂变量的条件可交换性假设</td>
+</tr>
+<tr>
+<td>随访</td>
+<td>统一起点、终止与删失规则</td>
+<td>time zero 与记录覆盖、死亡、失访</td>
+</tr>
+<tr>
+<td>结局</td>
+<td>事件定义、评估时点</td>
+<td>编码、测量窗、复核与缺失处理</td>
+</tr>
+<tr>
+<td>因果对比</td>
+<td>开始策略或持续依从策略；风险差/风险比等</td>
+<td>可识别的 estimand 和目标人群</td>
+</tr>
+<tr>
+<td>分析</td>
+<td>ITT/依从策略分析及推断</td>
+<td>标准化、IPW、纵向g方法与敏感性分析</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键检查：资格满足、策略分配与随访开始必须对齐。</strong> 不可根据随访后“坚持用药6个月”定义基线治疗组，再从最初入院开始计时，那会引入不死时间偏倚。</p>
+<h2 id="_4">选择分析路线</h2>
+<ul>
+<li><strong>基线开始策略</strong>：新使用者、主动对照通常更利于明确比较；洗脱期取决于数据与临床，不设通用固定天数。解释为“开始某策略”的类 ITT 对比时，说明观察数据没有真实随机分配。</li>
+<li><strong>随访中持续策略</strong>：若混杂变量随时间变化且受既往治疗影响，普通时间变化协变量回归可能不够，考虑边际结构模型、参数g-formula等。</li>
+<li><strong>宽限期/动态策略</strong>：同一个人初期可能兼容多个策略，可考虑 clone–censor–weight：克隆至兼容策略、偏离时人工删失、按删失机制加权。保留原始人ID处理克隆相关；不能直接把克隆当独立个体。</li>
+<li><strong>多个入组机会</strong>：可考虑序贯试验模拟；写明每次资格判断、重复贡献及个体层面的推断方式。</li>
+</ul>
+<h2 id="_5">最低数据清单</h2>
+<p>需要个体ID、资格日期、既往病史与治疗、干预/对照开始日、基线混杂、结局发生日或固定时点结局、死亡/失访时间。若缺少开始日期、基线窗口或关键混杂，先说明不可识别之处；“样本很大”不能弥补时间顺序与变量缺口。更详细的数据约束示例见 <a href="https://www.nature.com/articles/s41746-026-02563-z">EHR实施框架</a>。</p>
+<h2 id="r12">R：固定12个月结局的教学估计</h2>
+<p>以下先模拟完整随访数据，再估计 ATE。代码没有失访、竞争风险和宽限期；只演示基线 IPTW 的一个模块，不是完整 CCW。</p>
+<pre><code class="language-r">set.seed(20261023)
+n &lt;- 2000
+d &lt;- data.frame(age=rnorm(n,65,8), severity=rnorm(n))
+d$a &lt;- rbinom(n,1,plogis(-.2+.02*(d$age-65)+.5*d$severity))
+d$y &lt;- rbinom(n,1,plogis(-1+.35*d$a+.3*d$severity+.01*(d$age-65)))
+psfit &lt;- glm(a~age+severity,binomial(),data=d)
+d$ps &lt;- predict(psfit,type=&quot;response&quot;)
+stopifnot(all(d$ps&gt;0 &amp; d$ps&lt;1))
+p &lt;- mean(d$a)
+d$w &lt;- ifelse(d$a==1,p/d$ps,(1-p)/(1-d$ps))
+print(quantile(d$w,c(0,.01,.5,.99,1)))
+print(with(d, tapply(ps,a,range)))
+print(sum(d$w)^2/sum(d$w^2)) # 总体有效样本量摘要；也应分组检查
+library(survey)
+des &lt;- svydesign(ids=~1,weights=~w,data=d)
+fit &lt;- svyglm(y~a,design=des,family=quasibinomial(link=&quot;identity&quot;))
+coef(fit)[&quot;a&quot;]
+confint(fit)[&quot;a&quot;,]
+# 研究分析还需检查加权前后平衡、权重重叠，并按估计流程考虑bootstrap。
+</code></pre>
+<pre><code class="language-stata">* 真实固定时点数据需先明确基线、完整随访和混杂变量
+teffects ipw (y) (a age severity, logit), ate
+tebalance summarize
+</code></pre>
+<p>如果用截尾权重，预先说明阈值并比较未截尾结果；截尾会改变估计表现，不能仅因显著性更好而选择。结局有删失时需适当处理删失；死亡作为竞争事件时，先界定目标风险，不能默认为普通失访。</p>
+<h2 id="_6">输出与报告</h2>
+<p>保存协议对应表、患者流程图、time-zero时间图、变量字典、平衡图、权重诊断、主要绝对/相对效应、敏感性分析和代码版本。按 <a href="https://target-guideline.org/">TARGET指南</a> 透明报告：指南帮助说明设计，不替代可交换性、正值性和一致性等识别假设。</p>
+<h2 id="_7">小心这几个坑 🐾</h2>
+<p>把“做了PSM”直接写成TTE；用未来信息决定基线入组；混用治疗起始日与入院日；把条件HR当固定时点风险比；对不同估计目标的敏感性模型只比较P值。</p>
+<h2 id="_8">可复制请求</h2>
+<blockquote>
+<p>先为我的问题写目标试验—数据模拟对应表，逐项核对time zero和变量可得性。明确estimand后再选基线加权、纵向g方法或CCW；输出设计缺口与诊断，不预设数据能够识别目标因果效应。</p>
+</blockquote><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

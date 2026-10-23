@@ -1,0 +1,9 @@
+(async()=>{
+'use strict';const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+try{const [topics,sources]=await Promise.all(['policy-topics','policy-documents'].map(async p=>{const r=await fetch('data/'+p+'.json');if(!r.ok)throw new Error(p);return r.json();}));const refs=Object.fromEntries(sources.map(s=>[s.id,s]));
+$('#policyGroup').innerHTML+=[...new Set(topics.map(t=>t.group))].map(g=>`<option>${esc(g)}</option>`).join('');
+const list=x=>'<ul>'+x.map(v=>'<li>'+esc(v)+'</li>').join('')+'</ul>';
+function render(){const q=$('#policySearch').value.trim().toLowerCase(),g=$('#policyGroup').value,rows=topics.filter(t=>(!g||t.group===g)&&(!q||JSON.stringify(t).toLowerCase().includes(q)));$('#policyCount').textContent=`${rows.length} / ${topics.length} 个政策主题 · ${sources.length} 个官方文件/入口`;
+$('#policyResults').innerHTML=rows.map(t=>`<article class="record" id="${esc(t.id)}"><span class="meta">${esc(t.group)} · 核对${esc(t.checked)}</span><h2>${esc(t.title)}</h2><p>${esc(t.definition)}</p><p><b>逻辑框架：</b>${esc(t.logic)}</p><details ${q?'open':''}><summary>展开条款、研究变量、问题、方法与来源</summary><h3>重点读哪些条款</h3>${list(t.clauses)}<h3>研究字段建议</h3>${list(t.variables)}<h3>可检验的问题</h3>${list(t.questions)}<h3>候选方法及条件</h3>${list(t.methods)}<h3>容易混淆的地方</h3>${list(t.pitfalls)}<h3>官方文件与来源</h3><ul>${t.source_ids.map(id=>refs[id]).filter(Boolean).map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>（${s.year}，${esc(s.issuer)}）<br><small>${esc(s.note)}</small></li>`).join('')}</ul><p class="meta">${esc(t.note)}</p></details><p><a href="${esc(t.guide)}">阅读方法或深度指南 ↗</a></p></article>`).join('')||'<p>没有匹配主题，请更换关键词。</p>';}
+$('#policySearch').oninput=render;$('#policyGroup').onchange=render;render();}catch{$('#policyCount').textContent='政策资料未载入，请通过网站或本地HTTP预览打开。';}
+})();

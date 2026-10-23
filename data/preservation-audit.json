@@ -1,0 +1,57 @@
+{
+  "baseline_commit": "c7b390a",
+  "comparison": "已检索的旧站材料与当前整合版",
+  "checked": "2026-10-23",
+  "collections": [
+    {
+      "collection": "SKILLS",
+      "before": 12,
+      "after": 27,
+      "missing": []
+    },
+    {
+      "collection": "METHODS",
+      "before": 54,
+      "after": 89,
+      "missing": []
+    },
+    {
+      "collection": "DATA_SOURCES",
+      "before": 25,
+      "after": 25,
+      "missing": []
+    },
+    {
+      "collection": "SCHOOLS",
+      "before": 12,
+      "after": 12,
+      "missing": []
+    },
+    {
+      "collection": "JOURNALS",
+      "before": 48,
+      "after": 48,
+      "missing": []
+    },
+    {
+      "collection": "TOP_JOURNALS",
+      "before": 19,
+      "after": 19,
+      "missing": []
+    },
+    {
+      "collection": "THEORIES",
+      "before": 34,
+      "after": 34,
+      "missing": []
+    },
+    {
+      "collection": "CSSCI_PAPERS_ARCHIVE",
+      "before": 100,
+      "after": 100,
+      "missing": []
+    }
+  ],
+  "missing_old_tracked_files": [],
+  "note": "检查文件与原站结构化条目保留情况，不代表所有云端附件或全文都已下载。"
+}

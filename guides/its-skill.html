@@ -1,0 +1,463 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skill：间断时间序列助手（ITS 政策效果评估，Stata / R） · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/its-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">用途</a></li>
+<li><a href="#_2">适用范围（明确边界）</a></li>
+<li><a href="#_3">软件准备</a></li>
+<li><a href="#7">工作流程总览（7 步）</a><ul>
+<li><a href="#1">第 1 步：适用条件与研究设计（含数据要求与模拟数据）</a></li>
+<li><a href="#2">第 2 步：分段回归模型</a></li>
+<li><a href="#3">第 3 步：自相关处理</a></li>
+<li><a href="#4-stata-r">第 4 步：模型估计：Stata 与 R 实现（对照）</a></li>
+<li><a href="#5">第 5 步：图形呈现（原始序列 + 拟合 + 反事实）</a></li>
+<li><a href="#6">第 6 步：稳健性与检验</a></li>
+<li><a href="#7_1">第 7 步：报告清单</a></li>
+</ul>
+</li>
+<li><a href="#_4">常见错误清单</a></li>
+<li><a href="#its">输出格式（ITS 报告模板）</a></li>
+<li><a href="#_5">使用提示</a></li>
+<li><a href="#citation">引用 / Citation</a></li>
+</ul>
+</div>
+</aside><article><h1 id="skillits-stata-r">Skill：间断时间序列助手（ITS 政策效果评估，Stata / R）</h1>
+<p><strong>版本</strong> 1.0 · <strong>作者</strong> 杜思娴 (Du Sixian) · <strong>许可</strong> MIT · <strong>更新</strong> 2026-10-23</p>
+<h2 id="_1">用途</h2>
+<p>一份可复用的「间断时间序列分析（Interrupted Time Series, ITS）」工作流：用于评估<strong>单一地区/机构在某个明确时点实施的政策</strong>（如医保支付方式改革、药品集中带量采购落地、抗菌药物专项整治「限抗令」等）对结局时间序列的<strong>即时水平变化与趋势变化</strong>。内容覆盖研究设计与数据要求、分段回归模型、自相关处理、Stata（<code>newey</code> / <code>itsa</code>）与 R（<code>lm</code> + <code>NeweyWest</code>）的估计对照、拟合与反事实作图、稳健性检验（安慰剂时点、季节调整、控制组 ITS、异常值敏感性）与报告清单。<strong>每一步都给出「方法 + 代码」</strong>，可直接作为提示词喂给大语言模型，也可作为操作手册照做。</p>
+<p><strong>贯穿全篇的示例场景</strong>：「某院 DRG 付费改革（第 25 个月起实施）对次均住院费用（月度序列）的影响」。第 1 步给出 Stata 与 R 两套完全可运行的模拟数据代码，数据为 48 个月 = 干预前 24 + 干预后 24，内置真实干预效应：<strong>即时水平变化 β2 = −600 元、斜率变化 β3 = −30 元/月</strong>（干预前趋势 β1 = −50 元/月、干预时点基线 β0 = 12000 元、AR(1) 误差 ρ = 0.3）。后续各步全部沿用这份数据。</p>
+<h2 id="_2">适用范围（明确边界）</h2>
+<p>允许：
+- 评估单一地区/机构在<strong>明确时点</strong>实施的政策对连续结局时间序列的效应（卫生政策评估、药物利用研究、医院管理、医保改革等）
+- 单组 ITS 与对照（双组）ITS（CITS）的分段回归设定、估计与作图
+- 自相关诊断（ACF / Durbin-Watson / Cumby-Huizinga / Breusch-Godfrey）与 Newey-West（HAC）标准误修正
+- 安慰剂时点、季节调整、异常值敏感性等稳健性检验</p>
+<p><strong>不允许：</strong>
+- 在干预<strong>无明确时点</strong>（政策渐进落地、长期渐变）时硬性切割时间轴冒充 ITS
+- 把单组 ITS 的关联结论直接当成强因果结论（无对照无法排除同期事件）
+- 本 Skill 聚焦<strong>连续结局的线性 ITS</strong>；计数结局（如月感染例数）需 Poisson / 负二项 ITS，方法同理、链接函数不同，需另查对应文献
+- 承诺结果一定可发表；不替代计量经济学教科书与期刊审稿要求（如要求 CITS、检验力分析等）</p>
+<h2 id="_3">软件准备</h2>
+<p>方法：Stata 17 及以上、R ≥ 4.2。Stata 侧 <code>newey</code> 为官方命令；<code>actest</code>、<code>itsa</code>、<code>estout</code> 来自 SSC；R 侧 <code>lmtest</code>（<code>coeftest</code>、<code>dwtest</code>、<code>bgtest</code>）、<code>sandwich</code>（<code>NeweyWest</code>）、<code>car</code>（<code>linearHypothesis</code>、<code>deltaMethod</code>）为核心包，<code>ggplot2</code>、<code>texreg</code> 为作图与出表备选。</p>
+<pre><code class="language-stata">* Stata（联网安装一次）
+ssc install actest, replace
+ssc install itsa,   replace
+ssc install estout, replace
+</code></pre>
+<pre><code class="language-r"># R
+install.packages(c(&quot;lmtest&quot;, &quot;sandwich&quot;, &quot;car&quot;, &quot;ggplot2&quot;, &quot;texreg&quot;))
+</code></pre>
+<h2 id="7">工作流程总览（7 步）</h2>
+<ol>
+<li>适用条件与研究设计（含数据要求与模拟数据）→ 2. 分段回归模型 → 3. 自相关处理 → 4. 模型估计（Stata <code>newey</code>/<code>itsa</code> 与 R <code>lm</code>+<code>NeweyWest</code> 对照）→ 5. 图形呈现（拟合 + 反事实）→ 6. 稳健性与检验 → 7. 报告清单。以下每一步均为「方法 + 代码」。</li>
+</ol>
+<hr />
+<h3 id="1">第 1 步：适用条件与研究设计（含数据要求与模拟数据）</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>何时用 ITS</strong>：① 干预在<strong>明确的单一（或少数）时点</strong>实施；② 干预前后各有<strong>连续、等间隔</strong>的时间序列（月度/季度/周度）；③ 结局在干预前已有可测的基线趋势；④ 有<strong>足够长的序列</strong>：经验上干预前后<strong>每段至少 8–12 个观测点</strong>（Wagner 等建议每段 ≥ 8 点才能可靠估计趋势；24 个点/段更稳）；⑤ 干预时点可精确对应序列中的某一期（本例：第 25 个月）。</li>
+<li><strong>数据要求</strong>：结局变量（次均费用，元）、时间变量（月）、干预指示变量；序列无重大缺失（缺失期需插补并说明）；异常值记录在案。</li>
+<li><strong>分段回归思想</strong>：把序列按干预时点切成两段，用一条带「断点」的回归同时估计——干预前的水平与趋势（β0、β1）、干预时的<strong>即时水平跳变</strong>（β2）与干预后的<strong>趋势改变</strong>（β3）。反事实（无干预会发生什么）由干预前趋势外推得到。</li>
+<li><strong>识别前提</strong>：单组 ITS 的主要威胁是<strong>同期混杂</strong>（同一时点发生的其他政策/事件），故第 6 步必做安慰剂检验；有对照地区/机构时应升级为 CITS。</li>
+</ul>
+<p><strong>代码</strong>（贯穿全篇的模拟数据；Stata 与 R 各一份，参数相同）：</p>
+<pre><code class="language-stata">* =====================================================================
+* 模拟数据：48 个月 = 干预前 24（第 1–24 月）+ 干预后 24（第 25–48 月）
+* 场景：某院 DRG 付费改革（第 25 个月实施）对次均住院费用（元）的影响
+* 内置真实干预效应：
+*   β0 = 12000（干预时点基线，元）  β1 = -50（干预前趋势，元/月）
+*   β2 = -600 （即时水平变化，元）  β3 = -30（斜率变化，元/月）
+* 误差：AR(1)，rho = 0.3，扰动标准差 200 元
+* =====================================================================
+clear all
+set seed 2026
+set obs 48
+gen time        = _n
+gen time_c      = time - 25               // 中心化：干预时点 = 0
+gen level       = time &gt;= 25              // 干预指示：第 25 个月起 = 1
+gen trend_after = time_c * level          // 干预后斜率增量（干预前恒为 0）
+
+* AR(1) 误差
+gen e = rnormal(0, 200)
+forvalues t = 2/48 {
+    replace e = 0.3 * e[_n-1] + rnormal(0, 200) if time == `t'
+}
+
+* 结局：次均住院费用（元）
+gen y = 12000 - 50*time_c - 600*level - 30*trend_after + e
+
+tsset time
+twoway (line y time), xline(24.5, lpattern(dash)) ///
+    title(&quot;模拟月度序列：次均住院费用&quot;) ytitle(&quot;元&quot;) xtitle(&quot;月份&quot;)
+</code></pre>
+<pre><code class="language-r"># =====================================================================
+# 模拟数据（与 Stata 版同参数；随机数实现不同，不影响示例）
+# =====================================================================
+set.seed(2026)
+n           &lt;- 48
+time        &lt;- 1:n
+time_c      &lt;- time - 25                 # 中心化：干预时点 = 0
+level       &lt;- as.numeric(time &gt;= 25)    # 干预指示：第 25 个月起 = 1
+trend_after &lt;- time_c * level            # 干预后斜率增量
+
+# AR(1) 误差：rho = 0.3，扰动 sd = 200
+e &lt;- as.numeric(arima.sim(model = list(ar = 0.3), n = n, sd = 200))
+
+# 结局：次均住院费用（元），内置真实效应
+y &lt;- 12000 - 50*time_c - 600*level - 30*trend_after + e
+
+dat &lt;- data.frame(time, time_c, level, trend_after, y)
+plot(y ~ time, data = dat, type = &quot;o&quot;, pch = 16, cex = 0.7,
+     main = &quot;模拟月度序列：次均住院费用&quot;, xlab = &quot;月份&quot;, ylab = &quot;元&quot;)
+abline(v = 24.5, lty = 2, col = &quot;gray50&quot;)
+</code></pre>
+<hr />
+<h3 id="2">第 2 步：分段回归模型</h3>
+<p><strong>方法</strong>：</p>
+<p>分段回归（segmented regression）模型：</p>
+<p>Y_t = β0 + β1·time_c + β2·level + β3·trend_after + ε_t</p>
+<ul>
+<li><strong>β0</strong>：干预时点处（time_c = 0）的反事实基线——若无干预，干预时点的期望结局水平；</li>
+<li><strong>β1</strong>：<strong>干预前斜率</strong>（干预前每月平均变化，元/月）；</li>
+<li><strong>β2</strong>：<strong>即时水平变化</strong>（level change）——干预时点的一次性跃变（元）；</li>
+<li><strong>β3</strong>：<strong>斜率变化</strong>（trend change）——干预后斜率与干预前斜率之差（元/月）；</li>
+<li>干预后总斜率 = β1 + β3；干预后第 k 个月相对反事实的总效应 = β2 + k·β3（本例期末第 48 个月 k = 23 → 真实总效应 = −600 + 23×(−30) = −1290 元）。</li>
+</ul>
+<p><strong>中心化的写法与意义</strong>：<code>time_c = time − 25</code>，使干预时点对应 0。此时 β2 直接就是「干预时点的即时效应」。若用未中心化的 time 与 <code>time × level</code> 交互项，β2 变成「time = 0 处的跃变」，真实即时效应要算成 β2 + t0·β3，且 level 与趋势项共线性更强。中心化既便于解读，也降低共线性。</p>
+<p><strong>代码</strong>（先跑普通 OLS 预览系数方向；标准误问题在第 3 步处理）：</p>
+<pre><code class="language-stata">* 中心化版本（推荐）：β2 直接 = 干预时点即时效应
+regress y time_c level trend_after
+* 预计：_b[level] ≈ -600、_b[trend_after] ≈ -30（样本有噪声）
+
+* 对照：未中心化版本（time 与 time*level 交互）
+gen time_level = time * level
+regress y time level time_level
+* 此时 level 系数不再等于干预时点效应（是 time=0 处的跃变），须用组合计算
+</code></pre>
+<pre><code class="language-r"># 中心化版本（推荐）
+m0 &lt;- lm(y ~ time_c + level + trend_after, data = dat)
+summary(m0)
+# 预计：level ≈ -600、trend_after ≈ -30（样本有噪声）
+
+# 组合效应（第 3 步换 HAC 协方差后正式报告）
+library(car)
+linearHypothesis(m0, &quot;time_c + trend_after = 0&quot;)   # 干预后总斜率（β1+β3）
+deltaMethod(m0, &quot;level + 23*trend_after&quot;)          # 期末（time_c=23）总效应
+</code></pre>
+<hr />
+<h3 id="3">第 3 步：自相关处理</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li>月度结局几乎总存在<strong>残差自相关</strong>（相邻月高度相关）。OLS 系数仍无偏，但<strong>标准误有偏</strong>，t/p 值不可信，必须处理。</li>
+<li><strong>诊断</strong>：残差时序图 + ACF 图；一阶自相关用 Durbin-Watson（≈2 表示无一阶自相关；模型含滞后因变量时 DW 失效）；一般/高阶自相关用 Cumby-Huizinga（Stata <code>actest</code>）或 Breusch-Godfrey LM（R <code>bgtest</code>）。</li>
+<li><strong>处理方式</strong>（三选一或组合，主流是 ①）：
+  ① <strong>Newey-West / HAC 标准误</strong>：只修正推断，不改系数（推荐首选）；
+  ② <strong>AR(1) 建模</strong>：Prais-Winsten（Stata <code>prais</code>）/ R <code>gls + corAR1</code>，显式建模误差结构；
+  ③ 滞后因变量（<code>itsa</code> 的 <code>lag(#)</code>）：属动态模型，系数解释随之改变，慎用。</li>
+<li><strong>滞后阶数选择</strong>：太少 → 残留自相关；太多 → 效率损失。Stata <code>newey</code> 默认 m = floor(4(T/100)^(2/9))（T = 48 → 3）；小样本常取 lag(1)–lag(3)，报告阶数并做敏感性。R <code>NeweyWest()</code> 默认自动带宽（<code>prewhite = TRUE</code>）；与 Stata <code>lag(1)</code> 对照时用 <code>lag = 1, prewhite = FALSE</code>。</li>
+<li>先确认序列平稳：<code>dfuller y, trend</code>（ADF 检验）；存在单位根时需差分或 ARIMA-ITS，超出线性 ITS 框架。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* ① 残差诊断
+regress y time_c level trend_after
+predict r, residuals
+tsline r, yline(0) title(&quot;残差时序图&quot;)
+ac r, lags(12) title(&quot;残差 ACF&quot;)
+
+estat dwatson                    // Durbin-Watson（一阶）
+actest, lags(4)                  // Cumby-Huizinga 一般检验（SSC；选项以 help actest 为准）
+wntestq r, lags(4)               // Ljung-Box Q 检验
+
+* 平稳性检查（结局本身）
+dfuller y, trend
+
+* ② Newey-West / HAC 标准误
+newey y time_c level trend_after, lag(1)
+* 默认滞后 = floor(4*(T/100)^(2/9))（T=48 → 3）；建议对 lag(1)–lag(4) 做敏感性
+
+* ③ 备选：Prais-Winsten AR(1)（选项以 help prais 为准）
+prais y time_c level trend_after, rhotype(tscorr)
+</code></pre>
+<pre><code class="language-r"># ① 残差诊断
+m0 &lt;- lm(y ~ time_c + level + trend_after, data = dat)
+plot(resid(m0), type = &quot;o&quot;, pch = 16, cex = 0.7,
+     xlab = &quot;月份&quot;, ylab = &quot;残差&quot;); abline(h = 0)
+acf(resid(m0), lag.max = 12, main = &quot;残差 ACF&quot;)
+
+library(lmtest)
+dwtest(m0)                    # Durbin-Watson（一阶）
+bgtest(m0, order = 4)         # Breusch-Godfrey LM（高阶）
+
+# ② Newey-West / HAC 标准误
+library(sandwich)
+summary(m0)                                                    # 普通 SE（参考）
+coeftest(m0, vcov = NeweyWest(m0, lag = 1, prewhite = FALSE))  # HAC SE，lag 固定为 1
+coeftest(m0, vcov = NeweyWest(m0))                             # 默认：自动带宽 + prewhite
+# 注：NeweyWest 默认 prewhite = TRUE 且自动选带宽；与 Stata lag(1) 对照时
+#     用 lag = 1, prewhite = FALSE（以 help(NeweyWest) 为准）
+
+# ③ 备选：AR(1) 误差模型（nlme）
+library(nlme)
+g1 &lt;- gls(y ~ time_c + level + trend_after, data = dat,
+          correlation = corAR1(form = ~ time))
+summary(g1)
+</code></pre>
+<hr />
+<h3 id="4-stata-r">第 4 步：模型估计：Stata 与 R 实现（对照）</h3>
+<p><strong>方法</strong>：</p>
+<p>以下三个实现估计的是<strong>同一个分段回归</strong>，结果应几乎一致（本例应得到 β2 ≈ −600、β3 ≈ −30，真实参数见第 1 步）：</p>
+<table>
+<thead>
+<tr>
+<th>实现</th>
+<th>命令</th>
+<th>标准误</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stata 手动</td>
+<td><code>newey y time_c level trend_after, lag(1)</code></td>
+<td>Newey-West（用户指定滞后）</td>
+</tr>
+<tr>
+<td>Stata <code>itsa</code></td>
+<td><code>itsa y, single treatperiod(25) posttrend</code></td>
+<td>OLS + Newey-West（默认）</td>
+</tr>
+<tr>
+<td>R</td>
+<td><code>lm</code> + <code>coeftest(NeweyWest(...))</code></td>
+<td>HAC（可指定滞后）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意</strong>：<code>itsa</code> 的 <code>lag(#)</code> 是<strong>滞后因变量</strong>阶数（动态模型），与 <code>newey</code> 的 HAC <code>lag(#)</code> 含义不同；要得到与手动分段回归相同的模型，<code>itsa</code> 用默认 <code>lag(0)</code> + <code>posttrend</code>。<code>itsa</code> 会自动生成时间/水平/趋势变量（命名形如 <code>_t</code>、<code>_x_t25</code> 等，运行后 <code>browse</code> 可查看）；<code>prais</code> 选项改用 Prais-Winsten；<code>figure</code> 选项直接出含反事实的图。<strong>语法与输出以 <code>help itsa</code> 为准。</strong></p>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* ============ 4.1 手动分段回归 + Newey-West ============
+newey y time_c level trend_after, lag(1) force
+* 注：任务书简写 newey y time level trend, lag(1) force；此处 time 为干预时点
+*     中心化的 time_c；force 允许未 tsset 的数据仍按时间序列估计（已 tsset 可省略）
+estimates store its_manual
+
+* 组合效应（HAC 标准误下的线性组合检验）
+lincom time_c + trend_after              // 干预后总斜率（β1+β3）
+lincom level + 23*trend_after            // 期末（第 48 月）总效应（β2+23·β3）
+
+* ============ 4.2 itsa 命令（SSC，Ariel Linden）============
+* ssc install itsa, replace
+itsa y, single treatperiod(25) posttrend
+* 注：任务书示例写法 itsa y, single treat(25) 中的选项名，实际对应
+*     treatperiod(25)，以 help itsa 为准；itsa 默认 OLS + Newey-West 标准误。
+* 带滞后因变量的动态版本：itsa y, single treatperiod(25) lag(1) posttrend
+* 出图：itsa y, single treatperiod(25) posttrend figure
+</code></pre>
+<pre><code class="language-r"># ============ R：lm + NeweyWest，与 Stata 对照 ============
+m &lt;- lm(y ~ time_c + level + trend_after, data = dat)
+
+summary(m)                                                    # 普通 SE（参考）
+tab_hac &lt;- coeftest(m, vcov = NeweyWest(m, lag = 1, prewhite = FALSE))
+print(tab_hac)                                                # HAC SE
+coefci(tab_hac)                                               # 基于 HAC 的 95% CI
+
+# 组合效应（HAC 协方差下的线性组合与 delta 方法）
+linearHypothesis(m, &quot;time_c + trend_after = 0&quot;,
+                 vcov. = NeweyWest(m, lag = 1, prewhite = FALSE))   # 干预后总斜率
+deltaMethod(m, &quot;level + 23*trend_after&quot;,
+            vcov. = NeweyWest(m, lag = 1, prewhite = FALSE))         # 期末总效应
+</code></pre>
+<hr />
+<h3 id="5">第 5 步：图形呈现（原始序列 + 拟合 + 反事实）</h3>
+<p><strong>方法</strong>：</p>
+<p>一张规范的 ITS 图含四要素：① 原始观测序列（散点/线）；② 分段拟合线（干预前后两段）；③ <strong>反事实虚线</strong>（无干预时干预前趋势的外推：ŷ_cf = β̂0 + β̂1·time_c）；④ 干预时点竖线。反事实线与拟合线之间的「缺口」是 β2 的视觉表达，两线斜率之差是 β3。</p>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">newey y time_c level trend_after, lag(1)
+predict yhat, xb
+gen yhat_cf = _b[_cons] + _b[time_c]*time_c       // 反事实：延续干预前趋势
+
+twoway (scatter y time, msize(small) mcolor(gs8)) ///
+       (line yhat time, lcolor(navy) lwidth(medthick)) ///
+       (line yhat_cf time if time &gt;= 25, lcolor(red) lpattern(dash) lwidth(medthick)) ///
+       , xline(24.5, lcolor(gs10) lpattern(dash)) ///
+         xtitle(&quot;月份&quot;) ytitle(&quot;次均费用（元）&quot;) ///
+         title(&quot;ITS：DRG 改革对次均住院费用的影响&quot;) ///
+         legend(order(1 &quot;观测值&quot; 2 &quot;模型拟合&quot; 3 &quot;反事实（无干预）&quot;) position(6) rows(1))
+</code></pre>
+<pre><code class="language-r"># R（基础包）
+m &lt;- lm(y ~ time_c + level + trend_after, data = dat)
+dat$fit &lt;- fitted(m)
+b &lt;- coef(m)
+dat$cf  &lt;- b[&quot;(Intercept)&quot;] + b[&quot;time_c&quot;] * dat$time_c     # 反事实
+
+plot(y ~ time, data = dat, type = &quot;o&quot;, pch = 16, cex = 0.7, col = &quot;gray50&quot;,
+     main = &quot;ITS：DRG 改革对次均住院费用的影响&quot;,
+     xlab = &quot;月份&quot;, ylab = &quot;次均费用（元）&quot;)
+abline(v = 24.5, lty = 3, col = &quot;gray40&quot;)
+lines(dat$time, dat$fit, col = &quot;navy&quot;, lwd = 2)
+lines(dat$time[dat$time &gt;= 25], dat$cf[dat$time &gt;= 25], col = &quot;red&quot;, lwd = 2, lty = 2)
+legend(&quot;bottomleft&quot;, legend = c(&quot;观测值&quot;, &quot;模型拟合&quot;, &quot;反事实（无干预）&quot;),
+       col = c(&quot;gray50&quot;, &quot;navy&quot;, &quot;red&quot;), lty = c(1, 1, 2),
+       lwd = c(1, 2, 2), bty = &quot;n&quot;)
+
+# ggplot2 等价写法（ggplot2 ≥ 3.4 用 linewidth，低版本用 size）
+library(ggplot2)
+ggplot(dat, aes(time, y)) +
+  geom_point(colour = &quot;grey50&quot;) +
+  geom_vline(xintercept = 24.5, linetype = 3) +
+  geom_line(aes(y = fit), colour = &quot;navy&quot;, linewidth = 1) +
+  geom_line(data = subset(dat, time &gt;= 25), aes(y = cf),
+            colour = &quot;red&quot;, linetype = 2, linewidth = 1) +
+  labs(x = &quot;月份&quot;, y = &quot;次均费用（元）&quot;,
+       title = &quot;ITS：DRG 改革对次均住院费用的影响&quot;) +
+  theme_minimal()
+</code></pre>
+<hr />
+<h3 id="6">第 6 步：稳健性与检验</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>6.1 安慰剂时点</strong>（in-time placebo）：把干预时点<strong>前移</strong>到干预前某期（如第 13 个月，该处并无真实干预），重估模型。若此时 β2、β3 仍「显著」，说明断点效应可能来自模型设定而非政策；<strong>期望结果：安慰剂时点的水平与斜率变化接近 0 且不显著</strong>。</li>
+<li><strong>6.2 季节性与混杂</strong>：加入月度虚拟变量（或正弦/余弦 Fourier 对）吸收季节成分；同时把已知混杂事件作为对照时点做同样分析。核心系数稳定则结论稳健。</li>
+<li><strong>6.3 控制组 ITS（CITS）</strong>：有未受干预的对照地区/机构时，用「干预组 × 时点」交互项识别政策效应（DID 型设定），能控制同期共同冲击。Stata 用 <code>itsa</code> 双组语法（<code>treatid()</code>），或手动全交互模型；R 用 <code>lm</code> 交互项。</li>
+<li><strong>6.4 异常值敏感性</strong>：1%/99% 缩尾（或剔除极端月）后重估，检查系数稳定性。</li>
+<li>补充：滞后阶数敏感性（lag(1)–lag(4)）与不同自相关处理（HAC vs Prais-Winsten）的比较。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* ---- 6.1 安慰剂时点：假设干预发生在第 13 个月（实际无干预）----
+gen time_c13 = time - 13
+gen level13  = time &gt;= 13
+gen trend13  = time_c13 * level13
+newey y time_c13 level13 trend13, lag(1)
+* 期望：level13、trend13 系数接近 0 且不显著
+
+* ---- 6.2 季节性：加入月度虚拟变量（参考月 = 1 月）----
+gen month = mod(time - 1, 12) + 1
+tab month, gen(md)                          // 生成 md1–md12
+newey y time_c level trend_after md2-md12, lag(1)
+* 期望：β2、β3 与主模型接近（以实际结果为准）
+
+* ---- 6.3 控制组 ITS（CITS）：双地区面板示意 ----
+* 面板长表：id（地区）、time、y；treat = 1（干预地区，第 25 个月起受干预）
+* 多组 itsa（语法与选项以 help itsa 为准）：
+*     xtset id time
+*     itsa y, treatperiod(25) treatid(treat) posttrend
+* 手动 DID 型交互模型（示意）：
+gen t_c   = time - 25
+gen lev   = time &gt;= 25
+gen tr_a  = t_c * lev
+gen g_lev = treat * lev        // 水平变化的组间差（政策即时效应，DID）
+gen g_tr  = treat * tr_a       // 斜率变化的组间差（政策趋势效应，DID）
+newey y t_c treat lev tr_a g_lev g_tr, lag(1)
+* 关键系数：g_lev（相对对照组的即时水平变化）、g_tr（相对对照组的斜率变化）
+
+* ---- 6.4 异常值敏感性：1%/99% 缩尾 ----
+quietly summarize y, detail
+gen y_w = min(max(y, r(p1)), r(p99))
+newey y_w time_c level trend_after, lag(1)
+</code></pre>
+<pre><code class="language-r"># ---- 6.1 安慰剂时点：假设干预发生在第 13 个月 ----
+dat$time_c13 &lt;- dat$time - 13
+dat$level13  &lt;- as.numeric(dat$time &gt;= 13)
+dat$trend13  &lt;- dat$time_c13 * dat$level13
+m_placebo &lt;- lm(y ~ time_c13 + level13 + trend13, data = dat)
+coeftest(m_placebo, vcov = NeweyWest(m_placebo, lag = 1, prewhite = FALSE))
+# 期望：level13、trend13 接近 0 且不显著
+
+# ---- 6.2 季节性：加入月度虚拟变量 ----
+dat$month &lt;- factor(((dat$time - 1) %% 12) + 1)
+m_season &lt;- lm(y ~ time_c + level + trend_after + month, data = dat)
+coeftest(m_season, vcov = NeweyWest(m_season, lag = 1, prewhite = FALSE))
+# 更平滑的季节建模可用正弦/余弦对（Fourier terms），以数据周期为准
+
+# ---- 6.3 控制组 ITS（CITS）：面板数据交互项 ----
+# 面板长表 panel：id、time、y、treat（1 = 干预地区）
+panel$t_c  &lt;- panel$time - 25
+panel$lev  &lt;- as.numeric(panel$time &gt;= 25)
+panel$tr_a &lt;- panel$t_c * panel$lev
+m_cits &lt;- lm(y ~ t_c + treat + lev + tr_a + treat:lev + treat:tr_a, data = panel)
+coeftest(m_cits, vcov = NeweyWest(m_cits, lag = 1, prewhite = FALSE))
+# 政策效应 = treat:lev（即时）与 treat:tr_a（斜率）的系数
+
+# ---- 6.4 异常值敏感性：1%/99% 缩尾 ----
+q &lt;- quantile(dat$y, c(0.01, 0.99))
+dat$y_w &lt;- pmin(pmax(dat$y, q[1]), q[2])
+m_w &lt;- lm(y_w ~ time_c + level + trend_after, data = dat)
+coeftest(m_w, vcov = NeweyWest(m_w, lag = 1, prewhite = FALSE))
+</code></pre>
+<hr />
+<h3 id="7_1">第 7 步：报告清单</h3>
+<p><strong>方法</strong>：一篇 ITS 论文/报告至少报告以下七项——① 序列描述（时间区间、总点数、前后各段点数、结局定义与单位、均值/SD、缺失与异常值处理）；② 模型设定（公式、中心化说明）；③ 模型表（β0–β3 及 HAC 标准误、95% CI、p 值）；④ 自相关处理说明（检验结果与滞后阶数选择依据）；⑤ 图（原始序列 + 拟合 + 反事实 + 时点线）；⑥ 稳健性结果（安慰剂、季节、异常值、CITS 若有）；⑦ 局限（单组设计、同期事件、检验力）。</p>
+<p><strong>代码</strong>（出表）：</p>
+<pre><code class="language-stata">* 主表：HAC 标准误（esttab，SSC estout）
+newey y time_c level trend_after, lag(1)
+estimates store its_main
+esttab its_main, b(%9.2f) se(%9.2f) p(%9.3f) stats(N r2, fmt(%9.0f %9.3f)) ///
+    title(&quot;表 1：ITS 分段回归（Newey-West 标准误，lag(1)）&quot;) ///
+    addnotes(&quot;干预时点：第 25 个月；time_c 为干预时点中心化的月份。&quot;)
+</code></pre>
+<pre><code class="language-r"># 主表：用 HAC 标准误覆盖（texreg；以包文档为准）
+library(texreg)
+hac_se &lt;- sqrt(diag(NeweyWest(m, lag = 1, prewhite = FALSE)))
+screenreg(m, override.se = hac_se,
+          custom.model.names = &quot;ITS 分段回归（HAC 标准误）&quot;)
+</code></pre>
+<hr />
+<h2 id="_4">常见错误清单</h2>
+<ul>
+<li>[ ] 忽略残差自相关，直接用普通 OLS 标准误 → SE/t/p 失真（务必 HAC 或 AR(1) 建模）</li>
+<li>[ ] 干预前后数据点太少（每段 &lt; 8–12 个）→ 趋势估计不稳、检验力不足</li>
+<li>[ ] 把「即时水平变化（β2）」与「斜率变化（β3）」混为一谈（β3 是每月增量，不是一次性变化）</li>
+<li>[ ] 未做安慰剂时点检验就宣称效应来自政策</li>
+<li>[ ] 不报告 Newey-West 滞后阶数及选择依据（规则、敏感性）</li>
+<li>[ ] 未检查/处理季节性与同期混杂（同期其他政策、疫情、报销政策变动）</li>
+<li>[ ] 时间变量未中心化，却把 level 系数直接解读为「干预即时效应」（未中心化时该系数含义不同）</li>
+<li>[ ] 混淆 <code>itsa</code> 的 <code>lag(#)</code>（滞后因变量，动态模型）与 <code>newey</code> 的 <code>lag(#)</code>（HAC 带宽）</li>
+<li>[ ] 序列存在单位根（不平稳）仍直接回归，出现伪回归</li>
+<li>[ ] 用拟合线做长期外推预测，把样本内效应当成未来趋势</li>
+<li>[ ] 单组 ITS 无对照却做强因果断言，未讨论同期事件与历史威胁</li>
+<li>[ ] 干预时点定义含糊（政策渐进落地却硬按某时点切割），或时点与政策实际生效日不符</li>
+</ul>
+<h2 id="its">输出格式（ITS 报告模板）</h2>
+<pre><code>【研究设计与数据】
+结局（次均住院费用，元/次）与时间单位（月）；序列区间（20XX 年 X 月–20XX 年 X 月，
+共 48 个月）；干预（DRG 付费改革）与实施时点（第 25 个月）；干预前后各 24 个月；
+数据来源、缺失/插补、异常值处理。
+模型：Y = β0 + β1·time_c + β2·level + β3·trend_after + ε；time_c 为干预时点中心化。
+
+【主要结果】
+- 序列描述：均值、SD、干预前趋势（β1）与干预时点基线（β0）。
+- 自相关诊断：残差 ACF、DW / actest（或 BG）结果 → 采用 Newey-West 修正的理由。
+- 表 1：ITS 分段回归（β0–β3，HAC 标准误、95% CI、p 值；注明滞后阶数及选择依据）。
+- 效应解读：β2 = 即时水平变化（元）；β3 = 斜率变化（元/月）；
+  干预后总斜率 = β1 + β3；期末总效应 = β2 + k·β3（注明 k）。
+- 图 1：原始序列 + 分段拟合 + 反事实虚线 + 干预时点竖线。
+
+【稳健性检验】
+- 表 2：安慰剂时点（第 X 个月）结果：β2、β3 应接近 0；
+- 季节调整（月度虚拟/Fourier）后核心系数变化；
+- 异常值敏感性（1%/99% 缩尾）；
+- CITS（如有对照）：treat:level 与 treat:trend_after 交互项系数。
+
+【结论与局限】
+- 政策含义：方向、大小、持续时间（如「DRG 改革使次均费用即时下降约 600 元，
+  且此后每月多降约 30 元」）。
+- 局限：单组设计无法排除同期事件；自相关结构与滞后选择；序列长度与检验力；
+  单一机构结果的外部效度。
+</code></pre>
+<h2 id="_5">使用提示</h2>
+<ul>
+<li>命令与选项随版本更新：运行 <code>help newey</code>、<code>help itsa</code>、<code>help actest</code>、<code>help prais</code>、<code>help esttab</code> 核对；R 侧看 <code>help(NeweyWest)</code>、<code>help(coeftest)</code>、<code>help(deltaMethod)</code>。</li>
+<li><code>itsa</code> 的语法与输出<strong>以 <code>help itsa</code> 为准</strong>；任务书简写 <code>itsa y, single treat(25)</code> 对应实际选项 <code>treatperiod(25)</code>。</li>
+<li>Newey-West 滞后：Stata <code>newey</code> 默认 m = floor(4(T/100)^(2/9))（T = 48 → 3）；小样本常用 lag(1)–lag(3)，<strong>报告阶数并做敏感性分析</strong>；R 的 <code>NeweyWest()</code> 默认自动带宽（prewhite = TRUE），与 Stata 对照时用 <code>lag = 1, prewhite = FALSE</code>。</li>
+<li>建议同时报告普通 SE 与 HAC SE，直观展示自相关的严重程度。</li>
+<li>动手顺序：先画序列图、确认干预时点与异常值 → 再定模型 → 诊断自相关 → 主分析 → 稳健性。</li>
+<li>本 Skill 提供方法与代码模板；干预时点判定、混杂判断与最终结论由研究者负责。</li>
+</ul>
+<hr />
+<h2 id="citation">引用 / Citation</h2>
+<p>中文：杜思娴. 间断时间序列助手：ITS 政策效果评估 Skill [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.</p>
+<p>English: Du, S. (2026). <em>Interrupted Time Series Assistant: ITS for health policy evaluation skill</em> [Skill definition]. https://naturedu.github.io/socialmedicine/.</p>
+<p>建议阅读方法学文献：</p>
+<ul>
+<li>Bernal, J. L., Cummins, S., &amp; Gasparrini, A. (2017). Interrupted time series regression for the evaluation of public health interventions: a tutorial. <em>International Journal of Epidemiology</em>, 46(1), 348–355.</li>
+<li>Linden, A. (2015). Conducting interrupted time-series analysis for single- and multiple-group comparisons. <em>The Stata Journal</em>, 15(2), 480–500.</li>
+<li>Wagner, A. K., Soumerai, S. B., Zhang, F., &amp; Ross-Degnan, D. (2002). Segmented regression analysis of interrupted time series studies in medication use research. <em>Journal of Clinical Pharmacy and Therapeutics</em>, 27(4), 299–309.</li>
+<li>Ramsay, C. R., Matowe, L., Grilli, R., Grimshaw, J. M., &amp; Thomas, R. E. (2003). Interrupted time series designs in health technology assessment: lessons from two systematic reviews of behavior change strategies. <em>International Journal of Technology Assessment in Health Care</em>, 19(4), 613–623.</li>
+</ul><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

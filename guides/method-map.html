@@ -1,0 +1,112 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>🧭 方法逻辑地图：从问题走到模型 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/method-map.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">第一步：你希望得到什么</a></li>
+<li><a href="#_3">第二步：把目标写成一句话</a></li>
+<li><a href="#_4">第三步：检查数据与设计</a></li>
+<li><a href="#_5">第四步：沿着合适的分叉前进</a></li>
+<li><a href="#_6">第五步：让诊断决定能解释多远</a></li>
+<li><a href="#_7">最后交付一张模型说明卡</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">🧭 方法逻辑地图：从问题走到模型</h1>
+<h2 id="_2">第一步：你希望得到什么</h2>
+<table>
+<thead>
+<tr>
+<th>研究目的</th>
+<th>下一步</th>
+<th>常见路线</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>描述分布/差异</td>
+<td>样本能代表谁？结局怎么测？</td>
+<td>抽样、标化、描述与区间</td>
+</tr>
+<tr>
+<td>解释政策/干预效果</td>
+<td>谁接受了什么策略？何时开始？</td>
+<td>TTE、PSM/IPW、DID/SDID、IV、RDD</td>
+</tr>
+<tr>
+<td>预测未来结局</td>
+<td>预测时点有哪些信息？如何独立验证？</td>
+<td>正则化、ML、校准、净获益</td>
+</tr>
+<tr>
+<td>探索分型与机制</td>
+<td>特征相似性或构念如何定义？</td>
+<td>聚类、潜类别、定性、SEM/fsQCA</td>
+</tr>
+<tr>
+<td>综合既有证据</td>
+<td>分析单位是原始研究还是综述？</td>
+<td>Meta、网状Meta、伞状/范围综述</td>
+</tr>
+<tr>
+<td>资源配置与长期决策</td>
+<td>状态、历史、容量与互动如何运转？</td>
+<td>Markov、微观、DES、SD、ABM与PSA</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">第二步：把目标写成一句话</h2>
+<p>对〔目标人群〕，在〔时间窗〕比较〔策略A/B〕，估计〔风险差/均值差/ATT等〕；或在〔预测时点〕预测〔未来结局〕。不要把“找影响因素”“做一个高级模型”作为完整目标。</p>
+<h2 id="_4">第三步：检查数据与设计</h2>
+<ul>
+<li>暴露和结局谁先发生？是否有可核验的基线与处理日期？</li>
+<li>分析单位是患者、医院、城市、文件还是综述？重复/聚类发生在哪里？</li>
+<li>结局支持集、缺失、失访、竞争事件和抽样权重是什么？</li>
+<li>因果识别依赖什么：条件可交换、平行趋势、阈值连续性还是有效工具？哪些假设不能直接检验？</li>
+</ul>
+<h2 id="_5">第四步：沿着合适的分叉前进</h2>
+<table>
+<thead>
+<tr>
+<th>情境</th>
+<th>详细框架</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PSM、匹配、IPW、熵平衡</td>
+<td><a href="propensity-score-skill.html">目标→混杂→重叠→平衡→推断</a></td>
+</tr>
+<tr>
+<td>同时政策/交错政策/少量处理城市</td>
+<td><a href="did-skill.html">基础DID</a> · <a href="staggered-did-skill.html">交错DID</a> · <a href="advanced-causal-inference-skill.html">SDID/DML</a></td>
+</tr>
+<tr>
+<td>二元、费用、计数、面板与空间数据</td>
+<td><a href="econometric-modeling-skill.html">六步计量模型选型</a></td>
+</tr>
+<tr>
+<td>无标签探索患者或机构分型</td>
+<td><a href="clustering-analysis-skill.html">特征→距离→算法→类数→稳定性</a></td>
+</tr>
+<tr>
+<td>观察数据评价治疗策略</td>
+<td><a href="target-trial-emulation-skill.html">先写目标试验协议</a></td>
+</tr>
+<tr>
+<td>多干预比较/多综述总结</td>
+<td><a href="network-meta-analysis-skill.html">网状Meta</a> · <a href="umbrella-review-skill.html">伞状综述</a></td>
+</tr>
+<tr>
+<td>模型性能与政策情景</td>
+<td><a href="monte-carlo-simulation-skill.html">蒙特卡洛</a> · <a href="simulation-models-skill.html">模拟选型</a></td>
+</tr>
+<tr>
+<td>政策文本/医疗AI/公共队列</td>
+<td><a href="policy-text-analysis-skill.html">文本测量</a> · <a href="medical-ai-evaluation-skill.html">AI评价</a> · <a href="longitudinal-public-data-skill.html">纵向数据</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_6">第五步：让诊断决定能解释多远</h2>
+<p>平衡好不等于无混杂；趋势检验不显著不等于假设已证明；轮廓系数高不等于天然亚型；高AUC不等于临床获益；排序靠前不等于高确定性最佳干预；模拟重复多不等于结构正确。</p>
+<h2 id="_7">最后交付一张模型说明卡</h2>
+<p>研究问题｜估计目标｜数据结构｜识别假设｜模型与代码｜必要诊断｜结果尺度与区间｜敏感性｜适用边界。</p>
+<blockquote>
+<p>请按这张逻辑地图为我的研究选方法。先指出信息缺口，再比较有依据的路线，不按复杂程度和P值挑模型。</p>
+</blockquote><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

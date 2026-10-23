@@ -1,0 +1,510 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skill：DID 双重差分助手（卫生政策效果评估，Stata / R） · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/did-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">用途</a></li>
+<li><a href="#_2">适用范围（明确边界）</a></li>
+<li><a href="#_3">软件准备</a></li>
+<li><a href="#7">工作流程总览（数据准备 + 7 步）</a><ul>
+<li><a href="#0">第 0 步：生成贯穿全文的模拟面板数据</a></li>
+<li><a href="#1">第 1 步：研究设计与识别假设</a></li>
+<li><a href="#2-22-did">第 2 步：经典 2×2 DID</a></li>
+<li><a href="#3">第 3 步：平行趋势检验</a></li>
+<li><a href="#4-didcallaway-santanna-2021">第 4 步：多期 / 交错处理 DID（Callaway &amp; Sant'Anna, 2021）</a></li>
+<li><a href="#5">第 5 步：事件研究图</a></li>
+<li><a href="#6">第 6 步：稳健性检验</a></li>
+<li><a href="#7_1">第 7 步：报告清单</a></li>
+</ul>
+</li>
+<li><a href="#_4">常见错误清单</a></li>
+<li><a href="#_5">输出格式（政策评估报告模板）</a></li>
+<li><a href="#_6">使用提示</a></li>
+<li><a href="#citation">引用 / Citation</a></li>
+</ul>
+</div>
+</aside><article><h1 id="skilldid-stata-r">Skill：DID 双重差分助手（卫生政策效果评估，Stata / R）</h1>
+<p><strong>版本</strong> 1.0 · <strong>作者</strong> 杜思娴 (Du Sixian) · <strong>许可</strong> MIT · <strong>更新</strong> 2026-10-23</p>
+<h2 id="_1">用途</h2>
+<p>一份可复用的「双重差分（Difference-in-Differences, DID）」卫生政策评估工作流：从研究设计与识别假设、经典 2×2 DID 估计、平行趋势检验，到多期 / 交错处理 DID（Callaway &amp; Sant'Anna, 2021）与事件研究图，再到安慰剂检验、PSM-DID 等稳健性分析与政策评估报告。适用于医保目录调整、DRG/DIP 支付改革、药品集中采购、分级诊疗试点、慢病管理项目等卫生政策因果效应评估。<strong>每一步都给出「方法 + 代码」</strong>，可直接作为提示词喂给大语言模型，也可作为操作手册照做。</p>
+<p><strong>贯穿全文的示例场景</strong>：某地级市药品集中采购试点对<strong>次均药品费用（y）与住院率（adm）</strong>的影响。全文使用<strong>同一套自洽的模拟面板数据</strong>：60 个地区 × 4 期、30 个处理组（交错入组：10 个在 t=2、10 个在 t=3、10 个在 t=4 执行集采）、30 个永不受理对照组；数据生成过程内置<strong>真实 ATT = −150 元/期</strong>（次均药品费用）与 −0.02（住院率）。Stata 与 R 代码可直接复制运行。</p>
+<h2 id="_2">适用范围（明确边界）</h2>
+<p>允许：
+- 帮助研究者完成卫生政策评估的 DID 全流程（医保目录调整、DRG/DIP 支付改革、药品集中采购、分级诊疗试点、慢病管理项目等）
+- 给出 2×2 DID、多期 DID、交错处理 DID（Callaway–Sant'Anna）的估计、检验与作图代码
+- 平行趋势检验、安慰剂检验（伪处理组 / 伪时点）、剔除样本、PSM-DID、更换结局与聚类层级等稳健性分析</p>
+<p><strong>不允许：</strong>
+- 替研究者下「政策因果效应成立」的最终结论（DID 是基于假设的识别策略，需结合制度背景、数据与检验功效综合论证）
+- 承诺结果一定可发表；不替代计量经济学教科书与期刊审稿要求
+- 在未讨论平行趋势、共同冲击与溢出、未做稳健性检验的情况下武断下结论</p>
+<h2 id="_3">软件准备</h2>
+<p>方法：Stata 17 及以上（<code>didregress</code> / <code>xtdidregress</code> 需 17+；官方异质性 DID 命令 <code>hdidregress</code> / <code>xthdidregress</code> 需 18+；<code>csdid</code> / <code>csdid_plot</code> 是社区命令）、R ≥ 4.2（<code>fixest</code>、<code>did</code>、<code>MatchIt</code>、<code>ggplot2</code> 等）。SSC 安装 <code>csdid</code>、<code>drdid</code>、<code>reghdfe</code>、<code>coefplot</code>、<code>estout</code>、<code>ritest</code>、<code>psmatch2</code>；<code>csdid</code> 不是 Stata 自带命令，运行 <code>which csdid</code> 核对社区包版本；安装兼容性以当前帮助文件为准。</p>
+<pre><code class="language-stata">* Stata（联网安装一次）
+ssc install csdid,    replace    // 交错处理 DID（Callaway-Sant'Anna）
+ssc install drdid,    replace    // 双重稳健 DID（csdid 的依赖）
+ssc install reghdfe,  replace    // 高维固定效应（事件研究回归用）
+ssc install ftools,   replace    // reghdfe 的依赖
+ssc install coefplot, replace    // 系数图
+ssc install estout,   replace    // 结果表
+ssc install ritest,   replace    // 随机化推断（安慰剂检验备选）
+ssc install psmatch2, replace    // 倾向得分匹配
+</code></pre>
+<pre><code class="language-r"># R
+install.packages(c(&quot;fixest&quot;, &quot;did&quot;, &quot;MatchIt&quot;, &quot;ggplot2&quot;, &quot;cobalt&quot;, &quot;modelsummary&quot;))
+</code></pre>
+<h2 id="7">工作流程总览（数据准备 + 7 步）</h2>
+<ol start="0">
+<li>生成模拟面板数据 → 1. 研究设计与识别假设 → 2. 经典 2×2 DID → 3. 平行趋势检验 → 4. 多期 / 交错处理 DID（Callaway–Sant'Anna）→ 5. 事件研究图 → 6. 稳健性检验 → 7. 报告清单。以下每一步均为「方法 + 代码」。</li>
+</ol>
+<hr />
+<h3 id="0">第 0 步：生成贯穿全文的模拟面板数据</h3>
+<p><strong>方法</strong>：60 个地区（id = 1…60）、4 期（t = 1…4）。处理组 30 个、交错入组（队列 g：10 个 g=2、10 个 g=3、10 个 g=4），对照组 30 个永不受理（g=0）。数据生成过程（DGP）：</p>
+<p>y_it = α_i + β_i·(t−1) + λ_t + (−150)·D_it + ε_it</p>
+<ul>
+<li>α_i ~ N(900, 50)：地区固定效应（地区平均次均药品费用水平）</li>
+<li>β_i ~ N(−8, 4)：地区自身线性趋势</li>
+<li>λ_t = −30·(t−1)：共同时间趋势（如集采目录外药价下行、全国性控费）</li>
+<li>D_it = 1[t ≥ g_i]：处理指示（g_i = 0 为永不受理）</li>
+<li>ε_it ~ N(0, 40)</li>
+</ul>
+<p><strong>内置真实 ATT = −150</strong>：处理后每期次均药品费用下降 150 元，且各队列、各期效应同质——2×2、事件研究、Callaway–Sant'Anna 估计量都应回收 ≈ −150。次要结局 adm（住院率）真实效应 −0.02。协变量 x1、x2 为时不变地区特征（x1 与入选相关，供 PSM-DID 使用）。</p>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* ============================================================
+* 模拟面板：60 地区 × 4 期；30 个处理组交错入组；真实 ATT = -150
+* ============================================================
+clear all
+set seed 2026
+set obs 60
+gen id = _n
+* 处理时点 g（0 = 永不受理）
+gen g = 0
+replace g = 2 if inrange(id, 1, 10)
+replace g = 3 if inrange(id, 11, 20)
+replace g = 4 if inrange(id, 21, 30)
+gen treated = (g &gt; 0)
+* 地区特征（时不变）：固定效应、自身趋势、可观测协变量
+gen alpha = rnormal(900, 50)        // 地区平均次均费用水平
+gen beta  = rnormal(-8, 4)          // 地区自身趋势（元/期）
+gen x1 = rnormal(0.3*treated, 1)    // 协变量 1：与入选相关
+gen x2 = rnormal(0, 1)              // 协变量 2
+* 4 期面板
+expand 4
+bysort id: gen t = _n
+gen lambda = -30 * (t - 1)          // 共同时间趋势
+gen D = (t &gt;= g &amp; g &gt; 0)            // 处理指示
+gen y   = alpha + beta*(t-1) + lambda + (-150)*D + rnormal(0, 40)           // 次均药品费用
+gen adm = 0.20 - 0.01*(t-1) + (alpha-900)/3000 + (-0.02)*D + rnormal(0, 0.04)  // 住院率
+xtset id t
+save &quot;did_demo.dta&quot;, replace
+* 数据体检
+xtdes                               // 面板结构：60 个地区 × 4 期、无缺失
+tab g                               // 队列规模：g=2/3/4 各 10，g=0 共 30
+tabstat y if t == 1, by(treated) stat(n mean sd)   // 干预前基线比较
+</code></pre>
+<pre><code class="language-r"># ============================================================
+# 模拟面板：60 地区 × 4 期；30 个处理组交错入组；真实 ATT = -150
+# ============================================================
+set.seed(2026)
+N &lt;- 60; Tmax &lt;- 4
+id  &lt;- 1:N
+g   &lt;- c(rep(2, 10), rep(3, 10), rep(4, 10), rep(0, 30))   # 处理时点；0 = 永不受理
+treated &lt;- as.integer(g &gt; 0)
+alpha &lt;- rnorm(N, 900, 50)          # 地区固定效应
+beta  &lt;- rnorm(N, -8, 4)            # 地区自身趋势
+x1 &lt;- rnorm(N, 0.3 * treated, 1)    # 协变量 1：与入选相关
+x2 &lt;- rnorm(N, 0, 1)                # 协变量 2
+
+dat &lt;- expand.grid(id = id, t = 1:Tmax)
+dat$g &lt;- g[dat$id]; dat$treated &lt;- treated[dat$id]
+dat$alpha &lt;- alpha[dat$id]; dat$beta &lt;- beta[dat$id]
+dat$x1 &lt;- x1[dat$id]; dat$x2 &lt;- x2[dat$id]
+dat$D &lt;- as.integer(dat$t &gt;= dat$g &amp; dat$g &gt; 0)
+dat$y &lt;- dat$alpha + dat$beta * (dat$t - 1) - 30 * (dat$t - 1) +
+         (-150) * dat$D + rnorm(N * Tmax, 0, 40)                       # 次均药品费用
+dat$adm &lt;- 0.20 - 0.01 * (dat$t - 1) + (dat$alpha - 900) / 3000 +
+           (-0.02) * dat$D + rnorm(N * Tmax, 0, 0.04)                  # 住院率
+
+table(dat$g)                        # 队列规模
+aggregate(y ~ treated + t, data = dat, FUN = mean)     # 各期均值（干预前应接近）
+</code></pre>
+<hr />
+<h3 id="1">第 1 步：研究设计与识别假设</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>处理组 / 对照组</strong>：政策覆盖的地区、机构或人群为处理组，未覆盖且不受影响者为对照组。明确「谁在何时受处理」：处理变量 = 组指示 × 时点指示。对照组要求「若未受政策，其结局路径与处理组平行」。</li>
+<li><strong>干预时点</strong>：以政策<strong>实际生效</strong>时点为准（如集采落地执行月份、DRG 实际结算月份）；注意 phase-in（分批执行）→ 用交错处理设定；注意预期效应（政策公告早于执行）→ 把公告期单列检验。</li>
+<li><strong>平行趋势假设（概念与直觉）</strong>：反事实是「若无干预，处理组的结局变化应等于对照组的变化」。直觉：处理组与对照组在干预前有共同趋势，则干预后二者差异中「超出既有趋势的部分」可归因于政策。DID 识别的正是「处理组实际变化 − 处理组若无干预的变化（用对照组变化替代）」。</li>
+<li><strong>共同冲击假设</strong>：除所评估政策外，同期没有其他只影响处理组（或只影响对照组）的冲击（如其他政策、疫情、支付规则变动）；若有，需讨论其对估计的偏误方向。</li>
+<li><strong>何时不能用 DID</strong>：① 政策覆盖全国或全人群、找不到可比对照；② 处理组与对照组干预前趋势明显不平行且无修正办法；③ 处理组的选择与随时间变化的结局冲击直接相关（DID 无法消除时变选择）；④ 溢出 / 一般均衡效应强（对照组被政策间接影响）；⑤ 结局定义或测量方式在两组间随时间发生不同变化（测量不一致）；⑥ 只有一期数据（DID 至少需要干预前后各一期）。</li>
+</ul>
+<p><strong>代码</strong>（数据体检与基线图）：</p>
+<pre><code class="language-stata">* 干预前基线平衡表（t=1 期）
+tabstat y adm x1 x2 if t == 1, by(treated) stat(n mean sd)
+* 各期结局均值图（第一道识别直觉：干预前两组路径应平行）
+egen ybar = mean(y), by(treated t)
+twoway (line ybar t if treated == 1) (line ybar t if treated == 0), ///
+    legend(order(1 &quot;处理组&quot; 2 &quot;对照组&quot;)) xline(2.5, lp(dash)) ///
+    title(&quot;各期次均药品费用：处理组 vs 对照组（干预前应平行）&quot;)
+drop ybar
+</code></pre>
+<pre><code class="language-r"># 干预前基线平衡表
+aggregate(cbind(y, adm, x1, x2) ~ treated, data = subset(dat, t == 1), FUN = mean)
+# 各期均值图
+means &lt;- aggregate(y ~ treated + t, data = dat, FUN = mean)
+with(means, {
+    plot(t, y, type = &quot;n&quot;, xlab = &quot;t&quot;, ylab = &quot;次均药品费用&quot;)
+    lines(t[treated == 1], y[treated == 1], col = &quot;red&quot;,  lwd = 2)
+    lines(t[treated == 0], y[treated == 0], col = &quot;blue&quot;, lwd = 2)
+    abline(v = 2.5, lty = 2)
+    legend(&quot;topright&quot;, c(&quot;处理组&quot;, &quot;对照组&quot;), col = c(&quot;red&quot;, &quot;blue&quot;), lwd = 2)
+})
+</code></pre>
+<hr />
+<h3 id="2-22-did">第 2 步：经典 2×2 DID</h3>
+<p><strong>方法</strong>：两期面板（干预前一期 t=1、干预后一期 t=2）。估计式：</p>
+<p>y_it = β0 + β1·treated_i + β2·post_t + β3·(treated_i × post_t) + ε_it</p>
+<p><code>reg y i.treated##i.post</code> 的系数含义：<code>_cons</code> = 对照组干预前均值；<code>1.treated</code> = 干预前处理组 − 对照组的基线差异；<code>1.post</code> = 对照组的共同时间变化；<strong><code>1.treated#1.post</code> = DID = ATT</strong>（处理组变化 − 对照组变化）。标准误在<strong>干预分配层级</strong>（地区 id）聚类。演示中处理组 = 第 2 期入组队列（treated2 = g=2）；对照组 = 其余地区（含 g=3/4 的「尚未处理」者——t=1、2 时它们同样未受处理，是合法对照，这正是 not-yet-treated 思想）。预期系数 ≈ −150。等价写法是双向固定效应（只保留交互项）；官方命令 <code>didregress</code>（Stata 17+）自动完成 FE 并报告 ATET。</p>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* 两期子样本：t=1 干预前、t=2 干预后；处理组 = t=2 期入组队列
+preserve
+keep if inlist(t, 1, 2)
+gen post = (t == 2)
+gen treated2 = (g == 2)                // 10 个处理组；g=3/4 在 t&lt;=2 尚未处理，作为对照
+* 经典 2×2（OLS + 交互项）
+reg y i.treated2##i.post, vce(cluster id)
+est store m_2x2
+* 系数解释：1.treated2 = 基线差异；1.post = 共同时间变化；
+*           1.treated2#1.post = ATT ≈ -150（集采使次均药品费用下降约 150 元）
+
+* 等价：双向固定效应（系数相同）
+reg y i.treated2#i.post i.id i.t, vce(cluster id)
+
+* 官方命令（Stata 17+）：didregress（自动 FE 与 ATET 报告）
+didregress (y) (treated2), group(id) time(t) vce(cluster id)
+* 注：didregress 假设处理组单一入组时点；交错处理请用第 4 步的 csdid
+restore
+</code></pre>
+<pre><code class="language-r">library(fixest)
+d2 &lt;- subset(dat, t %in% 1:2)
+d2$post &lt;- as.integer(d2$t == 2)
+d2$treated2 &lt;- as.integer(d2$g == 2)
+
+# 双向固定效应 DID：组/期主效应被 FE 吸收，交互项 = ATT
+m_2x2 &lt;- feols(y ~ treated2 * post | id + t, data = d2, cluster = ~id)
+summary(m_2x2)                       # treated2:post ≈ -150
+
+# 等价：不含 FE 的经典 2×2（两期时系数相同，方便逐项解释）
+m_ols &lt;- feols(y ~ treated2 * post, data = d2, cluster = ~id)
+summary(m_ols)
+# 系数：treated2 = 基线差异；post = 共同时间变化；treated2:post = ATT
+</code></pre>
+<p><strong>结果解读</strong>：<code>treated2:post</code>（或 <code>1.treated2#1.post</code>）≈ −150，解释为「集采试点使处理地区的次均药品费用平均下降约 150 元」；95% CI 不含 0 即为统计显著。模拟数据每次重跑略有噪声；如需更精确回收 −150，可调小 ε 方差或增大样本。同时报告聚类数与观测数（本例 60 个聚类、120 条观测）。</p>
+<hr />
+<h3 id="3">第 3 步：平行趋势检验</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>图示（事件研究）</strong>：以<strong>干预前一期</strong>为基准（rel = −1），估计各相对时期处理组 − 对照组的差异；干预前各期系数应 ≈ 0 且在 0 附近（图上无趋势性漂移）。</li>
+<li><strong>正式检验</strong>：联合检验<strong>仅干预前</strong>各期系数是否为 0（Stata <code>test</code> / <code>estat ptrends</code>；R <code>wald</code> / <code>did::pre.test</code>）。<strong>只能检验干预前趋势</strong>——干预后系数是动态效应，不是平行趋势的证据。</li>
+<li><strong>检验的局限</strong>：检验功效有限，「不拒绝」≠「平行趋势成立」；应结合制度背景论证，并报告干预前系数的置信区间（看是否接近 0，而非只看显著性）；基准期选干预前一期（选最早一期功效差）。Roth (2022) 建议做 pre-trend 检验的功效分析。</li>
+</ul>
+<p><strong>代码</strong>（用 g=3 队列演示：t=1、2 为干预前，t=3、4 为干预后）：</p>
+<pre><code class="language-stata">* 事件研究（手工交互虚拟变量，基准 = 干预前一期 rel = -1）
+preserve
+keep if inlist(g, 0, 3)
+gen treated3 = (g == 3)
+gen rel = t - 3                         // rel = -2,-1,0,1
+gen ev_m2 = (rel == -2 &amp; treated3 == 1)
+gen ev_m1 = (rel == -1 &amp; treated3 == 1) // 基准（回归中省略）
+gen ev_0  = (rel ==  0 &amp; treated3 == 1)
+gen ev_1  = (rel ==  1 &amp; treated3 == 1)
+reghdfe y ev_m2 ev_0 ev_1, absorb(id t) vce(cluster id)
+test ev_m2 = 0                          // 正式检验：干预前系数 = 0
+coefplot, keep(ev_*) vertical yline(0, lcolor(red)) xline(1.5, lcolor(gs8) lp(dash))
+* 图：ev_m2（干预前）应 ≈ 0；ev_0、ev_1（干预后）应 ≈ -150
+* 注：本例受 4 期数据限制只有 1 个前趋势系数；真实研究应有 3 期以上干预前数据，
+*     并联合检验全部前趋势系数（test ev_m2 ev_m3 ... = 0）
+
+* 官方替代（Stata 17+）：didregress + 预趋势检验
+didregress (y) (treated3), group(id) time(t) vce(cluster id)
+estat trendplots                        // 各期处理-对照差异图（含置信区间）
+estat ptrends                           // 平行趋势联合检验（H0：干预前各期系数均为 0）
+restore
+</code></pre>
+<pre><code class="language-r"># 事件研究（fixest 的 i() 交互；基准 rel = -1）
+library(fixest)
+es &lt;- subset(dat, g %in% c(0, 3))
+es$treated3 &lt;- as.integer(es$g == 3)
+es$rel &lt;- es$t - 3
+m_es &lt;- feols(y ~ i(rel, treated3, ref = -1) | id + t, data = es, cluster = ~id)
+summary(m_es)
+iplot(m_es)                             # 事件研究图：干预前系数应 ≈ 0
+# 正式检验：干预前系数（本例为 rel = -2）
+coef(m_es)                              # 系数名形如 rel::-2:treated3（以实际输出为准）
+wald(m_es, &quot;rel::-2:treated3&quot;)          # 名称以 coef(m_es) 输出为准
+# 亦可用 coefplot(m_es)（fixest 自带）；选项以 help(coefplot.fixest) 为准
+# 交错处理时可用 did::pre.test()（对 CS 估计做干预前联合检验，以 help(pre.test) 为准）
+</code></pre>
+<hr />
+<h3 id="4-didcallaway-santanna-2021">第 4 步：多期 / 交错处理 DID（Callaway &amp; Sant'Anna, 2021）</h3>
+<p><strong>方法</strong>：交错处理（staggered adoption）下，把「不同时点入组的处理组」混在单一 post 的 TWFE 估计量，是各 2×2 比较的加权平均，效应异质时可能出现<strong>负权重</strong>而偏误（Goodman-Bacon, 2021；de Chaisemartin &amp; D'Haultfœuille, 2020；Sun &amp; Abraham, 2021）。Callaway &amp; Sant'Anna (2021) 定义<strong>组×期处理效应 ATT(g,t) = E[Y_t(g) − Y_t(0) | G = g]</strong>（队列 g 在日历期 t 的效应，仅 t ≥ g 有定义），对每个 (g,t) 用「尚未处理 / 永不受理」队列作干净对照分别估计，再按研究问题聚合：</p>
+<ul>
+<li><code>simple</code>：总体 ATT（各 ATT(g,t) 的加权平均，权重与组规模、暴露期数相关）</li>
+<li><code>dynamic</code> / <code>event</code>：按事件时间 e = t − g 聚合 → 事件研究（第 5 步作图）</li>
+<li><code>group</code>：按队列 g 聚合</li>
+<li><code>calendar</code>：按日历期 t 聚合</li>
+</ul>
+<p>识别假设：处理不可逆（吸收处理）、无预期效应、按队列的平行趋势、有限重叠（每个 (g,t) 有可用对照）。Stata 18+ 有官方 <code>csdid</code> / <code>xthdidregress</code>；Stata 17 及更早用 SSC 版 <code>csdid</code>（依赖 <code>drdid</code>）。R 用 <code>did</code>（Callaway &amp; Sant'Anna 官方实现）。</p>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata 18+：官方 csdid；Stata 17 及更早：ssc install csdid, replace + ssc install drdid, replace
+* 全样本：30 个处理组在 t=2/3/4 交错入组（g=2/3/4），30 个永不受理（g=0）
+csdid y, ivar(id) time(t) gvar(g)
+* 聚合（官方 18：estat simple/event/group/calendar；SSC 版：csdid_estat simple ...）
+estat simple                  // 总体 ATT ≈ -150
+estat event                   // 事件时间聚合（供第 5 步作图）
+estat group                   // 按队列聚合
+* 选项（method、对照组选择、权重自举等）以 help csdid 为准
+
+* 官方替代（Stata 18+）：xthdidregress，处理时点由 D 自动识别
+xthdidregress ra (y) (D), group(id) time(t)
+* 聚合与作图：estat aggregation / estat atetplot；语法以 help xthdidregress postestimation 为准
+</code></pre>
+<pre><code class="language-r"># Callaway-Sant'Anna（官方 R 实现）
+library(did)
+out &lt;- att_gt(yname = &quot;y&quot;, tname = &quot;t&quot;, idname = &quot;id&quot;, gname = &quot;g&quot;,
+              data = dat, control_group = &quot;notyettreated&quot;)
+summary(out)                            # ATT(g,t) 表：队列 g × 时期 t
+agg_simple &lt;- aggte(out, type = &quot;simple&quot;)    # 总体 ATT ≈ -150
+summary(agg_simple)
+agg_group  &lt;- aggte(out, type = &quot;group&quot;)     # 按队列
+agg_cal    &lt;- aggte(out, type = &quot;calendar&quot;)  # 按日历期
+# 对照组设定、估计方法（est_method = &quot;dr&quot;/&quot;reg&quot;/&quot;ipw&quot;）等选项以 help(att_gt) 为准
+
+# 替代：Sun &amp; Abraham（fixest）
+feols(y ~ sunab(g, t) | id + t, data = dat, cluster = ~id)
+</code></pre>
+<p><strong>结果解读</strong>：ATT(g,t) 表中处理前（t &lt; g）应 ≈ 0，t ≥ g 应 ≈ −150；<code>agg_simple</code> ≈ −150，与 2×2 结果一致。报告时注明<strong>聚合类型</strong>与<strong>对照组设定</strong>（not-yet-treated vs never-treated，二者识别假设不同）。</p>
+<hr />
+<h3 id="5">第 5 步：事件研究图</h3>
+<p><strong>方法</strong>：把第 4 步的 <code>event</code> / <code>dynamic</code> 聚合画成图：横轴 = 相对处理期 e = t − g，纵轴 = 平均处理效应；干预前（e &lt; 0）应 ≈ 0（平行趋势的可视证据），干预后（e ≥ 0）为动态效应。报告置信区间与基准期（e = −1）。图中干预前系数的置信带不应明显偏离 0；干预后曲线走势即「政策效果的时间路径」（如集采效果逐步释放、延迟生效）。相对期区间由数据决定（本例 t = 1…4、g = 2…4 → e ∈ [−3, 2]）。单一入组时点下，第 3 步的手工事件研究图与 CS 动态图一致；交错处理时以 CS 动态图为准。</p>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* 接第 4 步 csdid
+estat event                   // 官方 18；SSC 版为 csdid_estat event
+csdid_plot                    // 事件研究图（官方 18 与 SSC 版均有）
+* 若版本支持，亦可用 marginsplot：estat event 后 marginsplot
+* （以 help csdid postestimation / help csdid_plot 为准）
+</code></pre>
+<pre><code class="language-r"># 接第 4 步
+agg_dyn &lt;- aggte(out, type = &quot;dynamic&quot;, min_e = -3, max_e = 2)
+summary(agg_dyn)                    # 事件研究系数表（含各期置信区间）
+ggdid(agg_dyn)                      # 事件研究图（需 ggplot2）
+ggdid(agg_dyn, ylim = c(-300, 60), xlab = &quot;相对处理期&quot;,
+      title = &quot;动态处理效应：集采对次均药品费用&quot;)
+# ggdid 的图形选项以 help(ggdid) 为准
+</code></pre>
+<hr />
+<h3 id="6">第 6 步：稳健性检验</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>安慰剂检验——伪处理组</strong>：把「处理组身份」随机重抽（保持处理组规模与真实一致），重复 ≥ 数百次，得到伪 DID 系数分布；真实系数应位于分布尾部（经验 p 值 &lt; 0.05）。<strong>单次安慰剂不足以说明问题</strong>。</li>
+<li><strong>安慰剂检验——伪时点（预期效应检验）</strong>：把干预时点人为提前到真实时点之前、只用干预前数据估计；系数应 ≈ 0，显著非零提示预期效应或前趋势。</li>
+<li><strong>剔除部分样本</strong>：剔除极端值（缩尾）、剔除个别地区 / 时期后重估，结论应稳定。</li>
+<li><strong>PSM-DID</strong>：若处理组选择与可观测协变量相关，先按干预前（时不变）协变量做倾向得分匹配，再在匹配样本上做 DID——匹配消除可观测基线差异，DID 消除共同趋势。注意：协变量必须是干预前变量；PSM 不能替代平行趋势论证。</li>
+<li><strong>更换结局 / 聚类层级</strong>：换用次要结局（如住院率）；把聚类层级从地区改为更保守的层级（如上级地市 / 医院集团），标准误结论应稳定。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* ---------- 6.1 伪处理组（随机重抽处理组身份，500 次） ----------
+preserve
+keep if inlist(t, 1, 2)
+gen post = (t == 2)
+tempname pf
+tempfile pfres
+postfile `pf' b_did using `pfres', replace
+set seed 2026
+forvalues r = 1/500 {
+    * 在地区层面抽一个伪处理身份（同一地区两期身份一致）
+    bysort id: gen rnd_id = runiform() if _n == 1
+    bysort id (rnd_id): replace rnd_id = rnd_id[1]
+    egen prank = rank(rnd_id), unique
+    gen treatedF = (prank &lt;= 10)          // 随机 10 个伪处理地区
+    quietly reg y i.treatedF##i.post, vce(cluster id)
+    post `pf' (_b[1.treatedF#1.post])
+    drop rnd_id prank treatedF
+}
+postclose `pf'
+use `pfres', clear
+summarize b_did, detail                  // 伪系数分布：中心应 ≈ 0
+count if b_did &lt;= -150                   // 伪系数 ≤ 真实系数（-150）的次数
+di (r(N) + 1) / 501                      // 经验 p 值（单侧）
+histogram b_did, normal xline(-150, lcolor(red))
+* 备选：ritest（SSC）做随机化推断，支持聚类层级（选项以 help ritest 为准）
+restore
+
+* ---------- 6.2 伪时点（预期效应检验） ----------
+* 用 g=3 队列的干预前两期（t=1,2），人为假设 t=2 已干预
+preserve
+keep if inlist(g, 0, 3) &amp; inlist(t, 1, 2)
+gen post = (t == 2)
+gen treated3 = (g == 3)
+reg y i.treated3##i.post, vce(cluster id)     // 预期系数 ≈ 0
+restore
+
+* ---------- 6.3 剔除部分样本 ----------
+* (a) 剔除 y 上下 1% 极端值后重估 2×2
+preserve
+keep if inlist(t, 1, 2)
+gen post = (t == 2)
+gen treated2 = (g == 2)
+quietly summarize y, detail
+drop if y &lt; r(p1) | y &gt; r(p99)
+reg y i.treated2##i.post, vce(cluster id)
+restore
+* (b) 对照只用永不受理组（排除尚未处理队列），多期 FE 估计
+preserve
+keep if inlist(g, 0, 2)
+gen post = (t &gt;= 2)
+gen treated2 = (g == 2)
+reghdfe y i.treated2#i.post, absorb(id t) vce(cluster id)
+restore
+
+* ---------- 6.4 PSM-DID ----------
+preserve
+keep if inlist(t, 1, 2)
+gen post = (t == 2)
+gen treated2 = (g == 2)
+* 方案 A（官方 teffects）：横截面 ATT 演示（把两期分别视为观测）
+teffects psmatch (y) (treated2 x1 x2), atet
+* 方案 B（psmatch2 + DID，SSC；实务常用）：按干预前协变量匹配后做 DID
+psmatch2 treated2 x1 x2, out(y) logit common
+pstest x1 x2, both                        // 匹配后平衡性：标准化差异应 &lt; 0.1
+reg y i.treated2##i.post [pw = _weight], vce(cluster id)
+est store m_psm
+* 注：psmatch2 生成的 _weight 为匹配权重；以 help psmatch2 为准
+restore
+
+* ---------- 6.5 更换结局与聚类层级 ----------
+preserve
+keep if inlist(t, 1, 2)
+gen post = (t == 2)
+gen treated2 = (g == 2)
+reg adm i.treated2##i.post, vce(cluster id)      // 结局换为住院率：预期 ≈ -0.02
+est store m_adm
+* 聚类层级敏感性：地区 → 更保守的层级（示例：每 3 个地区并为一组）
+egen group3 = group(ceil(id/3))
+reg y i.treated2##i.post, vce(cluster group3)    // 聚类数变少，标准误通常变大
+restore
+</code></pre>
+<pre><code class="language-r"># 接第 2 步的 d2（t ∈ {1,2}；post、treated2 已定义）
+library(fixest)
+
+# ---------- 6.1 伪处理组（500 次随机重抽） ----------
+set.seed(2026)
+ids &lt;- unique(d2$id)
+b_null &lt;- replicate(500, {
+    fake &lt;- sample(ids, 10)                      # 随机 10 个伪处理地区
+    d2$treatedF &lt;- as.integer(d2$id %in% fake)
+    m &lt;- feols(y ~ treatedF * post | id + t, data = d2, cluster = ~id)
+    coef(m)[&quot;treatedF:post&quot;]                     # 系数名以 coef(m) 输出为准
+})
+pval &lt;- (sum(b_null &lt;= -150) + 1) / 501          # 经验 p 值（单侧）
+hist(b_null, breaks = 30, main = &quot;伪处理组 DID 系数分布&quot;)
+abline(v = -150, col = &quot;red&quot;, lwd = 2)
+
+# ---------- 6.2 伪时点 ----------
+d_pre &lt;- subset(dat, g %in% c(0, 3) &amp; t %in% 1:2)
+d_pre$post &lt;- as.integer(d_pre$t == 2)
+d_pre$treated3 &lt;- as.integer(d_pre$g == 3)
+feols(y ~ treated3 * post | id + t, data = d_pre, cluster = ~id)   # 预期 ≈ 0
+
+# ---------- 6.3 剔除极端值 ----------
+q &lt;- quantile(d2$y, c(0.01, 0.99))
+d2t &lt;- subset(d2, y &gt; q[1] &amp; y &lt; q[2])
+feols(y ~ treated2 * post | id + t, data = d2t, cluster = ~id)
+
+# ---------- 6.4 PSM-DID ----------
+library(MatchIt)
+d2pre &lt;- subset(d2, t == 1)
+m.out &lt;- matchit(treated2 ~ x1 + x2, data = d2pre, method = &quot;nearest&quot;, ratio = 1)
+summary(m.out)                       # 匹配后标准化均值差应 &lt; 0.1
+# library(cobalt); love.plot(m.out)  # 平衡性图
+md  &lt;- match.data(m.out)             # 匹配样本（含 weights）
+d2m &lt;- subset(d2, id %in% unique(md$id))
+feols(y ~ treated2 * post | id + t, data = d2m, cluster = ~id)
+
+# ---------- 6.5 更换结局与聚类层级 ----------
+feols(adm ~ treated2 * post | id + t, data = d2, cluster = ~id)     # 住院率 ≈ -0.02
+d2$group3 &lt;- ceiling(d2$id / 3)
+feols(y ~ treated2 * post | id + t, data = d2, cluster = ~group3)   # 更保守聚类
+</code></pre>
+<hr />
+<h3 id="7_1">第 7 步：报告清单</h3>
+<p><strong>方法</strong>：政策评估报告至少包含以下内容，逐项核对：</p>
+<ol>
+<li><strong>处理与对照定义</strong>：谁在处理组、谁在对照；处理变量构造（组指示 × 时点指示）；队列规模表。</li>
+<li><strong>干预时点</strong>：政策生效时点、phase-in 说明、预期效应讨论。</li>
+<li><strong>平行趋势证据</strong>：事件研究图（含置信区间）+ 干预前系数联合检验 p 值；结合制度背景论证。</li>
+<li><strong>主要 ATT 估计表</strong>：系数、聚类稳健 SE、95% CI、观测数与聚类数；交错处理报聚合类型（simple / dynamic / group）。</li>
+<li><strong>聚类标准误层级说明</strong>：干预在哪个层级分配就在哪个层级聚类（本例：地区）；说明理由并报告层级敏感性。</li>
+<li><strong>稳健性汇总</strong>：伪处理组分布与经验 p 值、伪时点、剔除样本、PSM-DID、更换结局、更换聚类层级的结果一览。</li>
+<li><strong>局限</strong>：平行趋势不可完全检验、溢出 / 一般均衡、同期政策干扰、外部效度。</li>
+</ol>
+<p><strong>代码</strong>（结果表输出）：</p>
+<pre><code class="language-stata">* 结果表（esttab，SSC；官方 etable 亦可）
+esttab m_2x2 m_psm m_adm, b(%9.2f) se(%9.2f) star(* 0.10 ** 0.05 *** 0.01) ///
+    mtitles(&quot;2x2 DID&quot; &quot;PSM-DID&quot; &quot;结局=住院率&quot;) ///
+    stats(N N_clust, labels(&quot;观测数&quot; &quot;聚类数&quot;))
+* CS 聚合结果用 estat simple / estat event 直接导出；
+* esttab 与 etable 选项以 help esttab / help etable 为准
+</code></pre>
+<pre><code class="language-r"># 结果表（fixest::etable 或 modelsummary）
+etable(list(m_2x2, m_psm, m_adm), cluster = ~id, fitstat = ~n)
+# library(modelsummary)
+# modelsummary(list(&quot;2x2&quot; = m_2x2, &quot;PSM-DID&quot; = m_psm, &quot;住院率&quot; = m_adm), stars = TRUE)
+</code></pre>
+<hr />
+<h2 id="_4">常见错误清单</h2>
+<ul>
+<li>[ ] 用干预后年份的系数「检验」平行趋势（干预后系数是动态效应，不是平行趋势的证据）</li>
+<li>[ ] 两期数据硬做事件研究 / 交错处理估计（两期只能做 2×2；交错处理需要多期 + 多个入组时点）</li>
+<li>[ ] 交错处理仍用单一 post 的 TWFE，不报告 Callaway–Sant'Anna 等稳健估计量（效应异质时可能有负权重偏误）</li>
+<li>[ ] 忽略聚类层级：地区层面干预却在个体 / 人次层面聚类（标准误过小、过度拒绝）</li>
+<li>[ ] 处理组内部生效时点不同却统一用单一 post（把尚未处理的地区算成已处理）</li>
+<li>[ ] 把相关当因果：不讨论平行趋势、共同冲击与溢出，只做政策前后比较就下因果结论</li>
+<li>[ ] 安慰剂检验只做一次（单次随机化可能是偶然，需 ≥ 数百次置换并报告分布与经验 p 值）</li>
+<li>[ ] 平行趋势检验只看 p 值：不画图、不报置信区间、不讨论检验功效与基准期选择</li>
+<li>[ ] 把「前趋势检验不显著」直接当作「平行趋势成立」的证明</li>
+<li>[ ] 不报告处理组 / 对照组的事前基线平衡表与「谁在何时受处理」的构造</li>
+<li>[ ] 在 Stata 17 用 didregress 评估交错处理（didregress 假设单一处理时点；交错用 csdid / xthdidregress）</li>
+<li>[ ] 用干预后协变量做 PSM（匹配变量必须是干预前或时不变变量）</li>
+<li>[ ] 事件研究基准期取最早一期而非干预前一期（功效差、图难读）</li>
+</ul>
+<h2 id="_5">输出格式（政策评估报告模板）</h2>
+<pre><code>【研究设计与数据】
+- 政策背景与干预时点；处理组/对照组定义、规模与队列分布（表 0）
+- 数据来源、时期、结局定义（次均药品费用、住院率）；干预前基线平衡表
+
+【识别假设】
+- 平行趋势论证：图 1 事件研究图 + 干预前系数联合检验 p 值 + 制度背景
+- 共同冲击、无预期效应、无溢出的讨论；不满足时的处理策略
+
+【主要结果】
+- 表 1：2×2 DID（或 didregress ATET）：系数、聚类稳健 SE、95% CI、观测数与聚类数
+- 表 2（交错处理时）：Callaway-Sant'Anna 聚合 ATT（simple/dynamic/group，注明聚合类型与对照组）
+- 图 2：动态处理效应（事件研究）图，注明基准期与置信区间
+
+【稳健性】
+- 表 3：伪处理组系数分布与经验 p 值（附直方图）；伪时点系数
+- 表 4：剔除极端值/部分样本、PSM-DID、更换结局、更换聚类层级结果汇总
+
+【结论与局限】
+- 效应大小与政策含义（如集采使次均药品费用下降约 X 元、住院率变化）
+- 局限：平行趋势不可完全检验、溢出/一般均衡、同期政策干扰、外部效度
+</code></pre>
+<h2 id="_6">使用提示</h2>
+<ul>
+<li>命令与选项随版本变化：Stata 18+ 有官方 <code>csdid</code> / <code>csdid_plot</code> / <code>xthdidregress</code>；Stata 17 用 <code>didregress</code>；更早版本用 SSC <code>csdid</code>。运行 <code>which csdid</code>、<code>help csdid</code>、<code>help didregress</code> 核对实际调用的版本与选项；凡标注「以 help / 帮助文档为准」处，运行前先核对本机文档。</li>
+<li>聚类层级：干预在哪个层级分配就在哪个层级聚类；不确定时做多层级敏感性分析。</li>
+<li>模拟数据用于演示完整流程（内置真实 ATT = −150）；真实研究需按政策实际设计处理组与干预时点，并核对数据质量、样本量与检验功效。</li>
+<li>估计前先画「处理组 vs 对照组」各期均值图（第 1 步代码），图是识别策略的第一道检验。</li>
+<li>本 Skill 提供方法与代码模板；平行趋势等识别假设的论证与最终结论由研究者负责。</li>
+</ul>
+<hr />
+<h2 id="citation">引用 / Citation</h2>
+<p>中文：杜思娴. DID 双重差分助手：卫生政策效果评估 Skill [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.</p>
+<p>English: Du, S. (2026). <em>DID Assistant: Difference-in-differences for health policy evaluation skill</em> [Skill definition]. https://naturedu.github.io/socialmedicine/.</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

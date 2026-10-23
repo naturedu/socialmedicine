@@ -1,0 +1,44 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>🌱 公共数据库与纵向研究：让同一个人，在时间里对得上 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/longitudinal-public-data-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">先看资料，再定分析</a></li>
+<li><a href="#_3">清理与设计路线</a></li>
+<li><a href="#r">R：长表结构核验与纵向模型接口</a></li>
+<li><a href="#_4">生存与竞争风险</a></li>
+<li><a href="#_5">输出与易错点 🐾</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">🌱 公共数据库与纵向研究：让同一个人，在时间里对得上</h1>
+<h2 id="_2">先看资料，再定分析</h2>
+<p>输入数据库名称与版本、问卷/代码本、下载文件清单、样本ID规则、波次、目标人群和研究问题。先交付变量可得性矩阵，再决定数字使用、认知、ADL/IADL、慢病或医疗费用是否可研究。某一波有题目不代表所有波次都有；智能手机、互联网使用、设备拥有和数字能力不能互相替代。</p>
+<p>官方入口：<a href="https://charls.pku.edu.cn/">CHARLS</a>、<a href="https://opendata.pku.edu.cn/dataverse/CHADS">CLHLS</a>、<a href="https://www.isss.pku.edu.cn/cfps/">CFPS</a>。具体数据版本、开放范围、申请条件与变量口径在使用时核对；示例不声称某题必然存在。</p>
+<h2 id="_3">清理与设计路线</h2>
+<ol>
+<li>建立文件—波次—ID—样本数清单；识别重复记录、代理回答、补样与死亡追访。</li>
+<li>制作变量对照表，保留原始题号、题干、跳转、特殊缺失码、单位及重编码；同名变量也可能含义不同。</li>
+<li>区分横断面与纵向权重，明确PSU/分层。抽样权重、因果权重和失访权重目的不同，组合需有统计依据。</li>
+<li>画暴露与结局时间图，优先保证暴露先于结局；描述性关联、预测和因果策略分别设计。</li>
+<li>报告每一波保留/死亡/失访、缺失模式及样本流。多重插补依赖假设，不能自动修正MNAR或失访选择。</li>
+<li>根据结局选择混合模型、GEE、生存或竞争风险；重复测量的认知变化与发病时间不是同一estimand。</li>
+<li>轨迹/潜类别用于总结异质模式，检查类数、可解释性、后验分类不确定性、每类样本与稳定性；数据驱动类别不等于天然人群类型。</li>
+</ol>
+<h2 id="r">R：长表结构核验与纵向模型接口</h2>
+<pre><code class="language-r"># d为已由代码本核实的长表；此处不假定任何数据库原始变量名
+stopifnot(!anyDuplicated(d[c(&quot;id&quot;,&quot;wave&quot;)]))
+with(d,table(wave,is.na(cognition)))
+library(lme4)
+fit &lt;- lmer(cognition ~ time*baseline_exposure+age0+sex+(1+time|id),data=d)
+summary(fit)
+# 这是条件均值关联模型；baseline_exposure需先定义，不能直接称因果效应。
+</code></pre>
+<pre><code class="language-stata">isid id wave
+xtset id wave
+mixed cognition c.time##i.baseline_exposure age0 i.sex || id: time, covariance(unstructured)
+* 若目标是复杂抽样总体估计，需另核对设计权重和模型的兼容性。
+</code></pre>
+<h2 id="_4">生存与竞争风险</h2>
+<p>定义事件、入组、删失、死亡与测量间隔。只在波次访问时知道新发结局，可能存在区间删失，不应无说明地假定发生在访问当天。老年队列死亡常阻止功能衰退事件的观察；原因别HR和累积发生风险回答不同问题，选择方法前先确定目标。</p>
+<h2 id="_5">输出与易错点 🐾</h2>
+<p>交付波次变量矩阵、分析样本流程、清洗日志、描述表及敏感性方案；公开版只使用通用字段和模拟数值。常见错误是按波次分别删缺失导致比较样本变化，把设备拥有写成设备使用，把生存者分析的结果外推给全体老人，或将轨迹类别后验归组视为完全无误。</p>
+<blockquote>
+<p>可复制请求：先根据问卷与代码本核对变量和时间顺序，告诉我哪些研究问题真正可做，再给抽样、缺失、死亡与重复测量的处理方案；不要凭数据库名称猜变量。</p>
+</blockquote><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

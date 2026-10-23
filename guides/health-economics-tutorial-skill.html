@@ -1,0 +1,532 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skill：卫生经济学评价教程（CEA/CUA 总纲，Stata / R） · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/health-economics-tutorial-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">用途</a></li>
+<li><a href="#_2">适用范围（明确边界）</a></li>
+<li><a href="#_3">软件准备</a></li>
+<li><a href="#9">工作流程总览（9 步）</a><ul>
+<li><a href="#1">第 1 步：提出研究问题与评价类型选择</a></li>
+<li><a href="#2">第 2 步：研究视角与时间范围</a></li>
+<li><a href="#3">第 3 步：成本测算</a></li>
+<li><a href="#4">第 4 步：效果与效用指标</a></li>
+<li><a href="#5">第 5 步：贴现</a></li>
+<li><a href="#6-icer">第 6 步：增量分析与 ICER</a></li>
+<li><a href="#7">第 7 步：不确定性分析</a></li>
+<li><a href="#8-cheers-2022">第 8 步：报告规范（CHEERS 2022）</a></li>
+<li><a href="#9-skill">第 9 步：研究工具箱指引（本仓库配套 Skill）</a></li>
+</ul>
+</li>
+<li><a href="#_4">常见错误清单</a></li>
+<li><a href="#_5">输出格式（研究方案 / 报告模板）</a></li>
+<li><a href="#_6">使用提示</a></li>
+<li><a href="#citation">引用 / Citation</a></li>
+</ul>
+</div>
+</aside><article><h1 id="skillceacua-stata-r">Skill：卫生经济学评价教程（CEA/CUA 总纲，Stata / R）</h1>
+<p><strong>版本</strong> 1.0 · <strong>作者</strong> 杜思娴 (Du Sixian) · <strong>许可</strong> MIT · <strong>更新</strong> 2026-10-23</p>
+<h2 id="_1">用途</h2>
+<p>一份可复用的「卫生经济学评价（Health Economic Evaluation）」入门教程型 Skill：从研究问题与评价类型选择（CEA / CUA / CMA / CBA）、研究视角与时间范围、成本测算、效果与效用指标（QALY / DALY）、贴现、增量分析与 ICER、不确定性分析，到 CHEERS 2022 报告规范与配套工具箱指引，覆盖完整研究流程。面向社会医学与卫生事业管理、卫生经济学、公共卫生专业的硕士生、博士生与研究者。<strong>每一步都给出「方法 + 代码」</strong>（Stata / R，数值自洽的教学算例可直接运行），可直接作为提示词喂给大语言模型，也可作为操作手册照做；结尾指引读者按需使用同一网站的其他配套 Skill（DCE 设计助手、Markov 模型助手、机器学习、DID 双重差分）。</p>
+<h2 id="_2">适用范围（明确边界）</h2>
+<p>允许：
+- 帮助研究者完成卫生经济学评价全流程的方案设计与计算（CEA、CUA、CMA、CBA）
+- 给出成本测算、QALY / DALY 计算、贴现、ICER、单因素敏感性分析与 PSA 的 Stata/R 代码
+- 用作研究生入门教学、课题方法部分写作与自查清单</p>
+<p><strong>不允许：</strong>
+- 替代研究者的专业判断（研究视角、时间范围、参数取值与阈值结论需结合课题背景与领域专家意见）
+- 承诺研究结果一定可发表；不替代教科书、《中国药物经济学评价指南（2020）》与期刊审稿要求
+- 在未报告不确定性、未说明假设的情况下武断给出「具有成本-效果」的结论</p>
+<h2 id="_3">软件准备</h2>
+<p>方法：Stata 17 及以上、R ≥ 4.2。本教程的基础代码只用 Stata 官方命令与 R 基础包，<code>boot</code>（bootstrap 置信区间）是唯一需额外安装的 R 包。涉及偏好测量见《DCE 设计助手》，动态建模与完整 PSA 见《Markov 模型助手》。</p>
+<pre><code class="language-stata">* Stata（本教程主要用官方命令；结果表导出可选用 estout，putexcel 为官方命令）
+ssc install estout, replace
+</code></pre>
+<pre><code class="language-r"># R
+install.packages(&quot;boot&quot;)      # bootstrap 置信区间；其余均为基础 R
+</code></pre>
+<h2 id="9">工作流程总览（9 步）</h2>
+<ol>
+<li>提出研究问题与评价类型选择（CEA / CUA / CMA / CBA）→ 2. 研究视角与时间范围 → 3. 成本测算 → 4. 效果与效用指标（QALY / DALY）→ 5. 贴现 → 6. 增量分析与 ICER → 7. 不确定性分析 → 8. 报告规范（CHEERS 2022）→ 9. 研究工具箱指引（配套 Skill）。以下每一步均为「方法 + 代码」。</li>
+</ol>
+<p>贯穿第 3–7 步的教学算例（数值自洽，可逐字运行）：某慢性病患者人群，比较<strong>新方案（干预）</strong>与<strong>常规方案（对照）</strong>，社会视角，时间范围 10 年，贴现率 5%。年总成本：干预 12,000 元（直接医疗 9,180 + 直接非医疗 600 + 间接 2,220）、对照 8,000 元（直接医疗 6,040 + 直接非医疗 500 + 间接 1,460）；年健康效用：干预 0.78、对照 0.70。</p>
+<hr />
+<h3 id="1">第 1 步：提出研究问题与评价类型选择</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>四种评价类型</strong>：</li>
+<li><strong>CMA（最小成本分析）</strong>：结局已被证明（或有充分证据）等效，只比较成本。前提严格，实践中极少能完全满足，慎用。</li>
+<li><strong>CEA（成本-效果分析）</strong>：效果用自然单位（血压 mmHg、避免的发作次数、生命年等），适合结局单一的研究；不同自然单位之间不可直接比较。</li>
+<li><strong>CUA（成本-效用分析）</strong>：CEA 的特例，效果用 QALY / DALY 等偏好加权指标，可跨疾病比较，是药品经济学评价与医保准入最常用的类型。</li>
+<li><strong>CBA（成本-效益分析）</strong>：成本与效果都货币化（支付意愿 WTP），用净货币收益（NMB）或效益-成本比判断；当需要与教育、环境等非健康领域比较时使用。</li>
+<li><strong>选择决策树（按顺序判断）</strong>：① 结局是否等效？是 → CMA；② 是否需要跨部门 / 跨领域比较？是 → CBA；③ 效果能否且需要转换为偏好加权指标（QALY）？是 → CUA；④ 其余情况 → CEA。国内指南默认推荐 CEA/CUA。</li>
+<li><strong>PICO-T 研究问题模板</strong>（在 P 中，与 C 相比，I 在 T 内对 O 的增量成本与效果如何）：</li>
+</ul>
+<pre><code>P（人群）：某慢性病患者（示例：2 型糖尿病、病程 ≥ 5 年、无严重并发症）
+I（干预）：新综合管理方案
+C（对照）：常规治疗
+O（结局）：QALY（及并发症发生率等自然单位结局）
+T（时间范围）：10 年
+研究问题：在 P 中，与 C 相比，I 在 T 年内对 O 产生的增量成本与增量效果如何？
+           ICER 是否低于支付意愿阈值 λ？
+</code></pre>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：评价类型选择示意（把结局类型写入 local 后运行）
+local outcome &quot;qaly&quot;    // 可选：equivalent / natural / qaly / monetary
+if &quot;`outcome'&quot; == &quot;equivalent&quot; {
+    display &quot;结局已证明等效 → 用 CMA（最小成本分析）&quot;
+}
+else if &quot;`outcome'&quot; == &quot;natural&quot; {
+    display &quot;结局为自然单位（血压、生命年等）→ 用 CEA（成本-效果分析）&quot;
+}
+else if &quot;`outcome'&quot; == &quot;qaly&quot; {
+    display &quot;结局为偏好加权指标（QALY/DALY）→ 用 CUA（成本-效用分析）&quot;
+}
+else {
+    display &quot;结局已货币化或需跨领域比较 → 用 CBA（成本-效益分析）&quot;
+}
+</code></pre>
+<pre><code class="language-r"># R：评价类型选择决策函数
+pick_type &lt;- function(outcome = c(&quot;equivalent&quot;, &quot;natural&quot;, &quot;qaly&quot;, &quot;monetary&quot;)) {
+  outcome &lt;- match.arg(outcome)
+  switch(outcome,
+    equivalent = &quot;CMA：最小成本分析（结局等效时只比较成本）&quot;,
+    natural    = &quot;CEA：成本-效果分析（自然单位结局）&quot;,
+    qaly       = &quot;CUA：成本-效用分析（QALY/DALY 等偏好加权结局）&quot;,
+    monetary   = &quot;CBA：成本-效益分析（成本与效果均货币化）&quot;)
+}
+pick_type(&quot;qaly&quot;)     # 本算例用 QALY → CUA
+</code></pre>
+<hr />
+<h3 id="2">第 2 步：研究视角与时间范围</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>研究视角决定纳入哪些成本</strong>：</li>
+<li><strong>医保支付方视角</strong>：只纳入医保基金支付的项目（报销的药品、检查、住院等）。</li>
+<li><strong>卫生体系视角</strong>：医保基金 + 政府财政投入 + 患者自付医疗费用等所有卫生体系内资源。</li>
+<li><strong>社会视角</strong>：卫生体系成本 + 患者与家庭的直接非医疗成本（交通、陪护、食宿）+ 生产力损失（间接成本）。信息最全、最接近全社会的真实代价，但数据要求最高；《中国药物经济学评价指南（2020）》建议以全社会或卫生体系视角为主，至少明确报告视角。</li>
+<li><strong>时间范围</strong>：必须<strong>足够长以覆盖干预引起的全部重要成本与效果差异</strong>——慢性病常需 10 年以上乃至终身，疫苗与急性感染可短至数月到数年。时间范围过短会系统性遗漏后期收益（尤其预防、筛查类「成本前置、收益后置」的干预），此时贴现率的影响也更大。本算例取 10 年。</li>
+<li><strong>提示</strong>：视角、时间范围在研究方案中先定，并在结果表中注明；换视角或换时间范围必须重新测算，不能事后拼凑。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：成本条目按研究视角纳入的示意见表（1 = 纳入，0 = 不纳入）
+* 注：中文值需 Stata 17+（UTF-8）
+clear
+input byte payer byte system byte society str50 item
+1 1 1 &quot;药品费用（医保报销部分）&quot;
+1 1 1 &quot;检查与住院（医保报销部分）&quot;
+0 1 1 &quot;政府财政补助与公共卫生投入&quot;
+0 1 1 &quot;患者自付医疗费用&quot;
+0 0 1 &quot;交通、陪护与食宿（患者家庭）&quot;
+0 0 1 &quot;因病损失的生产力&quot;
+end
+label var payer   &quot;医保支付方视角&quot;
+label var system  &quot;卫生体系视角&quot;
+label var society &quot;社会视角&quot;
+list, sep(0) noobs
+</code></pre>
+<pre><code class="language-r"># R：不同研究视角纳入的成本条目（示例矩阵）
+items &lt;- data.frame(
+  条目 = c(&quot;药品费用（医保报销部分）&quot;, &quot;检查与住院（医保报销部分）&quot;, &quot;政府财政补助与公共卫生投入&quot;,
+           &quot;患者自付医疗费用&quot;, &quot;交通、陪护与食宿（患者家庭）&quot;, &quot;因病损失的生产力&quot;),
+  医保支付方 = c(&quot;√&quot;, &quot;√&quot;, &quot;—&quot;, &quot;—&quot;, &quot;—&quot;, &quot;—&quot;),
+  卫生体系   = c(&quot;√&quot;, &quot;√&quot;, &quot;√&quot;, &quot;√&quot;, &quot;—&quot;, &quot;—&quot;),
+  社会视角   = c(&quot;√&quot;, &quot;√&quot;, &quot;√&quot;, &quot;√&quot;, &quot;√&quot;, &quot;√&quot;))
+items
+</code></pre>
+<hr />
+<h3 id="3">第 3 步：成本测算</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>三类成本</strong>：</li>
+<li><strong>直接医疗成本</strong>：药品、检查、手术、住院、康复等卫生资源消耗，按卫生服务量 × 单位价格估值。</li>
+<li><strong>直接非医疗成本</strong>：患者与家庭为就医发生的交通、食宿、陪护等支出。</li>
+<li><strong>间接成本（生产力损失）</strong>：因病休工或早亡损失的生产时间。<strong>人力资本法（HCA）</strong>按工资（或人均 GDP）乘以损失时间；<strong>摩擦成本法（FCM）</strong>只计入「岗位空缺到恢复生产」的摩擦期（通常 3–6 个月），更保守。指南 2020 建议社会视角下报告生产力损失，二法择一并说明理由。</li>
+<li><strong>成本测算三步</strong>：① <strong>识别</strong>——列出与干预相关的资源条目（依据指南、临床路径、专家咨询）；② <strong>测量</strong>——记录资源消耗数量（人次、天数、剂量）；③ <strong>估值</strong>——数量 × 单位成本。</li>
+<li><strong>中国情境提示</strong>：单位成本来源常用——各省市医疗服务项目价格规范、国家/省级药品耗材集中采购中标价、《国家基本医疗保险药品目录》报销规则；<strong>必须注明价格年份与地区</strong>，跨年价格用 CPI 或医疗 CPI 调整到基年（如 2026 年）。</li>
+<li><strong>统计</strong>：成本数据通常右偏，除正态近似 CI 外建议报告 bootstrap CI；组间比较看成本差而非只看各组均值。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：直接医疗成本示例数据（元/人/年；与贯穿算例一致：对照均值 6040、干预均值 9180）
+clear
+input byte group int cost
+0 6000
+0 5500
+0 6800
+0 5900
+0 6200
+0 6100
+0 5700
+0 6400
+0 5800
+0 6000
+1 9000
+1 8800
+1 9500
+1 9200
+1 8900
+1 9600
+1 9100
+1 9300
+1 9000
+1 9400
+end
+label define grp 0 &quot;对照&quot; 1 &quot;干预&quot;
+label values group grp
+
+* 均数与 95% CI（正态近似）
+mean cost, over(group)
+ci means cost if group == 0
+ci means cost if group == 1
+
+* bootstrap：两组成本之差的 95% 百分位区间与偏差校正（BC）区间
+capture program drop diff_cost
+program define diff_cost, rclass
+    quietly summarize cost if group == 0
+    local m0 = r(mean)
+    quietly summarize cost if group == 1
+    local m1 = r(mean)
+    return scalar diff = `m1' - `m0'
+end
+bootstrap r(diff), reps(1000) seed(2026) nodots: diff_cost
+estat bootstrap, percentile bc
+</code></pre>
+<pre><code class="language-r"># R：直接医疗成本示例数据（贯穿算例：对照组均值 6040、干预组均值 9180）
+cost0 &lt;- c(6000, 5500, 6800, 5900, 6200, 6100, 5700, 6400, 5800, 6000)
+cost1 &lt;- c(9000, 8800, 9500, 9200, 8900, 9600, 9100, 9300, 9000, 9400)
+c(mean0 = mean(cost0), mean1 = mean(cost1))
+t.test(cost0)$conf.int          # 对照组 95% CI（正态近似）
+t.test(cost1)$conf.int          # 干预组 95% CI
+
+# bootstrap：两组成本之差的 95% 百分位 CI
+library(boot)
+d &lt;- data.frame(cost = c(cost0, cost1), group = rep(c(0, 1), each = 10))
+diff_mean &lt;- function(data, i) {
+  g &lt;- data[i, ]
+  mean(g$cost[g$group == 1]) - mean(g$cost[g$group == 0])
+}
+set.seed(2026)
+b &lt;- boot(d, diff_mean, R = 1000)
+boot.ci(b, type = &quot;perc&quot;)       # 差值点估计 ≈ 9180 - 6040 = 3140 元
+</code></pre>
+<hr />
+<h3 id="4">第 4 步：效果与效用指标</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>QALY（质量调整生命年）</strong> = 生存时间 × 健康效用权重（0 = 死亡，1 = 完全健康；可为负，表示比死亡更差的健康状态）。多状态时逐段累加：QALY = Σ 效用_i × 时长_i。</li>
+<li><strong>DALY（伤残调整生命年）</strong> = YLL（早亡损失生命年）+ YLD（伤残状态生存年 × 伤残权重）。QALY 与 DALY 概念互补，数值不可直接互换，选一个并说明理由。</li>
+<li><strong>效用值的测量</strong>：</li>
+<li>直接法：标准博弈（SG）、时间权衡（TTO），测量负担重；</li>
+<li>间接法（多属性效用量表）：<strong>EQ-5D</strong> 最常用——EQ-5D-3L 用中国人群 TTO 积分体系（Liu 等，2014）；EQ-5D-5L 用已发表的中国积分体系（存在多个版本，<strong>报告时必须注明所用体系</strong>）；</li>
+<li>陈述性偏好法：<strong>DCE 也可测量偏好权重与支付意愿</strong>，作为效用值的补充或替代——设计、估计与 WTP 换算见《DCE 设计助手》skill。</li>
+<li><strong>效果证据来源</strong>：RCT、系统评价/Meta 分析；相对效果结合基线风险外推长期结局时，见《Markov 模型助手》skill。</li>
+<li>本算例：对照年效用 0.70、干预 0.78，持续 10 年（未贴现）。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：QALY 与增量 QALY（效用 × 生存年数，未贴现）
+scalar u0 = 0.70       // 对照年效用
+scalar u1 = 0.78       // 干预年效用
+scalar years = 10
+display &quot;对照 QALY = &quot; u0 * years          // 7.0
+display &quot;干预 QALY = &quot; u1 * years          // 7.8
+display &quot;ΔQALY     = &quot; (u1 - u0) * years   // 0.8
+</code></pre>
+<pre><code class="language-r"># R：QALY 与增量 QALY（未贴现）
+u0 &lt;- 0.70; u1 &lt;- 0.78; years &lt;- 10
+Q0 &lt;- u0 * years        # 7.0
+Q1 &lt;- u1 * years        # 7.8
+dQ &lt;- Q1 - Q0           # 0.8 QALY
+list(QALY_control = Q0, QALY_treat = Q1, dQALY = dQ)
+
+# R：DALY 简算示意：DALY = YLL + YLD
+YLL &lt;- 10               # 早亡损失的生命年（示例）
+YLD &lt;- 2.5              # 伤残状态生存年 × 伤残权重（示例）
+YLL + YLD               # 12.5 DALY
+
+# 提示：EQ-5D 状态（如 21121）须用已发表的中国积分体系系数换算效用值，
+# 勿自造系数；换算公式形如 U = 1 −（常数项 + 各维度离差项 + 交互/极端项）
+</code></pre>
+<hr />
+<h3 id="5">第 5 步：贴现</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>成本与效果用同一贴现率</strong>贴现到基年：PV = C_t / (1 + r)^t（t 为相对基年的年数）。理论上有主张对健康效果用更低贴现率的讨论，但实践与指南要求同一贴现率（可另作敏感性分析分别检验）。</li>
+<li><strong>《中国药物经济学评价指南（2020）》</strong>：贴现率建议 <strong>5%</strong>，敏感性分析取 <strong>0–8%</strong>。时间范围超过 1 年必须贴现；基年（如 2026 年）与价格年份须注明。</li>
+<li><strong>重要提示</strong>：若各年增量成本与增量效果恒定，分子分母同乘同一贴现因子，ICER 不随贴现率改变（本算例即如此）；当成本与效果<strong>时间分布不同</strong>（成本前置、收益后置的预防与筛查类干预）时，贴现率会显著改变 ICER——这正是必须做贴现率敏感性分析的原因。</li>
+<li>本算例：10 年、5% 的年金贴现因子 ≈ 7.7217；贴现后 ΔC = 4,000 × 7.7217 ≈ 30,886.9 元，ΔE = 0.08 × 7.7217 ≈ 0.6177 QALY。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：贴现因子与 10 年年金贴现因子（r = 5%）
+scalar r = 0.05
+scalar df = 0
+forvalues t = 1/10 {
+    scalar df = df + 1 / (1 + r)^`t'
+}
+display &quot;10 年、5% 的年金贴现因子 = &quot; %9.4f df      // 7.7217
+
+* 贴现后的增量成本与增量效果
+scalar dC = (12000 - 8000) * df
+scalar dE = (0.78 - 0.70) * df
+display &quot;贴现后 ΔC = &quot; %9.2f dC                      // 30886.93 元
+display &quot;贴现后 ΔE = &quot; %9.4f dE                      // 0.6177 QALY
+
+* 贴现率敏感性（0–8%）
+foreach rr in 0 0.03 0.05 0.08 {
+    scalar df = 0
+    forvalues t = 1/10 {
+        scalar df = df + 1 / (1 + `rr')^`t'
+    }
+    display &quot;r = &quot; `rr' &quot;：10 年年金贴现因子 = &quot; %9.4f df
+}
+</code></pre>
+<pre><code class="language-r"># R：贴现与贴现率敏感性
+r &lt;- 0.05; t &lt;- 1:10
+disc &lt;- 1 / (1 + r)^t
+sum(disc)                                   # 7.7217（10 年、5% 年金贴现因子）
+dC &lt;- (12000 - 8000) * sum(disc)            # 30886.9（贴现后增量成本，元）
+dE &lt;- (0.78 - 0.70) * sum(disc)             # 0.6177（贴现后增量 QALY）
+
+# 贴现率敏感性（0–8%）
+sapply(c(0, 0.03, 0.05, 0.08), function(rr) sum(1 / (1 + rr)^(1:10)))
+# 本算例年增量恒定 → 贴现率不改变 ICER（= 4000 / 0.08 = 50000）；
+# 成本与效果时间分布不同时，ICER 会随贴现率变化（见第 7 步）
+</code></pre>
+<hr />
+<h3 id="6-icer">第 6 步：增量分析与 ICER</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>只报增量，不报平均</strong>：ICER = ΔC / ΔE = (C1 − C0) / (E1 − E0)。平均成本-效果比（ACER）会误导决策，禁止作为主要结论。</li>
+<li><strong>成本-效果平面四象限解读</strong>：</li>
+<li>东北（ΔC &gt; 0，ΔE &gt; 0）：更贵更有效 → 与阈值 λ 比较，ICER &lt; λ 则有成本-效果；</li>
+<li>东南（ΔC &lt; 0，ΔE &gt; 0）：更便宜更有效 → <strong>优势（dominant）</strong>，直接推荐；</li>
+<li>西北（ΔC &gt; 0，ΔE &lt; 0）：更贵更差 → <strong>劣势（dominated）</strong>，直接拒绝；</li>
+<li>西南（ΔC &lt; 0，ΔE &lt; 0）：更便宜更差 → 权衡：节省的成本是否值得损失的效果（用 ICER 或净收益判断）。</li>
+<li><strong>与阈值比较</strong>：支付意愿阈值 λ 以 <strong>1–3 倍人均 GDP 为参考区间</strong>（国内常用口径；《中国药物经济学评价指南（2020）》以 1 倍人均 GDP 为主要参考，应用时以最新版指南与决策机构口径为准，并对 λ 做敏感性分析）。本算例取人均 GDP = 100,000 元（示例，以官方公布为准），λ = 100,000–300,000 元/QALY。</li>
+<li>本算例：ICER = 30,886.9 / 0.6177 ≈ <strong>50,003 元/QALY</strong> &lt; 100,000 → 具有成本-效果。净货币收益 NB(λ) = λ·ΔE − ΔC = 100,000 × 0.6177 − 30,886.9 ≈ 30,887 元 &gt; 0，结论一致。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：ICER、净收益与四象限判断
+scalar dC = 30886.9
+scalar dE = 0.6177
+scalar lambda = 100000
+display &quot;ICER = &quot; %9.1f dC / dE                    // ≈ 50003 元/QALY
+display &quot;NB(λ=100000) = &quot; %9.1f lambda * dE - dC   // ≈ 30887 元
+
+if dC &gt; 0 &amp; dE &gt; 0 {
+    display &quot;东北象限：更贵更有效 → 比较 ICER 与 λ&quot;
+    display cond(dC/dE &lt; lambda, &quot;ICER &lt; λ → 具有成本-效果&quot;, &quot;ICER ≥ λ → 不具有成本-效果&quot;)
+}
+else if dC &lt; 0 &amp; dE &gt; 0 {
+    display &quot;东南象限：更便宜更有效 → 优势策略，直接推荐&quot;
+}
+else if dC &gt; 0 &amp; dE &lt; 0 {
+    display &quot;西北象限：更贵更差 → 劣势策略，拒绝&quot;
+}
+else {
+    display &quot;西南象限：更便宜更差 → 权衡节省与效果损失&quot;
+}
+</code></pre>
+<pre><code class="language-r"># R：ICER、净收益与四象限判断
+dC &lt;- 30886.9; dE &lt;- 0.6177
+lambda &lt;- 100000
+ICER &lt;- dC / dE                                    # ≈ 50003 元/QALY
+NB   &lt;- lambda * dE - dC                            # ≈ 30887 元（净货币收益）
+quadrant &lt;- if (dC &gt; 0 &amp;&amp; dE &gt; 0) &quot;NE：更贵更有效（与 λ 比较）&quot; else
+            if (dC &lt; 0 &amp;&amp; dE &gt; 0) &quot;SE：更便宜更有效（优势）&quot; else
+            if (dC &gt; 0 &amp;&amp; dE &lt; 0) &quot;NW：更贵更差（劣势）&quot; else
+            &quot;SW：更便宜更差（权衡）&quot;
+verdict &lt;- ifelse(ICER &lt; lambda, &quot;ICER &lt; λ，具有成本-效果&quot;, &quot;ICER ≥ λ，不具有成本-效果&quot;)
+list(ICER = ICER, NB = NB, quadrant = quadrant, verdict = verdict)
+</code></pre>
+<hr />
+<h3 id="7">第 7 步：不确定性分析</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>单因素敏感性分析（one-way / tornado）</strong>：每次只变动一个参数（如 ±20%、极值、95% CI 上下界），其余固定，按对 ICER 的影响大小排序，画 tornado 图；影响最大的参数是结论稳健性的关键。</li>
+<li><strong>多因素 / 场景分析</strong>：同时变动多个参数的极端组合（如最优情形、最差情形）。</li>
+<li><strong>概率敏感性分析（PSA）</strong>：所有参数同时从各自分布抽样——成本常取 gamma / lognormal（保证非负），概率取 beta，相对风险取 lognormal，效用取 beta——蒙特卡洛迭代 ≥ 1000 次，输出成本-效果平面散点图与成本-效果可接受曲线（CEAC）。从参数层面抽样的完整实现（含 Markov 状态转移与参数相关结构）见《Markov 模型助手》skill；本步骤 R 代码给「直接从 ΔC、ΔE 分布抽样」的示意版本。</li>
+<li>本算例：ΔC ~ N(30,886.9, 3,200²)、ΔE ~ N(0.6177, 0.05²)（示意；正式研究应从参数层面抽样）。tornado 参数：ΔE ±20%、ΔC ±20%、干预年效用 0.73/0.83。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：单因素敏感性分析（基线 ICER ≈ 50003 元/QALY）
+scalar dC = 30886.9
+scalar dE = 0.6177
+display &quot;基线 ICER            = &quot; %9.1f dC / dE
+display &quot;ΔE +20% 的 ICER      = &quot; %9.1f dC / (dE * 1.2)
+display &quot;ΔE −20% 的 ICER      = &quot; %9.1f dC / (dE * 0.8)
+display &quot;ΔC +20% 的 ICER      = &quot; %9.1f (dC * 1.2) / dE
+display &quot;ΔC −20% 的 ICER      = &quot; %9.1f (dC * 0.8) / dE
+
+* 干预组年效用取 0.73 / 0.83（其余不变；贴现后 ΔE = Δu × 7.7217）
+display &quot;干预效用 0.73 → ICER = &quot; %9.1f dC / (0.03 * 7.7217)
+display &quot;干预效用 0.83 → ICER = &quot; %9.1f dC / (0.13 * 7.7217)
+* 解读：ICER 范围约 30769–133333 元/QALY，跨过 λ = 100000 →
+* 结论对效用参数敏感，报告中须突出说明
+</code></pre>
+<pre><code class="language-r"># R：概率敏感性分析（PSA）示意——直接从 ΔC、ΔE 的分布抽样；
+# 正式研究应从参数层面抽样（成本 gamma、概率 beta、RR lognormal），
+# 完整实现见《Markov 模型助手》skill。
+set.seed(2026)
+n &lt;- 1000
+dC &lt;- rnorm(n, mean = 30886.9, sd = 3200)     # 增量成本（元）
+dE &lt;- rnorm(n, mean = 0.6177, sd = 0.05)      # 增量 QALY
+
+# 成本-效果平面散点图（λ = 100000 元/QALY 的斜率线）
+plot(dE, dC, xlab = &quot;ΔE（QALY）&quot;, ylab = &quot;ΔC（元）&quot;, pch = 20,
+     cex = 0.5, col = rgb(0, 0, 0, 0.3), main = &quot;PSA 成本-效果平面散点图&quot;)
+abline(h = 0, v = 0, lty = 2)
+abline(a = 0, b = 100000, col = &quot;red&quot;)        # 斜率 = λ
+
+# 各象限模拟点占比
+quad &lt;- ifelse(dE &gt; 0, ifelse(dC &gt; 0, &quot;NE&quot;, &quot;SE&quot;),
+               ifelse(dC &gt; 0, &quot;NW&quot;, &quot;SW&quot;))
+table(quad) / n
+
+# 成本-效果可接受曲线（CEAC）：P(NMB(λ) &gt; 0)
+lam  &lt;- seq(0, 300000, by = 5000)
+ceac &lt;- sapply(lam, function(x) mean(x * dE - dC &gt; 0))
+plot(lam, ceac, type = &quot;l&quot;, xlab = &quot;支付意愿阈值 λ（元/QALY）&quot;,
+     ylab = &quot;具有成本-效果的概率&quot;, ylim = c(0, 1))
+abline(h = 0.5, lty = 3)
+</code></pre>
+<hr />
+<h3 id="8-cheers-2022">第 8 步：报告规范（CHEERS 2022）</h3>
+<p><strong>方法</strong>：报告应逐条对照 <strong>CHEERS 2022 清单（28 条）</strong>。核心条目按报告结构对照如下（节选，完整清单以 CHEERS 2022 官方文件为准）：</p>
+<table>
+<thead>
+<tr>
+<th>报告部分</th>
+<th>CHEERS 2022 核心条目</th>
+<th>要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题与摘要</td>
+<td>1 标题、2 摘要</td>
+<td>标题注明评价类型（成本-效果/成本-效用分析）；摘要含视角、时间范围、贴现率、ΔC、ΔE、ICER 与结论</td>
+</tr>
+<tr>
+<td>方法</td>
+<td>3–4 背景目的与分析计划；5–8 人群、背景地点、对照、视角；9–10 时间范围、贴现率；11–13 结局选择、测量与估值；14–15 资源与成本、货币与价格日期；16–17 模型与分析假设；20 不确定性</td>
+<td>逐项交代：PICO、视角与理由、时间范围与理由、贴现率与敏感性范围、QALY 及效用值来源（如 EQ-5D 中国积分体系版本）、成本条目与单位成本来源年份、模型结构、单因素/场景/PSA 计划与参数分布</td>
+</tr>
+<tr>
+<td>结果</td>
+<td>23 主要结果、24 不确定性影响</td>
+<td>成本表、效果表、ICER、tornado 图、PSA 散点图与 CEAC；说明不确定性是否改变结论</td>
+</tr>
+<tr>
+<td>讨论</td>
+<td>25–28 利益相关者影响、发现与局限、资助、利益冲突</td>
+<td>与现有证据比较；异质性与分布效应；外推假设局限；资助与利益冲突声明</td>
+</tr>
+</tbody>
+</table>
+<p><strong>代码</strong>（把主要结果导出到结果表，供报告引用）：</p>
+<pre><code class="language-stata">* Stata：把主要结果写入 Excel（putexcel，Stata 14+）
+putexcel set results.xlsx, replace
+putexcel A1 = &quot;指标&quot; B1 = &quot;数值&quot;
+putexcel A2 = &quot;贴现后 ΔC（元）&quot;        B2 = 30886.9
+putexcel A3 = &quot;贴现后 ΔE（QALY）&quot;      B3 = 0.6177
+putexcel A4 = &quot;ICER（元/QALY）&quot;        B4 = 50003
+putexcel A5 = &quot;阈值 λ（元/QALY）&quot;      B5 = 100000
+putexcel A6 = &quot;净收益 NB（元）&quot;        B6 = 30887
+</code></pre>
+<pre><code class="language-r"># R：导出主要结果表
+res &lt;- data.frame(
+  指标 = c(&quot;贴现后 ΔC（元）&quot;, &quot;贴现后 ΔE（QALY）&quot;, &quot;ICER（元/QALY）&quot;,
+           &quot;阈值 λ（元/QALY）&quot;, &quot;净收益 NB（元）&quot;),
+  数值 = c(30886.9, 0.6177, 50003, 100000, 30887))
+res
+write.csv(res, &quot;results.csv&quot;, row.names = FALSE)
+</code></pre>
+<hr />
+<h3 id="9-skill">第 9 步：研究工具箱指引（本仓库配套 Skill）</h3>
+<p><strong>方法</strong>：先按本总纲走完全流程，再按需调用同一网站的四个配套 Skill（文件名以仓库 <code>skills/</code> 目录为准）：</p>
+<table>
+<thead>
+<tr>
+<th>配套 Skill</th>
+<th>定位</th>
+<th>什么时候用它</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DCE 设计助手</td>
+<td>离散选择实验设计与分析（正交/D-效率设计、clogit/mixlogit/潜类别、WTP）</td>
+<td>需要用陈述性偏好测量偏好权重、效用值或支付意愿（作为 EQ-5D 的补充或替代）时</td>
+</tr>
+<tr>
+<td>Markov 模型助手</td>
+<td>状态转移模型（队列/微模拟）与完整概率敏感性分析</td>
+<td>慢性病动态建模、外推长期成本效果、实现参数层面的完整 PSA/CEAC 时</td>
+</tr>
+<tr>
+<td>机器学习</td>
+<td>费用预测、风险分层、成本数据挖掘</td>
+<td>用大样本真实世界数据预测费用、识别高费用人群时</td>
+</tr>
+<tr>
+<td>DID 双重差分</td>
+<td>政策/自然实验的因果效应估计</td>
+<td>用面板数据评估医保目录调整、价格改革等政策的因果效果时</td>
+</tr>
+</tbody>
+</table>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-r"># R：本仓库配套 Skill 一览（可复制到 README / 网页）
+toolbox &lt;- data.frame(
+  Skill = c(&quot;DCE 设计助手&quot;, &quot;Markov 模型助手&quot;, &quot;机器学习&quot;, &quot;DID 双重差分&quot;),
+  什么时候用 = c(
+    &quot;测量偏好、效用值与支付意愿（EQ-5D 的补充或替代）&quot;,
+    &quot;慢性病动态建模、时间外推与完整 PSA/CEAC&quot;,
+    &quot;真实世界大数据下的费用预测与风险分层&quot;,
+    &quot;用面板数据评估医保与支付改革政策的因果效果&quot;))
+toolbox
+</code></pre>
+<hr />
+<h2 id="_4">常见错误清单</h2>
+<ul>
+<li>[ ] 成本与效果使用<strong>不同的贴现率</strong>（必须同一贴现率，可另做敏感性分析分别检验）</li>
+<li>[ ] 用<strong>平均成本-效果比（ACER）</strong>代替增量比（ICER）</li>
+<li>[ ] 把<strong>统计显著当作经济显著</strong>（P &lt; 0.05 ≠ ICER &lt; λ）</li>
+<li>[ ] <strong>忘记报告不确定性</strong>（无单因素敏感性、无 PSA，直接下结论）</li>
+<li>[ ] <strong>阈值误用</strong>（套用别国或过期的阈值；把 1–3 倍人均 GDP 当绝对标准而不对 λ 做敏感性分析）</li>
+<li>[ ] 时间范围过短，漏掉后期成本/效果（预防、筛查类干预尤甚）</li>
+<li>[ ] 成本与效果<strong>基年 / 价格年份不一致</strong>，或未按 CPI 调整</li>
+<li>[ ] 效用值套用<strong>外国人群的积分体系</strong>直接用于中国人群（EQ-5D 应使用中国积分体系并注明版本）</li>
+<li>[ ] 用中间结局（血压、生化指标）代替最终结局（死亡、QALY）</li>
+<li>[ ] 未说明研究视角，却混用不同视角下的成本条目</li>
+<li>[ ] 成本数据明显右偏仍只用正态近似，不报告 bootstrap CI</li>
+<li>[ ] PSA 参数分布选择无依据（如成本用对称正态导致抽样出现负成本）</li>
+<li>[ ] 未按 CHEERS 2022 逐条自查，方法细节缺失导致不可复现</li>
+</ul>
+<h2 id="_5">输出格式（研究方案 / 报告模板）</h2>
+<pre><code>【研究方案模板】
+1. 研究问题（PICO-T）与评价类型（CEA/CUA/CMA/CBA 及选择理由）
+2. 研究视角（社会/卫生体系/医保支付方）与时间范围（含理由）
+3. 成本：条目清单（识别→测量→估值）、单位成本来源与年份、间接成本方法（HCA/FCM）
+4. 效果/效用：结局指标、数据来源、效用积分体系（如 EQ-5D 中国积分体系及版本）
+5. 贴现：贴现率（指南 2020：5%，敏感性 0–8%）与基年
+6. 分析计划：ICER、阈值 λ 与依据、敏感性分析（单因素/场景/PSA 与参数分布）
+7. 自查：按 CHEERS 2022 清单逐条对照
+
+【报告模板】
+标题（注明评价类型，如「……的成本-效用分析」）
+摘要（视角、时间范围、贴现率、ΔC、ΔE、ICER、结论）
+1 背景与目的 2 方法（视角、人群、时间范围、成本、效果、贴现、分析计划）
+3 结果（成本表、效果表、ICER、tornado 图、PSA 散点图与 CEAC）
+4 讨论（与文献比较、阈值与不确定性、异质性与公平性、局限）
+5 结论（附：CHEERS 2022 对照自查表）
+</code></pre>
+<h2 id="_6">使用提示</h2>
+<ul>
+<li>命令与选项随版本更新，运行 <code>help bootstrap</code> / <code>help display</code> / <code>help putexcel</code> 核对。</li>
+<li>流程建议：先定 PICO 与研究视角，再动手测算；每一步记录参数取值、来源与年份，方便复现与修改。</li>
+<li>本教程的算例数字为教学演示（数值自洽）；正式研究请替换为真实数据，并对全部关键参数做敏感性分析。</li>
+<li>本 Skill 是总纲：偏好与效用测量用《DCE 设计助手》，动态建模与完整 PSA 用《Markov 模型助手》，费用预测与风险分层用《机器学习》，政策因果评估用《DID 双重差分》。</li>
+<li>研究背景、参数取舍与最终结论由研究者负责；本 Skill 不替代教科书、指南与期刊审稿要求。</li>
+</ul>
+<hr />
+<h2 id="citation">引用 / Citation</h2>
+<p>中文：杜思娴. 卫生经济学评价教程 Skill [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.</p>
+<p>English: Du, S. (2026). <em>Health economics evaluation tutorial</em> [Skill definition]. https://naturedu.github.io/socialmedicine/.</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

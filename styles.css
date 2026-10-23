@@ -385,3 +385,6 @@ legend { font-weight: 600; font-size: 14px; margin-bottom: 10px; color: var(--in
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* 方法小花园 */
+.method-welcome{background:#eef1e7;border:1px solid #d8dece;border-radius:20px;padding:26px;margin:24px 0}.method-welcome h3{font-family:var(--serif);font-size:25px;margin:12px 0}.method-welcome p{color:var(--muted);line-height:1.8}.welcome-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.welcome-links a{display:inline-block;background:var(--paper,#faf7f0);border:1px solid #d8dece;padding:8px 13px;border-radius:24px;color:var(--ink)}.skill-search-label{display:block;font-size:13px;margin-bottom:7px}.skill-search{width:100%;margin-bottom:18px}.method-name{color:var(--ink);text-decoration:underline;text-underline-offset:4px}.cat-H{background:#eee4f5}.cat-I{background:#f6ead5}.cat-J{background:#e1eff0}.skill-icon{min-width:48px}a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}@media(max-width:640px){.method-welcome{padding:18px}.method-welcome h3{font-size:21px}.welcome-links a{font-size:13px}.method-item{grid-template-columns:40px 1fr}.method-use,.method-item>.mini-tag{grid-column:2}}

@@ -1,0 +1,69 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skill：学术写作规范润色（中文学术文本） · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/academic-copyediting-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">用途</a></li>
+<li><a href="#_2">适用范围（明确边界）</a></li>
+<li><a href="#_3">工作流程</a></li>
+<li><a href="#_4">诊断清单</a></li>
+<li><a href="#_5">输出格式</a></li>
+<li><a href="#_6">使用提示</a></li>
+<li><a href="#citation">引用 / Citation</a></li>
+<li><a href="#_7">期刊模式扩展</a></li>
+</ul>
+</div>
+</aside><article><h1 id="skill">Skill：学术写作规范润色（中文学术文本）</h1>
+<p><strong>版本</strong> 1.0 · <strong>作者</strong> 杜思娴 (Du Sixian) · <strong>许可</strong> MIT</p>
+<h2 id="_1">用途</h2>
+<p>对中文学术文本做<strong>写作质量层面</strong>的规范与润色：标点、句式、冗余、结构与术语。适用于人类写作，也适用于 AI 辅助写作的质量提升。可直接作为提示词（Prompt）喂给任何大语言模型使用。</p>
+<h2 id="_2">适用范围（明确边界）</h2>
+<p>允许：
+- 全半角标点规范化（中文语境下统一为全角标点，数字、英文、网址、代码除外）
+- 破折号 / 连字符统一（<code>--</code>、<code>—</code>、<code>–</code> 按中文规范处理）
+- 去冗余表达（「进行了」「通过……的方式」「值得注意的是」等套话）
+- 长句拆分（单句超过约 60 字时提示拆分）
+- 句首重复与句式单一化调整
+- 段落结构与过渡、术语一致性
+- 「学术腔」压缩——以清晰、准确为导向</p>
+<p><strong>不允许：</strong>
+- 针对任何 AI 检测器做优化（即不以“降低 AI 检测分数”为目标）
+- 承诺或尝试让 AI 生成的内容“通过编辑/审稿审查”
+- 把 AI 生成内容伪装为人类原创
+- 去除、篡改来源信息或元数据（如 C2PA 标签）
+- 在报告或稿件中隐瞒 AI 使用情况</p>
+<h2 id="_3">工作流程</h2>
+<ol>
+<li><strong>诊断</strong>：通读全文，按下方清单逐项检查并记录问题位置。</li>
+<li><strong>规范化</strong>：逐项修改，保持原意不变，不做事实层面的增删（需要增删事实时留待作者本人处理）。</li>
+<li><strong>输出</strong>：给出「修改后全文 + 修改说明 + 建议作者人工复核的事项」。</li>
+</ol>
+<h2 id="_4">诊断清单</h2>
+<ul>
+<li>[ ] 全半角标点混用（如 <code>,</code> 应为 <code>，</code>；中文里的半角括号、冒号、问号）</li>
+<li>[ ] 全角字母 / 数字混入（应转半角，如 <code>ＡＢＣ</code> → <code>ABC</code>、<code>２０２６</code> → <code>2026</code>）</li>
+<li>[ ] 破折号不规范（<code>--</code>、单个 <code>—</code>、<code>–</code> 混用）</li>
+<li>[ ] 冗余套话：进行了、通过……的方式、在……的情况下、值得注意的是、需要指出的是、综上所述、总而言之等</li>
+<li>[ ] 长句（超过约 60 字的单句，提示拆分）</li>
+<li>[ ] 句首重复（相邻句以相同词语开头）</li>
+<li>[ ] 术语前后不一致</li>
+<li>[ ] 段落过长或主题混杂</li>
+</ul>
+<h2 id="_5">输出格式</h2>
+<pre><code>【修改后全文】
+……
+
+【修改说明】
+1. 第 X 段：……（原因：……）
+2. ……
+
+【请作者人工复核】
+- 事实与数据（润色不改事实，需作者核对）
+- 引用出处
+- AI 使用披露是否已写入稿件
+</code></pre>
+<h2 id="_6">使用提示</h2>
+<p>本 Skill 是写作质量工具。它不保证、也不尝试让文本“看起来不像 AI 写的”。如果你的稿件使用了 AI 辅助，请在稿件中如实披露（可配合普贤的披露声明生成器使用）。</p>
+<hr />
+<h2 id="citation">引用 / Citation</h2>
+<p>中文：杜思娴. 学术写作规范润色 Skill [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.</p>
+<p>English: Du, S. (2026). <em>Academic writing copyediting skill</em> [Skill definition]. https://naturedu.github.io/socialmedicine/.</p>
+<h2 id="_7">期刊模式扩展</h2>
+<p>需要《管理世界》、Nature/Science 或临床公共卫生期刊风格时，先读 <a href="references/journal-writing.html">期刊写作模式</a>。优先修正问题—机制—证据链和结论强度；字词替换只是表层环节。页面提供本地审读和模型润色任务书，不把规则输出冒充大模型完成的全文润色。</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

@@ -1,0 +1,180 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skill：主动健康与健康融入万策（Health in All Policies，总纲旗舰） · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/active-health-hiap-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">用途</a></li>
+<li><a href="#_2">适用范围（明确边界）</a></li>
+<li><a href="#_3">理念：从「普度众生」到「健康普惠」</a></li>
+<li><a href="#_4">工作流程总览（五大板块）</a><ul>
+<li><a href="#1">板块 1：理论框架（怎么写进论文与标书）</a></li>
+<li><a href="#2hia">板块 2：健康影响评估（HIA）方法</a></li>
+<li><a href="#3">板块 3：数据源（健康融入万策的证据底座）</a></li>
+<li><a href="#4">板块 4：选题与基金（把愿景变成课题）</a></li>
+<li><a href="#5">板块 5：院校与学科建设</a></li>
+</ul>
+</li>
+<li><a href="#_5">常见错误清单</a></li>
+<li><a href="#_6">输出格式（政策健康影响评估报告模板）</a></li>
+<li><a href="#_7">使用提示</a></li>
+<li><a href="#citation">引用 / Citation</a></li>
+</ul>
+</div>
+</aside><article><h1 id="skillhealth-in-all-policies">Skill：主动健康与健康融入万策（Health in All Policies，总纲旗舰）</h1>
+<p><strong>版本</strong> 1.0 · <strong>作者</strong> 杜思娴 (Du Sixian) · <strong>许可</strong> MIT · <strong>更新</strong> 2026-10-23</p>
+<h2 id="_1">用途</h2>
+<p>这是「普贤——社医卫管科研助手」方法学套件的<strong>总纲旗舰 Skill</strong>，承载整套工具的理念与整合逻辑：</p>
+<blockquote>
+<p><strong>就是为了每一个人的健康。</strong></p>
+</blockquote>
+<p>以「主动健康」为策略主轴，以「健康融入所有政策（Health in All Policies, HiAP）」为治理框架，把本网站的理论方法、数据源、选题与院校四个板块蒸馏成一个可用于<strong>学科建设、课题设计、政策评估与教学</strong>的工作流。既有普度众生式的普惠愿景（健康不止于治病，而是让政策、环境与日常都向健康倾斜），又把愿景落到可算、可评、可复现的方法与代码上。每个环节都给出「方法 + 代码」，Stata / R 双轨。</p>
+<h2 id="_2">适用范围（明确边界）</h2>
+<p>允许：
+- 以 HiAP 框架组织跨部门健康政策研究与健康影响评估（HIA）
+- 以主动健康视角设计行为与体系层面的干预与评估方案
+- 用定量方法（归因负担、公平性、成本效果）为「健康融入万策」提供证据
+- 指导选题、基金申报与学科方向的凝练</p>
+<p><strong>不允许：</strong>
+- 把健康价值凌驾于其他正当政策目标之上做单边裁断（HiAP 是权衡与协同，不是否决权）
+- 以模型结果冒充已发生的健康结局；归因是模型估计，需显式说明
+- 用愿景口号替代证据；本 Skill 要求每个主张都有方法学支撑</p>
+<h2 id="_3">理念：从「普度众生」到「健康普惠」</h2>
+<ul>
+<li><strong>普贤愿景的现代转译</strong>：菩萨度人是个体修为；卫生治理的健康普惠是制度修为。普贤的品牌底色由此而来——像海浪一样温柔地渗透每个领域。</li>
+<li><strong>主动健康</strong>：健康的第一责任人是个体，但个体选择被环境塑造。主动健康 = 个体主动（运动、营养、心理、睡眠、社交等健康行为）+ 体系主动（环境、政策、服务与支付方式让健康选择成为默认选项）。</li>
+<li><strong>健康融入万策（HiAP）</strong>：WHO 赫尔辛基声明（2013）的核心主张——健康与福祉由卫生部门之外的因素决定，因此所有政策都应系统考虑健康后果。八项原则：考虑健康与健康公平、共同受益、多部门参与、利益相关者参与、政策一致性、问责与透明度、基于证据、能力建设。中国的政策表达是「将健康融入所有政策」与「健康中国 2030」战略。</li>
+</ul>
+<h2 id="_4">工作流程总览（五大板块）</h2>
+<ol>
+<li>理论框架（主动健康 + HiAP + 健康社会决定因素）→ 2. 健康影响评估 HIA 方法 → 3. 数据源（全球健康数据库）→ 4. 选题与基金 → 5. 院校与学科建设。每个板块「方法 + 代码」。</li>
+</ol>
+<hr />
+<h3 id="1">板块 1：理论框架（怎么写进论文与标书）</h3>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>立论三件套</strong>：① 健康社会决定因素（WHO CSDH：日常生活条件 + 权力、金钱与资源的分配）说明「为什么健康问题出在卫生部门之外」；② HiAP 说明「政策杠杆在哪里」（教育、住房、交通、环境、社保、医保、食品）；③ 主动健康说明「个体与体系如何共同发力」。</li>
+<li><strong>论文中的用法</strong>：理论框架部分按「决定因素 → 政策杠杆 → 主动健康机制」三段展开；讨论部分回扣「该政策是否把健康带进了决策」。</li>
+<li><strong>标书中的用法</strong>：立项依据写「健康融入万策」的政策窗口（如《“健康中国 2030”规划纲要》把健康融入所有政策列为基本原则），研究目标写清楚要评估哪一类政策的健康与公平后果。</li>
+</ul>
+<p><strong>代码</strong>（政策文本快速摸底：关键词与主题结构，辅助而非替代人工阅读）：</p>
+<pre><code class="language-r">library(quanteda)
+docs &lt;- readtext::readtext(&quot;policy_texts/*.txt&quot;)          # 政策文件目录
+corp &lt;- corpus(docs)
+toks &lt;- tokens(corp, remove_punct = TRUE)
+dfmat &lt;- dfm(toks)
+kw &lt;- c(&quot;健康&quot;, &quot;预防&quot;, &quot;公平&quot;, &quot;环境&quot;, &quot;医疗&quot;, &quot;保障&quot;)
+dfm_select(dfmat, pattern = kw) |&gt; textstat_frequency()    # 政策文本中的健康话语频次
+</code></pre>
+<hr />
+<h3 id="2hia">板块 2：健康影响评估（HIA）方法</h3>
+<p><strong>方法</strong>：HIA 六步——① 筛选（是否值得做 HIA）；② 界定（范围、人群、时间、评估者）；③ 评估（基线、影响识别、定量/定性分析）；④ 建议（可执行的政策修改）；⑤ 报告；⑥ 监测与评价。</p>
+<p><strong>定量核心公式</strong>：</p>
+<ul>
+<li>暴露—反应归因：人群归因分数 PAF = p(RR−1) / [p(RR−1) + 1]，p 为暴露率，RR 为暴露—反应相对危险度（来自系统综述/GBD 比较风险评估）。</li>
+<li>归因负担 = 基线疾病负担 × PAF；干预后负担 = 基线负担 × (1 − 干预后暴露变化 × 归因系数)，据此算「可避免的死亡/DALY」。</li>
+<li>公平性：集中指数 CI = 2·cov(y, r)/ȳ（r 为按社会经济排序的分数秩），并用分解说明政策收益分布。</li>
+</ul>
+<p><strong>代码</strong>：</p>
+<pre><code class="language-stata">* Stata：PAF 与可避免负担的情景计算
+local p  0.35            // 基线暴露率
+local RR 1.45            // 暴露-反应 RR（示例，来自 Meta 分析）
+local paf = (`p'*(`RR'-1))/(`p'*(`RR'-1)+1)
+di &quot;PAF = &quot; %5.3f `paf'
+local B 12000            // 基线年死亡数（示例）
+di &quot;基线归因死亡 = &quot; %9.0f (`B'*`paf')
+* 干预使暴露率降至 0.25
+local p2 0.25
+local paf2 = (`p2'*(`RR'-1))/(`p2'*(`RR'-1)+1)
+di &quot;干预后可避免死亡 = &quot; %9.0f (`B'*(`paf'-`paf2'))
+
+* 公平性：集中指数（协方差法）
+egen r = rank(y)         // y 为健康结局，按经济状况排序后的秩
+sum y
+gen lhs = 2*y*r/r(mean)
+quietly reg lhs r
+di &quot;CI = &quot; %5.3f _b[r]
+</code></pre>
+<pre><code class="language-r"># R：同一计算 + 集中指数 + 情景比较
+paf &lt;- function(p, RR) p*(RR-1)/(p*(RR-1)+1)
+B &lt;- 12000
+base  &lt;- B * paf(0.35, 1.45)
+after &lt;- B * paf(0.25, 1.45)
+avoid &lt;- base - after
+cat(sprintf(&quot;基线归因死亡 %.0f；干预后可避免死亡 %.0f\n&quot;, base, avoid))
+
+# 集中指数
+ci &lt;- function(y, x) 2 * cov(y, rank(x)) / mean(y)
+ci(health_y, income_x)
+</code></pre>
+<hr />
+<h3 id="3">板块 3：数据源（健康融入万策的证据底座）</h3>
+<p><strong>方法</strong>：按「问题 → 数据」配表。疾病负担用 GBD（IHME）；暴露与政策用 WHO GHO / 世界银行 HNP / 中国卫生健康统计年鉴；行为与主动健康用 CHARLS / CFPS / 中国居民营养与慢性病状况报告；环境暴露用中国 CDC 公卫数据中心与卫星产品；政策文本用各级政府公开文件。</p>
+<p><strong>代码</strong>（R 抓取与整理公开数据的习惯写法）：</p>
+<pre><code class="language-r">library(readxl)
+df &lt;- read_excel(&quot;GBD_results.xlsx&quot;)     # 从 GBD Results Tool 导出的 CSV/XLSX
+agg &lt;- aggregate(deaths ~ year + location, data = df, sum)
+# 与政策时点对齐：政策前后负担变化（配合 ITS/DID skill 做因果评估）
+</code></pre>
+<blockquote>
+<p>完整数据库导航见网站「数据源」模块（25 个数据源，含链接与口径提示）。</p>
+</blockquote>
+<hr />
+<h3 id="4">板块 4：选题与基金（把愿景变成课题）</h3>
+<p><strong>方法</strong>：主动健康 × HiAP 的选题生成规则——「政策杠杆 × 健康结局 × 公平维度」三维交叉。示例选题（直接可用）：</p>
+<ol>
+<li>医保支付方式改革（DRG/DIP）对预防服务供给与慢病并发症的影响（DID/ITS）</li>
+<li>「体医融合」运动处方纳入医保对慢病患者健康行为的因果效应（RCT/准实验）</li>
+<li>城市更新与 15 分钟生活圈对居民体力活动与肥胖的准实验评估（DID）</li>
+<li>学校供餐营养政策对儿童超重与学业表现的长期影响（队列/自然实验）</li>
+<li>气候政策（碳氮协同治理）的健康协同收益测算（CEA + PAF 归因）</li>
+<li>主动健康干预（五处方：运动/营养/心理/睡眠/社交）的社区整群随机试验</li>
+<li>健康影响评估制度化的国际比较与本土路径（政策文本分析 + 比较案例）</li>
+<li>远程医疗与数字健康工具对基层慢病管理的公平性影响（集中指数 + 分解）</li>
+<li>健康城市指标体系构建与考核的德尔菲研究</li>
+<li>食品标签/含糖饮料政策对健康不平等的异质性影响（fsQCA/分层分析）</li>
+</ol>
+<p><strong>基金申报</strong>：国自然（管理科学部 G04 健康管理与政策；医学部 H30）、国社科（社会学/应用经济/管理学）、教育部人文社科、卫健委委托课题——申报导航见网站「选题基金」模块；方法学技术路线直接引用本套件对应 Skill（DCE/Markov/DID/ITS/Meta 等）。</p>
+<hr />
+<h3 id="5">板块 5：院校与学科建设</h3>
+<p><strong>方法</strong>：学科建设三件事——方向凝练（用本 Skill 五板块做教研室/课题组的方向地图）、人才培养（把 socialmedicineskills 速查手册作为研究生方法学课程大纲）、院际合作（按「院校科普」模块的 12 所院系匹配合作对象与报考方向）。代表学者路径的启示：把本地证据连接到全球数据与政策问题（借鉴 Science 卫生政策样本中作者路径一节）。</p>
+<blockquote>
+<p>院校科普（北大公卫、复旦公卫、人大公管、人大人口与健康、浙大公卫、华科医管、武大政管、安医大等 12 所）见网站「院校」模块。</p>
+</blockquote>
+<hr />
+<h2 id="_5">常见错误清单</h2>
+<ul>
+<li>[ ] 把 HiAP 写成「卫生部门否决其他部门」，忽略共同受益与权衡</li>
+<li>[ ] PAF 计算用错暴露率口径（点暴露率 vs 累积暴露）或 RR 来源不明</li>
+<li>[ ] 把模型归因结果写成已发生的健康结局</li>
+<li>[ ] 只算平均效果，不报公平性分布（集中指数/分人群）</li>
+<li>[ ] 数据源口径混用（GBD 归因 vs 本地监测）</li>
+<li>[ ] 政策文本分析用词频代替人工阅读与制度分析</li>
+<li>[ ] 选题只有愿景没有可检验的因果问题</li>
+<li>[ ] 引用 GBD/WHO 数据未注明版本与年份</li>
+</ul>
+<h2 id="_6">输出格式（政策健康影响评估报告模板）</h2>
+<pre><code>【政策与背景】
+政策名称、出台部门、目标与「健康融入万策」的关联点。
+
+【HIA 界定】
+范围、人群（含易受影响人群）、时间范围、评估者与利益相关者。
+
+【基线】
+暴露率、疾病负担、公平性现状（附数据源与版本）。
+
+【影响评估】
+暴露-反应证据（RR 与来源）；PAF 与可避免负担的情景计算；公平性影响（CI 与分解）；不确定性说明。
+
+【建议】
+可执行的政策修改建议（按证据强度分级）。
+
+【监测与评价】
+指标、数据来源与复查时点。
+</code></pre>
+<h2 id="_7">使用提示</h2>
+<ul>
+<li>本 Skill 是总纲：理论用「板块 1」、定量用「板块 2」、数据用「板块 3」、选题用「板块 4」、学科建设用「板块 5」；深度方法到对应 Skill（DCE 设计助手、Markov 模型助手、DID/ITS/DDD、Meta 分析、机器学习、卫生经济学教程）。</li>
+<li>主动健康干预评估优先考虑整群随机试验与准实验设计；因果估计与模型归因分开表述。</li>
+<li>愿景要有边界：健康融入万策是权衡的艺术，不是健康的一票否决。</li>
+</ul>
+<hr />
+<h2 id="citation">引用 / Citation</h2>
+<p>中文：杜思娴. 主动健康与健康融入万策（HiAP）总纲 Skill [EB/OL]. (2026). https://naturedu.github.io/socialmedicine/.</p>
+<p>English: Du, S. (2026). <em>Proactive health and Health in All Policies (HiAP): A flagship skill</em> [Skill definition]. https://naturedu.github.io/socialmedicine/.</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

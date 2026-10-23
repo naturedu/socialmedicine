@@ -1,0 +1,31 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>纵向轨迹、混合模型与多时点作图 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/longitudinal-studio.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">边界</a></li>
+<li><a href="#r">R 模板</a></li>
+<li><a href="#stata">STATA 模板</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">纵向轨迹、混合模型与多时点作图</h1>
+<p>重复测量应处理个体内相关；轨迹图、混合效应和 GEE 的目标不同。</p>
+<h2 id="_2">边界</h2>
+<p>所有代码为教学模板，未在真实数据执行；请核对数据字典、版本和包依赖。</p>
+<h2 id="r">R 模板</h2>
+<pre><code class="language-r"># 依赖 lme4 / ggplot2；df包含id time y group
+library(lme4); library(ggplot2)
+fit &lt;- lmer(y ~ time * group + (1 + time | id), data=df)
+summary(fit)
+ggplot(df, aes(time,y,group=id,colour=factor(group))) +
+ geom_line(alpha=.10) +
+ stat_summary(aes(group=group),fun=mean,geom=&quot;line&quot;,linewidth=1.2) +
+ theme_classic()
+# 检查非线性、缺失机制及随机效应结构；均值轨迹不等同潜在类别
+</code></pre>
+<h2 id="stata">STATA 模板</h2>
+<pre><code class="language-stata">* id time y group；先检查时间尺度与重复记录
+isid id time
+xtset id time
+mixed y c.time##i.group || id: time, covariance(unstructured)
+margins group, at(time=(0 1 2 3))
+marginsplot
+* 非正态结局可考虑GEE：xtgee y c.time##i.group, family(binomial) link(logit) corr(exchangeable) vce(robust)
+</code></pre><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

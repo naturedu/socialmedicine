@@ -1,0 +1,87 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>🧭 因果方法进阶：让设计带路，让算法帮忙 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/advanced-causal-inference-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">先选问题，再选工具</a></li>
+<li><a href="#sdid">SDID：空间与时间一起构造参照</a></li>
+<li><a href="#dml">DML：灵活处理混杂，保留目标参数</a></li>
+<li><a href="#ipwmsmg">IPW/MSM与g方法：看清时间顺序</a></li>
+<li><a href="#_3">交付与易错点 🐾</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">🧭 因果方法进阶：让设计带路，让算法帮忙</h1>
+<h2 id="_2">先选问题，再选工具</h2>
+<table>
+<thead>
+<tr>
+<th>数据与问题</th>
+<th>候选路线</th>
+<th>必须核对</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>少量城市政策、足够长政策前面板</td>
+<td>SCM / SDID</td>
+<td>供体未受干预、拟合质量、共同冲击、处理时点</td>
+</tr>
+<tr>
+<td>多城市分批政策</td>
+<td>分组-时间DID、适合交错处理的扩展</td>
+<td>各批次可比对照、预期效应、异质效应</td>
+</tr>
+<tr>
+<td>基线混杂多且关系复杂</td>
+<td>DML / 双稳健估计</td>
+<td>可交换性、正值性、交叉拟合、目标参数</td>
+</tr>
+<tr>
+<td>受既往治疗影响的时间变化混杂</td>
+<td>MSM/IPW、参数g-formula</td>
+<td>历史信息、删失机制、权重稳定性</td>
+</tr>
+<tr>
+<td>风险效应对未测量因素敏感</td>
+<td>定量偏倚/敏感性分析</td>
+<td>假设范围及外部依据</td>
+</tr>
+</tbody>
+</table>
+<p>PSM-DID、SDID、DDD、DML各有任务，不能按“越叠加越高级”选择。模型之间若估计对象、样本或时间窗不同，结果不同并不直接构成不稳健。</p>
+<h2 id="sdid">SDID：空间与时间一起构造参照</h2>
+<p>输入地区×时间结局面板、处理开始时点、供体资格及同时发生的政策。先画原始趋势，再检查政策前加权拟合、单位权重与时间权重、单一供体支配、供体排除敏感性和政策溢出。少处理城市时，常规大簇渐近标准误可能不合适；置换需要说明可交换的单位集合及赋值假设。</p>
+<pre><code class="language-r">library(synthdid)
+data(&quot;california_prop99&quot;)
+z &lt;- panel.matrices(california_prop99)
+att &lt;- synthdid_estimate(z$Y,z$N0,z$T0)
+plot(att)
+se &lt;- sqrt(vcov(att,method=&quot;placebo&quot;))
+c(estimate=as.numeric(att),SE=as.numeric(se))
+</code></pre>
+<p>这是软件自带示例，不是本地项目结果。<a href="https://synth-inference.github.io/synthdid/">synthdid官方实现</a> 要求这里的处理矩阵是同时开始的块状结构；交错政策不能直接塞入上述示例。政策前拟合好也不是因果识别的充分条件。</p>
+<h2 id="dml">DML：灵活处理混杂，保留目标参数</h2>
+<p>DML通常用机器学习估计干扰参数，借助正交得分和交叉拟合降低过拟合/正则化对目标参数推断的影响。它不会自动处理未测量混杂。部分线性模型的系数不应在任意异质效应场景下直接叫ATE；二元处理的ATE可另考虑适合的交互回归模型。</p>
+<pre><code class="language-r">library(DoubleML)
+library(mlr3)
+library(mlr3learners)
+set.seed(20261023)
+n &lt;- 600
+d &lt;- data.frame(x1=rnorm(n),x2=rnorm(n))
+d$a &lt;- .5*d$x1+rnorm(n)
+d$y &lt;- .8*d$a+d$x1+d$x2^2+rnorm(n)
+obj &lt;- DoubleMLData$new(d,y_col=&quot;y&quot;,d_cols=&quot;a&quot;,x_cols=c(&quot;x1&quot;,&quot;x2&quot;))
+fit &lt;- DoubleMLPLR$new(obj,
+  ml_l=lrn(&quot;regr.rpart&quot;),ml_m=lrn(&quot;regr.rpart&quot;),n_folds=5)
+fit$fit()
+fit$summary()
+</code></pre>
+<p>该教学数据的部分线性系数为0.8；真实数据需选择与处理类型相符的模型、学习器和得分。面板/医院聚类数据应按依赖结构分割样本，调参也不能读取评估折。见 <a href="https://docs.doubleml.org/stable/guide/resampling.html">DoubleML交叉拟合文档</a>。</p>
+<h2 id="ipwmsmg">IPW/MSM与g方法：看清时间顺序</h2>
+<p>基线IPW先估计治疗概率，检查重叠、加权平衡、极端权重和有效样本量。纵向MSM需要把每期治疗及删失概率按历史连乘；记录分子/分母模型与截尾规则。g-formula则在干预策略下标准化结局；模型设定与时序必须与目标策略匹配。入门概念见 <a href="https://www.hsph.harvard.edu/miguel-hernan/wp-content/uploads/sites/1268/2024/01/hernanrobins_WhatIf_2jan24.pdf">Causal Inference: What If</a>，设计先读目标试验模拟。</p>
+<pre><code class="language-stata">* 仅基线处理、固定时点结局的教学接口，不是纵向MSM
+teffects aipw (y age severity) (a age severity), ate
+tebalance summarize
+</code></pre>
+<h2 id="_3">交付与易错点 🐾</h2>
+<p>交付因果图/识别说明、估计目标、数据时间图、主分析及有针对性的敏感性分析。区分预测异质性与因果异质性；SHAP不能证明机制。政策文本得分不能充当政策实际执行强度的无误测量。不要把安慰剂P值当作自动通过证明，也不要因“只有两个处理城市”就声称任何模型都能补足信息。</p>
+<blockquote>
+<p>可复制请求：请比较DID/SDID/DDD/DML对我的问题各自估计什么，列出识别假设、最小数据和不可检查部分，只推荐有数据支持的主路线与补充分析。</p>
+</blockquote><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

@@ -1,0 +1,59 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>个体微观模拟 · Microsimulation · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/microsimulation-studio.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">边界</a></li>
+<li><a href="#r">R 模板</a></li>
+<li><a href="#stata">STATA 模板</a></li>
+</ul>
+</div>
+</aside><article><h1 id="microsimulation">个体微观模拟 · Microsimulation</h1>
+<p>个体异质性、路径依赖与随机转移；演示仅使用虚构参数。</p>
+<h2 id="_1">边界</h2>
+<p>所有代码为教学模板，未在真实数据执行；请核对数据字典、版本和包依赖。</p>
+<h2 id="r">R 模板</h2>
+<pre><code class="language-r"># 教学模拟；参数不来自真实疾病，禁止直接作临床或政策结论
+set.seed(2026)
+N &lt;- 10000; T &lt;- 20
+state &lt;- rep(1L, N) # 1健康、2患病、3死亡
+age &lt;- runif(N, 40, 60); qaly &lt;- numeric(N)
+for (t in seq_len(T)) {
+  old &lt;- state
+  pdeath &lt;- pmin(0.20, 0.005 * exp(0.06 * (age + t - 40)))
+  for (s in 1:2) {
+    ids &lt;- which(old == s); u &lt;- runif(length(ids))
+    pd &lt;- pdeath[ids] * ifelse(s == 2, 1.5, 1)
+    psick &lt;- if (s == 1) 0.03 else 0
+    stopifnot(all(pd + psick &lt;= 1))
+    state[ids[u &lt; pd]] &lt;- 3L
+    state[ids[u &gt;= pd &amp; u &lt; pd + psick]] &lt;- 2L
+  }
+  # 半周期近似；贴现率仅为教学输入，实际需依据指南
+  utility &lt;- c(1, 0.7, 0)
+  qaly &lt;- qaly + (utility[old] + utility[state])/2 / 1.03^(t-0.5)
+}
+print(table(state)); print(mean(qaly))
+# 政策比较需共同随机数、多次重复、参数与一阶不确定性分开评估
+</code></pre>
+<h2 id="stata">STATA 模板</h2>
+<pre><code class="language-stata">* 教学微模拟；虚构参数，年度周期
+clear
+set seed 2026
+set obs 10000
+gen id = _n
+gen age = 40 + 20*runiform()
+gen state = 1
+gen qaly = 0
+forvalues t = 1/20 {
+  gen old = state
+  gen pd = min(.20, .005*exp(.06*(age+`t'-40)))
+  replace pd = 1.5*pd if old==2
+  gen u = runiform()
+  replace state = 3 if old&lt;3 &amp; u&lt;pd
+  replace state = 2 if old==1 &amp; u&gt;=pd &amp; u&lt;pd+.03
+  gen u0 = cond(old==1,1,cond(old==2,.7,0))
+  gen u1 = cond(state==1,1,cond(state==2,.7,0))
+  replace qaly = qaly + (u0+u1)/2/1.03^(`t'-.5)
+  drop old pd u u0 u1
+}
+tab state
+summarize qaly
+</code></pre><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

@@ -1,0 +1,30 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>断点回归 · RDD · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/rdd-studio.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">边界</a></li>
+<li><a href="#r">R 模板</a></li>
+<li><a href="#stata">STATA 模板</a></li>
+</ul>
+</div>
+</aside><article><h1 id="rdd">断点回归 · RDD</h1>
+<p>适用明确阈值分配规则；检查操纵、连续性、带宽与局部解释。</p>
+<h2 id="_1">边界</h2>
+<p>所有代码为教学模板，未在真实数据执行；请核对数据字典、版本和包依赖。</p>
+<h2 id="r">R 模板</h2>
+<pre><code class="language-r"># 依赖 rdrobust / rddensity；df 包含 y、running
+library(rdrobust)
+library(rddensity)
+cutoff &lt;- 0 # 替换为真实制度阈值
+fit &lt;- rdrobust(y=df$y, x=df$running, c=cutoff, p=1)
+summary(fit)
+summary(rddensity(X=df$running, c=cutoff))
+rdplot(y=df$y, x=df$running, c=cutoff)
+# 模糊断点需另传 fuzzy=df$treatment；不得用高阶全局多项式代替局部识别
+</code></pre>
+<h2 id="stata">STATA 模板</h2>
+<pre><code class="language-stata">* 依赖：ssc install rdrobust / rddensity（自行确认安装）
+* 数据含 y running；阈值 0 仅为模板
+rdrobust y running, c(0) p(1)
+rddensity running, c(0)
+rdplot y running, c(0)
+* 模糊断点：rdrobust y running, c(0) fuzzy(treatment)
+</code></pre><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

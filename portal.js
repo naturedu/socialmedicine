@@ -20,7 +20,7 @@ const configs={
  'insurance-timeline':{key:'insurance-timeline',filters:[['track','改革主线']],class:'timeline',size:30,render:p=>`<article class="entry"><div><time>${esc(p.date)}</time><div class="date-basis">${esc(p.date_basis)}</div></div><div>${tags(p.track,p.status)}<h2>${esc(p.title)}</h2><p>${esc(p.description)}</p>${dl([['文件号',p.document_number],['落地与生效',p.implementation]])}${link(p.url,'政策原文')}<p class="tiny">核验日期 ${esc(p.verified_on)}</p></div></article>`},
  grants:{key:'grants',filters:[['funder','资助方'],['country','国家/地区']],class:'wide-grid',render:g=>`<article class="entry">${tags(g.funder,g.date)}<h2>${esc(g.title)}</h2>${dl([['机构',g.organization],['类别',g.category],['项目号',g.id],['资助承诺',g.amount?Number(g.amount).toLocaleString('en-US')+' USD（非实际拨付）':''],['状态',g.status]])}<p class="meta">${esc(g.scope)}</p>${g.matched_terms?'<p class="meta">命中：'+esc(g.matched_terms)+'</p>':''}${link(g.source,g.funder==='Gates Foundation'?'资助数据库（按项目号回查）':'官方名单与所在页')}</article>`}
 };
-const category={A:'研究设计',B:'统计分析',C:'卫生经济评价',D:'因果推断',E:'数据科学',F:'理论框架',G:'定性与结构方程'};
+const category={A:'研究设计',B:'统计分析',C:'卫生经济评价',D:'因果推断',E:'数据科学',F:'理论框架',G:'定性与结构方程',H:'证据综合',I:'模拟与决策',J:'政策文本与AI评价'};
 function initList(){
  const c=configs[page];if(!c)return;
  rows=D[c.key]||[];if(page==='grants')rows=[...rows,...(D['moe-projects']||[])];

@@ -1,0 +1,352 @@
+[
+  {
+    "id": "A9",
+    "cat": "A",
+    "name": "复杂抽样与调查权重",
+    "use": "分层整群调查的总体估计；区分横断面与纵向权重",
+    "guide": "longitudinal-public-data-skill",
+    "keywords": "survey PSU strata CHARLS CFPS CLHLS",
+    "pitfall": "直接把全国调查当简单随机样本，或把调查权重与因果权重混用。",
+    "report": "抽样层级、PSU、分层、权重版本、目标总体和方差估计。"
+  },
+  {
+    "id": "B11",
+    "cat": "B",
+    "name": "一致性评价：Kappa / ICC",
+    "use": "名义、等级或连续评分的评审者一致性；与准确性分开",
+    "guide": "medical-ai-evaluation-skill",
+    "keywords": "Cohen Fleiss weighted kappa ICC Bland Altman",
+    "pitfall": "用相关性代替一致性，或将高一致性等同于高准确性。",
+    "report": "评分者结构、量表类型、Kappa/ICC定义、区间及类别分布。"
+  },
+  {
+    "id": "B12",
+    "cat": "B",
+    "name": "竞争风险与累积发生率",
+    "use": "死亡等事件阻止目标结局发生时，估计原因别风险或实际累积风险",
+    "guide": "longitudinal-public-data-skill",
+    "keywords": "competing risk CIF Fine Gray cause specific",
+    "pitfall": "把竞争死亡作为无信息删失，直接用1-KM解释实际发生风险。",
+    "report": "事件定义、竞争事件、估计目标、时间点与绝对风险。"
+  },
+  {
+    "id": "D9",
+    "cat": "D",
+    "name": "目标试验模拟 TTE",
+    "use": "把观察性数据分析对应到明确的假想试验协议",
+    "guide": "target-trial-emulation-skill",
+    "keywords": "目标实验模拟 target trial time zero CCW clone censor weight",
+    "pitfall": "资格、治疗分配和随访起点错位，或用未来依从性定义基线治疗组。",
+    "report": "七要素协议、time zero、estimand、识别假设、诊断及TARGET。"
+  },
+  {
+    "id": "D10",
+    "cat": "D",
+    "name": "IPW与边际结构模型 MSM",
+    "use": "基线或时间变化治疗的加权因果估计",
+    "guide": "advanced-causal-inference-skill",
+    "keywords": "IPTW IPCW marginal structural stabilized weights",
+    "pitfall": "忽略极端权重、正值性或受既往治疗影响的时间变化混杂。",
+    "report": "概率模型、稳定化、截尾、平衡、有效样本量与删失机制。"
+  },
+  {
+    "id": "D11",
+    "cat": "D",
+    "name": "g-formula与双稳健估计",
+    "use": "按指定干预标准化结局，或结合治疗和结局模型估计目标效应",
+    "guide": "advanced-causal-inference-skill",
+    "keywords": "g computation gcomp AIPW TMLE doubly robust",
+    "pitfall": "把双稳健误解为对未测量混杂也稳健；不核对两模型的假设。",
+    "report": "目标人群、干预策略、模型设定、标准化流程和推断方法。"
+  },
+  {
+    "id": "D12",
+    "cat": "D",
+    "name": "双重机器学习 DML",
+    "use": "高维或非线性混杂下，利用正交得分与交叉拟合估计因果参数",
+    "guide": "advanced-causal-inference-skill",
+    "keywords": "DoubleML orthogonal cross fitting PLR IRM",
+    "pitfall": "把高预测准确率视为因果识别，或在测试折调参导致信息泄漏。",
+    "report": "得分/模型、估计目标、折分单位、学习器、调参与聚类推断。"
+  },
+  {
+    "id": "D13",
+    "cat": "D",
+    "name": "合成双重差分 SDID",
+    "use": "政策面板中同时构造单位权重与时间权重",
+    "guide": "advanced-causal-inference-skill",
+    "keywords": "synthetic difference differences synthdid 合成差分",
+    "pitfall": "忽略供体受政策影响，或把交错处理直接套入同时处理的块状实现。",
+    "report": "供体池、处理日期、政策前拟合、权重、溢出及少簇推断。"
+  },
+  {
+    "id": "D14",
+    "cat": "D",
+    "name": "定量偏倚与敏感性分析",
+    "use": "评估未测量混杂、误分类和选择机制对主要结论的影响",
+    "guide": "advanced-causal-inference-skill",
+    "keywords": "QBA E value negative control sensitivity analysis",
+    "pitfall": "把敏感性摘要当作不存在偏倚的证据，或随意选择参数范围。",
+    "report": "偏倚机制、参数来源、情景范围、效应变化及剩余局限。"
+  },
+  {
+    "id": "E7",
+    "cat": "E",
+    "name": "纵向轨迹与潜类别",
+    "use": "识别重复测量数据中的不同变化模式",
+    "guide": "longitudinal-public-data-skill",
+    "keywords": "trajectory LCGA GMM latent class growth lcmm",
+    "pitfall": "把统计类别当自然人群，忽略后验分类不确定性和类数稳定性。",
+    "report": "时间编码、模型/类数选择、类别大小、后验概率及失访处理。"
+  },
+  {
+    "id": "E8",
+    "cat": "E",
+    "name": "预测验证、校准与净获益",
+    "use": "从内部/外部验证判断模型判别、风险准确性和决策价值",
+    "guide": "medical-ai-evaluation-skill",
+    "keywords": "validation calibration Brier DCA decision curve AUC",
+    "pitfall": "仅凭训练集AUC或SHAP图宣称模型临床可用。",
+    "report": "独立验证设计、校准截距/斜率、区间、阈值及净获益比较。"
+  },
+  {
+    "id": "F11",
+    "cat": "F",
+    "name": "实施科学：CFIR / RE-AIM",
+    "use": "解释干预为何难落地，并评价触达、实施与维持",
+    "guide": "implementation-equity-skill",
+    "keywords": "implementation fidelity acceptability feasibility health equity",
+    "pitfall": "堆叠框架名称而没有构念测量，把实施结局与健康结局混为一谈。",
+    "report": "框架版本、构念定义、分母、层级、时间窗与弱势群体触达。"
+  },
+  {
+    "id": "H1",
+    "cat": "H",
+    "name": "系统评价与证据分级",
+    "use": "对明确研究问题系统检索、筛选、评价并综合证据",
+    "guide": "research-workflow-skill",
+    "keywords": "systematic review GRADE PRISMA RoB ROBINS",
+    "pitfall": "只有检索和文章汇总，没有预设标准、偏倚评价或排除记录。",
+    "report": "方案、检索式/日期、双人流程、排除原因、偏倚与确定性。"
+  },
+  {
+    "id": "H2",
+    "cat": "H",
+    "name": "成对 Meta 分析",
+    "use": "对可合并的同类比较与结局估计综合效应",
+    "guide": "meta-analysis-skill",
+    "keywords": "pairwise meta analysis REML heterogeneity forest funnel",
+    "pitfall": "混合不相容效应尺度，按I²阈值机械选择模型。",
+    "report": "效应方向、模型、τ²、区间、研究设计与异质性解释。"
+  },
+  {
+    "id": "H3",
+    "cat": "H",
+    "name": "网状 Meta 分析 NMA",
+    "use": "在连通且可比的研究网络中比较三个及以上干预",
+    "guide": "network-meta-analysis-skill",
+    "keywords": "network meta transitivity consistency incoherence SUCRA P score",
+    "pitfall": "缺少传递性论证，仅凭排序宣布最佳干预。",
+    "report": "节点、网络、多臂相关、直接间接证据、诊断与CINeMA。"
+  },
+  {
+    "id": "H4",
+    "cat": "H",
+    "name": "meta-meta / 伞状综述",
+    "use": "以系统综述为单位绘制证据版图并解释结论差异",
+    "guide": "umbrella-review-skill",
+    "keywords": "meta meta overview reviews umbrella CCA overlap AMSTAR ROBIS",
+    "pitfall": "忽略原始研究重复，直接将多个Meta合并效应再次独立加权。",
+    "report": "综述家族、研究重叠矩阵、CCA、方法质量与重叠处理。"
+  },
+  {
+    "id": "H5",
+    "cat": "H",
+    "name": "范围综述 Scoping review",
+    "use": "梳理概念、研究类型、测量方法和证据缺口",
+    "guide": "research-workflow-skill",
+    "keywords": "scoping PCC PRISMA ScR evidence mapping",
+    "pitfall": "把非系统的文献罗列称范围综述，或据研究数量断言干预有效。",
+    "report": "问题框架、检索范围、筛选、资料制图与PRISMA-ScR。"
+  },
+  {
+    "id": "I1",
+    "cat": "I",
+    "name": "蒙特卡洛方法学模拟",
+    "use": "在已知真值下评估估计方法的偏倚、覆盖与效能",
+    "guide": "monte-carlo-simulation-skill",
+    "keywords": "Monte Carlo ADEMP MCSE simulation power coverage bias",
+    "pitfall": "不报告MCSE与失败率，或只选择对方法有利的数据生成机制。",
+    "report": "ADEMP、场景、种子、重复次数依据、性能及MC误差。"
+  },
+  {
+    "id": "I2",
+    "cat": "I",
+    "name": "概率敏感性分析 PSA",
+    "use": "传播模型参数不确定性，估计成本效果决策的不确定性",
+    "guide": "monte-carlo-simulation-skill",
+    "keywords": "probabilistic sensitivity CEAC INMB cost effectiveness",
+    "pitfall": "破坏参数相关性，把成本效果概率当临床有效概率。",
+    "report": "联合分布、参数依据、相关性、阈值、INMB与CEAC。"
+  },
+  {
+    "id": "I3",
+    "cat": "I",
+    "name": "个体微观模拟",
+    "use": "模拟具有异质风险和历史依赖的个体路径",
+    "guide": "simulation-models-skill",
+    "keywords": "microsimulation first order second order individual",
+    "pitfall": "混淆个体随机变异与参数不确定性，忽略模拟噪声收敛。",
+    "report": "个体属性、事件风险、路径记忆、校准、验证与随机数。"
+  },
+  {
+    "id": "I4",
+    "cat": "I",
+    "name": "离散事件模拟 DES",
+    "use": "分析到达、排队、床位与转诊等资源受限系统",
+    "guide": "simulation-models-skill",
+    "keywords": "discrete event queue capacity warm up",
+    "pitfall": "忽略到达率、容量、暖机期或重复运行，仅展示单次输出。",
+    "report": "实体、事件、队列纪律、分布、容量、重复与验证。"
+  },
+  {
+    "id": "I5",
+    "cat": "I",
+    "name": "系统动力学 SD",
+    "use": "刻画存量、流量、反馈与延迟驱动的系统变化",
+    "guide": "simulation-models-skill",
+    "keywords": "system dynamics stock flow feedback delay",
+    "pitfall": "仅画因果回路图便声称完成定量模拟，或忽视量纲一致。",
+    "report": "边界、存量流量方程、延迟、参数、校准与情景。"
+  },
+  {
+    "id": "I6",
+    "cat": "I",
+    "name": "多主体模型 ABM",
+    "use": "通过异质主体互动和适应解释系统涌现",
+    "guide": "simulation-models-skill",
+    "keywords": "agent based interaction emergence ODD 多主体仿真",
+    "pitfall": "把AI助手称为仿真主体，或用无依据行为规则预设政策效果。",
+    "report": "主体、环境、决策与互动、调度、参数来源及验证。"
+  },
+  {
+    "id": "J1",
+    "cat": "J",
+    "name": "三维政策框架与 PMC",
+    "use": "按可复核codebook整理政策工具、对象、目标和内容覆盖",
+    "guide": "policy-text-analysis-skill",
+    "keywords": "policy text PMC 三维框架 policy modeling consistency",
+    "pitfall": "把文件得分直接解释为政策执行或健康改善。",
+    "report": "政策范围、单位、指标依据、编码规则、权重与原文定位。"
+  },
+  {
+    "id": "J2",
+    "cat": "J",
+    "name": "LDA / BERTopic 主题分析",
+    "use": "探索政策语料中的主题及其变化",
+    "guide": "policy-text-analysis-skill",
+    "keywords": "topic modeling LDA BERT BERTopic embedding",
+    "pitfall": "只看主题词命名，不回读原文或检验参数/主题数稳定性。",
+    "report": "语料、预处理、词典/嵌入、参数、主题稳定性及代表文本。"
+  },
+  {
+    "id": "J3",
+    "cat": "J",
+    "name": "LLM辅助编码与关系抽取",
+    "use": "把政策或病历条款转成有证据定位的结构化变量",
+    "guide": "policy-text-analysis-skill",
+    "keywords": "LLM codebook annotation relation extraction gold standard",
+    "pitfall": "无人工金标准、无独立测试，用模型自报信心代替评价。",
+    "report": "codebook、人工仲裁、模型/prompt版本、测试、错误与修订率。"
+  },
+  {
+    "id": "J4",
+    "cat": "J",
+    "name": "医疗大模型配对评价",
+    "use": "比较模型与人工的准确性、安全性、时间和实际决策表现",
+    "guide": "medical-ai-evaluation-skill",
+    "keywords": "medical AI LLM paired McNemar TRIPOD LLM reliability",
+    "pitfall": "把同一病例多轮回答当独立样本，忽略拒答或严重错误。",
+    "report": "病例与参考标准、盲评、配对/聚类、区间、失败及亚组。"
+  },
+  {
+    "id": "B13",
+    "cat": "B",
+    "name": "广义线性模型 GLM",
+    "use": "依据结局支持集与均值-方差关系选择分布和链接",
+    "guide": "econometric-modeling-skill",
+    "keywords": "Gamma log link generalized linear model",
+    "pitfall": "对含零费用直接用Gamma，或把链接尺度系数当原尺度差异。",
+    "report": "分布、链接、支持集、方差、诊断、边际预测与区间。"
+  },
+  {
+    "id": "B14",
+    "cat": "B",
+    "name": "费用两部模型",
+    "use": "分别估计发生费用概率与正费用均值，再合成人群费用",
+    "guide": "econometric-modeling-skill",
+    "keywords": "two part hurdle cost utilization",
+    "pitfall": "只报告正费用模型，忽略使用概率和整个估计流程的不确定性。",
+    "report": "两部分样本/模型、合成预测、区间及因果假设。"
+  },
+  {
+    "id": "B15",
+    "cat": "B",
+    "name": "面板 FE / RE / CRE",
+    "use": "区分组内变化、组间差异及个体效应与协变量的关系",
+    "guide": "econometric-modeling-skill",
+    "keywords": "fixed random correlated effects Mundlak panel",
+    "pitfall": "把FE当作全部内生性的解决方案，或仅凭Hausman选择模型。",
+    "report": "单位/时间效应、组内变异、假设、聚类层级与动态偏误。"
+  },
+  {
+    "id": "B16",
+    "cat": "B",
+    "name": "分位数回归",
+    "use": "研究条件分布不同位置的费用或健康结局关联",
+    "guide": "econometric-modeling-skill",
+    "keywords": "quantile regression median qreg",
+    "pitfall": "把条件分位数系数直接解释为同一群个体的因果效应。",
+    "report": "条件/无条件目标、分位点、区间和模型支持。"
+  },
+  {
+    "id": "B17",
+    "cat": "B",
+    "name": "零膨胀与 hurdle 计数模型",
+    "use": "依据零产生机制区分结构性零与计数过程",
+    "guide": "econometric-modeling-skill",
+    "keywords": "zero inflated ZIP ZINB hurdle count",
+    "pitfall": "仅因零很多就选择零膨胀，不核对两过程机制与可识别性。",
+    "report": "零机制、两部分模型、过度离散、拟合和边际效应。"
+  },
+  {
+    "id": "B18",
+    "cat": "B",
+    "name": "空间计量与溢出",
+    "use": "分析地区间依赖并在合适模型中解释直接/间接效应",
+    "guide": "econometric-modeling-skill",
+    "keywords": "spatial SAR SEM SDM Moran spillover",
+    "pitfall": "把空间自相关直接当作政策溢出因果证据。",
+    "report": "空间权重、尺度、依赖结构、直接/间接效应与敏感性。"
+  },
+  {
+    "id": "D15",
+    "cat": "D",
+    "name": "交错 DID / 分批处理",
+    "use": "按首次政策批次估计ATT(g,t)并聚合动态与总体效应",
+    "guide": "staggered-did-skill",
+    "keywords": "staggered DID csdid Callaway Sant Anna Sun Abraham ATT group time",
+    "pitfall": "异质效应下直接套传统TWFE，或把已处理单位当合格对照。",
+    "report": "处理批次、对照、预期、支持、聚合权重、置信带与聚类。"
+  },
+  {
+    "id": "D16",
+    "cat": "D",
+    "name": "熵平衡与重叠权重",
+    "use": "通过矩约束或强调重叠构建可比样本，明确新的目标总体",
+    "guide": "propensity-score-skill",
+    "keywords": "entropy balancing overlap weights ATO ATT ATE",
+    "pitfall": "只看平衡不看权重集中，或把ATO结果仍称原总体ATE。",
+    "report": "目标、约束/权重公式、重叠、有效样本量与推断。"
+  }
+]

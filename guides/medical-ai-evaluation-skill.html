@@ -1,0 +1,76 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>🤝 医疗AI评价：答得像、答得对、用起来有益，分别检查 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/medical-ai-evaluation-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">评价问题与设计</a></li>
+<li><a href="#_2">实施步骤</a></li>
+<li><a href="#r-stata">R / Stata核心接口</a></li>
+<li><a href="#_3">交付</a></li>
+</ul>
+</div>
+</aside><article><h1 id="ai">🤝 医疗AI评价：答得像、答得对、用起来有益，分别检查</h1>
+<h2 id="_1">评价问题与设计</h2>
+<p>先定义任务：分类、风险预测、分诊、病历抽取或开放式建议。明确参考标准、分析单位（患者/病例/问答/评分）、评审盲法、模型设置与日期。若同一病例由多个模型、多个医生和多轮重复回答，不能把全部评分当作独立样本。</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>主要指标</th>
+<th>关键边界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对金标准的分类准确性</td>
+<td>灵敏度、特异度、PPV/NPV、F1</td>
+<td>患病率/抽样影响预测值</td>
+</tr>
+<tr>
+<td>评审者一致性</td>
+<td>Cohen/Fleiss Kappa、加权Kappa</td>
+<td>一致不代表正确；类别失衡影响Kappa</td>
+</tr>
+<tr>
+<td>连续评分一致性</td>
+<td>指定模型的ICC、Bland–Altman</td>
+<td>Pearson相关不能替代一致性</td>
+</tr>
+<tr>
+<td>预测风险质量</td>
+<td>判别、校准、Brier、净获益</td>
+<td>高AUC不保证临床获益</td>
+</tr>
+<tr>
+<td>安全与使用效果</td>
+<td>严重错误、遗漏、时间、实际决策</td>
+<td>模拟病例收益不能直接外推真实临床</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">实施步骤</h2>
+<ol>
+<li>锁定病例纳排、样本来源、代表性、分层及参考标准；适当分开模型开发与外部/时间验证。</li>
+<li>预先确定主要指标、临床可接受差值及多重比较规则。样本量依据配对差异或目标精度，不设“至少56例”等通用门槛。</li>
+<li>保存完整模型版本、prompt、检索材料、解码设置、工具调用、重复次数与拒答。拒答和失败按预设规则计入，不能只保留成功答案。</li>
+<li>专家盲评、独立评分后仲裁，公布量表及锚点；若参考标准含争议，做敏感性分析。</li>
+<li>按病例聚类bootstrap或适当混合模型推断。模型配对二元正确/错误可考虑McNemar；同一个病例多轮回答先明确聚合或层级结构。</li>
+<li>报告亚组、严重错误类别、外部适用性及人工修订负担。不要用单一“总体得分”掩盖高危错误。</li>
+</ol>
+<h2 id="r-stata">R / Stata核心接口</h2>
+<pre><code class="language-r">library(irr)
+ratings &lt;- data.frame(r1=c(1,1,0,0,1,0),
+                      r2=c(1,0,0,0,1,1),r3=c(1,1,0,1,1,0))
+kappam.fleiss(ratings)
+# 两分类器在相同病例上正确/错误的配对表
+mcnemar.test(matrix(c(30,4,9,13),nrow=2))
+# 连续评分ICC需明确模型、绝对一致/一致性、单个/平均评分
+# irr::icc(score_matrix, model=&quot;twoway&quot;,type=&quot;agreement&quot;,unit=&quot;single&quot;)
+</code></pre>
+<pre><code class="language-stata">* 两位评审、名义分类
+kap rater1 rater2
+* 该接口是两位评审的Cohen Kappa，不是Fleiss Kappa。
+</code></pre>
+<p>正式数据须核对缺失、评分者是否固定/可互换、等级距离及病例选择。小样本区间宽时如实报告，不把任意Kappa分界当临床标准。</p>
+<h2 id="_3">交付</h2>
+<p>输出评估协议、病例流程、评分手册、配对结果、区间、错误案例表及模型设置。根据任务参照 <a href="https://www.tripod-statement.org/tripod-llm/">TRIPOD-LLM官方清单</a> 和 <a href="https://www.nature.com/articles/s41591-024-03425-5">原始指南</a>；若研究为临床干预试验，再匹配试验报告规范。报告规范不是安全性认证。</p>
+<blockquote>
+<p>可复制请求：请先明确我的金标准、配对/聚类结构和主要评价目标，再推荐准确性、一致性、风险校准及安全指标，给出区间与失败处理，不把一致性写成临床有效性。</p>
+</blockquote><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

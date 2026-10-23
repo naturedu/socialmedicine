@@ -117,5 +117,180 @@
     "tags": [
       "写作"
     ]
+  },
+  {
+    "name": "网状 Meta 分析",
+    "category": "evidence",
+    "tags": [
+      "NMA",
+      "证据综合"
+    ],
+    "description": "传递性、网络结构、多臂相关、直接/间接诊断与证据确定性。",
+    "url": "guides/network-meta-analysis-skill.html"
+  },
+  {
+    "name": "meta-meta / 伞状综述",
+    "category": "evidence",
+    "tags": [
+      "umbrella",
+      "meta-meta"
+    ],
+    "description": "综述家族、原始研究重叠矩阵、CCA、AMSTAR 2/ROBIS与二阶合并边界。",
+    "url": "guides/umbrella-review-skill.html"
+  },
+  {
+    "name": "目标试验模拟 TTE",
+    "category": "policy",
+    "tags": [
+      "目标实验模拟",
+      "TTE"
+    ],
+    "description": "七要素协议、time zero、IPW、CCW路线与TARGET报告。",
+    "url": "guides/target-trial-emulation-skill.html"
+  },
+  {
+    "name": "蒙特卡洛模拟与 PSA",
+    "category": "simulation",
+    "tags": [
+      "Monte Carlo",
+      "PSA"
+    ],
+    "description": "ADEMP、偏倚/覆盖/效能、MCSE、PSA与CEAC的教学实验。",
+    "url": "guides/monte-carlo-simulation-skill.html"
+  },
+  {
+    "name": "因果推断进阶",
+    "category": "policy",
+    "tags": [
+      "SDID",
+      "DML"
+    ],
+    "description": "SDID、DML、IPW/MSM与g方法：先定估计目标，再核对识别和诊断。",
+    "url": "guides/advanced-causal-inference-skill.html"
+  },
+  {
+    "name": "卫生政策文本分析",
+    "category": "text",
+    "tags": [
+      "PMC",
+      "BERTopic",
+      "LLM"
+    ],
+    "description": "三维框架、PMC、主题模型、LLM编码与人工金标准验证。",
+    "url": "guides/policy-text-analysis-skill.html"
+  },
+  {
+    "name": "医疗 AI 与人工评价",
+    "category": "data",
+    "tags": [
+      "Kappa",
+      "ICC",
+      "医学AI"
+    ],
+    "description": "准确性、一致性、配对比较、校准、安全错误和TRIPOD-LLM。",
+    "url": "guides/medical-ai-evaluation-skill.html"
+  },
+  {
+    "name": "公共数据库与纵向研究",
+    "category": "data",
+    "tags": [
+      "纵向",
+      "公共数据库"
+    ],
+    "description": "CHARLS/CLHLS/CFPS口径、抽样、失访、轨迹与竞争风险。",
+    "url": "guides/longitudinal-public-data-skill.html"
+  },
+  {
+    "name": "模拟模型选型",
+    "category": "simulation",
+    "tags": [
+      "微观模拟",
+      "ABM",
+      "DES"
+    ],
+    "description": "Markov、微观、DES、系统动力学、ABM：结构、参数、校准与验证。",
+    "url": "guides/simulation-models-skill.html"
+  },
+  {
+    "name": "实施科学与健康公平",
+    "category": "theory",
+    "tags": [
+      "实施科学",
+      "公平"
+    ],
+    "description": "CFIR/RE-AIM、可测机制链、定性定量整合和公平性评价。",
+    "url": "guides/implementation-equity-skill.html"
+  },
+  {
+    "name": "从选题到论文的研究流程",
+    "category": "writing",
+    "tags": [
+      "研究流程",
+      "范围综述"
+    ],
+    "description": "文献核验、综述分流、变量与图表计划、写作修订和投稿材料。",
+    "url": "guides/research-workflow-skill.html"
+  },
+  {
+    "name": "PSM、匹配与加权",
+    "category": "policy",
+    "tags": [
+      "PSM",
+      "IPW",
+      "熵平衡"
+    ],
+    "description": "ATE/ATT/ATO、变量选择、共同支持、Love plot与匹配后推断。",
+    "url": "guides/propensity-score-skill.html"
+  },
+  {
+    "name": "交错 DID / 分批政策",
+    "category": "policy",
+    "tags": [
+      "交错DID",
+      "csdid"
+    ],
+    "description": "ATT(g,t)、C&S、Sun–Abraham、事件窗、对照支持与小簇推断。",
+    "url": "guides/staggered-did-skill.html"
+  },
+  {
+    "name": "聚类分析与分型",
+    "category": "data",
+    "tags": [
+      "K-means",
+      "聚类",
+      "潜类别"
+    ],
+    "description": "距离、变量尺度、算法、类数、稳定性与外部验证的完整路线。",
+    "url": "guides/clustering-analysis-skill.html"
+  },
+  {
+    "name": "卫生计量模型选型",
+    "category": "stats",
+    "tags": [
+      "计量经济学",
+      "模型逻辑"
+    ],
+    "description": "GLM、两部、计数、面板FE/RE/CRE、分位数、IV/RDD和空间模型。",
+    "url": "guides/econometric-modeling-skill.html"
+  },
+  {
+    "name": "长期护理保险政策与研究",
+    "category": "政策主题",
+    "tags": [
+      "长护险",
+      "政策主题"
+    ],
+    "description": "2016/2020试点到2026建制，筹资、评估、待遇、地方版本与研究变量。",
+    "url": "guides/long-term-care-policy-skill.html"
+  },
+  {
+    "name": "家庭病床政策与研究",
+    "category": "政策主题",
+    "tags": [
+      "家庭病床",
+      "居家医疗"
+    ],
+    "description": "2026服务指南、建撤床流程、支付、地方差异及效果评价框架。",
+    "url": "guides/home-hospital-bed-policy-skill.html"
   }
 ]

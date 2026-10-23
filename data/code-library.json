@@ -2149,5 +2149,266 @@
     "source": "skills/sem-qca-qualitative-skill.md",
     "status": "模板；未逐项执行",
     "line": 222
+  },
+  {
+    "id": "network-meta-analysis-skill-1",
+    "title": "网状 Meta 分析 · R：可复现的玩具网络",
+    "language": "r",
+    "source": "skills/network-meta-analysis-skill.md",
+    "line": 32,
+    "code": "library(netmeta)\nd <- data.frame(\n  study = paste0(\"trial\", 1:6),\n  t1 = c(\"education\",\"digital\",\"family\",\"digital\",\"family\",\"family\"),\n  t2 = c(\"usual\",\"usual\",\"usual\",\"education\",\"education\",\"digital\"),\n  TE = log(c(.85,.72,.76,.87,.91,1.05)),\n  seTE = c(.14,.16,.17,.19,.20,.18)\n)\nfit <- netmeta(TE, seTE, t1, t2, studlab=study, data=d,\n  sm=\"OR\", reference.group=\"usual\", common=FALSE, random=TRUE,\n  method.tau=\"REML\", small.values=\"desirable\")\nsummary(fit)\nnetgraph(fit)\nnetleague(fit)\nnetsplit(fit)\ndecomp.design(fit)\nnetrank(fit, small.values=\"good\")\nsessionInfo()",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "umbrella-review-skill-1",
+    "title": "meta-meta / 伞状综述 · 重叠：CCA 的可运行计算",
+    "language": "r",
+    "source": "skills/umbrella-review-skill.md",
+    "line": 32,
+    "code": "M <- matrix(c(1,1,0, 1,0,1, 0,1,1, 1,1,1), nrow=4, byrow=TRUE)\nrownames(M) <- paste0(\"study\",1:4)\ncolnames(M) <- paste0(\"review\",1:3)\nM <- M[rowSums(M)>0,,drop=FALSE]\nN <- sum(M); r <- nrow(M); c <- ncol(M)\ncca <- if(c>1) (N-r)/(r*c-r) else NA_real_\ncca\npair_overlap <- crossprod(M)\npair_overlap",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "umbrella-review-skill-2",
+    "title": "meta-meta / 伞状综述 · 重叠：CCA 的可运行计算",
+    "language": "stata",
+    "source": "skills/umbrella-review-skill.md",
+    "line": 44,
+    "code": "* 当前数据：每行一个去重后的原始研究，rev1-rev3 为0/1\negen n_reviews = rowtotal(rev1-rev3)\nkeep if n_reviews > 0\nquietly count\nscalar r = r(N)\nquietly summarize n_reviews\nscalar N = r(sum)\nscalar c = 3\ndisplay (N-r)/(r*c-r)",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "target-trial-emulation-skill-1",
+    "title": "目标试验模拟 TTE · R：固定12个月结局的教学估计",
+    "language": "r",
+    "source": "skills/target-trial-emulation-skill.md",
+    "line": 44,
+    "code": "set.seed(20261023)\nn <- 2000\nd <- data.frame(age=rnorm(n,65,8), severity=rnorm(n))\nd$a <- rbinom(n,1,plogis(-.2+.02*(d$age-65)+.5*d$severity))\nd$y <- rbinom(n,1,plogis(-1+.35*d$a+.3*d$severity+.01*(d$age-65)))\npsfit <- glm(a~age+severity,binomial(),data=d)\nd$ps <- predict(psfit,type=\"response\")\nstopifnot(all(d$ps>0 & d$ps<1))\np <- mean(d$a)\nd$w <- ifelse(d$a==1,p/d$ps,(1-p)/(1-d$ps))\nprint(quantile(d$w,c(0,.01,.5,.99,1)))\nprint(with(d, tapply(ps,a,range)))\nprint(sum(d$w)^2/sum(d$w^2)) # 总体有效样本量摘要；也应分组检查\nlibrary(survey)\ndes <- svydesign(ids=~1,weights=~w,data=d)\nfit <- svyglm(y~a,design=des,family=quasibinomial(link=\"identity\"))\ncoef(fit)[\"a\"]\nconfint(fit)[\"a\",]\n# 研究分析还需检查加权前后平衡、权重重叠，并按估计流程考虑bootstrap。",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "target-trial-emulation-skill-2",
+    "title": "目标试验模拟 TTE · R：固定12个月结局的教学估计",
+    "language": "stata",
+    "source": "skills/target-trial-emulation-skill.md",
+    "line": 66,
+    "code": "* 真实固定时点数据需先明确基线、完整随访和混杂变量\nteffects ipw (y) (a age severity, logit), ate\ntebalance summarize",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "monte-carlo-simulation-skill-1",
+    "title": "蒙特卡洛模拟与 PSA · R：两组均值差的完整教学实验",
+    "language": "r",
+    "source": "skills/monte-carlo-simulation-skill.md",
+    "line": 33,
+    "code": "set.seed(20261023)\nB <- 2000; n <- 100; truth <- 0.3\none <- function(){\n  y0 <- rnorm(n,0,1); y1 <- rnorm(n,truth,1.5)\n  z <- t.test(y1,y0) # Welch；估计方向为y1-y0\n  c(est=mean(y1)-mean(y0),lo=z$conf.int[1],hi=z$conf.int[2],p=z$p.value)\n}\nans <- t(replicate(B,one()))\nerr <- ans[,\"est\"]-truth\ncovered <- ans[,\"lo\"]<=truth & ans[,\"hi\"]>=truth\ncoverage <- mean(covered)\nc(bias=mean(err),MCSE_bias=sd(ans[,\"est\"])/sqrt(B),\n  RMSE=sqrt(mean(err^2)),coverage=coverage,\n  MCSE_coverage=sqrt(coverage*(1-coverage)/B),\n  power=mean(ans[,\"p\"]<.05))\n# 将truth设为0并重新生成数据，才能估计该场景的I类错误率。",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "monte-carlo-simulation-skill-2",
+    "title": "蒙特卡洛模拟与 PSA · R：两组均值差的完整教学实验",
+    "language": "stata",
+    "source": "skills/monte-carlo-simulation-skill.md",
+    "line": 52,
+    "code": "clear\nset seed 20261023\ncapture program drop mc_mean\nprogram define mc_mean, rclass\n    drop _all\n    set obs 200\n    gen byte a = _n > 100\n    gen y = .3*a + rnormal(0,cond(a==1,1.5,1))\n    quietly regress y a, vce(robust)\n    return scalar est = _b[a]\n    return scalar se = _se[a]\n    return scalar covered = abs((_b[a]-.3)/_se[a]) <= invttail(e(df_r),.025)\nend\nsimulate est=r(est) se=r(se) covered=r(covered), reps(2000): mc_mean\nsummarize est se covered\n* Stata示例用稳健回归区间，R示例用Welch区间，二者并非完全同一方法。",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "monte-carlo-simulation-skill-3",
+    "title": "蒙特卡洛模拟与 PSA · PSA：用增量净收益表达决策",
+    "language": "r",
+    "source": "skills/monte-carlo-simulation-skill.md",
+    "line": 73,
+    "code": "set.seed(20261023)\nB <- 10000\ndelta_cost <- rnorm(B,1200,300)\ndelta_qaly <- rnorm(B,.08,.025)\nlambda <- seq(0,100000,by=5000) # 教学阈值范围，不是政策推荐\nceac <- sapply(lambda,function(k) mean(k*delta_qaly-delta_cost>0))\ndata.frame(lambda,Pr_cost_effective=ceac)",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "advanced-causal-inference-skill-1",
+    "title": "因果推断进阶 · SDID：空间与时间一起构造参照",
+    "language": "r",
+    "source": "skills/advanced-causal-inference-skill.md",
+    "line": 25,
+    "code": "library(synthdid)\ndata(\"california_prop99\")\nz <- panel.matrices(california_prop99)\natt <- synthdid_estimate(z$Y,z$N0,z$T0)\nplot(att)\nse <- sqrt(vcov(att,method=\"placebo\"))\nc(estimate=as.numeric(att),SE=as.numeric(se))",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "advanced-causal-inference-skill-2",
+    "title": "因果推断进阶 · DML：灵活处理混杂，保留目标参数",
+    "language": "r",
+    "source": "skills/advanced-causal-inference-skill.md",
+    "line": 41,
+    "code": "library(DoubleML)\nlibrary(mlr3)\nlibrary(mlr3learners)\nset.seed(20261023)\nn <- 600\nd <- data.frame(x1=rnorm(n),x2=rnorm(n))\nd$a <- .5*d$x1+rnorm(n)\nd$y <- .8*d$a+d$x1+d$x2^2+rnorm(n)\nobj <- DoubleMLData$new(d,y_col=\"y\",d_cols=\"a\",x_cols=c(\"x1\",\"x2\"))\nfit <- DoubleMLPLR$new(obj,\n  ml_l=lrn(\"regr.rpart\"),ml_m=lrn(\"regr.rpart\"),n_folds=5)\nfit$fit()\nfit$summary()",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "advanced-causal-inference-skill-3",
+    "title": "因果推断进阶 · IPW/MSM与g方法：看清时间顺序",
+    "language": "stata",
+    "source": "skills/advanced-causal-inference-skill.md",
+    "line": 63,
+    "code": "* 仅基线处理、固定时点结局的教学接口，不是纵向MSM\nteffects aipw (y age severity) (a age severity), ate\ntebalance summarize",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "policy-text-analysis-skill-1",
+    "title": "卫生政策文本分析 · R：对人工/模型标签做基本核验",
+    "language": "r",
+    "source": "skills/policy-text-analysis-skill.md",
+    "line": 36,
+    "code": "# 0/1教学标签；真实任务应保留无法判断、缺失及多标签规则\ngold <- c(1,0,1,0,1,0,1,0)\npred <- c(1,0,0,0,1,1,1,0)\ntab <- table(factor(gold,levels=0:1),factor(pred,levels=0:1))\nprecision <- tab[2,2]/sum(tab[,2])\nrecall <- tab[2,2]/sum(tab[2,])\nc(precision=precision,recall=recall,F1=2*precision*recall/(precision+recall))\n# 稀有标签、空分母、地区/年份分层及区间需在正式分析中单独处理。",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "medical-ai-evaluation-skill-1",
+    "title": "医疗 AI 与人工评价 · R / Stata核心接口",
+    "language": "r",
+    "source": "skills/medical-ai-evaluation-skill.md",
+    "line": 32,
+    "code": "library(irr)\nratings <- data.frame(r1=c(1,1,0,0,1,0),\n                      r2=c(1,0,0,0,1,1),r3=c(1,1,0,1,1,0))\nkappam.fleiss(ratings)\n# 两分类器在相同病例上正确/错误的配对表\nmcnemar.test(matrix(c(30,4,9,13),nrow=2))\n# 连续评分ICC需明确模型、绝对一致/一致性、单个/平均评分\n# irr::icc(score_matrix, model=\"twoway\",type=\"agreement\",unit=\"single\")",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "medical-ai-evaluation-skill-2",
+    "title": "医疗 AI 与人工评价 · R / Stata核心接口",
+    "language": "stata",
+    "source": "skills/medical-ai-evaluation-skill.md",
+    "line": 43,
+    "code": "* 两位评审、名义分类\nkap rater1 rater2\n* 该接口是两位评审的Cohen Kappa，不是Fleiss Kappa。",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "longitudinal-public-data-skill-1",
+    "title": "公共数据库与纵向研究 · R：长表结构核验与纵向模型接口",
+    "language": "r",
+    "source": "skills/longitudinal-public-data-skill.md",
+    "line": 27,
+    "code": "# d为已由代码本核实的长表；此处不假定任何数据库原始变量名\nstopifnot(!anyDuplicated(d[c(\"id\",\"wave\")]))\nwith(d,table(wave,is.na(cognition)))\nlibrary(lme4)\nfit <- lmer(cognition ~ time*baseline_exposure+age0+sex+(1+time|id),data=d)\nsummary(fit)\n# 这是条件均值关联模型；baseline_exposure需先定义，不能直接称因果效应。",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "longitudinal-public-data-skill-2",
+    "title": "公共数据库与纵向研究 · R：长表结构核验与纵向模型接口",
+    "language": "stata",
+    "source": "skills/longitudinal-public-data-skill.md",
+    "line": 37,
+    "code": "isid id wave\nxtset id wave\nmixed cognition c.time##i.baseline_exposure age0 i.sex || id: time, covariance(unstructured)\n* 若目标是复杂抽样总体估计，需另核对设计权重和模型的兼容性。",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "simulation-models-skill-1",
+    "title": "模拟模型选型 · 一个很小的R排队实验",
+    "language": "r",
+    "source": "skills/simulation-models-skill.md",
+    "line": 29,
+    "code": "set.seed(20261023)\nn <- 1000\narrival <- cumsum(rexp(n,rate=4))\nservice <- rexp(n,rate=5)\nstart <- finish <- numeric(n)\nfor(i in seq_len(n)){\n  start[i] <- max(arrival[i],if(i==1) 0 else finish[i-1])\n  finish[i] <- start[i]+service[i]\n}\nwait <- start-arrival\nc(mean_wait=mean(wait),p95_wait=unname(quantile(wait,.95)))",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "implementation-equity-skill-1",
+    "title": "实施科学与健康公平 · 公平性最小指标",
+    "language": "r",
+    "source": "skills/implementation-equity-skill.md",
+    "line": 28,
+    "code": "# 教学数据：0/1结局且均值>0；fractional rank按收入从低到高\nd <- data.frame(income=c(1,2,3,4,5),use=c(0,0,1,0,1))\nn <- nrow(d)\nd$r <- (rank(d$income,ties.method=\"average\")-.5)/n\nmu <- mean(d$use)\ncov_pop <- mean((d$use-mu)*(d$r-mean(d$r)))\nCI <- 2*cov_pop/mu\nErreygers <- 4*mu*CI # 仅适用于0/1界限；未加权教学表达\nc(CI=CI,Erreygers=Erreygers)",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "propensity-score-skill-1",
+    "title": "PSM、匹配与加权 · R教学样例：匹配ATT与诊断",
+    "language": "r",
+    "source": "skills/propensity-score-skill.md",
+    "line": 37,
+    "code": "library(MatchIt)\nlibrary(cobalt)\nset.seed(20261023)\nn <- 1000\nd <- data.frame(age=rnorm(n,65,8),severity=rnorm(n))\nd$a <- rbinom(n,1,plogis(-.3+.03*(d$age-65)+.5*d$severity))\nd$y <- 100+8*d$a+2*d$severity+.4*d$age+rnorm(n,0,10)\nm <- matchit(a~age+severity,data=d,method=\"nearest\",distance=\"glm\",\n  link=\"linear.logit\",estimand=\"ATT\",ratio=1,caliper=.2,std.caliper=TRUE)\nsummary(m)\nlove.plot(m,thresholds=c(m=.1))\nmd <- match.data(m)\nfit <- lm(y~a,data=md,weights=weights)\nlmtest::coeftest(fit,vcov.=sandwich::vcovCL(fit,cluster=~subclass))\n# 示例为无替换1:1匹配；复杂替换/聚类设计需重新选择推断。",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "propensity-score-skill-2",
+    "title": "PSM、匹配与加权 · R教学样例：匹配ATT与诊断",
+    "language": "stata",
+    "source": "skills/propensity-score-skill.md",
+    "line": 55,
+    "code": "* ATT（Stata称ATET），a为处理，y为结局\nteffects psmatch (y) (a age severity, logit), atet nneighbor(1)\ntebalance summarize\n* 这是内置估计器示例，不与R卡钳匹配的全部细节完全等价。",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "staggered-did-skill-1",
+    "title": "交错 DID / 分批政策 · R：软件自带面板的C&S演示",
+    "language": "r",
+    "source": "skills/staggered-did-skill.md",
+    "line": 31,
+    "code": "library(did)\ndata(mpdta)\natt <- att_gt(yname=\"lemp\",tname=\"year\",idname=\"countyreal\",\n  gname=\"first.treat\",xformla=~1,data=mpdta,panel=TRUE,\n  control_group=\"nevertreated\",est_method=\"dr\",bstrap=TRUE,cband=TRUE)\nsummary(att)\ndyn <- aggte(att,type=\"dynamic\",min_e=-2,max_e=2)\nsummary(dyn)\nggdid(dyn)\naggte(att,type=\"group\")",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "staggered-did-skill-2",
+    "title": "交错 DID / 分批政策 · R：软件自带面板的C&S演示",
+    "language": "r",
+    "source": "skills/staggered-did-skill.md",
+    "line": 46,
+    "code": "library(fixest)\n# 教学接口：d中never-treated的g按sunab文档编码；不得直接复制did的0编码\n# d$g_sa <- ifelse(d$g==0, max(d$year)+100, d$g)\n# m <- feols(y ~ sunab(g_sa,year,ref.p=-1) | id+year,data=d,cluster=~id)\n# iplot(m)",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "staggered-did-skill-3",
+    "title": "交错 DID / 分批政策 · R：软件自带面板的C&S演示",
+    "language": "stata",
+    "source": "skills/staggered-did-skill.md",
+    "line": 56,
+    "code": "* 第三方csdid；先核对所装版本help csdid，g=0为从未处理\n* ssc install csdid\n* ssc install drdid\ncsdid y x_pre, ivar(id) time(year) gvar(g) method(dripw) cluster(id)\nestat simple\nestat event, window(-2 2)",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "clustering-analysis-skill-1",
+    "title": "聚类分析与分型 · R教学样例",
+    "language": "r",
+    "source": "skills/clustering-analysis-skill.md",
+    "line": 33,
+    "code": "set.seed(20261023)\nX <- scale(iris[,1:4])\nkm <- kmeans(X,centers=3,nstart=50)\ntable(km$cluster)\naggregate(iris[,1:4],list(cluster=km$cluster),mean)\nlibrary(cluster)\nsil <- silhouette(km$cluster,dist(X))\nmean(sil[,\"sil_width\"])\n# iris物种标签未参与建模；本例仅示范接口，不作为患者分型依据。",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "clustering-analysis-skill-2",
+    "title": "聚类分析与分型 · R教学样例",
+    "language": "stata",
+    "source": "skills/clustering-analysis-skill.md",
+    "line": 45,
+    "code": "* 仅对选定连续特征标准化；先完成缺失与异常检查\negen z_age = std(age)\negen z_util = std(utilization)\negen z_cost = std(logcost)\nset seed 20261023\ncluster kmeans z_age z_util z_cost, k(3) name(km3)\ntabulate km3",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "econometric-modeling-skill-1",
+    "title": "卫生计量模型选型 · 两部模型的R接口",
+    "language": "r",
+    "source": "skills/econometric-modeling-skill.md",
+    "line": 35,
+    "code": "# d: cost>=0，a为处理/分组，x为治疗前协变量\nd$anycost <- as.integer(d$cost>0)\npmod <- glm(anycost~a+x,family=binomial(),data=d)\ncmod <- glm(cost~a+x,family=Gamma(link=\"log\"),data=subset(d,cost>0))\nd1 <- d0 <- d; d1$a <- 1; d0$a <- 0\npred_mean <- function(nd) predict(pmod,nd,type=\"response\") *\n  predict(cmod,nd,type=\"response\")\nmean(pred_mean(d1)-pred_mean(d0))\n# 这只是标准化模型差异；因果解释另需识别假设。\n# 区间可对整个两部拟合与标准化过程适当重抽样；聚类数据按簇抽样。",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "econometric-modeling-skill-2",
+    "title": "卫生计量模型选型 · 两部模型的R接口",
+    "language": "stata",
+    "source": "skills/econometric-modeling-skill.md",
+    "line": 48,
+    "code": "glm cost i.a c.x if cost>0, family(gamma) link(log) vce(robust)\nmargins, dydx(a)\npoisson visits i.a c.x, exposure(person_time) vce(robust)\nqreg cost i.a c.x, quantile(.5)",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "econometric-modeling-skill-3",
+    "title": "卫生计量模型选型 · 面板FE、RE与CRE",
+    "language": "stata",
+    "source": "skills/econometric-modeling-skill.md",
+    "line": 61,
+    "code": "xtset id year\nxtreg y x i.year, fe vce(cluster id)\nxtreg y x i.year, re vce(cluster id)\nbysort id: egen xbar = mean(x)\nxtreg y x xbar i.year, re vce(cluster id)",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
+  },
+  {
+    "id": "econometric-modeling-skill-4",
+    "title": "卫生计量模型选型 · IV、RDD与空间模型",
+    "language": "stata",
+    "source": "skills/econometric-modeling-skill.md",
+    "line": 75,
+    "code": "ivregress 2sls y x (a=z), vce(robust)\nestat firststage",
+    "status": "教学模拟 / 数据接口；未在R或Stata执行，需核对依赖、数据与设计"
   }
 ]

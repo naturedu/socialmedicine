@@ -9,7 +9,7 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 
 ## 先按任务选入口
 
-- **方法选择和分析代码**：读 [54 条方法手册](references/methods-54.md)，复杂设计再查 [进阶方法与原始文献](references/advanced-methods.md)。DID、DDD、ITS、卫生经济、Markov、DCE、机器学习、Meta、定性/SEM 等专题保留在本目录各 `*-skill.md`。先确定估计对象、数据结构和识别假设，再选代码。
+- **方法选择和分析代码**：读 [89 条方法手册](methods-89.md)，复杂设计再查 [进阶方法与原始文献](references/advanced-methods.md)。DID、DDD、ITS、卫生经济、Markov、DCE、机器学习、Meta、定性/SEM 等专题保留在本目录各 `*-skill.md`。先确定估计对象、数据结构和识别假设，再选代码。
 - **检索、题录核验和图片整理**：读 [证据与语料工作流](references/evidence-workflow.md)。出版者正式栏目与数据库通用文献类型不能混用；纳入、排除、待核分开。
 - **关键词、时间演变、机构作者及聚类/耦合**：读 [文献计量口径](references/bibliometrics.md)。需要确定性计算时使用 `scripts/coupling.py`，不把网络结构解释为因果或研究质量。
 - **《管理世界》与国际顶刊润色**：读 [期刊写作模式](references/journal-writing.md)。保留事实、引用及结论强度，给修订理由与证据缺口；不保证发表，不以检测分数为目标。
@@ -17,6 +17,27 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 - **找机构、期刊、数据和已提供资料**：按 [资源目录](references/catalog-location.md) 定位，只检索有关记录，不一次加载整库。
 
 - **按标题／摘要选刊**：读 [选刊流程与边界](references/journal-selection.md)。区分主题匹配、方法适配与发表门槛；私人输入不得入公共库。
+
+
+## 新增方法逻辑与专题
+
+先读[方法逻辑地图](method-map.md)，按问题、估计目标、数据与识别假设选择路线。
+
+- [网状 Meta 分析](network-meta-analysis-skill.md)：传递性、网络结构、多臂相关、直接/间接诊断与证据确定性。
+- [meta-meta / 伞状综述](umbrella-review-skill.md)：综述家族、原始研究重叠矩阵、CCA、AMSTAR 2/ROBIS与二阶合并边界。
+- [目标试验模拟 TTE](target-trial-emulation-skill.md)：七要素协议、time zero、IPW、CCW路线与TARGET报告。
+- [蒙特卡洛模拟与 PSA](monte-carlo-simulation-skill.md)：ADEMP、偏倚/覆盖/效能、MCSE、PSA与CEAC的教学实验。
+- [因果推断进阶](advanced-causal-inference-skill.md)：SDID、DML、IPW/MSM与g方法：先定估计目标，再核对识别和诊断。
+- [卫生政策文本分析](policy-text-analysis-skill.md)：三维框架、PMC、主题模型、LLM编码与人工金标准验证。
+- [医疗 AI 与人工评价](medical-ai-evaluation-skill.md)：准确性、一致性、配对比较、校准、安全错误和TRIPOD-LLM。
+- [公共数据库与纵向研究](longitudinal-public-data-skill.md)：CHARLS/CLHLS/CFPS口径、抽样、失访、轨迹与竞争风险。
+- [模拟模型选型](simulation-models-skill.md)：Markov、微观、DES、系统动力学、ABM：结构、参数、校准与验证。
+- [实施科学与健康公平](implementation-equity-skill.md)：CFIR/RE-AIM、可测机制链、定性定量整合和公平性评价。
+- [从选题到论文的研究流程](research-workflow-skill.md)：文献核验、综述分流、变量与图表计划、写作修订和投稿材料。
+- [PSM、匹配与加权](propensity-score-skill.md)：ATE/ATT/ATO、变量选择、共同支持、Love plot与匹配后推断。
+- [交错 DID / 分批政策](staggered-did-skill.md)：ATT(g,t)、C&S、Sun–Abraham、事件窗、对照支持与小簇推断。
+- [聚类分析与分型](clustering-analysis-skill.md)：距离、变量尺度、算法、类数、稳定性与外部验证的完整路线。
+- [卫生计量模型选型](econometric-modeling-skill.md)：GLM、两部、计数、面板FE/RE/CRE、分位数、IV/RDD和空间模型。
 
 ## 每次交付的底线
 
@@ -30,7 +51,7 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 
 范围仅为社会医学与卫生事业管理及其必要方法参考。公共资料含 69 条题录（54 条领域文献、15 条方法参考）、27 张图表、97 个期刊／刊名入口、91 个机构入口；项目为 990 条基金会与 60 条教育部领域候选，非逐项全文核验。
 
-当前目录保留原有 12 份工具手册，集中索引 54 个方法、239 个原有代码片段；另补进阶方法与耦合脚本。文献库包含已有 CSSCI 题录、Nature/Science 书单、Nature Medicine 与相关数字医学资料以及 JAMA 图表文献。Cell 已列入期刊入口，但没有已提供且确认属于 Cell 主刊的题录，不能虚报为完整 CNS 语料。
+当前目录保留原有12份完整工具手册并新增15份专题，集中索引89个方法、239 个原有代码片段；另补进阶方法与耦合脚本。文献库包含已有 CSSCI 题录、Nature/Science 书单、Nature Medicine 与相关数字医学资料以及 JAMA 图表文献。Cell 已列入期刊入口，但没有已提供且确认属于 Cell 主刊的题录，不能虚报为完整 CNS 语料。
 
 期刊和院校目录属于导航索引，不是排名、完整学科普查或招生承诺。2026 年教育部项目公示入口与 2025 年已解析正式立项名单分开；基金会库保留提供时的公开快照。
 
@@ -39,3 +60,9 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 ## 致谢
 
 感谢华中科技大学医药卫生管理学院对我的帮助。
+
+## 政策主题与文本研究
+
+- [长期护理保险](long-term-care-policy-skill.md)：核对试点/建制版本、筹资、评估、待遇与服务。
+- [家庭病床](home-hospital-bed-policy-skill.md)：核对2026服务指南、建撤床、支付及地方差异。
+- 14个主题和27个官方文件入口见网站policy-topics.html与data/policy-topics.json；政策含义、研究建议和实际执行分开。
