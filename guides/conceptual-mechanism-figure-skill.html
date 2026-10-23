@@ -1,0 +1,26 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>理论框架、机制图与DAG · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/conceptual-mechanism-figure-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">先选图的语义</a></li>
+<li><a href="#_2">构图规则</a></li>
+<li><a href="#_3">实现与验收</a></li>
+<li><a href="#_4">可直接使用的任务书</a></li>
+<li><a href="#_5">交付与衔接</a></li>
+</ul>
+</div>
+</aside><article><h1 id="dag">理论框架、机制图与DAG</h1>
+<h2 id="_1">先选图的语义</h2>
+<p>概念框架组织构念与层次；DAG编码假设的因果结构并辅助识别；SEM路径图对应明确的测量/结构模型；系统动力学反馈图可以有环。不能把这些图的箭头互换，DAG不能出现反馈环。</p>
+<p>先建立节点表：ID、显示名称、定义、测量、时间、层次及出处。再建关系表：起点、终点、关系类型、方向、证据位置、已观察/理论推断/待验证。证据弱时弱化主张；没有来源的装饰箭头删除。</p>
+<h2 id="_2">构图规则</h2>
+<p>按个体、家庭、组织、制度或研究阶段分层，但层次由材料决定。变量、方法、数据源、结局和产物使用不同视觉角色。只有具有独立输入、操作和输出的对象才画成并列模块；变量更适合放在节点标签或连线上。</p>
+<p>交叉线先通过重新布局解决，再考虑汇合线或端口。相同含义的平行连线可合并；不同关系不能为美观而无标签合并。潜变量、测量指标、误差项按选用模型约定标识；未估计路径不得标注虚构系数或显著性星号。</p>
+<h2 id="_3">实现与验收</h2>
+<p>机制概览用SVG，流程或架构可用Draw.io，需要演示编辑时用PPT原生形状与连接线。中文尽量保留文本，说明字体依赖；矢量文件含嵌入位图时明确指出。</p>
+<p>逐边核对科学含义，检查缩放后标签、箭头端点、上下标和图例。图注说明是理论模型、研究假设还是估计结果；相关证据不能自动改写为因果证据。项目特定方法变更只作用于当前项目，不写成通用禁用规则。</p>
+<h2 id="_4">可直接使用的任务书</h2>
+<pre><code class="language-text">请依据我提供的文字绘制理论机制图。先区分概念框架、DAG和SEM路径，列出节点与每条连线的原文依据；不添加原文没有的模块或因果箭头。交付可编辑SVG/Draw.io或PPT、图注及关系证据表，待验证机制用明确图例标识。
+</code></pre>
+<h2 id="_5">交付与衔接</h2>
+<p>需要的材料：研究方案与理论来源；变量定义与已有证据；关系类型及目标图式。</p>
+<p>交付：SVG/Draw.io或原生PPT；节点与连线证据表；图注和待验证关系说明。</p>
+<p>通用交付检查见<a href="figure-ppt-quality-skill.html">画图与PPT质量检查</a>，工具与来源边界见<a href="references/visual-skill-sources.html">公开工作流来源说明</a>。涉及期刊尺寸、格式或生成服务时，执行前核对目标官方文档。</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

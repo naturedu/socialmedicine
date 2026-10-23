@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>图片、扫描PDF转可编辑PPT · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/image-to-editable-slides-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">先确定可恢复范围</a></li>
+<li><a href="#_2">分解对象</a></li>
+<li><a href="#_3">工具选择</a></li>
+<li><a href="#_4">验收与限制</a></li>
+<li><a href="#_5">可直接使用的任务书</a></li>
+<li><a href="#_6">交付与衔接</a></li>
+</ul>
+</div>
+</aside><article><h1 id="pdfppt">图片、扫描PDF转可编辑PPT</h1>
+<h2 id="_1">先确定可恢复范围</h2>
+<p>盘点原页数、比例、顺序、语言、分辨率和备注来源。扫描OCR需要人工校对公式、上下标、负号、专名和数字；低清内容看不清时列出具体缺口，不猜测。</p>
+<h2 id="_2">分解对象</h2>
+<p>将页面拆为背景、文字、几何形状、连接线、图表、照片/插图、徽标。文字与常规形状重建为PPT原生对象；图表只有在真实数据可获得时重建为数据图，不能从低清像素编造精确值。复杂照片可保留位图，但需说明其不可逐元素编辑。</p>
+<p>不要保留含全部原文字的整页截图，再覆盖一层可编辑文字；这会形成双重内容并破坏后续编辑。局部需要修复背景时，处理范围和来源要记录；不得用生成图重造研究证据。</p>
+<h2 id="_3">工具选择</h2>
+<p>若环境已安装<code>image-to-editable-ppt</code>与<code>editppt</code>，读取它们当前随附说明再按其状态与校验流程运行。本手册是公开方法说明，不包含该第三方CLI、其授权或账号配置；不把本手册冒充完整上游软件。也可在没有专属CLI时用原生PPT库重建，实际说明完成范围。</p>
+<h2 id="_4">验收与限制</h2>
+<p>检查页数、比例、页序、备注、字体、坐标、形状层级与图像关系。选中并修改代表性的标题、连线和形状，确认编辑能力真实存在。视觉对照检查裁切、字距、位置与颜色；结构通过并不等于像素一致。</p>
+<p>交付每页对象数量、保留的位图、OCR疑难项和缺失备注。无法恢复的动画、母版、图表数据或原始矢量路径明确列出，不承诺从截图还原所有底层信息。</p>
+<h2 id="_5">可直接使用的任务书</h2>
+<pre><code class="language-text">请将这些截图/PDF重建为对象级可编辑PPT。保持页序、原文和必要备注，区分文字、形状、连接线、图表与位图；无法从截图恢复的图表数据请说明。不能把整页截图加文字覆盖当作完成，交付PPTX、预览、对象对应表和无法恢复项。
+</code></pre>
+<h2 id="_6">交付与衔接</h2>
+<p>需要的材料：原始截图、PDF或图片型PPT；需要保留的备注与页序；目标编辑精度与字体。</p>
+<p>交付：对象级可编辑PPTX；逐页源图/对象对应表；重建预览与限制说明。</p>
+<p>通用交付检查见<a href="figure-ppt-quality-skill.html">画图与PPT质量检查</a>，工具与来源边界见<a href="references/visual-skill-sources.html">公开工作流来源说明</a>。涉及期刊尺寸、格式或生成服务时，执行前核对目标官方文档。</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

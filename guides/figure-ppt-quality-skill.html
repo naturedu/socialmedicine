@@ -1,0 +1,35 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>科研图与PPT质量检查 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/figure-ppt-quality-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">四个检查层</a></li>
+<li><a href="#_2">常见问题与修复</a></li>
+<li><a href="#_3">自动工具</a></li>
+<li><a href="#_4">验收记录</a></li>
+<li><a href="#_5">可直接使用的任务书</a></li>
+<li><a href="#_6">交付与衔接</a></li>
+</ul>
+</div>
+</aside><article><h1 id="ppt">科研图与PPT质量检查</h1>
+<h2 id="_1">四个检查层</h2>
+<ol>
+<li>证据：图中每个值、箭头、样本量和标签能追溯到数据、模型或原文；图注与结论强度匹配。</li>
+<li>结构：文件可打开，页数/面板数正确，资源关系完整；不丢备注、公式和上下标。</li>
+<li>编辑：文字、形状、连线与图表是否真能编辑；整页位图或嵌入位图明确说明。</li>
+<li>视觉：按最终使用尺寸渲染，逐页检查裁切、字体、重叠、字距、图例、色彩与行距。</li>
+</ol>
+<h2 id="_2">常见问题与修复</h2>
+<p>缺少图例或坐标时恢复完整区域；密集原图拆页或局部放大；字体过小时删冗余或拆分，不能只缩小字号。中文替换字体后重新渲染，检查负号、上下标和公式。连线核对端点、方向与遮挡，不能为了对称改变科学含义。</p>
+<p>对PPT组对象、表格、连接线、外部链接和备注逐项检查。一个页面有多个对象不自动证明可编辑；整页图片加文字覆盖仍需指出。PDF转PNG、SVG转PNG或PPTX装箱都不会凭空增加编辑能力。</p>
+<h2 id="_3">自动工具</h2>
+<pre><code class="language-bash">python scripts/audit_slides.py deck.pptx --out qa.json
+</code></pre>
+<p>脚本检查越出画布的对象、缺失备注、疑似整页位图及对象数量，退出码只由结构性错误决定。没有备注或疑似图片页是需要结合任务判断的提示。它不能测量实际字体替换、渲染文字溢出、视觉遮挡或统计正确性；须人工/渲染补充。</p>
+<h2 id="_4">验收记录</h2>
+<p>按严重度记录文件/页、问题、证据、处理和复查状态。事实错误、误导性图示、文件损坏和关键文字截断先修；轻微样式差异可按用户用途说明。未能渲染时写“结构已检查，视觉待核”，不要称投稿级或完美通过。</p>
+<p>交付源文件、导出、预览和可复现脚本。用户已修改的版本优先，不覆盖手工修改；要修改时先读取当前源文件。</p>
+<h2 id="_5">可直接使用的任务书</h2>
+<pre><code class="language-text">请审核这些科研图/PPT。核对数字、单位、方法、图号与原文一致，再检查字体、上下标、文字溢出、图像裁切、连接线及可编辑范围。结构检查与视觉检查分别报告；按严重度列问题并修复可直接修复项，不把脚本通过等同于版式完美。
+</code></pre>
+<h2 id="_6">交付与衔接</h2>
+<p>需要的材料：源文件与最终导出文件；原文/原始数据和图源；目标格式、尺寸与模板。</p>
+<p>交付：按严重度排序的问题清单；修订文件与预览；结构检查和视觉检查状态。</p>
+<p>通用交付检查见<a href="figure-ppt-quality-skill.html">画图与PPT质量检查</a>，工具与来源边界见<a href="references/visual-skill-sources.html">公开工作流来源说明</a>。涉及期刊尺寸、格式或生成服务时，执行前核对目标官方文档。</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

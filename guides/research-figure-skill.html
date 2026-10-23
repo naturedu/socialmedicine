@@ -1,0 +1,66 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>科研数据图与多面板排版 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/research-figure-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">先确定图的论证任务</a></li>
+<li><a href="#_3">数据与图型</a></li>
+<li><a href="#_4">构图与复现</a></li>
+<li><a href="#_5">可执行入口</a></li>
+<li><a href="#_6">可直接使用的任务书</a></li>
+<li><a href="#_7">交付与衔接</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">科研数据图与多面板排版</h1>
+<h2 id="_2">先确定图的论证任务</h2>
+<p>用一句话写出图要支持的判断，再列出每个面板的证据。描述、关联、因果效应、预测表现分开表达。面板顺序跟随读者理解路径：研究对象或设计 → 主要结果 → 异质性或稳健性，不为凑版式重复数据。</p>
+<h2 id="_3">数据与图型</h2>
+<table>
+<thead>
+<tr>
+<th>数据与问题</th>
+<th>优先图型</th>
+<th>必须核对</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多组连续分布</td>
+<td>点图、箱线/小提琴叠加原始点</td>
+<td>样本量、重复测量、离群值规则</td>
+</tr>
+<tr>
+<td>效应及区间</td>
+<td>森林图、系数图</td>
+<td>差值/比值、尺度、参考线、区间定义</td>
+</tr>
+<tr>
+<td>时间变化</td>
+<td>折线、事件研究、分段回归</td>
+<td>时间间隔、政策时点、对照与置信带</td>
+</tr>
+<tr>
+<td>两变量关系</td>
+<td>散点、平滑线</td>
+<td>变换、重叠、拟合方式与外推范围</td>
+</tr>
+<tr>
+<td>多变量结构</td>
+<td>热图、相关矩阵</td>
+<td>标准化、聚类距离、缺失、色阶</td>
+</tr>
+</tbody>
+</table>
+<p>先检查缺失、权重、重复键、极端值和筛选条件；不要从图面外观反推统计模型。保留已有Python/R偏好；已有脚本时在原脚本修改。需要估计模型但尚无分析结果时，先完成分析或明确标为待估计。</p>
+<h2 id="_4">构图与复现</h2>
+<p>统一面板字母、术语、字体、线宽和颜色语义。共享坐标轴只在单位与尺度一致时使用。重要结果放在视觉主位，图例靠近对应数据；避免多余边框、3D效果及只靠红绿区分。按实际插入尺寸预览中文、上下标、负号和显著性说明。</p>
+<p>保存输入版本、变量映射、筛选规则、模型来源、软件依赖和随机种子（仅在随机过程存在时）。矢量图优先保留文字；PNG/TIFF的尺寸和分辨率按当前投稿要求确定，不能靠增大DPI修复低清原图。</p>
+<h2 id="_5">可执行入口</h2>
+<p>已有估计值与区间可使用本库原创脚本：</p>
+<pre><code class="language-bash">python scripts/plot_effects.py effects.csv --out result/effects --scale ratio --label &quot;HR (95% CI)&quot;
+</code></pre>
+<p>CSV必须有<code>label,estimate,lower,upper</code>；比值尺度要求全部为正。脚本只绘制输入估计，不计算模型或Meta合并；输出SVG/PDF/PNG和输入摘要。Python环境需安装matplotlib，中文标签用<code>--font</code>指定已有字体。</p>
+<h2 id="_6">可直接使用的任务书</h2>
+<pre><code class="language-text">请按科研数据图工作流处理我提供的数据。先定义图要回答的问题、变量单位、分母、估计量和不确定性，再选择图型与面板。沿用我已有的Python/R环境；交付可复现脚本、SVG/PDF、PNG、图注与检查记录。缺少数据时列出缺口，不补造数值。
+</code></pre>
+<h2 id="_7">交付与衔接</h2>
+<p>需要的材料：研究问题与目标读者；带变量字典的数据或已估计结果；目标刊物或版心尺寸。</p>
+<p>交付：绘图脚本与依赖说明；SVG/PDF及PNG预览；图注、数据来源和检查记录。</p>
+<p>通用交付检查见<a href="figure-ppt-quality-skill.html">画图与PPT质量检查</a>，工具与来源边界见<a href="references/visual-skill-sources.html">公开工作流来源说明</a>。涉及期刊尺寸、格式或生成服务时，执行前核对目标官方文档。</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>政策评估与卫生经济图表 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/policy-evaluation-figures-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">按设计选图</a></li>
+<li><a href="#_3">结果输入契约</a></li>
+<li><a href="#_4">图注与正文衔接</a></li>
+<li><a href="#_5">可直接使用的任务书</a></li>
+<li><a href="#_6">交付与衔接</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">政策评估与卫生经济图表</h1>
+<h2 id="_2">按设计选图</h2>
+<p><strong>DID/交错DID</strong>：事件时间在政策实施点对齐，注明省略期、估计器、参照组、队列聚合和区间类型。画出各事件期的样本支持，端点合并注明。不能将传统TWFE图自动当作分期政策的稳健估计；处理效应异质时先核对估计方法。前趋势未显著不能证明平行趋势成立。</p>
+<p><strong>ITS/CITS</strong>：原始序列、拟合趋势和反事实分别标识；明确水平/斜率变化、政策实施点、季节项、滞后及不确定性来源。控制序列需注明。图上折线连接不等于分段模型，干预后的外推区间不能隐藏。</p>
+<p><strong>PSM/IPW/重叠加权</strong>：用Love plot比较调整前后标准化差异，并补充倾向评分分布或权重诊断。写明ATE/ATT/ATO、人群保留与截尾规则。阈值是诊断约定，平衡改善不证明无未测量混杂；匹配/加权后的推断需对应实际方案。</p>
+<p><strong>卫生经济</strong>：成本效果平面保留增量成本、增量效果及象限；CEAC注明支付意愿阈值、净收益判定及参数抽样来源。龙卷风图注明单因素取值范围和排序依据。支配、扩展支配与ICER解释依赖比较集合；不要把模拟抽样云写成患者观察数据。</p>
+<p><strong>公平性</strong>：集中曲线标明按何种社会经济指标排序、权重与健康变量方向；集中指数与相对/绝对不平等分开。分组图保留分母、样本量、置信区间以及多重比较口径。</p>
+<h2 id="_3">结果输入契约</h2>
+<p>保留模型名、样本限制、估计对象、点估计、区间、标准误来源、聚类层级和参数抽样种子。主效应、异质性与敏感性检验分别标记，不把每个显著子组都当作预设机制。</p>
+<h2 id="_4">图注与正文衔接</h2>
+<p>先说图在论证中的作用，再给有单位的效应与区间，最后说明设计限制。反事实趋势、预测线与观察数据使用不同线型；不以配色暗示一种政策必然更好。</p>
+<h2 id="_5">可直接使用的任务书</h2>
+<pre><code class="language-text">请根据我提供的政策评估或卫生经济结果画图。先核对估计目标、对照、时间与不确定性；交错DID注明估计器和聚合，匹配图说明目标人群和权重，CEA/CEAC注明视角、时间范围和阈值。只画已有结果，不从图形推出额外因果结论。
+</code></pre>
+<h2 id="_6">交付与衔接</h2>
+<p>需要的材料：模型估计结果与设计说明；政策时点与对照定义；权重、阈值与参数抽样结果。</p>
+<p>交付：事件研究/ITS/平衡/经济评价图；图源数据与绘图脚本；识别与解释边界。</p>
+<p>通用交付检查见<a href="figure-ppt-quality-skill.html">画图与PPT质量检查</a>，工具与来源边界见<a href="references/visual-skill-sources.html">公开工作流来源说明</a>。涉及期刊尺寸、格式或生成服务时，执行前核对目标官方文档。</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

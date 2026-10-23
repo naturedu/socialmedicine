@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>论文精读与中文文献汇报PPT · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/paper-to-ppt-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_1">按论文类型安排叙事</a></li>
+<li><a href="#_2">建立页级故事</a></li>
+<li><a href="#_3">图片与语言</a></li>
+<li><a href="#_4">生成与验收</a></li>
+<li><a href="#_5">可直接使用的任务书</a></li>
+<li><a href="#_6">交付与衔接</a></li>
+</ul>
+</div>
+</aside><article><h1 id="ppt">论文精读与中文文献汇报PPT</h1>
+<h2 id="_1">按论文类型安排叙事</h2>
+<p>临床/人群研究突出入选、暴露/干预、比较、时间与效应；方法/AI论文突出任务、基线、公平比较、消融和外部验证；资源论文突出采集、质控、覆盖与复用；机制论文按问题与关键实验证据推进；综述/Meta按证据版图、纳入与偏倚组织。不要给所有论文套同一页数和标题。</p>
+<h2 id="_2">建立页级故事</h2>
+<p>每页记录：作用、主标题、一个核心判断、对应图表、论文定位、必要限定和讲稿。原文结果与汇报者解读分开。方法细节能决定解释时留在主线，其他细节可放备份；作者没有做的分析列为讨论，不能画成已有发现。</p>
+<h2 id="_3">图片与语言</h2>
+<p>优先提取论文原图或出版者高质量图源。多面板图只裁目标面板时保留必要坐标、图例、样本量和注释；文字太小时拆页或局部放大，不靠放大截图恢复清晰度。页脚标注作者/年份、DOI和图号。</p>
+<p>中文表达直接说明研究动作与结果，基因/蛋白、模型、数据集和指标按术语表统一；首次缩写解释。句子过长时重写，不把正文段落缩到小字号。相关、预测与因果措辞沿用证据强度。</p>
+<h2 id="_4">生成与验收</h2>
+<p>优先沿用用户模板，文字、形状和数据图表尽量保留原生编辑；原论文图片保留其位图/矢量性质。可用本库<code>scripts/build_editable_deck.py</code>制作简洁底稿，再依据原图密度调整。</p>
+<p>实际生成<code>.pptx</code>，不能仅交提纲。逐页检查图是否完整、文本是否溢出、数字是否对应、备注是否匹配。结构脚本无法证明视觉完美；使用可用的PPT/PDF渲染器检查，再修复问题。</p>
+<h2 id="_5">可直接使用的任务书</h2>
+<pre><code class="language-text">请把这篇论文制作成中文文献汇报PPT。先判断属于临床、方法、资源、机制还是综述研究，建立问题—设计—主要证据—局限的主线。每页一个主要判断，保留原图坐标、图例与出处；交付真实PPTX、逐页讲稿、术语表和渲染检查报告，不虚构论文未报告的内容。
+</code></pre>
+<h2 id="_6">交付与衔接</h2>
+<p>需要的材料：论文全文、补充材料或完整笔记；听众与汇报时长；模板和必须讲解的图。</p>
+<p>交付：中文PPTX及逐页讲稿；图源清单与术语表；缩略图与检查报告。</p>
+<p>通用交付检查见<a href="figure-ppt-quality-skill.html">画图与PPT质量检查</a>，工具与来源边界见<a href="references/visual-skill-sources.html">公开工作流来源说明</a>。涉及期刊尺寸、格式或生成服务时，执行前核对目标官方文档。</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

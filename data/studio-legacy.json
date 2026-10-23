@@ -465,6 +465,150 @@
         "HRS家族扩展",
         "数据库"
       ]
+    },
+    {
+      "icon": "📊",
+      "name": "科研数据图与多面板排版",
+      "file": "research-figure-skill.md",
+      "group": "figures",
+      "desc": "从数据、模型输出和科学问题生成可复现统计图与多面板图，交付脚本、SVG/PDF和预览；不生成研究数据。",
+      "tags": [
+        "科研画图",
+        "SVG",
+        "科研图表"
+      ]
+    },
+    {
+      "icon": "🩺",
+      "name": "JAMA八类图表阅读与绘制",
+      "file": "clinical-statistical-figures-skill.md",
+      "group": "figures",
+      "desc": "区分并绘制生存、森林、流程、样条、分布、竞争风险、预测评价和目标试验图解；保留真实来源和统计含义。",
+      "tags": [
+        "科研画图",
+        "SVG",
+        "科研图表"
+      ]
+    },
+    {
+      "icon": "📈",
+      "name": "政策评估与卫生经济图表",
+      "file": "policy-evaluation-figures-skill.md",
+      "group": "figures",
+      "desc": "将DID、ITS、匹配加权和卫生经济模型的已估计结果转为可审读图表，明确识别条件、比较组与不确定性。",
+      "tags": [
+        "科研画图",
+        "SVG",
+        "科研图表"
+      ]
+    },
+    {
+      "icon": "🧩",
+      "name": "理论框架、机制图与DAG",
+      "file": "conceptual-mechanism-figure-skill.md",
+      "group": "figures",
+      "desc": "把文献或研究方案转成有证据来源的理论框架、机制图、DAG或SEM示意，交付可编辑源文件并核对箭头含义。",
+      "tags": [
+        "科研画图",
+        "SVG",
+        "科研图表"
+      ]
+    },
+    {
+      "icon": "🗺️",
+      "name": "基金申报与研究技术路线图",
+      "file": "grant-roadmap-figure-skill.md",
+      "group": "figures",
+      "desc": "将申请书或研究方案转成研究内容、科学问题、方法、数据和产物对齐的技术路线图，保持项目原文和可编辑性。",
+      "tags": [
+        "科研画图",
+        "SVG",
+        "科研图表"
+      ]
+    },
+    {
+      "icon": "🎨",
+      "name": "图形摘要与AI辅助示意图",
+      "file": "graphical-abstract-skill.md",
+      "group": "figures",
+      "desc": "设计论文图形摘要与AI辅助概念插图，保持来源、事实和数值完整，明确位图、矢量与可编辑交付的差别。",
+      "tags": [
+        "科研画图",
+        "SVG",
+        "科研图表"
+      ]
+    },
+    {
+      "icon": "📑",
+      "name": "论文精读与中文文献汇报PPT",
+      "file": "paper-to-ppt-skill.md",
+      "group": "presentation",
+      "desc": "将科研论文转为有证据主线的中文汇报PPT，保留关键原图、出处和逐页讲稿，交付真实PPTX。",
+      "tags": [
+        "PPT制作",
+        "PPTX",
+        "汇报"
+      ]
+    },
+    {
+      "icon": "🎓",
+      "name": "开题、中期与答辩PPT",
+      "file": "thesis-defense-ppt-skill.md",
+      "group": "presentation",
+      "desc": "依据研究阶段制作开题、中期或答辩PPT，对齐科学问题、子研究、方法和已有结果，清楚标识计划与完成状态。",
+      "tags": [
+        "PPT制作",
+        "PPTX",
+        "汇报"
+      ]
+    },
+    {
+      "icon": "✂️",
+      "name": "图片、扫描PDF转可编辑PPT",
+      "file": "image-to-editable-slides-skill.md",
+      "group": "presentation",
+      "desc": "将幻灯片截图、扫描PDF或图片型PPT重建为对象可编辑的PPTX，保留图像与文本来源并说明无法恢复的内容。",
+      "tags": [
+        "PPT制作",
+        "PPTX",
+        "汇报"
+      ]
+    },
+    {
+      "icon": "🖼️",
+      "name": "统一视觉的图片型PPT",
+      "file": "image-based-slides-skill.md",
+      "group": "presentation",
+      "desc": "在用户接受整页图片的前提下制作视觉统一的图片型PPT，保留原图、提示词和讲稿，明确对象不可单独编辑。",
+      "tags": [
+        "PPT制作",
+        "PPTX",
+        "汇报"
+      ]
+    },
+    {
+      "icon": "🌱",
+      "name": "科研教学、方法科普与分镜PPT",
+      "file": "teaching-storyboard-ppt-skill.md",
+      "group": "presentation",
+      "desc": "把研究方法或科研知识组织成教学幻灯片、图解卡片和视频分镜，保留准确术语、来源与受众层次。",
+      "tags": [
+        "PPT制作",
+        "PPTX",
+        "汇报"
+      ]
+    },
+    {
+      "icon": "🔍",
+      "name": "科研图与PPT质量检查",
+      "file": "figure-ppt-quality-skill.md",
+      "group": "presentation",
+      "desc": "检查科研图和PPT的证据、图文一致、对象编辑、字体、裁切和导出，区分自动结构检查与人工视觉检查。",
+      "tags": [
+        "质量检查",
+        "可编辑",
+        "验收"
+      ]
     }
   ],
   "METHODS": [
