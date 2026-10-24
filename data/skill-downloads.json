@@ -17,10 +17,10 @@
       "releaseId": 422637537,
       "publishedAt": "2026-10-24T09:32:01Z",
       "url": "https://github.com/naturedu/socialmedicine/releases/download/skills-v2026.10.24.1/skill-download-stats.zip",
-      "downloadCount": 0,
+      "downloadCount": 1,
       "available": true,
       "firstSeenAt": "2026-10-24T09:33:26Z",
-      "lastSeenAt": "2026-10-24T09:33:26Z"
+      "lastSeenAt": "2026-10-24T10:33:55Z"
     },
     {
       "id": 671845807,
@@ -28,31 +28,30 @@
       "tag": "skills-v2026.10.24.1",
       "releaseId": 422637537,
       "publishedAt": "2026-10-24T09:32:01Z",
-      "url": "https://github.com/naturedu/socialmedicine/releases/download/skills-v2026.10.24.1/socialmedicineskills.zip",
-      "downloadCount": 0,
-      "available": true,
+      "downloadCount": 1,
+      "available": false,
       "firstSeenAt": "2026-10-24T09:33:26Z",
-      "lastSeenAt": "2026-10-24T09:33:26Z"
+      "lastSeenAt": "2026-10-24T10:33:55Z"
     }
   ],
   "daily": [
     {
       "day": "2026-10-24",
-      "recordedAt": "2026-10-24T09:33:26Z",
-      "observedTotal": 0,
-      "availableTotal": 0,
+      "recordedAt": "2026-10-24T10:33:55Z",
+      "observedTotal": 2,
+      "availableTotal": 1,
       "increaseSincePreviousRecord": null,
       "packages": {
-        "skill-download-stats.zip": 0,
-        "socialmedicineskills.zip": 0
+        "skill-download-stats.zip": 1,
+        "socialmedicineskills.zip": 1
       }
     }
   ],
-  "updatedAt": "2026-10-24T09:33:26Z",
-  "observedTotal": 0,
-  "availableTotal": 0,
+  "updatedAt": "2026-10-24T10:33:55Z",
+  "observedTotal": 2,
+  "availableTotal": 1,
   "byPackage": {
-    "skill-download-stats.zip": 0,
-    "socialmedicineskills.zip": 0
+    "skill-download-stats.zip": 1,
+    "socialmedicineskills.zip": 1
   }
 }

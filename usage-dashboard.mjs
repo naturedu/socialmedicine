@@ -29,6 +29,6 @@ if(root){
 }
 async function loadInventory(){
  const inventory=document.getElementById('resourceInventory');if(!inventory||inventory.dataset.loading)return;inventory.dataset.loading='true';
- const defs=[['studio-methods','方法工作台文档','份'],['code-library','原站代码片段','段'],['studio-classics','经典导读','篇'],['research-datasets','数据源深度指南','条'],['research-theses','博士论文题录','条'],['research-schools','院系方向档案','个'],['research-conferences','国际会议与系列','个'],['institutions','扩展院校机构目录','条'],['journals','扩展期刊目录','条'],['nssf-projects','国社科题名候选（覆盖见项目页）','条'],['moe-projects','教育部题名候选（2016—2025）','条'],['research-careers','官方招聘与职业入口','条'],['figures','论文图表条目','条']];
+ const defs=[['studio-methods','方法工作台文档','份'],['code-library','原站代码片段','段'],['studio-classics','经典导读','篇'],['research-datasets','数据源深度指南','条'],['research-theses','博士论文题录','条'],['research-schools','院系方向档案','个'],['research-conferences','国际会议与系列','个'],['institutions','扩展院校机构目录','条'],['journals','扩展期刊目录','条'],['research-careers','官方招聘与职业入口','条'],['figures','论文图表条目','条']];
  const rows=await Promise.all(defs.map(async([file,label,unit])=>{try{const r=await fetch(new URL('./data/'+file+'.json',import.meta.url));if(!r.ok)throw new Error();const data=await r.json();if(!Array.isArray(data))throw new Error();return[label,data.length,unit];}catch{return[label,'未能读取',unit];}}));inventory.append(table(['资源类别','当前数量','单位'],rows),node('p','不同目录存在交叉，同一研究可能有题录、片段和代码记录，因此不相加成“独立资源总数”。数量不代表全文可用、逐项代码验证或当年招生状态。','micro'));
 }

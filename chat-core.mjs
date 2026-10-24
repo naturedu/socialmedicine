@@ -27,7 +27,7 @@ const collection={
 export function chooseIntent(q,previous={}){
  const methodIds=aliases.filter(([,re])=>re.test(q)).map(([id])=>id);
  if(/院校|学校|中山大学|南方医科|哪所|招生|导师/.test(q))return {kind:'schools',methodIds:[]};
- if(/国社科|教育部|项目题|立项|获批项目/.test(q))return {kind:'grants',methodIds:[]};
+ if(/国社科|国自然|教育部|项目题|立项|获批项目/.test(q))return {kind:'grants',methodIds:[]};
  if(/期刊|审稿|分区|jcr|lancet|jama|nature health/i.test(q)&&!/研究设计/.test(q))return {kind:'journals',methodIds:[]};
  if(/典籍|经典|arrow|阿罗|不确定性|福利经济学/i.test(q))return {kind:'classics',methodIds:[]};
  if(/数据库|charls|clhls|nhanes|\bhrs\b|cfps|chns|数据源/i.test(q))return {kind:'datasets',methodIds:[]};
@@ -80,11 +80,7 @@ export function makeReply(question,previous={},data={}){
   return finish(answer(rows.length?'从核心问题读起。':'可以先指定一个主题。',[],{status:rows.length?'answered':'clarify',sections:rows.map(r=>({heading:r.zh+' · '+r.author,items:[r.idea,r.application]})),sources:rows.map(r=>source(r.title,r.url,r.edition)),suggestions:['医疗不确定性如何用于研究设计？']}));
  }
  if(intent.kind==='grants'){
-  const year=context.match(/20(?:1[6-9]|2[0-6])/g)?.at(-1),provider=/教育部/.test(q)?'教育部':/国社科/.test(q)?'国社科':null;
-  const all=(data.projects||[]).filter(r=>(!year||r.date===year)&&(!provider||r.funder===provider));
-  const key=context.replace(/20\d{2}|国社科|教育部|项目|题目|立项|给我|看看|有哪些|总览|研究|年/g,' ').trim();
-  const rows=(key?relevant(all,key,r=>[r.title,r.organization,r.theme],5):all.slice(0,5));
-  return finish(answer(rows.length?'找到这些公开项目题目。':'当前题目库没有匹配结果。',['本站按领域相关题名筛选，不是全国全部项目。国社科仅正式立项，教育部保留各条原始状态；题名匹配不能代替项目内容审读。',...(data.coverage?.limitations||[]).slice(0,2)],{status:rows.length?'answered':'unmatched',sections:rows.map(r=>({heading:r.title,items:[`${r.date} · ${r.funder} · ${r.project_type}`,r.funder==='国社科'?r.organization:[r.principal,r.organization].filter(Boolean).join(' · '),r.status]})),sources:[...rows.map(r=>source(r.title+' · 原名单',r.source,r.locator)),source('完整筛选与年度覆盖','grants.html'),source('国社科立项图谱','nssfc-projects.html')],suggestions:['找2025年教育部养老项目','找2024年国社科医保项目']}));
+  return finish(answer('项目资料目前仅展示汇总分析。',['本站按领域相关资料整理，不是全国全部项目。国社科、教育部和国自然各自保留统计范围与状态说明；网页不展示人员、编号或逐项名单。'],{status:'answered',sources:[source('教育部与项目分析总览','grants.html#moe'),source('国社科主题与机构分析','nssfc-projects.html'),source('国自然经管与健康分析','nsfc-health.html')],suggestions:['机器学习预测模型怎么验证？']}));
  }
  if(intent.kind==='goal'){
   const plan=buildGoal({target:context,type:intent.goal,background:'',weeks:12},data.library||[]);

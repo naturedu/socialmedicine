@@ -6,7 +6,7 @@ const cache=new Map();
 async function read(name){if(!cache.has(name))cache.set(name,fetch(new URL('./data/'+name+'.json',import.meta.url),{signal:AbortSignal.timeout(15000)}).then(r=>{if(!r.ok)throw new Error('资料暂不可用');return r.json();}).catch(e=>{cache.delete(name);throw e;}));return cache.get(name);}
 async function contextFor(q,state){
  const kind=chooseIntent(q,state).kind, data={};
- const paths={methods:[['methods','studio-methods'],['methodGuide','method-guide']],schools:[['schools','research-schools']],datasets:[['datasets','research-datasets']],journals:[['journals','studio-journals']],classics:[['classics','studio-classics']],grants:[['projects','health-projects'],['coverage','project-coverage']],goal:[],design:[],writing:[],search:[['library','studio-library']]};
+ const paths={methods:[['methods','studio-methods'],['methodGuide','method-guide']],schools:[['schools','research-schools']],datasets:[['datasets','research-datasets']],journals:[['journals','studio-journals']],classics:[['classics','studio-classics']],grants:[],goal:[],design:[],writing:[],search:[['library','studio-library']]};
  await Promise.all((paths[kind]||[]).map(async([key,path])=>{data[key]=await read(path);}));return data;
 }
 function download(name,text){const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'})),a=node('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}

@@ -2,9 +2,9 @@
 
 ## Skill 安装包、下载记录与方法出处
 
-[下载与记录页面](https://naturedu.github.io/socialmedicine/skill-downloads.html) · [完整研究 Skill 包](https://github.com/naturedu/socialmedicine/releases/latest/download/socialmedicineskills.zip) · [独立下载记录工具](https://github.com/naturedu/socialmedicine/releases/latest/download/skill-download-stats.zip) · [89个方法的原始论文与官方来源](https://naturedu.github.io/socialmedicine/method-sources.html)
+[下载与记录页面](https://naturedu.github.io/socialmedicine/skill-downloads.html) · [研究 Skill 阅读页](guides/socialmedicineskills.html) · [独立下载记录工具](https://github.com/naturedu/socialmedicine/releases/latest/download/skill-download-stats.zip) · [89个方法的原始论文与官方来源](https://naturedu.github.io/socialmedicine/method-sources.html)
 
-安装包内为技能说明、原创脚本和公开资料索引，不包含人物照片、原始对话、私人稿件、受限数据或论文全文。新增科研公众号图文流程与返修证据对应规则；已有绘图、PPT、数据库及微观模拟内容继续保留。此次整理基于可访问对话与已有公开库交叉核对，并非导出整个账号的全部历史。
+含项目明细的旧版完整安装包已撤下；目前以网页阅读为主。其他工具仅包含相应技能说明与原创脚本，不包含人物照片、原始对话、私人稿件、受限数据或论文全文。新增科研公众号图文流程与返修证据对应规则；已有绘图、PPT、数据库及微观模拟内容继续保留。此次整理基于可访问对话与已有公开库交叉核对，并非导出整个账号的全部历史。
 
 方法卡片标题可直达代表性原始方法或官方来源，另保留本站中文教程与代码。`data/method-authorities.json` 记录89个方法的来源对应、来源类型及核对状态；不把报告清单当作设计标准，不把链接检查当作全文或代码验证。
 
@@ -19,7 +19,7 @@ GitHub 自动累计附件下载计数，网页打开或刷新时从公开 API �
 2026-10-24：首页改为绿色科研聊天入口，标语为 **All for the health**。支持方法比较、Stata/R 代码追问、研究设计、院校、数据库、项目题目与经典资料；回答给出站内资料或官方出处。结构化学习与申请路线仍可展开使用。当前采用本地规则与资料检索，未接入通用模型 API。
 
 右上角展示全站访问、预设功能点击与下载点击，点击可查看明细和导出。统计服务将提问、已回答、需补充、未匹配、失败、追问及反馈分别汇总；互动事件没有原文或访客身份字段。对话仅在用户勾选后保留本机，可清除或导出。重复投递按事件 ID 去重；统计不代表独立人数、答案正确率或下载完成率。问答统计从本版本启用后开始，历史不可回溯。
-2026-10-24：[国社科立项图谱](nssfc-projects.html) 上线。从 22 份官网来源文件、38 个年度批次的 60,578 条公开立项元数据中，筛入并去重 4,471 个领域相关正式项目。支持机构、主题、关键词、共现与可比时期分析，附逐条官网来源、名单定位、批次覆盖和下载。网站主理人介绍及联系方式已删除。
+2026-10-24：项目资料调整为 HTML 汇总分析。国社科、教育部、国自然分别展示主题与机构分布；不再发布项目明细、原始编号、人员或资料包。
 
 2026-10-23：绿色首页与完整资源目录整合。首页为 `index.html`，`research-studio.html` 为同版入口，`classic.html` 保留此前资源主页。原站专题页、数据、图表及方法文档均保留。
 
@@ -55,11 +55,11 @@ GitHub 自动累计附件下载计数，网页打开或刷新时从公开 API �
 | [机构](institutions.html) | 91 个院校／机构／院系导航条目 | 部分仅核到学校主页；不是全部院校、招生目录或排名 |
 | [检索与数据](sources.html) | 40 个资源入口 | 公开入口不代表全文与微观数据可自由下载 |
 | [医保时间线](insurance-timeline.html) | 1998–2026 年 21 个国家级节点 | 成文、公布、生效分开，不是全部政策；2026 年医保法自 2027-01-01 施行 |
-| [国社科立项图谱](nssfc-projects.html) / [项目总览](grants.html) | 4,471 个国社科正式立项领域项目；教育部目录独立保留 | 题名筛选，附机构、主题、热点和逐批来源；不是三领域全部项目 |
+| [国社科立项图谱](nssfc-projects.html) / [项目总览](grants.html) | 4,471 个国社科正式立项领域项目；教育部目录独立保留 | 题名筛选后的机构与主题汇总，网页说明覆盖范围；不是三领域全部项目 |
 
 Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cell 只有导航入口，没有已提供且确认属于 Cell 主刊的题录，不能称为完整 CNS 语料库。临床统计、AI 评价规范和图表表达单列方法参考。
 
-国社科仅统计正式立项。2016—2025 年重点、一般、青年全国批次条数已核对，西部、重大、后期和专项按实际取得的正式附件公开覆盖；2026 年目前仅收录已核实的重大专项，年度公示不计入。教育部为原一般项目所列附件，独立保留其原状态。见 [完整说明与复现](docs/nssfc-data.md)、[来源覆盖](data/nssfc-coverage.json)、[分析报告](data/nssfc-analysis-report.md) 与 [提取审计](data/nssfc-extraction-audit.json)。机构频次不代表质量或获批率；主题比较只用覆盖一致的年度系列和全学科分母。
+国社科仅统计正式立项。2016—2025 年重点、一般、青年全国批次条数已核对，西部、重大、后期和专项按实际取得的正式附件公开覆盖；2026 年目前仅收录已核实的重大专项，年度公示不计入。教育部为原一般项目所列附件，独立保留其原状态。见[国社科主题分析](nssfc-projects.html)和[教育部简析](grants.html#moe)。机构频次不代表质量或获批率；主题比较只用覆盖一致的年度系列和全学科分母。
 
 ## 标题／摘要选刊
 
@@ -124,9 +124,9 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cel
 
 可下载[data/figure-ppt-skills.zip](data/figure-ppt-skills.zip)，每份技能独立为SKILL.md目录，并含本次原创支持脚本与引用资料；Python脚本依赖matplotlib或python-pptx，不自动安装、不调用外部服务。
 
-## 国社科荟萃 Skills 与公众号宣传
+## 国社科主题分析
 
-[独立技能说明](skills/nssfc-project-synthesis/SKILL.md) · [下载技能包](downloads/nssfc-project-synthesis.zip) · [公众号静态图文](nssfc-wechat.html) · [宣传长图](shots/nssfc-promo.png) · [横版封面](shots/nssfc-cover.png)。需要支持Skills、联网与Python的AI助手；新来源须核验，现有数据覆盖和缺口见立项图谱。
+[在线分析](nssfc-projects.html)仅展示机构、主题、关键词共现与可比时期的汇总。相关技能包、明细数据及旧宣传包已撤下，统计范围与覆盖缺口在网页内说明。
 
 ## 个体微观模拟
 
@@ -138,6 +138,10 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cel
 
 ## 国自然经管与健康治理
 
-[交互分析](nsfc-health.html) · [脱敏清单](data/nsfc-health-projects.csv) · [分析与技能包](downloads/nsfc-health-analysis.zip)。1934项健康相关条目，涉及313个原层级机构，来自5份本地第三方汇编，实际覆盖2010—2025年，未逐项官方核验。1991—2009为缺口；2024—2025为局部院校汇编。网页、索引、CSV和ZIP均移除人员与项目编号，原工作簿及申请书不上传。
+[国自然经管与健康分析](nsfc-health.html)：1,934项健康相关汇编条目，涉及313个原层级机构，实际覆盖2010—2025年，未逐项官方核验。只保留汇总 HTML；不发布清单、CSV、JSON或资料包。
 
-国社科现有4471项及398项历史待核记录同步移除姓名、批准号和原始编号；统计数量保持。外部官方原名单及既有Git历史不属于本次清理范围。
+国社科与教育部资料同样只保留汇总网页，搜索、前端和发布附件不再携带项目明细。
+
+## 机器学习预测模型
+
+[简明 HTML 教程](prediction-models.html)：数据划分与泄漏、模型比较、评价指标、SHAP/LIME及报告。仅作方法解读，无课程、数据或模型文件下载。

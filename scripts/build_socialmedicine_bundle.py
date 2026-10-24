@@ -7,8 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOGUES = ["methods", "code-library", "tools", "library", "figures", "institutions", "journals",
-              "sources", "insurance-timeline", "health-projects", "nssf-projects", "moe-projects",
-              "nsfc-health-projects", "nsfc-health-analysis", "nsfc-health-methodology", "nsfc-health-sources", "method-sources", "method-authorities", "database-skills", "database-sources", "visual-skills"]
+              "sources", "insurance-timeline", "method-sources", "method-authorities", "database-skills", "database-sources", "visual-skills"]
 EXTENSIONS = {".md", ".py", ".R", ".do", ".json", ".txt", ".yaml", ".yml"}
 
 
@@ -36,7 +35,7 @@ def build(output):
         if source.suffix not in EXTENSIONS and source.name != "LICENSE":
             continue
         relative = source.relative_to(ROOT / "skills").as_posix()
-        if relative.startswith("skill-download-stats/"):
+        if relative.startswith(("skill-download-stats/", "nssfc-project-synthesis/", "nsfc-health-synthesis/")):
             continue  # Pack the administration skill separately.
         name = "SKILL.md" if relative == "socialmedicineskills.md" else relative
         content = source.read_text(encoding="utf-8-sig")

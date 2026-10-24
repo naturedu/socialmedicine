@@ -32,9 +32,7 @@ def build():
       ('research-theses','博士论文题录与入口','论文','research-resources.html'),
       ('studio-classics','经典理论书架','理论','index.html#classics'),
       ('insurance-timeline','医保制度时间线','政策','insurance-timeline.html'),
-      ('nsfc-health-projects','国自然经管与健康治理汇编（2010—2025）','项目','nsfc-health.html'),
-      ('nssf-projects','国社科正式立项与热点（2016—2026）','项目','nssfc-projects.html'),
-      ('moe-projects','教育部领域项目（2016—2025）','项目','grants.html')]
+    ]
     records=[];collections=[]
     def add(key,title,kind,page,rows,source):
         if isinstance(rows,dict):
@@ -50,6 +48,13 @@ def build():
     for key,title,kind,page in specs:
         p=R/'data'/(key+'.json')
         if p.exists():add(key,title,kind,page,read(p),p.relative_to(R).as_posix())
+    summary_pages=[
+      dict(title='国社科主题与机构分析',summary='领域相关正式立项的主题、机构与可比时期汇总。',url='nssfc-projects.html'),
+      dict(title='教育部项目简析',summary='主题构成、管理学与经济学子集及状态说明。',url='grants.html#moe'),
+      dict(title='国自然经管与健康分析',summary='健康相关汇编条目的主题和机构分布，说明覆盖限制。',url='nsfc-health.html'),
+      dict(title='机器学习预测模型简明教程',summary='数据划分、预处理、模型比较、校准、SHAP与报告。',url='prediction-models.html')]
+    add('summary-pages','专题分析与学习网页','专题','grants.html',summary_pages,'HTML')
+    for rec,page in zip(records[-len(summary_pages):],summary_pages):rec['url']=page['url'];rec['summary']=page['summary'];rec['source']=page['url']
     legacy=read(R/'data/studio-legacy.json')
     for key,title,kind,page in [
       ('DATA_SOURCES','原站25个数据库入口','数据','classic.html#datasources'),
