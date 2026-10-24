@@ -1,0 +1,4 @@
+interface:
+  display_name: "国社科正式立项荟萃与分析"
+  short_description: "围绕健康中国建设荟萃官网正式立项，分析可追溯的机构、主题词与研究热点"
+  default_prompt: "请使用 $nssfc-project-synthesis 荟萃国家社科基金卫生健康与公共事业治理领域正式立项，保留官网来源并分析机构与热点。"

@@ -273,10 +273,10 @@
     "access": "区别公示、立项与结项"
   },
   {
-    "name": "国社科与教育部年度项目题目",
+    "name": "国社科正式立项图谱与教育部项目目录",
     "category": "项目与基金",
-    "url": "https://naturedu.github.io/socialmedicine/grants.html",
-    "description": "2016—2025 年公开题名筛选与年度覆盖审计；公示与正式立项分开。",
-    "note": "仅社会医学、卫生管理与相关社会政策题名候选，见年度覆盖限制。"
+    "url": "https://naturedu.github.io/socialmedicine/nssfc-projects.html",
+    "description": "2016—2026 年正式立项题名检索，机构、主题词、热点及官网来源；教育部项目在独立总览中保留原状态。",
+    "note": "重点、一般、青年2016—2025全国批次条数已核对；其他系列和2026年见覆盖矩阵。"
   }
 ]

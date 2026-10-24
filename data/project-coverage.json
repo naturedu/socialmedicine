@@ -1,35 +1,41 @@
 {
-  "updated": "2026-10-23",
+  "updated": "2026-10-24",
   "years": [
     2016,
-    2025
+    2026
   ],
-  "scope": "健康、医疗保障与社会政策相关公开项目题名候选。主题分类是本站关键词整理，不是官方学科认定。",
+  "scope": "国社科仅正式立项题名筛选；教育部项目独立保留原状态与覆盖口径。",
   "limitations": [
-    "不代表2016—2025年全部国社科和教育部项目。",
-    "2016国社科仅上海地区；2017仅年度项目；2022仅青年项目。",
-    "部分为公示或无批准号存档，逐条标记；不能据样本数量判断年度热度、申请成功率或院校排名。",
-    "仅提取公开题名与元数据，不包含申请书、研究方案或全文。"
+    "不代表三领域的全部项目：关键词法存在漏检和误检，题目略的项目无法判定主题。",
+    "2026年度重点、一般、青年项目尚无本次可核实的正式名单；公示不计数。",
+    "西部2017未取得正式完整附件；后期资助2021—2023及2026、教育学/艺术学/军事学单列与其他专项未系统覆盖。",
+    "重大专项仅收录2023二十大精神、2026二十届四中全会精神两批，其他专项待补。",
+    "立项状态指当年公布状态，未逐条追溯后来撤项、变更或结项。",
+    "机构频次反映本库覆盖与题名规则，不能解释为学术质量排名或申报成功率。"
   ],
   "coverage": [
     {
       "year": 2016,
       "provider": "国社科",
-      "parsedRows": 285,
-      "selectedRows": 16,
-      "note": "仅上海地区官方年报中的重点、一般与青年项目，未取得全国完整名单；不可用于全国年度比较。",
+      "parsedRows": 5034,
+      "selectedRows": 340,
+      "note": "重点、一般、青年全国批次条数已核对；其他类别仅覆盖所列附件。 未覆盖：",
       "sources": [
         {
-          "label": "n2016-0 · 正式立项（仅上海地区，非全国名单）",
-          "url": "https://www.sh-popss.gov.cn/url/nb2016.pdf"
+          "label": "annual-2016-2021 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693668"
         },
         {
-          "label": "n2016-1 · 正式立项（仅上海地区，非全国名单）",
-          "url": "https://www.sh-popss.gov.cn/url/nb2016.pdf"
+          "label": "west-2016 · 高校官网正式立项存档",
+          "url": "https://szyjs.ndnu.edu.cn/2016lxgb.xls"
         },
         {
-          "label": "n2016-2 · 正式立项（仅上海地区，非全国名单）",
-          "url": "https://www.sh-popss.gov.cn/url/nb2016.pdf"
+          "label": "major-2016-2020 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693670"
+        },
+        {
+          "label": "later-2016-2020 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693664"
         }
       ]
     },
@@ -49,13 +55,21 @@
     {
       "year": 2017,
       "provider": "国社科",
-      "parsedRows": 3196,
-      "selectedRows": 142,
-      "note": "仅年度项目；青年项目未收录。原PDF横向分栏，提取题目、负责人及单位，项目类别与批准号未补写。",
+      "parsedRows": 5107,
+      "selectedRows": 354,
+      "note": "重点、一般、青年全国批次条数已核对；其他类别仅覆盖所列附件。 未覆盖：西部项目",
       "sources": [
         {
-          "label": "n2017-0 · 高校官网存档名单，未逐项复核最终立项",
-          "url": "https://sfxy.czu.cn/_upload/article/files/87/af/d504bb8f45ebabb333d00c038139/194e6d9b-b0c0-461d-8586-437c04a17af9.pdf"
+          "label": "annual-2016-2021 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693668"
+        },
+        {
+          "label": "major-2016-2020 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693670"
+        },
+        {
+          "label": "later-2016-2020 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693664"
         }
       ]
     },
@@ -75,17 +89,25 @@
     {
       "year": 2018,
       "provider": "国社科",
-      "parsedRows": 4506,
-      "selectedRows": 170,
-      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "parsedRows": 5948,
+      "selectedRows": 373,
+      "note": "重点、一般、青年全国批次条数已核对；其他类别仅覆盖所列附件。 未覆盖：",
       "sources": [
         {
-          "label": "n2018-0 · 正式立项（高校官网转载）",
-          "url": "https://tech.shou.edu.cn/_upload/article/files/4e/8d/40f303f04128af13368a03b401bb/497781ec-0e50-49ec-9023-7ac29a891b5f.xls"
+          "label": "annual-2016-2021 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693668"
         },
         {
-          "label": "n2018-1 · 正式立项（高校官网转载）",
-          "url": "https://tech.shou.edu.cn/_upload/article/files/4e/8d/40f303f04128af13368a03b401bb/c242b156-de62-457a-8744-f031f917997a.xls"
+          "label": "west-2018 · 高校官网正式立项存档",
+          "url": "https://site.cqrk.edu.cn/ewebeditor/uploadfile/2021/01/07/20210107151818061004.xls"
+        },
+        {
+          "label": "major-2016-2020 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693670"
+        },
+        {
+          "label": "later-2016-2020 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693664"
         }
       ]
     },
@@ -105,17 +127,25 @@
     {
       "year": 2019,
       "provider": "国社科",
-      "parsedRows": 4627,
-      "selectedRows": 181,
-      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "parsedRows": 6498,
+      "selectedRows": 417,
+      "note": "重点、一般、青年全国批次条数已核对；其他类别仅覆盖所列附件。 未覆盖：",
       "sources": [
         {
-          "label": "n2019-0 · 正式立项（高校官网转载）",
-          "url": "https://skc.sdut.edu.cn/_upload/article/files/17/94/2ef4a05240bfa593a4697b3c9671/aae8d24d-0624-4dd0-a5b6-61f66e18585f.xls"
+          "label": "annual-2016-2021 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693668"
         },
         {
-          "label": "n2019-1 · 正式立项（高校官网转载）",
-          "url": "https://skc.sdut.edu.cn/_upload/article/files/8a/5a/af0df08d4fd4bb64f23178b15068/bb67b430-f61a-487a-bf23-2a212bcdfcab.xls"
+          "label": "west-2019 · 高校官网正式立项存档",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/f2/23/b6038ca846958e52dbbe9d25a3fa/514cda9b-a605-4377-adee-e5079402fc19.xlsx"
+        },
+        {
+          "label": "major-2016-2020 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693670"
+        },
+        {
+          "label": "later-2016-2020 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693664"
         }
       ]
     },
@@ -135,17 +165,25 @@
     {
       "year": 2020,
       "provider": "国社科",
-      "parsedRows": 4625,
-      "selectedRows": 259,
-      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "parsedRows": 6480,
+      "selectedRows": 560,
+      "note": "重点、一般、青年全国批次条数已核对；其他类别仅覆盖所列附件。 未覆盖：",
       "sources": [
         {
-          "label": "n2020-0 · 正式立项（高校官网转载）",
-          "url": "https://skc.sdut.edu.cn/_upload/article/files/f1/1c/cd7bc4b1442b8bdfbb02c7ed11ef/9df6cdab-3c2e-4da7-87a8-c04dbdd28029.xls"
+          "label": "annual-2016-2021 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693668"
         },
         {
-          "label": "n2020-1 · 正式立项（高校官网转载）",
-          "url": "https://skc.sdut.edu.cn/_upload/article/files/aa/c2/8442ffb84e6389241862bdfc4bd2/c92b5f60-fe48-4adb-bdb4-f496ae987303.xls"
+          "label": "west-2020 · 高校官网正式立项存档",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/3d/a8/36eca4904099b5f441204851697d/9a9fdf00-b02b-49f7-af21-9b81cd2e49d2.xls"
+        },
+        {
+          "label": "major-2016-2020 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693670"
+        },
+        {
+          "label": "later-2016-2020 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693664"
         }
       ]
     },
@@ -165,17 +203,21 @@
     {
       "year": 2021,
       "provider": "国社科",
-      "parsedRows": 4650,
-      "selectedRows": 256,
-      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。 本次取得的是公示版本，未逐项比对最终名单。",
+      "parsedRows": 5489,
+      "selectedRows": 517,
+      "note": "重点、一般、青年全国批次条数已核对；其他类别仅覆盖所列附件。 未覆盖：后期资助",
       "sources": [
         {
-          "label": "n2021-0 · 公示名单，未逐项复核最终立项",
-          "url": "https://news.eol.cn/yaowen/202109/W020210903632632880978.xlsx"
+          "label": "annual-2016-2021 · 高校官网正式立项存档",
+          "url": "https://kjhz.zufedfc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=2122088115&wbfileid=16693668"
         },
         {
-          "label": "n2021-1 · 公示名单，未逐项复核最终立项",
-          "url": "https://news.eol.cn/yaowen/202109/W020210903632632904059.xlsx"
+          "label": "west-2021 · 高校官网正式立项存档",
+          "url": "https://skc.sdut.edu.cn/_upload/article/files/05/75/e8ad6ae0459d983bd19dd321732b/d2385da7-f3f8-4cbf-8a3a-c6e5652c84dd.xlsx"
+        },
+        {
+          "label": "major-2021 · 高校官网正式立项存档",
+          "url": "https://keyan.xafa.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1986870348&wbfileid=CEA77803C701931C55566528231B78FF"
         }
       ]
     },
@@ -195,13 +237,21 @@
     {
       "year": 2022,
       "provider": "国社科",
-      "parsedRows": 1127,
-      "selectedRows": 58,
-      "note": "仅青年项目；年度项目附件未能取得有效文件，未记为0项。",
+      "parsedRows": 5513,
+      "selectedRows": 479,
+      "note": "重点、一般、青年全国批次条数已核对；其他类别仅覆盖所列附件。 未覆盖：后期资助",
       "sources": [
         {
-          "label": "n2022-1 · 正式立项（高校官网转载）",
-          "url": "https://skc.sdut.edu.cn/_upload/article/files/18/70/db8d06814ea999cd8cbae5eda240/768c4e75-dd49-4e62-b170-e847d79d13be.xlsx"
+          "label": "annual-2022-2025 · 高校官网正式立项存档",
+          "url": "https://science.hnust.edu.cn/docs/2025-11/b7c7a519e299461dab7780db346cf326.xls"
+        },
+        {
+          "label": "west-2022 · 高校官网正式立项存档",
+          "url": "https://sfl.yxnu.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1678893561&wbfileid=FA625FD9206D9D66A9D1A27DBFDFBCB2"
+        },
+        {
+          "label": "major-2022 · 主管部门官网附件",
+          "url": "https://download.people.com.cn/dangwang/one16704862821.pdf"
         }
       ]
     },
@@ -221,17 +271,25 @@
     {
       "year": 2023,
       "provider": "国社科",
-      "parsedRows": 4790,
-      "selectedRows": 227,
-      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "parsedRows": 5685,
+      "selectedRows": 406,
+      "note": "重点、一般、青年全国批次条数已核对；其他类别仅覆盖所列附件。 未覆盖：后期资助",
       "sources": [
         {
-          "label": "n2023-0 · 正式立项（高校官网转载）",
-          "url": "https://myy.cueb.edu.cn/docs/2023-10/20231012201635563472.pdf"
+          "label": "annual-2022-2025 · 高校官网正式立项存档",
+          "url": "https://science.hnust.edu.cn/docs/2025-11/b7c7a519e299461dab7780db346cf326.xls"
         },
         {
-          "label": "n2023-1 · 正式立项（高校官网转载）",
-          "url": "https://myy.cueb.edu.cn/docs/2023-10/20231012201644137527.pdf"
+          "label": "west-2023 · 高校官网正式立项存档",
+          "url": "https://skc-443.webvpn.wzu.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1353748487&wbfileid=63F56806818681F895367FA96748ECFC"
+        },
+        {
+          "label": "major-2023 · 主管部门官网附件",
+          "url": "https://download.people.com.cn/yunying2/twentyfive17037243791.pdf"
+        },
+        {
+          "label": "special-2023 · 高校官网正式立项存档",
+          "url": "https://www.ynufe.edu.cn/__local/E/92/5E/943EAC109A021E5F838CFF7D219_4BD20CBA_230E9.pdf?e=.pdf"
         }
       ]
     },
@@ -251,21 +309,25 @@
     {
       "year": 2024,
       "provider": "国社科",
-      "parsedRows": 5138,
-      "selectedRows": 249,
-      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "parsedRows": 7251,
+      "selectedRows": 484,
+      "note": "重点、一般、青年全国批次条数已核对；其他类别仅覆盖所列附件。 未覆盖：",
       "sources": [
         {
-          "label": "n2024-0 · 正式立项（高校官网转载）",
-          "url": "https://skc.sdut.edu.cn/_upload/article/files/1e/e9/439802424b1ba7c3658daa5766db/920cf8cc-ed04-4f21-9ccb-5dafda43a664.pdf"
+          "label": "annual-2022-2025 · 高校官网正式立项存档",
+          "url": "https://science.hnust.edu.cn/docs/2025-11/b7c7a519e299461dab7780db346cf326.xls"
         },
         {
-          "label": "n2024-1 · 正式立项（高校官网转载）",
-          "url": "https://skc.sdut.edu.cn/_upload/article/files/1e/e9/439802424b1ba7c3658daa5766db/3b956080-be1e-4c84-a712-d0366e034369.pdf"
+          "label": "west-2024 · 主管部门官网附件",
+          "url": "https://download.people.com.cn/dangwang/one17289811711.pdf"
         },
         {
-          "label": "n2024-2 · 正式立项（高校官网转载）",
-          "url": "https://skc.sdut.edu.cn/_upload/article/files/1e/e9/439802424b1ba7c3658daa5766db/f77fe19f-817f-4029-8c8a-87bd188433cb.pdf"
+          "label": "major-2024 · 主管部门官网附件",
+          "url": "https://download.people.com.cn/dangwang/one17341460181.pdf"
+        },
+        {
+          "label": "later-2024 · 主管部门官网附件",
+          "url": "https://download.people.com.cn/dangwang/one17371044591.pdf"
         }
       ]
     },
@@ -285,21 +347,25 @@
     {
       "year": 2025,
       "provider": "国社科",
-      "parsedRows": 5254,
-      "selectedRows": 278,
-      "note": "所列附件范围内的题名筛选；不含重大、后期资助及全部专项。",
+      "parsedRows": 7432,
+      "selectedRows": 529,
+      "note": "重点、一般、青年全国批次条数已核对；其他类别仅覆盖所列附件。 未覆盖：",
       "sources": [
         {
-          "label": "n2025-0 · 正式立项（高校官网转载）",
-          "url": "https://skc.sdut.edu.cn/_upload/article/files/7e/a4/3e24d4d44b0989bc4fa813e69e88/0837282b-d47f-48d6-a885-7e8fa173cd67.pdf"
+          "label": "annual-2022-2025 · 高校官网正式立项存档",
+          "url": "https://science.hnust.edu.cn/docs/2025-11/b7c7a519e299461dab7780db346cf326.xls"
         },
         {
-          "label": "n2025-1 · 正式立项（高校官网转载）",
-          "url": "https://skc.sdut.edu.cn/_upload/article/files/7e/a4/3e24d4d44b0989bc4fa813e69e88/a71f5c30-d2dc-4a33-b570-ab2d524622c9.pdf"
+          "label": "west-2025 · 高校官网正式立项存档",
+          "url": "https://wgyxy.cqust.edu.cn/__local/6/90/79/58D3F63247B36D85F68CE47AD48_ED0DEFB0_78A4F.pdf"
         },
         {
-          "label": "n2025-2 · 正式立项（高校官网转载）",
-          "url": "https://skc.sdut.edu.cn/_upload/article/files/7e/a4/3e24d4d44b0989bc4fa813e69e88/eaa17ce6-8b51-41f6-a891-6134b56a89b5.pdf"
+          "label": "major-2025 · 主管部门官网附件",
+          "url": "https://download.people.com.cn/yunying4/sixteen17661409841.pdf"
+        },
+        {
+          "label": "later-2025 · 主管部门官网附件",
+          "url": "https://download.people.com.cn/yunying2/twentyfive17669924171.pdf"
         }
       ]
     },
@@ -313,6 +379,19 @@
         {
           "label": "m2025 · 正式立项",
           "url": "https://www.moe.gov.cn/s78/A13/tongzhi/202512/W020251202477371694907.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2026,
+      "provider": "国社科",
+      "parsedRows": 141,
+      "selectedRows": 12,
+      "note": "尚未取得可核实的本年度重点、一般、青年正式名单；仅统计取得的正式重大专项。 未覆盖：年度项目、西部项目、重大项目、后期资助",
+      "sources": [
+        {
+          "label": "special-2026 · 主管部门官网附件",
+          "url": "https://download.people.com.cn/yunying4/sixteen17828965511.pdf"
         }
       ]
     }

@@ -1,5 +1,7 @@
 # 普贤 · AI 互动与研究工作台
 
+2026-10-24：[国社科立项图谱](nssfc-projects.html) 上线。从 22 份官网来源文件、38 个年度批次的 60,578 条公开立项元数据中，筛入并去重 4,471 个领域相关正式项目。支持机构、主题、关键词、共现与可比时期分析，附逐条官网来源、名单定位、批次覆盖和下载。网站主理人介绍及联系方式已删除。
+
 2026-10-23：绿色首页与完整资源目录整合。首页为 `index.html`，`research-studio.html` 为同版入口，`classic.html` 保留此前资源主页。原站专题页、数据、图表及方法文档均保留。
 
 - 输入博士毕业设计、申请博士、方法学习、基金、保研或写作目标，得到阶段任务、交付物、检查标准及可复制的 AI 任务书。
@@ -34,11 +36,11 @@
 | [机构](institutions.html) | 91 个院校／机构／院系导航条目 | 部分仅核到学校主页；不是全部院校、招生目录或排名 |
 | [检索与数据](sources.html) | 40 个资源入口 | 公开入口不代表全文与微观数据可自由下载 |
 | [医保时间线](insurance-timeline.html) | 1998–2026 年 21 个国家级节点 | 成文、公布、生效分开，不是全部政策；2026 年医保法自 2027-01-01 施行 |
-| [项目](grants.html) | 3,413 条 2016—2025 年国社科、教育部题名候选 | 初筛／题名复筛，未逐项审读项目内容 |
+| [国社科立项图谱](nssfc-projects.html) / [项目总览](grants.html) | 4,471 个国社科正式立项领域项目；教育部目录独立保留 | 题名筛选，附机构、主题、热点和逐批来源；不是三领域全部项目 |
 
 Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cell 只有导航入口，没有已提供且确认属于 Cell 主刊的题录，不能称为完整 CNS 语料库。临床统计、AI 评价规范和图表表达单列方法参考。
 
-项目资料按年和来源列出覆盖。2016 国社科仅上海，2017 仅年度项目，2022 仅青年项目；部分为公示或无批准号存档。教育部为一般项目所列附件，不含全部专项。见 [年度覆盖](data/project-coverage.json) 与 [提取审计](data/project-extraction-audit.json)。不可据样本比较年度获批率或热点。
+国社科仅统计正式立项。2016—2025 年重点、一般、青年全国批次条数已核对，西部、重大、后期和专项按实际取得的正式附件公开覆盖；2026 年目前仅收录已核实的重大专项，年度公示不计入。教育部为原一般项目所列附件，独立保留其原状态。见 [完整说明与复现](docs/nssfc-data.md)、[来源覆盖](data/nssfc-coverage.json)、[分析报告](data/nssfc-analysis-report.md) 与 [提取审计](data/nssfc-extraction-audit.json)。机构频次不代表质量或获批率；主题比较只用覆盖一致的年度系列和全学科分母。
 
 ## 标题／摘要选刊
 
@@ -102,3 +104,7 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cel
 这些手册提炼既有任务中可复用的方法；不含原始对话、未发表项目和私人素材。第三方技能为明确标注的可选上游入口，不捆绑其软件、账号或生成额度。详情见[来源与能力边界](skills/references/visual-skill-sources.md)。本次原创脚本可生成效应图、简洁可编辑PPT底稿和有限结构检查，需另外进行视觉检查。
 
 可下载[data/figure-ppt-skills.zip](data/figure-ppt-skills.zip)，每份技能独立为SKILL.md目录，并含本次原创支持脚本与引用资料；Python脚本依赖matplotlib或python-pptx，不自动安装、不调用外部服务。
+
+## 国社科荟萃 Skills 与公众号宣传
+
+[独立技能说明](skills/nssfc-project-synthesis/SKILL.md) · [下载技能包](downloads/nssfc-project-synthesis.zip) · [公众号静态图文](nssfc-wechat.html) · [宣传长图](shots/nssfc-promo.png) · [横版封面](shots/nssfc-cover.png)。需要支持Skills、联网与Python的AI助手；新来源须核验，现有数据覆盖和缺口见立项图谱。

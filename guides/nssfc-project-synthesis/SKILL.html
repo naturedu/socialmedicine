@@ -1,0 +1,29 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>国社科正式立项荟萃与分析 · 普贤</title><link rel="stylesheet" href="../../guide.css"></head><body><header><a class="back" href="../../index.html#methods">← 方法工作台</a><a href="../../database-skills.html">🌱 数据库</a><a href="../../guides/method-map.html">🧭 逻辑地图</a><a href="../../skills/nssfc-project-synthesis/SKILL.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">先确定来源与口径</a></li>
+<li><a href="#_3">执行已有来源的荟萃与分析</a></li>
+<li><a href="#_4">解释和交付</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">国社科正式立项荟萃与分析</h1>
+<p>围绕健康中国建设，把用户指定年份、类别和领域的公开立项名单荟萃成可追溯的项目表与描述性分析，梳理医疗保障、卫生服务、公共卫生、老龄照护、心理健康和健康公平等研究布局。立项记录反映科研关注，评价建设成效还须结合实际健康与服务数据。官网公告、名单附件和覆盖缺口都要交付。</p>
+<h2 id="_2">先确定来源与口径</h2>
+<p>按用户需求检索全国哲学社会科学工作办公室官网 <a href="https://www.nopss.gov.cn/">https://www.nopss.gov.cn/</a> 的正式立项公告与附件；失效链接可用高校官网的同一正式名单存档。公示、拟立项、指南、申报和结项名单不进入正式立项主表。保留公告、附件URL、文件哈希、页码或表内行位置，不以搜索摘要代替名单核验。</p>
+<p>随包 <code>data/nssfc-source-files.json</code> 是截至2026-10-24核验的22份来源清单，可用于重建本次数据。2016—2025年度重点/一般/青年全国批次数量已核对；其他类别及2026仍有缺口。新一轮检索须检查新增公告，不能把随包快照称为最新或全量。</p>
+<h2 id="_3">执行已有来源的荟萃与分析</h2>
+<p>需要可联网并能运行Python的AI助手。先检查依赖；缺少时按用户环境允许的方式安装 <code>requirements.txt</code>。将以下路径替换为本技能、工作缓存与结果目录的真实位置。输出写到用户任务目录，保留技能原文件。</p>
+<pre><code class="language-text">python -m pip install -r &lt;技能目录&gt;/requirements.txt
+python &lt;技能目录&gt;/scripts/nssfc_extract.py --cache &lt;工作缓存目录&gt;
+python &lt;技能目录&gt;/scripts/build_nssfc.py --cache &lt;工作缓存目录&gt;/parsed --output &lt;结果目录&gt;
+</code></pre>
+<p>已有原始名单时可给提取命令加 <code>--offline</code>，文件按来源清单中的 <code>filename</code> 命名。下载校验失败时检查来源，不跳过哈希校验。新文件在核验正式状态、表结构与全国批次条数后，加入另存的来源清单，两个命令都用 <code>--manifest &lt;新清单&gt;</code>；<code>expected</code> 只填写有官方依据的批次数量。扫描件、登录、验证码或无法稳定提取的表格应另行处理并报告，不把失败记作零立项。</p>
+<h2 id="_4">解释和交付</h2>
+<ul>
+<li>原始项目表保留年份、批准号、题名、责任单位、负责人及来源定位。删除网站主理人介绍不等于删除名单中公开的项目负责人。</li>
+<li>默认筛选是题名词表规则；读取 <code>scripts/build_nssfc.py</code> 的 <code>HEALTH</code>、<code>PUBLIC</code>、<code>TOPICS</code>、<code>KEYWORDS</code> 后再按用户领域调整，记录规则和误检/漏检检查。泛指产业或市场“健康发展”不单独视为健康研究。</li>
+<li>批准号去重；无号按年份、系列、题名、单位和负责人组合去重。机构保留原层级，不擅自把学院、附属医院合并到大学。</li>
+<li>主题和关键词是受控词表标注，可以交叉，不是官方学科或官方关键词。热点为项目题名的描述性汇聚；不做效应量Meta分析，不推断申报成功率或研究结论。</li>
+<li>跨时期变化只比较批次完整且可比的项目系列，说明分母。默认2018—2020与2023—2025年度项目按每千项全国立项频次比较；来源改变后重新判断可比性。</li>
+</ul>
+<p>交付结果目录中的 <code>data/nssf-projects.csv</code>、JSON、分析HTML/Markdown、机构表、共现表、主题变化表、逐年覆盖、方法与提取审计；另附实际使用的来源清单。说明已覆盖和未覆盖的年份/类别；只报告实际提取并复核的数量。</p>
+<p>公开示例与复现说明：<a href="https://naturedu.github.io/socialmedicine/nssfc-projects.html">https://naturedu.github.io/socialmedicine/nssfc-projects.html</a> · <a href="https://github.com/naturedu/socialmedicine/blob/main/docs/nssfc-data.md">https://github.com/naturedu/socialmedicine/blob/main/docs/nssfc-data.md</a>。</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

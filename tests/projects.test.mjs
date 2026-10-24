@@ -4,11 +4,11 @@ import {readFile,access} from 'node:fs/promises';
 const root=new URL('../',import.meta.url),json=async path=>JSON.parse(await readFile(new URL(path,root),'utf8'));
 test('project records preserve years, provenance, public notice state and stable identities',async()=>{
  const rows=await json('data/health-projects.json');assert.ok(rows.length>3000);assert.equal(new Set(rows.map(r=>r.funder+'|'+r.id)).size,rows.length);
- for(const r of rows){assert.ok(+r.date>=2016&&+r.date<=2025);assert.ok(['国社科','教育部'].includes(r.funder));assert.ok(r.title.length>5);assert.match(r.source,/^https?:\/\//);assert.ok(r.locator);if(r.project_code)assert.ok(r.project_code.startsWith(r.date.slice(2)));if(r.status.includes('公示'))assert.equal(r.state,'公示／最终状态待核');}
+ for(const r of rows){assert.ok(+r.date>=2016&&+r.date<=2026);assert.ok(['国社科','教育部'].includes(r.funder));assert.ok(r.title.length>5);assert.match(r.source,/^https?:\/\//);assert.ok(r.locator);if(r.project_code)assert.ok(r.project_code.startsWith(r.date.slice(2)));if(r.status.includes('公示'))assert.equal(r.state,'公示／最终状态待核');}
  assert.equal((await json('data/nssf-projects.json')).length+(await json('data/moe-projects.json')).length,rows.length);
- const coverage=(await json('data/project-coverage.json')).coverage;assert.equal(coverage.length,20);for(const c of coverage)assert.equal(c.selectedRows,rows.filter(r=>r.date==c.year&&r.funder===c.provider).length);
- assert.match(coverage.find(c=>c.year===2016&&c.provider==='国社科').note,/仅上海/);
- assert.match(coverage.find(c=>c.year===2022&&c.provider==='国社科').note,/仅青年/);
+ const coverage=(await json('data/project-coverage.json')).coverage;assert.equal(coverage.length,21);for(const c of coverage)assert.equal(c.selectedRows,rows.filter(r=>r.date==c.year&&r.funder===c.provider).length);
+ assert.match(coverage.find(c=>c.year===2016&&c.provider==='国社科').note,/全国批次条数已核对/);
+ assert.match(coverage.find(c=>c.year===2026&&c.provider==='国社科').note,/尚未取得/);
 });
 test('removed datasets and links are absent from the published funding paths',async()=>{
  for(const p of ['data/grants.json','data/grants.csv','data/gates-grants.csv'])await assert.rejects(access(new URL(p,root)));
