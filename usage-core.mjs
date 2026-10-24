@@ -10,6 +10,8 @@ export function usageCsv(data){
  const s=summarizeUsage(data),scope=`${data.totals.started||'未开始'} 至 ${data.today}（Asia/Shanghai）`,rows=[['类型','项目','数量','单位','统计范围','数据更新时间']];
  const add=(type,label,n,unit='次',range=scope)=>rows.push([type,label,n,unit,range,data.updatedAt]);
  add('总计','页面访问',s.visits);add('总计','已记录按钮点击',s.clicks);add('Skill','打开',s.opens);add('Skill','下载点击',s.downloads);
+ if(data.downloadTotals)add('总计','全部下载点击',count(data.downloadTotals.total));
+ if(data.chatTotals)for(const [key,label]of Object.entries({questions:'提问',answered:'已回答',clarifications:'需要补充',unmatched:'未匹配',errors:'回答失败',followups:'追问',helpful:'有帮助',unhelpful:'还没解决',exports:'导出对话'}))add('科研对话',label,count(data.chatTotals[key]),'次',`${data.chatStarted||'2026-10-24'} 至 ${data.today}`);
  for(const p of data.pages||[])add('页面',p.label||p.page,count(p.count));
  for(const a of data.actions||[])add('功能',a.label||a.action,count(a.count));
  for(const k of data.skills||[]){add('Skill打开',k.label||k.id,count(k.opens));add('Skill下载点击',k.label||k.id,count(k.downloads));}

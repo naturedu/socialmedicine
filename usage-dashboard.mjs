@@ -1,16 +1,19 @@
-import {summarizeUsage,usageCsv} from './usage-core.mjs';
+import {summarizeUsage,usageCsv} from './usage-core.mjs?v=20261024chat1';
 const root=document.getElementById('usageDashboard');
 const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
 const number=n=>Number(n).toLocaleString('zh-CN');
 const time=value=>new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',dateStyle:'medium',timeStyle:'short'}).format(new Date(value));
 function table(headers,rows){const wrap=node('div',undefined,'table-scroll'),t=node('table',undefined,'summary-table'),head=node('thead'),tr=node('tr');headers.forEach(h=>tr.append(node('th',h)));head.append(tr);const body=node('tbody');for(const row of rows){const r=node('tr');row.forEach(value=>r.append(node('td',String(value))));body.append(r);}t.append(head,body);wrap.append(t);return wrap;}
-function save(name,text,mime){const u=URL.createObjectURL(new Blob([text],{type:mime})),a=node('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);}
+function save(name,text,mime){const u=URL.createObjectURL(new Blob([text],{type:mime})),a=node('a');a.href=u;a.download=name;a.click();window.puxianTrack?.('file_download');setTimeout(()=>URL.revokeObjectURL(u),1000);}
 if(root){
  const actions=node('div',undefined,'actions'),refresh=node('button','刷新统计','secondary'),csv=node('button','下载统计 CSV','secondary'),json=node('button','下载原始 JSON','text-button'),status=node('p','打开此页时读取最新公开统计。','micro'),content=node('div');
  refresh.type=csv.type=json.type='button';csv.disabled=json.disabled=true;status.setAttribute('role','status');actions.append(refresh,csv,json);root.append(actions,status,content);let snapshot,busy=false,loaded=false;
  async function load(){if(busy)return;loadInventory();busy=true;refresh.disabled=true;status.textContent='正在读取公开统计…';
   try{const r=await fetch('https://puxian-visit-statistics.greycarp257.chatgpt.site/api/stats',{credentials:'omit',cache:'no-store',signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error();const data=await r.json(),s=summarizeUsage(data);snapshot=data;loaded=true;content.replaceChildren();
    const metrics=node('div',undefined,'usage-metrics');for(const [label,value]of [['累计页面访问',s.visits],['已记录按钮点击',s.clicks],['Skill 打开',s.opens],['Skill 下载点击',s.downloads]]){const card=node('article',undefined,'surface');card.append(node('span',label,'micro'),node('strong',number(value)));metrics.append(card);}content.append(metrics);
+   content.append(node('h3','全部下载与科研对话'));
+   content.append(table(['记录项目','累计次数'],[['全部下载点击',data.downloadTotals?number(data.downloadTotals.total):'未接入'],...Object.entries({questions:'提问',answered:'已回答',clarifications:'需要补充信息',unmatched:'未匹配资料',errors:'回答失败',followups:'追问',helpful:'有帮助',unhelpful:'还没解决',exports:'导出对话'}).map(([key,label])=>[label,data.chatTotals?number(data.chatTotals[key]):'未接入'])]));
+   content.append(node('p','问答统计自 2026-10-24 启用。已回答表示已整理站内资料，不表示答案已通过专家核验；不保存问题和回答原文。下载包括已记录的单份 Skill、整包和其他文件下载点击，不代表下载完成。','note'));
    content.append(table(['可用统计范围','页面访问','已记录点击'],[['今天',s.today.visits,s.today.clicks],['近 7 天',s.week.visits,s.week.clicks],['近 30 天',s.month.visits,s.month.clicks]]));
    content.append(node('p',`每百次页面访问对应 ${s.perHundred===null?'—':s.perHundred.toFixed(1)} 次已记录操作。该比值可能超过 100，不是按按钮曝光计算的点击率，也不是访客转化率。`,'note'));
    content.append(node('h3','累计页面访问分布'),table(['页面','访问次数','访问占比'],(data.pages||[]).map(p=>[p.label||p.page,number(p.count),s.visits?(p.count/s.visits*100).toFixed(1)+'%':'—'])));
