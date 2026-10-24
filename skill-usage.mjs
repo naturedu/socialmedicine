@@ -63,7 +63,7 @@ window.addEventListener('click',event=>{
  const id=identify(a);if(id&&(a.hasAttribute('download')||a.pathname.endsWith('.md')||a.pathname.endsWith('.zip'))){event.preventDefault();event.stopImmediatePropagation();openSkill(id,a.href);}
 },{capture:true});
 function decorate(){
- for(const a of document.querySelectorAll('a[href]')){if(a.closest('.puxian-skill-dialog')||a.dataset.usageDecorated)continue;const id=identify(a);if(!id)continue;a.dataset.usageDecorated='true';const parent=a.closest('.actions')||a.parentElement;if(parent.querySelector(`[data-puxian-use="${id}"]`))continue;const b=node('button','豆包 / GPT 使用','usage-skill-button');b.type='button';b.dataset.puxianUse=id;parent.append(b);}
+ for(const a of document.querySelectorAll('a[href]')){if(a.closest('.puxian-skill-dialog')||a.dataset.usageDecorated)continue;const id=identify(a);if(!id)continue;a.dataset.usageDecorated='true';const parent=a.closest('.actions')||a.parentElement;if(parent.querySelector(`[data-puxian-use="${id}"]`))continue;const short=catalog[id].label.replace(/^Skill[:：]/,'').split(' · ')[0].split('（')[0].slice(0,14);const b=node('button','豆包/GPT · '+short,'usage-skill-button');b.type='button';b.dataset.puxianUse=id;parent.append(b);}
  const m=/\/guides\/([a-z0-9-]+)\.html$/.exec(location.pathname);if(m&&catalog[m[1]]&&!document.querySelector('header [data-puxian-use]')){const b=node('button','使用此 Skill','usage-skill-button');b.type='button';b.dataset.puxianUse=m[1];document.querySelector('body>header')?.append(b);}
 }
 decorate();let decorateTimer;new MutationObserver(()=>{clearTimeout(decorateTimer);decorateTimer=setTimeout(decorate,100);}).observe(document.body,{childList:true,subtree:true});
