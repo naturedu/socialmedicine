@@ -54,7 +54,7 @@ def build():
       dict(title='国自然经管与健康分析',summary='健康相关汇编条目的主题和机构分布，说明覆盖限制。',url='nsfc-health.html'),
       dict(title='机器学习预测模型简明教程',summary='数据划分、预处理、模型比较、校准、SHAP与报告。',url='prediction-models.html')]
     add('summary-pages','专题分析与学习网页','专题','grants.html',summary_pages,'HTML')
-    for rec,page in zip(records[-len(summary_pages):],summary_pages):rec['url']=page['url'];rec['summary']=page['summary'];rec['source']=page['url']
+    for rec,page in zip(records[-len(summary_pages):],summary_pages):rec['url']=page['url'];rec['summary']=page['summary'];rec['source']=page['url'];rec['kind']='方法' if page['url']=='prediction-models.html' else '项目'
     legacy=read(R/'data/studio-legacy.json')
     for key,title,kind,page in [
       ('DATA_SOURCES','原站25个数据库入口','数据','classic.html#datasources'),
