@@ -1,6 +1,6 @@
 # 盖茨基金、CNS 与《管理世界》公开主题库
 
-[交互阅读与筛选](https://naturedu.github.io/socialmedicine/topic-analysis.html) · [公开索引](https://naturedu.github.io/socialmedicine/data/public-topic-records.json) · [分析结果](https://naturedu.github.io/socialmedicine/data/public-topic-analysis.json)
+[盖茨基金项目](https://naturedu.github.io/socialmedicine/gates-grants.html) · [CNS与管理世界](https://naturedu.github.io/socialmedicine/topic-analysis.html) · [公开索引](https://naturedu.github.io/socialmedicine/data/public-topic-records.json) · [分析结果](https://naturedu.github.io/socialmedicine/data/public-topic-analysis.json)
 
 ## 收录范围
 

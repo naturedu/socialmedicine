@@ -24,7 +24,7 @@ test('public exports and source links reject formula and script injection',()=>{
 test('chat routes these public collections to grounded analysis without hijacking writing',()=>{
  assert.equal(chooseIntent('盖茨基金有哪些主题？').kind,'publicTopics');assert.equal(chooseIntent('管理世界文章帮我润色').kind,'writing');
  for(const q of ['盖茨基金有哪些主题？','CNS的主题','管理世界研究主题']){
-  const r=makeReply(q,{}, {publicTopics,publicAnalysis});assert.equal(r.status,'answered');assert.ok(r.sources[0].url.startsWith('topic-analysis.html#'));assert.ok(r.sections[1].items.length);
+  const r=makeReply(q,{}, {publicTopics,publicAnalysis});assert.equal(r.status,'answered');assert.ok(r.sources[0].url=== 'gates-grants.html'||r.sources[0].url.startsWith('topic-analysis.html#'));assert.ok(r.sections[1].items.length);
  }
  assert.equal(makeReply('盖茨基金有哪些主题？',{},{}).status,'clarify');
 });

@@ -36,6 +36,11 @@ def build():
     ]
     records=[];collections=[]
     def add(key,title,kind,page,rows,source):
+        if key=='public-topic-records':
+            public=rows['records']
+            add('gates-public','盖茨基金公开项目','项目','gates-grants.html',[r for r in public if r['collection']=='gates'],source)
+            add('journal-topics','CNS与管理世界文献主题','文献','topic-analysis.html',[r for r in public if r['collection']!='gates'],source)
+            return
         if isinstance(rows,dict):
             candidates=[rows['papers']] if isinstance(rows.get('papers'),list) else [v for v in rows.values() if isinstance(v,list)]
             rows=max(candidates,key=len) if candidates else [rows]
@@ -45,8 +50,8 @@ def build():
             name=next((str(x[k]) for k in ['title','name','title_zh','chinese_title','标题','paper_title'] if x.get(k)),key+' '+str(i+1))
             summary=next((str(x[k]) for k in ['use','description','desc','overview','abstract_zh','abstract','scope','core','text','content','focus','supports'] if x.get(k)),'')
             url='guides/'+x['guide']+'.html' if key=='database-skills' else page
-            if key=='public-topic-records':
-                url=page+'#'+x['collection']
+            if key in ('gates-public','journal-topics'):
+                url=page if key=='gates-public' else page+'#'+x['collection']
                 summary=' · '.join(filter(None,[x.get('primaryTopic'),x.get('titleZh'),x.get('journal'),x.get('organization')]))
             records.append(dict(id=key+':'+str(x.get('id',i+1)),collection=key,collection_title=title,kind=kind,title=name,summary=summary[:650],url=url,source=source,details=x))
     for key,title,kind,page in specs:

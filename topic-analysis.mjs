@@ -15,9 +15,9 @@ export function summarizeRecords(rows){
 }
 export function csvCell(value){let s=Array.isArray(value)?value.join('; '):String(value??'');if(/^[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';}
 
-if(typeof document!=='undefined'){
+if(typeof document!=='undefined'&&(document.body.dataset.topicCollection==='gates'||location.hash!=='#gates')){
  const $=id=>document.getElementById(id),node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
- const state={collection:['gates','cns','management'].includes(location.hash.slice(1))?location.hash.slice(1):'gates',subset:'',year:'',topic:'',query:'',page:1};
+ const state={collection:document.body.dataset.topicCollection||(['cns','management'].includes(location.hash.slice(1))?location.hash.slice(1):'cns'),subset:'',year:'',topic:'',query:'',page:1};
  let records=[],current=[];const pageSize=20;
  const options=(element,items,all)=>{element.replaceChildren(new Option(all,''),...items.map(x=>new Option(x,x)));};
  function selectCollection(key){state.collection=key;state.subset=state.year=state.topic=state.query='';state.page=1;$('query').value='';history.replaceState(null,'','#'+key);document.querySelectorAll('[data-collection]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.collection===key)));const rows=records.filter(r=>r.collection===key);const subsets=key==='gates'?[...new Set(rows.flatMap(r=>r.portfolios))]:key==='cns'?['主刊','相关期刊',...new Set(rows.map(r=>r.journal))]:['社医卫管直接相关','管理与经济学参照','书评线索'];options($('subset'),subsets,'全部资料范围');options($('year'),[...new Set(rows.map(r=>String(r.year)))].sort().reverse(),'全部年份');options($('topic'),[...new Set(rows.map(r=>r.primaryTopic))].sort((a,b)=>a.localeCompare(b,'zh')),'全部主题');$('collectionTitle').textContent=COLLECTIONS[key].title;$('scopeNote').textContent=COLLECTIONS[key].note;render();}
@@ -36,3 +36,5 @@ if(typeof document!=='undefined'){
  $('download').onclick=()=>{const keys=['id','collection','title','titleZh','journal','year','authors','doi','organization','country','amountUSD','primaryTopic','topics','analysisEligible','sourceUrl','verification'];const text='\uFEFF'+[keys.map(csvCell).join(','),...current.map(r=>keys.map(k=>csvCell(r[k])).join(','))].join('\r\n');const u=URL.createObjectURL(new Blob([text],{type:'text/csv;charset=utf-8'})),a=node('a');a.href=u;a.download='public-topics-'+state.collection+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);};
  fetch('data/public-topic-records.json').then(r=>{if(!r.ok)throw new Error('读取资料失败');return r.json();}).then(data=>{records=data.records;$('loadStatus').hidden=true;$('content').hidden=false;selectCollection(state.collection);}).catch(()=>{$('loadStatus').textContent='资料暂时未能加载。请通过网站或本地 HTTP 预览打开，再刷新重试。';});
 }
+
+else if(typeof document!=='undefined'){location.replace(new URL('gates-grants.html',location.href));}
