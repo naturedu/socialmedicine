@@ -9,6 +9,8 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 
 ## 先按任务选入口
 
+- **盖茨基金、CNS 与《管理世界》主题分析**：读[公开主题库](references/public-topics.md)。按来源集合、主刊/相关期刊和书评分开统计；公开题名与出处保留，私人材料排除。
+
 - **方法选择和分析代码**：读 [89 条方法手册](methods-89.md)，复杂设计再查 [进阶方法与原始文献](references/advanced-methods.md)。DID、DDD、ITS、卫生经济、Markov、DCE、机器学习、Meta、定性/SEM 等专题保留在本目录各 `*-skill.md`。先确定估计对象、数据结构和识别假设，再选代码。
 - **检索、题录核验和图片整理**：读 [证据与语料工作流](references/evidence-workflow.md)。出版者正式栏目与数据库通用文献类型不能混用；纳入、排除、待核分开。
 - **关键词、时间演变、机构作者及聚类/耦合**：读 [文献计量口径](references/bibliometrics.md)。需要确定性计算时使用 `scripts/coupling.py`，不把网络结构解释为因果或研究质量。
@@ -55,7 +57,7 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 
 范围仅为社会医学与卫生事业管理及其必要方法参考。项目资料只在网页呈现汇总：国社科4,471项领域相关正式立项、教育部1,577条领域候选、国自然1,934条经管与健康相关汇编。三类资料独立说明覆盖与状态；不发布逐项名单、编号、人员、数据文件或资料包。
 
-当前目录保留原有12份完整工具手册，完整Skill书架共58份；集中索引89个方法与288段教学代码，另有进阶方法与耦合脚本。文献库包含已有 CSSCI 题录、Nature/Science 书单、Nature Medicine 与相关数字医学资料以及 JAMA 图表文献。Cell 已列入期刊入口，但没有已提供且确认属于 Cell 主刊的题录，不能虚报为完整 CNS 语料。
+当前目录保留原有12份完整工具手册，完整Skill书架共58份；集中索引89个方法与288段教学代码，另有进阶方法与耦合脚本。文献库包含已有 CSSCI 题录、Nature/Science 书单、Nature Medicine 与相关数字医学资料以及 JAMA 图表文献。新增主题库收录 CNS 主刊 55 条（含 Cell 3 条）与相关期刊 10 条，并收录《管理世界》36 条公开题录；均为选定样本，不代表完整期刊语料。
 
 期刊和院校目录属于导航索引，不是排名、完整学科普查或招生承诺。国社科检索范围2016—2026年；2016—2025年度重点、一般、青年全国批次条数已核对，2026仅计已核实的正式重大专项，其他系列仍有覆盖缺口。官网、附件、定位与逐年覆盖见网站nssfc-projects.html。
 
@@ -63,7 +65,7 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 
 ## 国社科正式立项荟萃与分析
 
-项目资料仅保留[国社科主题分析](https://naturedu.github.io/socialmedicine/nssfc-projects.html)、[教育部简析](https://naturedu.github.io/socialmedicine/grants.html#moe)与[国自然经管健康分析](https://naturedu.github.io/socialmedicine/nsfc-health.html)。原始资料和提取结果仅在本地保存，不写入公开索引、前端数据或发布附件。
+国社科、教育部和国自然项目资料保留[国社科主题分析](https://naturedu.github.io/socialmedicine/nssfc-projects.html)、[教育部简析](https://naturedu.github.io/socialmedicine/grants.html#moe)与[国自然经管健康分析](https://naturedu.github.io/socialmedicine/nsfc-health.html)。原始资料和提取结果仅在本地保存，不写入公开索引、前端数据或发布附件。
 
 ## 政策主题与文本研究
 
@@ -115,3 +117,5 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 ## 网页分析与教程的发布边界
 
 基金资料仅保留汇总 HTML，不提供名单、编号、姓名、原始文件或打包数据；不将已撤下的明细重新生成到公共仓库、搜索索引或 Release。机器学习新增内容见[预测模型简明教程](https://naturedu.github.io/socialmedicine/prediction-models.html)，仅作方法解读，不上传课程包、模型文件或个体记录。
+
+盖茨基金另按最新公开范围要求保留 1,455 个去重资助 ID 与公开用途、机构、承诺金额；详见[公开主题库](references/public-topics.md)。这不改变其他三类基金的汇总展示方式。

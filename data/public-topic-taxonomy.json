@@ -1,0 +1,375 @@
+{
+  "version": "2026-10-24",
+  "health": [
+    {
+      "name": "卫生筹资、医保与经济评价",
+      "terms": [
+        "health economics",
+        "health financing",
+        "health insurance",
+        "cost-effectiveness",
+        "cost effectiveness",
+        "health expenditure",
+        "health spending",
+        "universal health coverage",
+        "financial protection",
+        "医保",
+        "卫生筹资",
+        "经济评价"
+      ]
+    },
+    {
+      "name": "卫生服务与体系建设",
+      "terms": [
+        "health system",
+        "health systems",
+        "health services",
+        "health service",
+        "primary care",
+        "primary health care",
+        "healthcare delivery",
+        "health care delivery",
+        "health sector",
+        "hospital",
+        "hospitals",
+        "health workforce",
+        "卫生服务",
+        "医疗卫生",
+        "医疗体系"
+      ]
+    },
+    {
+      "name": "疫苗接种与服务可及性",
+      "terms": [
+        "vaccination",
+        "vaccinations",
+        "vaccine",
+        "vaccines",
+        "immunization",
+        "immunisation",
+        "疫苗",
+        "免疫",
+        "接种"
+      ]
+    },
+    {
+      "name": "传染病防控与公共卫生干预",
+      "terms": [
+        "tuberculosis",
+        "hiv",
+        "malaria",
+        "covid-19",
+        "pandemic",
+        "epidemic",
+        "epidemics",
+        "non-pharmaceutical",
+        "anti-contagion",
+        "infectious",
+        "polio",
+        "结核",
+        "艾滋",
+        "传染病",
+        "mpxv",
+        "infection",
+        "coronavirus",
+        "mask",
+        "masks"
+      ]
+    },
+    {
+      "name": "母婴、儿童与生殖健康",
+      "terms": [
+        "maternal",
+        "newborn",
+        "neonatal",
+        "child",
+        "children",
+        "childhood",
+        "family planning",
+        "reproductive",
+        "contraceptive",
+        "contraception",
+        "妇幼",
+        "生殖健康",
+        "儿童"
+      ]
+    },
+    {
+      "name": "营养、食品与代谢健康",
+      "terms": [
+        "nutrition",
+        "nutritional",
+        "nutritive",
+        "dietary",
+        "diets",
+        "glycemic",
+        "glucose",
+        "growth failure",
+        "food",
+        "营养",
+        "食品",
+        "sugar",
+        "chronic disease"
+      ]
+    },
+    {
+      "name": "数字健康、AI与测量方法",
+      "terms": [
+        "artificial intelligence",
+        "deep learning",
+        "machine learning",
+        "digital health",
+        "algorithm",
+        "algorithms",
+        "electronic health",
+        "health data",
+        "measurement",
+        "covid-19 app",
+        "人工智能",
+        "数字健康",
+        "测量",
+        "large language model",
+        "large language models",
+        "llm",
+        "llm-assisted",
+        "ai",
+        "clinical prediction"
+      ]
+    },
+    {
+      "name": "药品研发、监管与供应",
+      "terms": [
+        "antibiotic",
+        "antibiotics",
+        "drug",
+        "drugs",
+        "pharmaceutical",
+        "medicines",
+        "regulatory",
+        "prequalification",
+        "pre-qualification",
+        "药品",
+        "药物",
+        "监管"
+      ]
+    },
+    {
+      "name": "健康公平与社会决定因素",
+      "terms": [
+        "inequality",
+        "inequalities",
+        "inequities",
+        "equity",
+        "poverty",
+        "socioeconomic",
+        "social networks",
+        "gender",
+        "women",
+        "girls",
+        "教育",
+        "公平",
+        "贫困",
+        "mental health",
+        "social contagion"
+      ]
+    },
+    {
+      "name": "全球健康治理与政策合作",
+      "terms": [
+        "global health",
+        "health policy",
+        "policy",
+        "policies",
+        "governance",
+        "advocacy",
+        "sustainable development",
+        "development assistance",
+        "全球卫生",
+        "全球健康",
+        "卫生治理",
+        "政策"
+      ]
+    },
+    {
+      "name": "环境、气候与水卫生",
+      "terms": [
+        "climate",
+        "temperature",
+        "sanitation",
+        "water",
+        "pollution",
+        "环境",
+        "气候",
+        "卫生设施",
+        "pesticide",
+        "pesticides",
+        "cyclones",
+        "coal",
+        "exposomics"
+      ]
+    },
+    {
+      "name": "行为干预、传播与能力建设",
+      "terms": [
+        "nudge",
+        "nudges",
+        "reminders",
+        "incentives",
+        "behavior",
+        "behaviour",
+        "communication",
+        "training",
+        "capacity",
+        "education",
+        "conference",
+        "congress",
+        "传播",
+        "培训",
+        "人才",
+        "behavioral",
+        "behavioural",
+        "traffic safety"
+      ]
+    },
+    {
+      "name": "一般慈善与跨领域发展",
+      "terms": [
+        "community engagement",
+        "agriculture",
+        "agricultural",
+        "financial services",
+        "museum",
+        "cultural",
+        "operating support",
+        "community",
+        "charitable"
+      ]
+    }
+  ],
+  "management": [
+    {
+      "name": "医疗服务、医保与药品政策",
+      "terms": [
+        "医疗",
+        "医保",
+        "药品",
+        "分级诊疗",
+        "医院",
+        "处方"
+      ]
+    },
+    {
+      "name": "社会保障与劳动就业",
+      "terms": [
+        "社保",
+        "社会保险",
+        "养老保险",
+        "缴费",
+        "就业",
+        "工资",
+        "劳动力",
+        "人力资源"
+      ]
+    },
+    {
+      "name": "企业创新与组织机制",
+      "terms": [
+        "专精特新",
+        "技术追赶",
+        "突破性创新",
+        "组织架构",
+        "共链行动",
+        "竞合",
+        "关键核心技术",
+        "扩展适应"
+      ]
+    },
+    {
+      "name": "数字经济、数据与平台治理",
+      "terms": [
+        "数字",
+        "数据",
+        "平台",
+        "大模型",
+        "大语言模型",
+        "金融科技"
+      ]
+    },
+    {
+      "name": "财政税收与政策激励",
+      "terms": [
+        "税收",
+        "减税",
+        "预提税",
+        "税基",
+        "财政压力",
+        "数据财政",
+        "积极财政",
+        "财政政策"
+      ]
+    },
+    {
+      "name": "金融市场、开放与风险",
+      "terms": [
+        "金融",
+        "银行",
+        "风险承担",
+        "资本市场",
+        "注册制",
+        "核准制",
+        "债券",
+        "汇率",
+        "计价货币",
+        "资本账户"
+      ]
+    },
+    {
+      "name": "国际贸易与产业结构",
+      "terms": [
+        "国际贸易",
+        "贸易开放",
+        "FTA",
+        "价值链",
+        "跨境电商",
+        "出海",
+        "产业结构",
+        "生产结构",
+        "贸易壁垒"
+      ]
+    },
+    {
+      "name": "消费需求与市场可达性",
+      "terms": [
+        "居民消费",
+        "广延边际",
+        "集约边际",
+        "市场可达",
+        "消费提振",
+        "低碳消费"
+      ]
+    },
+    {
+      "name": "乡村治理与区域发展",
+      "terms": [
+        "乡村",
+        "旅游",
+        "脱贫",
+        "村寨",
+        "区域",
+        "粤港澳",
+        "文化产业",
+        "集体行动"
+      ]
+    },
+    {
+      "name": "环境资源与可持续发展",
+      "terms": [
+        "低碳",
+        "矿产",
+        "环境整治",
+        "可持续发展",
+        "绿色"
+      ]
+    }
+  ]
+}

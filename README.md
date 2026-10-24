@@ -1,5 +1,13 @@
 # 普贤 · AI 互动与研究工作台
 
+## 公开资料主题分析与常用入口
+
+[盖茨基金 / CNS / 管理世界主题分析](topic-analysis.html)：1,455 条去重公开资助、65 条 CNS 主刊及相关期刊题录、36 条《管理世界》题录。保留公开题名、作者、机构及出处，使用字段白名单排除私人信息。7 条书评线索单列；规则分类与核验深度可查。详见[资料口径](skills/references/public-topics.md)。
+
+主页顺序改为「科研问答 → 写作与期刊 → AI 检测与学术润色」，提问框下方同步添加快捷入口。
+
+复算：`python scripts/build_public_topics.py`；专题网页、技能资料与全部资料柜共同使用这份公开索引。
+
 ## Skill 安装包、下载记录与方法出处
 
 [下载与记录页面](https://naturedu.github.io/socialmedicine/skill-downloads.html) · [研究 Skill 阅读页](guides/socialmedicineskills.html) · [独立下载记录工具](https://github.com/naturedu/socialmedicine/releases/latest/download/skill-download-stats.zip) · [89个方法的原始论文与官方来源](https://naturedu.github.io/socialmedicine/method-sources.html)
@@ -57,7 +65,7 @@ GitHub 自动累计附件下载计数，网页打开或刷新时从公开 API �
 | [医保时间线](insurance-timeline.html) | 1998–2026 年 21 个国家级节点 | 成文、公布、生效分开，不是全部政策；2026 年医保法自 2027-01-01 施行 |
 | [国社科立项图谱](nssfc-projects.html) / [项目总览](grants.html) | 4,471 个国社科正式立项领域项目；教育部目录独立保留 | 题名筛选后的机构与主题汇总，网页说明覆盖范围；不是三领域全部项目 |
 
-Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cell 只有导航入口，没有已提供且确认属于 Cell 主刊的题录，不能称为完整 CNS 语料库。临床统计、AI 评价规范和图表表达单列方法参考。
+Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。独立主题库补入 Cell 主刊 3 条公开题录，合计 CNS 主刊 55 条、相关期刊 10 条；不称为完整 CNS 语料库。临床统计、AI 评价规范和图表表达单列方法参考。
 
 国社科仅统计正式立项。2016—2025 年重点、一般、青年全国批次条数已核对，西部、重大、后期和专项按实际取得的正式附件公开覆盖；2026 年目前仅收录已核实的重大专项，年度公示不计入。教育部为原一般项目所列附件，独立保留其原状态。见[国社科主题分析](nssfc-projects.html)和[教育部简析](grants.html#moe)。机构频次不代表质量或获批率；主题比较只用覆盖一致的年度系列和全学科分母。
 

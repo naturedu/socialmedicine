@@ -15,3 +15,7 @@
 大表使用 JSON/CSV 按条件检索，输出总命中和可复查 ID；页面分页不改变实际纳入数量。项目下载和外部来源回访需保持来源与日期。
 
 项目仅提供 HTML 汇总分析：`grants.html`、`nssfc-projects.html`、`nsfc-health.html`。这些资料不再提供逐项明细或数据文件。机器学习阅读页为 `prediction-models.html`。
+
+## 公开主题库
+
+`public-topic-records.json` 保存盖茨基金、CNS 与《管理世界》的公开条目；`public-topic-analysis.json` 为主题统计，`public-topic-taxonomy.json` 为分类词表。字段采用白名单，书评和主刊/相关期刊分开统计，详见[公开主题口径](public-topics.md)。

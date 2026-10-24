@@ -7,7 +7,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOGUES = ["methods", "code-library", "tools", "library", "figures", "institutions", "journals",
-              "sources", "insurance-timeline", "method-sources", "method-authorities", "database-skills", "database-sources", "visual-skills"]
+              "sources", "insurance-timeline", "method-sources", "method-authorities", "database-skills", "database-sources", "visual-skills",
+              "public-topic-records", "public-topic-analysis", "public-topic-taxonomy"]
 EXTENSIONS = {".md", ".py", ".R", ".do", ".json", ".txt", ".yaml", ".yml"}
 
 

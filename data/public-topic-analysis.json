@@ -1,0 +1,1052 @@
+{
+  "updated": "2026-10-24",
+  "method": "公开题名／项目用途与关键词的规则编码；标题命中权重3、关键词权重1；同分按公开词表顺序。一个互斥主主题用于构成统计，多标签仅辅助检索。",
+  "limits": [
+    "统计分母为本站收录样本，不代表全球资助全库或期刊全部发文。",
+    "CNS主刊与相关期刊分开；Cell条目为方法参照，不补造卫生管理研究。",
+    "管理世界书评线索保留检索，但不计入默认主题构成；正式栏目仍须回访原刊。",
+    "2026年是不完整年度，早期年份也有选择性覆盖；不能由频次变化推断学科趋势。",
+    "资助金额为美元承诺额；受资助机构所在地不等于服务地，不代表拨款或成效。"
+  ],
+  "collections": {
+    "gates": {
+      "total": 1455,
+      "analyzed": 1455,
+      "excludedBookReviews": 0,
+      "primaryTopics": [
+        {
+          "name": "卫生服务与体系建设",
+          "count": 302,
+          "percent": 20.8,
+          "exampleIds": [
+            "INV-085186",
+            "INV-090638",
+            "INV-097984"
+          ]
+        },
+        {
+          "name": "疫苗接种与服务可及性",
+          "count": 302,
+          "percent": 20.8,
+          "exampleIds": [
+            "INV-097117",
+            "INV-097155",
+            "INV-097362"
+          ]
+        },
+        {
+          "name": "全球健康治理与政策合作",
+          "count": 240,
+          "percent": 16.5,
+          "exampleIds": [
+            "INV-101164",
+            "INV-101405",
+            "INV-101442"
+          ]
+        },
+        {
+          "name": "传染病防控与公共卫生干预",
+          "count": 165,
+          "percent": 11.3,
+          "exampleIds": [
+            "INV-093232",
+            "INV-095387",
+            "INV-098449"
+          ]
+        },
+        {
+          "name": "母婴、儿童与生殖健康",
+          "count": 121,
+          "percent": 8.3,
+          "exampleIds": [
+            "INV-086665",
+            "INV-090376",
+            "INV-094745"
+          ]
+        },
+        {
+          "name": "卫生筹资、医保与经济评价",
+          "count": 66,
+          "percent": 4.5,
+          "exampleIds": [
+            "INV-099615",
+            "INV-104530",
+            "INV-088783"
+          ]
+        },
+        {
+          "name": "健康公平与社会决定因素",
+          "count": 62,
+          "percent": 4.3,
+          "exampleIds": [
+            "INV-102087",
+            "INV-102206",
+            "INV-103130"
+          ]
+        },
+        {
+          "name": "一般慈善与跨领域发展",
+          "count": 42,
+          "percent": 2.9,
+          "exampleIds": [
+            "INV-104384",
+            "INV-105285",
+            "INV-079811"
+          ]
+        },
+        {
+          "name": "其他／待人工复核",
+          "count": 37,
+          "percent": 2.5,
+          "exampleIds": [
+            "INV-101712",
+            "INV-102208",
+            "INV-071870"
+          ]
+        },
+        {
+          "name": "环境、气候与水卫生",
+          "count": 31,
+          "percent": 2.1,
+          "exampleIds": [
+            "INV-091728",
+            "INV-091729",
+            "INV-074327"
+          ]
+        },
+        {
+          "name": "药品研发、监管与供应",
+          "count": 25,
+          "percent": 1.7,
+          "exampleIds": [
+            "INV-065938",
+            "INV-074943",
+            "INV-061003"
+          ]
+        },
+        {
+          "name": "行为干预、传播与能力建设",
+          "count": 24,
+          "percent": 1.6,
+          "exampleIds": [
+            "INV-108217",
+            "INV-110657",
+            "INV-061417"
+          ]
+        },
+        {
+          "name": "数字健康、AI与测量方法",
+          "count": 22,
+          "percent": 1.5,
+          "exampleIds": [
+            "INV-100150",
+            "INV-100225",
+            "INV-110255"
+          ]
+        },
+        {
+          "name": "营养、食品与代谢健康",
+          "count": 16,
+          "percent": 1.1,
+          "exampleIds": [
+            "INV-092181",
+            "INV-092446",
+            "INV-059110"
+          ]
+        }
+      ],
+      "yearCounts": {
+        "1999": 1,
+        "2000": 3,
+        "2001": 4,
+        "2002": 4,
+        "2003": 4,
+        "2004": 2,
+        "2005": 5,
+        "2006": 5,
+        "2007": 19,
+        "2008": 20,
+        "2009": 18,
+        "2010": 16,
+        "2011": 17,
+        "2012": 18,
+        "2013": 32,
+        "2014": 42,
+        "2015": 72,
+        "2016": 81,
+        "2017": 90,
+        "2018": 102,
+        "2019": 115,
+        "2020": 118,
+        "2021": 84,
+        "2022": 85,
+        "2023": 97,
+        "2024": 141,
+        "2025": 140,
+        "2026": 120
+      },
+      "journals": {},
+      "amountUSD": 4126520870
+    },
+    "cns": {
+      "total": 65,
+      "analyzed": 65,
+      "excludedBookReviews": 0,
+      "primaryTopics": [
+        {
+          "name": "传染病防控与公共卫生干预",
+          "count": 26,
+          "percent": 40.0,
+          "exampleIds": [
+            "CNS-5eb3e84190f9",
+            "CNS-aa6bd6c36bf6",
+            "CNS-f585ed448500"
+          ]
+        },
+        {
+          "name": "数字健康、AI与测量方法",
+          "count": 10,
+          "percent": 15.4,
+          "exampleIds": [
+            "CNS-2b1c48cbe44e",
+            "CNS-426f519629f7",
+            "CNS-b1b01f28488a"
+          ]
+        },
+        {
+          "name": "疫苗接种与服务可及性",
+          "count": 9,
+          "percent": 13.8,
+          "exampleIds": [
+            "CNS-0641d1fde311",
+            "CNS-30e798267b11",
+            "CNS-852787f4372e"
+          ]
+        },
+        {
+          "name": "环境、气候与水卫生",
+          "count": 8,
+          "percent": 12.3,
+          "exampleIds": [
+            "CNS-0bb84aa3bd2f",
+            "CNS-c2a42da4fe61",
+            "CNS-155dfff768d5"
+          ]
+        },
+        {
+          "name": "健康公平与社会决定因素",
+          "count": 4,
+          "percent": 6.2,
+          "exampleIds": [
+            "CNS-714dbc8882e8",
+            "CNS-d62c67c55963",
+            "CNS-f9ebd3ecd3a9"
+          ]
+        },
+        {
+          "name": "母婴、儿童与生殖健康",
+          "count": 3,
+          "percent": 4.6,
+          "exampleIds": [
+            "CNS-81d2c49e94d6",
+            "CNS-76a58deb64ec",
+            "CNS-a1242d52e9f8"
+          ]
+        },
+        {
+          "name": "营养、食品与代谢健康",
+          "count": 3,
+          "percent": 4.6,
+          "exampleIds": [
+            "CNS-950fcf23c21b",
+            "CNS-7ab14c2812b6",
+            "CNS-2202db8592c1"
+          ]
+        },
+        {
+          "name": "行为干预、传播与能力建设",
+          "count": 2,
+          "percent": 3.1,
+          "exampleIds": [
+            "CNS-90ddbf3cea8c",
+            "CNS-d60151449479"
+          ]
+        }
+      ],
+      "yearCounts": {
+        "2015": 1,
+        "2018": 2,
+        "2019": 2,
+        "2020": 16,
+        "2021": 8,
+        "2022": 6,
+        "2023": 2,
+        "2024": 11,
+        "2025": 5,
+        "2026": 12
+      },
+      "journals": {
+        "Nature Health": 4,
+        "npj Digital Medicine": 2,
+        "Nature": 21,
+        "Science": 31,
+        "Nature Medicine": 3,
+        "Science Advances": 1,
+        "Cell": 3
+      },
+      "amountUSD": null
+    },
+    "management": {
+      "total": 36,
+      "analyzed": 29,
+      "excludedBookReviews": 7,
+      "primaryTopics": [
+        {
+          "name": "金融市场、开放与风险",
+          "count": 6,
+          "percent": 20.7,
+          "exampleIds": [
+            "MW-0cbee6ceed69",
+            "MW-85b5b91f3de1",
+            "MW-c58e61439b8b"
+          ]
+        },
+        {
+          "name": "企业创新与组织机制",
+          "count": 6,
+          "percent": 20.7,
+          "exampleIds": [
+            "MW-294ff9f84234",
+            "MW-3087f775176a",
+            "MW-5c570d5fff13"
+          ]
+        },
+        {
+          "name": "数字经济、数据与平台治理",
+          "count": 4,
+          "percent": 13.8,
+          "exampleIds": [
+            "MW-1273742995dc",
+            "MW-95ffd9918714",
+            "MW-99a1cea19ca0"
+          ]
+        },
+        {
+          "name": "社会保障与劳动就业",
+          "count": 3,
+          "percent": 10.3,
+          "exampleIds": [
+            "MW-057f8996a1b5",
+            "MW-391084395433",
+            "MW-6be27bb7de27"
+          ]
+        },
+        {
+          "name": "国际贸易与产业结构",
+          "count": 3,
+          "percent": 10.3,
+          "exampleIds": [
+            "MW-0e3958216ce1",
+            "MW-134f06064463",
+            "MW-3933f213073e"
+          ]
+        },
+        {
+          "name": "乡村治理与区域发展",
+          "count": 2,
+          "percent": 6.9,
+          "exampleIds": [
+            "MW-03b1fd77e41a",
+            "MW-798855d34497"
+          ]
+        },
+        {
+          "name": "医疗服务、医保与药品政策",
+          "count": 2,
+          "percent": 6.9,
+          "exampleIds": [
+            "MW-16ad7e419ff4",
+            "MW-8ad204c2cbc4"
+          ]
+        },
+        {
+          "name": "财政税收与政策激励",
+          "count": 2,
+          "percent": 6.9,
+          "exampleIds": [
+            "MW-6842e47752c3",
+            "MW-7e587647dd83"
+          ]
+        },
+        {
+          "name": "消费需求与市场可达性",
+          "count": 1,
+          "percent": 3.4,
+          "exampleIds": [
+            "MW-edc2b6ce9384"
+          ]
+        }
+      ],
+      "yearCounts": {
+        "2026": 29
+      },
+      "journals": {
+        "管理世界": 36
+      },
+      "amountUSD": null
+    }
+  },
+  "gatesPortfolios": {
+    "中国机构公开资助": {
+      "total": 472,
+      "analyzed": 472,
+      "excludedBookReviews": 0,
+      "primaryTopics": [
+        {
+          "name": "全球健康治理与政策合作",
+          "count": 130,
+          "percent": 27.5,
+          "exampleIds": [
+            "INV-101442",
+            "INV-108197",
+            "INV-086818"
+          ]
+        },
+        {
+          "name": "传染病防控与公共卫生干预",
+          "count": 93,
+          "percent": 19.7,
+          "exampleIds": [
+            "INV-098449",
+            "INV-098451",
+            "INV-105447"
+          ]
+        },
+        {
+          "name": "疫苗接种与服务可及性",
+          "count": 49,
+          "percent": 10.4,
+          "exampleIds": [
+            "INV-097362",
+            "INV-102920",
+            "INV-105828"
+          ]
+        },
+        {
+          "name": "一般慈善与跨领域发展",
+          "count": 36,
+          "percent": 7.6,
+          "exampleIds": [
+            "INV-105285",
+            "INV-093276",
+            "INV-073251"
+          ]
+        },
+        {
+          "name": "环境、气候与水卫生",
+          "count": 29,
+          "percent": 6.1,
+          "exampleIds": [
+            "INV-091728",
+            "INV-091729",
+            "INV-074327"
+          ]
+        },
+        {
+          "name": "健康公平与社会决定因素",
+          "count": 27,
+          "percent": 5.7,
+          "exampleIds": [
+            "INV-102087",
+            "INV-103130",
+            "INV-090461"
+          ]
+        },
+        {
+          "name": "其他／待人工复核",
+          "count": 26,
+          "percent": 5.5,
+          "exampleIds": [
+            "INV-102208",
+            "INV-079111",
+            "INV-004140"
+          ]
+        },
+        {
+          "name": "药品研发、监管与供应",
+          "count": 21,
+          "percent": 4.4,
+          "exampleIds": [
+            "INV-074943",
+            "INV-061003",
+            "INV-039199"
+          ]
+        },
+        {
+          "name": "母婴、儿童与生殖健康",
+          "count": 19,
+          "percent": 4.0,
+          "exampleIds": [
+            "INV-094745",
+            "INV-100011",
+            "INV-100397"
+          ]
+        },
+        {
+          "name": "行为干预、传播与能力建设",
+          "count": 15,
+          "percent": 3.2,
+          "exampleIds": [
+            "INV-108217",
+            "INV-075488",
+            "INV-075711"
+          ]
+        },
+        {
+          "name": "营养、食品与代谢健康",
+          "count": 14,
+          "percent": 3.0,
+          "exampleIds": [
+            "INV-092181",
+            "INV-092446",
+            "INV-059110"
+          ]
+        },
+        {
+          "name": "卫生服务与体系建设",
+          "count": 9,
+          "percent": 1.9,
+          "exampleIds": [
+            "INV-072724",
+            "INV-019123",
+            "INV-051767"
+          ]
+        },
+        {
+          "name": "数字健康、AI与测量方法",
+          "count": 3,
+          "percent": 0.6,
+          "exampleIds": [
+            "INV-003422",
+            "INV-004142",
+            "INV-008151"
+          ]
+        },
+        {
+          "name": "卫生筹资、医保与经济评价",
+          "count": 1,
+          "percent": 0.2,
+          "exampleIds": [
+            "INV-069958"
+          ]
+        }
+      ],
+      "yearCounts": {
+        "2002": 1,
+        "2005": 1,
+        "2007": 5,
+        "2008": 6,
+        "2009": 7,
+        "2010": 8,
+        "2011": 8,
+        "2012": 5,
+        "2013": 12,
+        "2014": 14,
+        "2015": 22,
+        "2016": 35,
+        "2017": 29,
+        "2018": 35,
+        "2019": 36,
+        "2020": 59,
+        "2021": 38,
+        "2022": 26,
+        "2023": 32,
+        "2024": 45,
+        "2025": 30,
+        "2026": 18
+      },
+      "journals": {},
+      "amountUSD": 699607332
+    },
+    "中国相关健康政策管理（2016—2025）": {
+      "total": 192,
+      "analyzed": 192,
+      "excludedBookReviews": 0,
+      "primaryTopics": [
+        {
+          "name": "全球健康治理与政策合作",
+          "count": 67,
+          "percent": 34.9,
+          "exampleIds": [
+            "INV-079543",
+            "INV-088299",
+            "INV-091994"
+          ]
+        },
+        {
+          "name": "传染病防控与公共卫生干预",
+          "count": 45,
+          "percent": 23.4,
+          "exampleIds": [
+            "INV-078369",
+            "INV-088449",
+            "INV-094475"
+          ]
+        },
+        {
+          "name": "疫苗接种与服务可及性",
+          "count": 27,
+          "percent": 14.1,
+          "exampleIds": [
+            "INV-091242",
+            "INV-068342",
+            "INV-069957"
+          ]
+        },
+        {
+          "name": "环境、气候与水卫生",
+          "count": 10,
+          "percent": 5.2,
+          "exampleIds": [
+            "INV-076232",
+            "INV-019129",
+            "INV-042032"
+          ]
+        },
+        {
+          "name": "健康公平与社会决定因素",
+          "count": 9,
+          "percent": 4.7,
+          "exampleIds": [
+            "INV-090461",
+            "INV-093210",
+            "INV-059308"
+          ]
+        },
+        {
+          "name": "药品研发、监管与供应",
+          "count": 9,
+          "percent": 4.7,
+          "exampleIds": [
+            "INV-065938",
+            "INV-046877",
+            "INV-021880"
+          ]
+        },
+        {
+          "name": "营养、食品与代谢健康",
+          "count": 7,
+          "percent": 3.6,
+          "exampleIds": [
+            "INV-092181",
+            "INV-060483",
+            "INV-031637"
+          ]
+        },
+        {
+          "name": "卫生服务与体系建设",
+          "count": 7,
+          "percent": 3.6,
+          "exampleIds": [
+            "INV-019123",
+            "INV-051767",
+            "INV-057523"
+          ]
+        },
+        {
+          "name": "母婴、儿童与生殖健康",
+          "count": 4,
+          "percent": 2.1,
+          "exampleIds": [
+            "INV-057883",
+            "INV-092670",
+            "INV-034871"
+          ]
+        },
+        {
+          "name": "行为干预、传播与能力建设",
+          "count": 3,
+          "percent": 1.6,
+          "exampleIds": [
+            "INV-077659",
+            "INV-006407",
+            "INV-009955"
+          ]
+        },
+        {
+          "name": "一般慈善与跨领域发展",
+          "count": 2,
+          "percent": 1.0,
+          "exampleIds": [
+            "INV-046473",
+            "INV-009432"
+          ]
+        },
+        {
+          "name": "卫生筹资、医保与经济评价",
+          "count": 1,
+          "percent": 0.5,
+          "exampleIds": [
+            "INV-069958"
+          ]
+        },
+        {
+          "name": "其他／待人工复核",
+          "count": 1,
+          "percent": 0.5,
+          "exampleIds": [
+            "INV-008338"
+          ]
+        }
+      ],
+      "yearCounts": {
+        "2016": 12,
+        "2017": 15,
+        "2018": 16,
+        "2019": 23,
+        "2020": 38,
+        "2021": 26,
+        "2022": 14,
+        "2023": 17,
+        "2024": 19,
+        "2025": 12
+      },
+      "journals": {},
+      "amountUSD": 157868006
+    },
+    "全球社医卫管候选": {
+      "total": 990,
+      "analyzed": 990,
+      "excludedBookReviews": 0,
+      "primaryTopics": [
+        {
+          "name": "卫生服务与体系建设",
+          "count": 300,
+          "percent": 30.3,
+          "exampleIds": [
+            "INV-085186",
+            "INV-090638",
+            "INV-097984"
+          ]
+        },
+        {
+          "name": "疫苗接种与服务可及性",
+          "count": 258,
+          "percent": 26.1,
+          "exampleIds": [
+            "INV-097117",
+            "INV-097155",
+            "INV-097483"
+          ]
+        },
+        {
+          "name": "全球健康治理与政策合作",
+          "count": 112,
+          "percent": 11.3,
+          "exampleIds": [
+            "INV-101164",
+            "INV-101405",
+            "INV-103757"
+          ]
+        },
+        {
+          "name": "母婴、儿童与生殖健康",
+          "count": 101,
+          "percent": 10.2,
+          "exampleIds": [
+            "INV-086665",
+            "INV-090376",
+            "INV-100164"
+          ]
+        },
+        {
+          "name": "传染病防控与公共卫生干预",
+          "count": 67,
+          "percent": 6.8,
+          "exampleIds": [
+            "INV-093232",
+            "INV-095387",
+            "INV-099338"
+          ]
+        },
+        {
+          "name": "卫生筹资、医保与经济评价",
+          "count": 66,
+          "percent": 6.7,
+          "exampleIds": [
+            "INV-099615",
+            "INV-104530",
+            "INV-088783"
+          ]
+        },
+        {
+          "name": "健康公平与社会决定因素",
+          "count": 35,
+          "percent": 3.5,
+          "exampleIds": [
+            "INV-102087",
+            "INV-102206",
+            "INV-112085"
+          ]
+        },
+        {
+          "name": "数字健康、AI与测量方法",
+          "count": 19,
+          "percent": 1.9,
+          "exampleIds": [
+            "INV-100150",
+            "INV-100225",
+            "INV-110255"
+          ]
+        },
+        {
+          "name": "其他／待人工复核",
+          "count": 11,
+          "percent": 1.1,
+          "exampleIds": [
+            "INV-101712",
+            "INV-071870",
+            "INV-062435"
+          ]
+        },
+        {
+          "name": "行为干预、传播与能力建设",
+          "count": 10,
+          "percent": 1.0,
+          "exampleIds": [
+            "INV-110657",
+            "INV-061417",
+            "INV-061461"
+          ]
+        },
+        {
+          "name": "一般慈善与跨领域发展",
+          "count": 6,
+          "percent": 0.6,
+          "exampleIds": [
+            "INV-104384",
+            "INV-079811",
+            "INV-048818"
+          ]
+        },
+        {
+          "name": "环境、气候与水卫生",
+          "count": 2,
+          "percent": 0.2,
+          "exampleIds": [
+            "INV-008967",
+            "OPP19371"
+          ]
+        },
+        {
+          "name": "药品研发、监管与供应",
+          "count": 2,
+          "percent": 0.2,
+          "exampleIds": [
+            "OPP53125",
+            "OPP43410"
+          ]
+        },
+        {
+          "name": "营养、食品与代谢健康",
+          "count": 1,
+          "percent": 0.1,
+          "exampleIds": [
+            "INV-005218"
+          ]
+        }
+      ],
+      "yearCounts": {
+        "1999": 1,
+        "2000": 3,
+        "2001": 4,
+        "2002": 4,
+        "2003": 4,
+        "2004": 2,
+        "2005": 4,
+        "2006": 5,
+        "2007": 14,
+        "2008": 14,
+        "2009": 11,
+        "2010": 8,
+        "2011": 9,
+        "2012": 13,
+        "2013": 20,
+        "2014": 29,
+        "2015": 50,
+        "2016": 45,
+        "2017": 62,
+        "2018": 69,
+        "2019": 76,
+        "2020": 59,
+        "2021": 48,
+        "2022": 60,
+        "2023": 67,
+        "2024": 96,
+        "2025": 109,
+        "2026": 104
+      },
+      "journals": {},
+      "amountUSD": 3430247386
+    }
+  },
+  "cnsMain": {
+    "total": 55,
+    "analyzed": 55,
+    "excludedBookReviews": 0,
+    "primaryTopics": [
+      {
+        "name": "传染病防控与公共卫生干预",
+        "count": 25,
+        "percent": 45.5,
+        "exampleIds": [
+          "CNS-5eb3e84190f9",
+          "CNS-f585ed448500",
+          "CNS-c22e3174cd8d"
+        ]
+      },
+      {
+        "name": "疫苗接种与服务可及性",
+        "count": 9,
+        "percent": 16.4,
+        "exampleIds": [
+          "CNS-0641d1fde311",
+          "CNS-30e798267b11",
+          "CNS-852787f4372e"
+        ]
+      },
+      {
+        "name": "环境、气候与水卫生",
+        "count": 6,
+        "percent": 10.9,
+        "exampleIds": [
+          "CNS-155dfff768d5",
+          "CNS-fee0d6cf88b6",
+          "CNS-2d89105a7593"
+        ]
+      },
+      {
+        "name": "数字健康、AI与测量方法",
+        "count": 4,
+        "percent": 7.3,
+        "exampleIds": [
+          "CNS-b1b01f28488a",
+          "CNS-11418dbbf06d",
+          "CNS-7545a91a2f4c"
+        ]
+      },
+      {
+        "name": "健康公平与社会决定因素",
+        "count": 3,
+        "percent": 5.5,
+        "exampleIds": [
+          "CNS-714dbc8882e8",
+          "CNS-f9ebd3ecd3a9",
+          "CNS-a091d0a3723b"
+        ]
+      },
+      {
+        "name": "母婴、儿童与生殖健康",
+        "count": 3,
+        "percent": 5.5,
+        "exampleIds": [
+          "CNS-81d2c49e94d6",
+          "CNS-76a58deb64ec",
+          "CNS-a1242d52e9f8"
+        ]
+      },
+      {
+        "name": "营养、食品与代谢健康",
+        "count": 3,
+        "percent": 5.5,
+        "exampleIds": [
+          "CNS-950fcf23c21b",
+          "CNS-7ab14c2812b6",
+          "CNS-2202db8592c1"
+        ]
+      },
+      {
+        "name": "行为干预、传播与能力建设",
+        "count": 2,
+        "percent": 3.6,
+        "exampleIds": [
+          "CNS-90ddbf3cea8c",
+          "CNS-d60151449479"
+        ]
+      }
+    ],
+    "yearCounts": {
+      "2015": 1,
+      "2018": 2,
+      "2019": 2,
+      "2020": 15,
+      "2021": 8,
+      "2022": 5,
+      "2023": 2,
+      "2024": 11,
+      "2025": 4,
+      "2026": 5
+    },
+    "journals": {
+      "Nature": 21,
+      "Science": 31,
+      "Cell": 3
+    },
+    "amountUSD": null
+  },
+  "cnsRelated": {
+    "total": 10,
+    "analyzed": 10,
+    "excludedBookReviews": 0,
+    "primaryTopics": [
+      {
+        "name": "数字健康、AI与测量方法",
+        "count": 6,
+        "percent": 60.0,
+        "exampleIds": [
+          "CNS-2b1c48cbe44e",
+          "CNS-426f519629f7",
+          "CNS-f8c404b9592f"
+        ]
+      },
+      {
+        "name": "环境、气候与水卫生",
+        "count": 2,
+        "percent": 20.0,
+        "exampleIds": [
+          "CNS-0bb84aa3bd2f",
+          "CNS-c2a42da4fe61"
+        ]
+      },
+      {
+        "name": "传染病防控与公共卫生干预",
+        "count": 1,
+        "percent": 10.0,
+        "exampleIds": [
+          "CNS-aa6bd6c36bf6"
+        ]
+      },
+      {
+        "name": "健康公平与社会决定因素",
+        "count": 1,
+        "percent": 10.0,
+        "exampleIds": [
+          "CNS-d62c67c55963"
+        ]
+      }
+    ],
+    "yearCounts": {
+      "2020": 1,
+      "2022": 1,
+      "2025": 1,
+      "2026": 7
+    },
+    "journals": {
+      "Nature Health": 4,
+      "npj Digital Medicine": 2,
+      "Nature Medicine": 3,
+      "Science Advances": 1
+    },
+    "amountUSD": null
+  }
+}

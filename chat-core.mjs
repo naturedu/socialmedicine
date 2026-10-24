@@ -26,6 +26,7 @@ const collection={
 };
 export function chooseIntent(q,previous={}){
  const methodIds=aliases.filter(([,re])=>re.test(q)).map(([id])=>id);
+ if(/盖茨|gates|\bcns\b|管理世界|Cell主刊|Nature主刊|Science主刊/i.test(q)&&!/润色|写作|选刊|审稿|投稿|分区/.test(q))return {kind:'publicTopics',methodIds:[]};
  if(/院校|学校|中山大学|南方医科|哪所|招生|导师/.test(q))return {kind:'schools',methodIds:[]};
  if(/国社科|国自然|教育部|项目题|立项|获批项目/.test(q))return {kind:'grants',methodIds:[]};
  if(/期刊|审稿|分区|jcr|lancet|jama|nature health/i.test(q)&&!/研究设计/.test(q))return {kind:'journals',methodIds:[]};
@@ -81,6 +82,16 @@ export function makeReply(question,previous={},data={}){
  }
  if(intent.kind==='grants'){
   return finish(answer('项目资料目前仅展示汇总分析。',['本站按领域相关资料整理，不是全国全部项目。国社科、教育部和国自然各自保留统计范围与状态说明；网页不展示人员、编号或逐项名单。'],{status:'answered',sources:[source('教育部与项目分析总览','grants.html#moe'),source('国社科主题与机构分析','nssfc-projects.html'),source('国自然经管与健康分析','nsfc-health.html')],suggestions:['机器学习预测模型怎么验证？']}));
+ }
+ if(intent.kind==='publicTopics'){
+  const key=/盖茨|gates/i.test(context)?'gates':/管理世界/.test(context)?'management':'cns';
+  const labels={gates:'盖茨基金公开资助',cns:'CNS主刊及相关期刊',management:'《管理世界》题录'};
+  const stats=data.publicAnalysis?.collections?.[key];
+  if(!stats)return finish(answer('主题资料暂未载入。',['请从专题页查看已整理的公开索引与主题分析。'],{status:'clarify',sources:[source('公开主题分析','topic-analysis.html#'+key)]}));
+  const rows=(data.publicTopics?.records||[]).filter(r=>r.collection===key&&r.analysisEligible);
+  const top=stats.primaryTopics.slice(0,3);
+  const examples=top.map(t=>rows.find(r=>r.id===t.exampleIds[0])).filter(Boolean);
+  return finish(answer(labels[key]+'：从主题到原始出处。',[`当前收录 ${stats.total} 条，${stats.analyzed} 条纳入主题构成。这里描述本站收录样本，不是资助全库或期刊全量发文。`,key==='gates'?'资助按公开 ID 去重，金额为承诺额；机构所在地不等于服务地。':key==='cns'?'55 条主刊与 10 条相关期刊分开；Cell 的 3 条是方法与转化研究参照。':'7 条书评线索保留检索，未计入默认主题构成；题录不能代替全文。'],{sections:[{heading:'数量较多的主主题',items:top.map(t=>`${t.name}：${t.count} 条（${t.percent}%）`)},{heading:'代表性公开条目',items:examples.map(r=>r.title)}],sources:[source('筛选公开条目与查看主题分析','topic-analysis.html#'+key),...examples.map(r=>source(r.title,r.sourceUrl,r.verification))],suggestions:['盖茨基金有哪些研究主题？','CNS文献有哪些主题？','管理世界有哪些研究主题？']}));
  }
  if(intent.kind==='goal'){
   const plan=buildGoal({target:context,type:intent.goal,background:'',weeks:12},data.library||[]);

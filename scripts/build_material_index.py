@@ -11,6 +11,7 @@ def build():
       ('policy-topics','政策主题与研究逻辑','政策','policy-topics.html'),
       ('policy-documents','官方政策文件与入口','政策','policy-topics.html'),
       ('library','专题文献与方法参考','文献','library.html'),
+      ('public-topic-records','盖茨基金、CNS与管理世界公开主题库','专题','topic-analysis.html'),
       ('studio-library','工作台知识与阅读材料','文献','index.html#library'),
       ('papers','CSSCI当前专题筛选版','文献','papers.html'),
       ('archive/cssci-100','CSSCI原站100条双语语料（历史归档）','历史归档','papers-archive.html'),
@@ -44,6 +45,9 @@ def build():
             name=next((str(x[k]) for k in ['title','name','title_zh','chinese_title','标题','paper_title'] if x.get(k)),key+' '+str(i+1))
             summary=next((str(x[k]) for k in ['use','description','desc','overview','abstract_zh','abstract','scope','core','text','content','focus','supports'] if x.get(k)),'')
             url='guides/'+x['guide']+'.html' if key=='database-skills' else page
+            if key=='public-topic-records':
+                url=page+'#'+x['collection']
+                summary=' · '.join(filter(None,[x.get('primaryTopic'),x.get('titleZh'),x.get('journal'),x.get('organization')]))
             records.append(dict(id=key+':'+str(x.get('id',i+1)),collection=key,collection_title=title,kind=kind,title=name,summary=summary[:650],url=url,source=source,details=x))
     for key,title,kind,page in specs:
         p=R/'data'/(key+'.json')
