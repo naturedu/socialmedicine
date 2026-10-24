@@ -1,3 +1,4 @@
+import {loadAuthorities, attachAuthorities} from './method-authorities.mjs';
 export function orderedGroups(rows, guide) {
   const definitions=[...guide.groups,{id:'other',title:'其他方法专题',intro:'继续查看对应手册的研究问题、数据要求和假设。',order:99}];
   return definitions.map(group=>({...group,items:rows.filter(x=>(x.group||'other')===group.id).sort((a,b)=>(a.order??99)-(b.order??99)||a.id.localeCompare(b.id))})).filter(x=>x.items.length);
@@ -12,6 +13,7 @@ export async function initMethodGuide(){
     const r=await fetch(new URL('./data/method-guide.json',import.meta.url));if(!r.ok)throw new Error();const guide=await r.json();
     const style=el('style',styles);style.id='method-guide-style';document.head.append(style);
     const definitions=new Map([...guide.skills,...guide.quick].map(x=>[x.id,x]));
+    let authorities;try{authorities=await loadAuthorities();}catch{/* Existing method content remains available. */}
     const map=el('aside',null,'method-reading-map');map.setAttribute('aria-label','方法分类与阅读建议');map.append(el('h3','先看研究问题，再选方法'),el('p','想描述现状，先看研究设计与统计；想评价政策，先核对因果识别条件；想比较方案价值，再看经济评价。每张卡片先说明用途和准备条件，详细代码按需展开。'));
     const route=el('div',null,'method-route');for(const g of guide.groups.filter(g=>g.id!=='start'))route.append(el('span',`${String(g.order).padStart(2,'0')} ${g.title}`));map.append(route,el('p','这是阅读导航，不是固定分析流程。理论框架、样本量与数据准备要在选题和设计阶段考虑。','method-reading-note'));
     if(skillGrid){const panel=document.getElementById('panel-methods');const anchor=panel.querySelector('.searchbar')||skillGrid;anchor.before(map);}else classicGrid.before(map);
@@ -20,7 +22,7 @@ export async function initMethodGuide(){
       if(!cards.length)return;
       const rows=cards.map((card,i)=>{const id=kind==='skills'?card.querySelector('[data-method]')?.dataset.method:(card.querySelector('.step')||card.querySelector('.tag'))?.textContent.trim();const info=definitions.get(id);return {...(info||{id:id||`unknown-${i}`,group:'other',order:999}),card};});
       for(const m of rows){
-        if(!m.intro)continue;
+        if(!m.intro){if(authorities)attachAuthorities(m.card,m.id,authorities);continue;}
         const heading=m.card.querySelector('h3,h2');if(heading){heading.title=heading.textContent;heading.textContent=m.title;}
         const paragraph=[...m.card.children].find(x=>x.tagName==='P');
         if(paragraph)paragraph.textContent=m.intro;else heading?.after(el('p',m.intro));
@@ -28,6 +30,7 @@ export async function initMethodGuide(){
           const prep=el('p',null,'method-prepare');prep.append(el('strong','先准备：'),document.createTextNode(m.prepare));
           const intro=[...m.card.children].find(x=>x.tagName==='P');intro?.after(prep);if(m.example)prep.after(el('p',m.example,'method-example'));
         }
+        if(authorities)attachAuthorities(m.card,m.id,authorities);
       }
       const fragment=document.createDocumentFragment();
       for(const group of orderedGroups(rows,guide)){
@@ -50,7 +53,7 @@ export async function initMethodGuide(){
     if(detail)new MutationObserver(()=>{
       if(detail.querySelector('.method-dialog-intro'))return;
       const href=detail.querySelector('a[download]')?.getAttribute('href');const id=href?.match(/skills\/([^/]+)\.md/)?.[1];const info=definitions.get(id);if(!info)return;
-      const context=el('div',null,'method-dialog-intro');context.append(el('p',info.intro),el('p','先准备：'+info.prepare,'method-prepare'));if(info.example)context.append(el('p',info.example,'method-example'));
+      const context=el('div',null,'method-dialog-intro');context.append(el('p',info.intro),el('p','先准备：'+info.prepare,'method-prepare'));if(info.example)context.append(el('p',info.example,'method-example'));if(authorities)attachAuthorities(context,id,authorities);
       const heading=detail.querySelector('h3');const previous=heading?.nextElementSibling;if(previous?.tagName==='P')previous.remove();heading?.after(context);
     }).observe(detail,{childList:true});
   }catch{

@@ -1,0 +1,485 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>方法原始论文与官方来源 · 普贤</title><link rel="stylesheet" href="../../guide.css"></head><body><header><a class="back" href="../../index.html#methods">← 方法工作台</a><a href="../../database-skills.html">🌱 数据库</a><a href="../../guides/method-map.html">🧭 逻辑地图</a><a href="../../skills/references/method-authorities.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#a1">A1 · 横断面研究</a></li>
+<li><a href="#a2">A2 · 病例对照研究</a></li>
+<li><a href="#a3">A3 · 队列研究</a></li>
+<li><a href="#a4-rct">A4 · 随机对照试验 RCT</a></li>
+<li><a href="#a5">A5 · 准实验设计</a></li>
+<li><a href="#a6">A6 · 生态学研究</a></li>
+<li><a href="#a7">A7 · 混合方法研究（定性+定量）</a></li>
+<li><a href="#a8-delphi">A8 · 德尔菲法（Delphi）</a></li>
+<li><a href="#b1">B1 · 描述统计与正态性检验</a></li>
+<li><a href="#b2-t">B2 · t 检验与方差分析</a></li>
+<li><a href="#b3">B3 · 卡方检验与非参数检验</a></li>
+<li><a href="#b4">B4 · 相关与简单线性回归</a></li>
+<li><a href="#b5-logistic">B5 · 二元 logistic 回归</a></li>
+<li><a href="#b6-logistic">B6 · 有序/多项 logistic 回归</a></li>
+<li><a href="#b7-poisson">B7 · Poisson 与负二项回归</a></li>
+<li><a href="#b8-kaplan-meier-cox">B8 · 生存分析（Kaplan-Meier 与 Cox）</a></li>
+<li><a href="#b9">B9 · 重复测量与混合效应模型</a></li>
+<li><a href="#b10">B10 · 主成分分析与因子分析</a></li>
+<li><a href="#c1">C1 · 成本测算</a></li>
+<li><a href="#c2-cea-cua">C2 · 成本-效果分析 CEA 与成本-效用分析 CUA</a></li>
+<li><a href="#c3-qaly-daly">C3 · QALY 与 DALY 计算</a></li>
+<li><a href="#c4-bia">C4 · 预算影响分析 BIA</a></li>
+<li><a href="#c5-hta">C5 · 卫生技术评估 HTA 流程</a></li>
+<li><a href="#c6-sfa-dea">C6 · 随机前沿分析 SFA 与数据包络分析 DEA（效率评价）</a></li>
+<li><a href="#c7-drgdip">C7 · 医保支付标准测算（DRG/DIP 权重与点值测算思路）</a></li>
+<li><a href="#c8-ci">C8 · 卫生服务利用公平性（集中指数 CI 与不平等分解）</a></li>
+<li><a href="#d1-psm">D1 · 倾向得分匹配（PSM）</a></li>
+<li><a href="#d2-iv">D2 · 工具变量（IV）</a></li>
+<li><a href="#d3-rdd">D3 · 断点回归（RDD）</a></li>
+<li><a href="#d4-scm">D4 · 合成控制法（SCM）</a></li>
+<li><a href="#d5">D5 · 事件研究法</a></li>
+<li><a href="#d6-did">D6 · 双重差分（DID）</a></li>
+<li><a href="#d7-its">D7 · 间断时间序列（ITS）</a></li>
+<li><a href="#d8-ddd">D8 · 三重差分（DDD）</a></li>
+<li><a href="#e1">E1 · 缺失数据与多重插补</a></li>
+<li><a href="#e2">E2 · 样本量与统计效能计算</a></li>
+<li><a href="#e3-lasso">E3 · LASSO/弹性网与正则化</a></li>
+<li><a href="#e4-xgboost">E4 · 随机森林与 XGBoost</a></li>
+<li><a href="#e5-k-means">E5 · 聚类分析（K-means/层次聚类）</a></li>
+<li><a href="#e6">E6 · 贝叶斯统计入门</a></li>
+<li><a href="#f1-andersen">F1 · Andersen 卫生服务利用行为模型</a></li>
+<li><a href="#f2-grossman">F2 · Grossman 健康需求模型</a></li>
+<li><a href="#f3-hbm">F3 · 健康信念模型 HBM</a></li>
+<li><a href="#f4-tpb">F4 · 计划行为理论 TPB</a></li>
+<li><a href="#f5">F5 · 社会生态学模型</a></li>
+<li><a href="#f6-rawls-sen">F6 · 健康公平与正义理论（Rawls / Sen 可行能力）</a></li>
+<li><a href="#f7-csdh">F7 · 健康社会决定因素框架（CSDH）</a></li>
+<li><a href="#f8-sid">F8 · 委托代理与供方诱导需求（SID）</a></li>
+<li><a href="#f9">F9 · 市场失灵与政府干预（公共品 / 外部性 / 信息不对称）</a></li>
+<li><a href="#f10">F10 · 制度变迁与路径依赖（医改分析）</a></li>
+<li><a href="#g1-grounded-theory">G1 · 扎根理论（Grounded Theory）</a></li>
+<li><a href="#g2-sem">G2 · 结构方程模型（SEM）</a></li>
+<li><a href="#g3-semmultilevel-sem">G3 · 多层 / 多重嵌套 SEM（Multilevel SEM）</a></li>
+<li><a href="#g4-fsqca">G4 · fsQCA 模糊集定性比较分析</a></li>
+<li><a href="#a9">A9 · 复杂抽样与调查权重</a></li>
+<li><a href="#b11-kappa-icc">B11 · 一致性评价：Kappa / ICC</a></li>
+<li><a href="#b12">B12 · 竞争风险与累积发生率</a></li>
+<li><a href="#d9-tte">D9 · 目标试验模拟 TTE</a></li>
+<li><a href="#d10-ipw-msm">D10 · IPW与边际结构模型 MSM</a></li>
+<li><a href="#d11-g-formula">D11 · g-formula与双稳健估计</a></li>
+<li><a href="#d12-dml">D12 · 双重机器学习 DML</a></li>
+<li><a href="#d13-sdid">D13 · 合成双重差分 SDID</a></li>
+<li><a href="#d14">D14 · 定量偏倚与敏感性分析</a></li>
+<li><a href="#e7">E7 · 纵向轨迹与潜类别</a></li>
+<li><a href="#e8">E8 · 预测验证、校准与净获益</a></li>
+<li><a href="#f11-cfir-re-aim">F11 · 实施科学：CFIR / RE-AIM</a></li>
+<li><a href="#h1">H1 · 系统评价与证据分级</a></li>
+<li><a href="#h2-meta">H2 · 成对 Meta 分析</a></li>
+<li><a href="#h3-meta-nma">H3 · 网状 Meta 分析 NMA</a></li>
+<li><a href="#h4-meta-meta">H4 · meta-meta / 伞状综述</a></li>
+<li><a href="#h5-scoping-review">H5 · 范围综述 Scoping review</a></li>
+<li><a href="#i1">I1 · 蒙特卡洛方法学模拟</a></li>
+<li><a href="#i2-psa">I2 · 概率敏感性分析 PSA</a></li>
+<li><a href="#i3">I3 · 个体微观模拟</a></li>
+<li><a href="#i4-des">I4 · 离散事件模拟 DES</a></li>
+<li><a href="#i5-sd">I5 · 系统动力学 SD</a></li>
+<li><a href="#i6-abm">I6 · 多主体模型 ABM</a></li>
+<li><a href="#j1-pmc">J1 · 三维政策框架与 PMC</a></li>
+<li><a href="#j2-lda-bertopic">J2 · LDA / BERTopic 主题分析</a></li>
+<li><a href="#j3-llm">J3 · LLM辅助编码与关系抽取</a></li>
+<li><a href="#j4">J4 · 医疗大模型配对评价</a></li>
+<li><a href="#b13-glm">B13 · 广义线性模型 GLM</a></li>
+<li><a href="#b14">B14 · 费用两部模型</a></li>
+<li><a href="#b15-fe-re-cre">B15 · 面板 FE / RE / CRE</a></li>
+<li><a href="#b16">B16 · 分位数回归</a></li>
+<li><a href="#b17-hurdle">B17 · 零膨胀与 hurdle 计数模型</a></li>
+<li><a href="#b18">B18 · 空间计量与溢出</a></li>
+<li><a href="#d15-did">D15 · 交错 DID / 分批处理</a></li>
+<li><a href="#d16">D16 · 熵平衡与重叠权重</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">方法原始论文与官方来源</h1>
+<p>代表性原始方法、官方指南和作者文档；不作唯一权威排名。报告指南不替代设计方法，软件文档不代表本站代码已验证。</p>
+<p>点击方法名称可进入代表性来源；其他来源按报告、设计或软件用途选择。来源可访问和DOI元数据核对不代表全文审读或教学代码执行。</p>
+<h2 id="a1">A1 · 横断面研究</h2>
+<ul>
+<li><a href="https://www.strobe-statement.org/">STROBE：观察性研究报告规范</a> — 官方报告指南。适用于横断面、病例对照和队列研究的报告，不是设计质量评分工具。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="a2">A2 · 病例对照研究</h2>
+<ul>
+<li><a href="https://www.strobe-statement.org/">STROBE：观察性研究报告规范</a> — 官方报告指南。适用于横断面、病例对照和队列研究的报告，不是设计质量评分工具。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="a3">A3 · 队列研究</h2>
+<ul>
+<li><a href="https://www.strobe-statement.org/">STROBE：观察性研究报告规范</a> — 官方报告指南。适用于横断面、病例对照和队列研究的报告，不是设计质量评分工具。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="a4-rct">A4 · 随机对照试验 RCT</h2>
+<ul>
+<li><a href="https://www.consort-spirit.org/">SPIRIT–CONSORT：随机试验方案与报告</a> — 官方报告指南。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="a5">A5 · 准实验设计</h2>
+<ul>
+<li><a href="https://miguelhernan.org/whatifbook">Hernán &amp; Robins：Causal Inference: What If</a> — 作者方法教材。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+<li><a href="https://doi.org/10.1016/j.jeconom.2020.12.001">Difference-in-Differences with multiple time periods</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://doi.org/10.1093/ije/dyw098">Interrupted time series regression for the evaluation of public health interventions: a tutorial</a> — 方法教程。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="a6">A6 · 生态学研究</h2>
+<ul>
+<li><a href="https://doi.org/10.1146/annurev.pu.16.050195.000425">Ecologic Studies in Epidemiology: Concepts, Principles, and Methods</a> — 方法综述。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="a7">A7 · 混合方法研究（定性+定量）</h2>
+<ul>
+<li><a href="https://study.sagepub.com/creswell3e">Creswell &amp; Plano Clark：混合方法研究</a> — 作者教材／出版者资源。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="a8-delphi">A8 · 德尔菲法（Delphi）</h2>
+<ul>
+<li><a href="https://doi.org/10.1371/journal.pmed.1004326">ACCORD: A reporting guideline for consensus methods in biomedicine</a> — 报告指南论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="b1">B1 · 描述统计与正态性检验</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rsummarize.pdf">Stata：描述统计</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+<li><a href="https://www.stata.com/manuals/rswilk.pdf">Stata：正态性检验</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b2-t">B2 · t 检验与方差分析</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rttest.pdf">Stata：t 检验</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+<li><a href="https://www.stata.com/manuals/ranova.pdf">Stata：方差分析</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b3">B3 · 卡方检验与非参数检验</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rtabulatetwoway.pdf">Stata：列联表与卡方检验</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+<li><a href="https://www.stata.com/manuals/rranksum.pdf">Stata：秩和检验</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b4">B4 · 相关与简单线性回归</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rregress.pdf">Stata：线性回归</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b5-logistic">B5 · 二元 logistic 回归</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rlogit.pdf">Stata：Logistic 回归</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b6-logistic">B6 · 有序/多项 logistic 回归</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rologit.pdf">Stata：有序 Logistic</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+<li><a href="https://www.stata.com/manuals/rmlogit.pdf">Stata：多项 Logistic</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b7-poisson">B7 · Poisson 与负二项回归</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rpoisson.pdf">Stata：Poisson 回归</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+<li><a href="https://www.stata.com/manuals/rnbreg.pdf">Stata：负二项回归</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b8-kaplan-meier-cox">B8 · 生存分析（Kaplan-Meier 与 Cox）</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/st.pdf">Stata：生存分析</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b9">B9 · 重复测量与混合效应模型</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/memixed.pdf">Stata：混合效应模型</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b10">B10 · 主成分分析与因子分析</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/mvpca.pdf">Stata：主成分分析</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+<li><a href="https://www.stata.com/manuals/mvfactor.pdf">Stata：因子分析</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="c1">C1 · 成本测算</h2>
+<ul>
+<li><a href="https://www.nice.org.uk/process/pmg36/chapter/economic-evaluation-2">NICE：经济评价方法</a> — 官方方法指南。NICE 决策语境；不自动等同其他国家的评价规则。核对：2026-10-24，官网检索可核对，直接访问受限。</li>
+</ul>
+<h2 id="c2-cea-cua">C2 · 成本-效果分析 CEA 与成本-效用分析 CUA</h2>
+<ul>
+<li><a href="https://www.nice.org.uk/process/pmg36/chapter/economic-evaluation-2">NICE：经济评价方法</a> — 官方方法指南。NICE 决策语境；不自动等同其他国家的评价规则。核对：2026-10-24，官网检索可核对，直接访问受限。</li>
+<li><a href="https://doi.org/10.1136/bmj-2021-067975">CHEERS 2022 statement: updated reporting guidance for health economic evaluations</a> — 报告指南论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="c3-qaly-daly">C3 · QALY 与 DALY 计算</h2>
+<ul>
+<li><a href="https://www.nice.org.uk/process/pmg36/chapter/economic-evaluation-2">NICE：经济评价方法</a> — 官方方法指南。NICE 决策语境；不自动等同其他国家的评价规则。核对：2026-10-24，官网检索可核对，直接访问受限。</li>
+<li><a href="https://www.who.int/data/global-health-estimates">WHO：Global Health Estimates 方法与数据</a> — 官方方法与数据。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="c4-bia">C4 · 预算影响分析 BIA</h2>
+<ul>
+<li><a href="https://www.ispor.org/heor-resources/good-practices/article/principles-of-good-practice-for-budget-impact-analysis-ii">ISPOR：预算影响分析良好实践</a> — 学会方法指南。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="c5-hta">C5 · 卫生技术评估 HTA 流程</h2>
+<ul>
+<li><a href="https://www.nice.org.uk/process/pmg36">NICE：卫生技术评价方法与流程</a> — 官方方法指南。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，官网检索可核对，直接访问受限。</li>
+</ul>
+<h2 id="c6-sfa-dea">C6 · 随机前沿分析 SFA 与数据包络分析 DEA（效率评价）</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rfrontier.pdf">Stata：随机前沿模型</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+<li><a href="https://cran.r-project.org/web/packages/Benchmarking/Benchmarking.pdf">Benchmarking：DEA 与效率分析文档</a> — 官方软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="c7-drgdip">C7 · 医保支付标准测算（DRG/DIP 权重与点值测算思路）</h2>
+<ul>
+<li><a href="https://www.nhsa.gov.cn/art/2024/7/23/art_53_13314.html">国家医保局：DRG/DIP 2.0 分组通知</a> — 官方政策原文。核对分组版本；点值、预算和结算标准需另查当地现行文件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="c8-ci">C8 · 卫生服务利用公平性（集中指数 CI 与不平等分解）</h2>
+<ul>
+<li><a href="https://doi.org/10.1596/978-0-8213-6933-3">Analyzing Health Equity Using Household Survey Data</a> — 机构方法教材。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="d1-psm">D1 · 倾向得分匹配（PSM）</h2>
+<ul>
+<li><a href="https://doi.org/10.1093/biomet/70.1.41">The central role of the propensity score in observational studies for causal effects</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://kosukeimai.github.io/MatchIt/articles/MatchIt.html">MatchIt: Getting Started</a> — 官方指南／作者文档。匹配流程与平衡诊断。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="d2-iv">D2 · 工具变量（IV）</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rivregress.pdf">Stata：工具变量回归</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+<li><a href="https://miguelhernan.org/whatifbook">Hernán &amp; Robins：Causal Inference: What If</a> — 作者方法教材。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="d3-rdd">D3 · 断点回归（RDD）</h2>
+<ul>
+<li><a href="https://rdpackages.github.io/">RD Packages：断点回归作者工具与论文</a> — 作者软件与方法文献。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="d4-scm">D4 · 合成控制法（SCM）</h2>
+<ul>
+<li><a href="https://doi.org/10.1198/jasa.2009.ap08746">Synthetic Control Methods for Comparative Case Studies</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="d5">D5 · 事件研究法</h2>
+<ul>
+<li><a href="https://lrberge.github.io/fixest/reference/sunab.html">Sun and Abraham interactions — sunab</a> — 官方指南／作者文档。Usage / cohort / ref.c；编码差异。核对：2026-10-24，页面可访问。</li>
+<li><a href="https://doi.org/10.1016/j.jeconom.2020.12.001">Difference-in-Differences with multiple time periods</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="d6-did">D6 · 双重差分（DID）</h2>
+<ul>
+<li><a href="https://doi.org/10.1016/j.jeconom.2020.12.001">Difference-in-Differences with multiple time periods</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://bcallaway11.github.io/did/articles/did-basics.html">Getting Started with the did Package</a> — 官方指南／作者文档。ATT(g,t)、聚合与示例。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="d7-its">D7 · 间断时间序列（ITS）</h2>
+<ul>
+<li><a href="https://doi.org/10.1093/ije/dyw098">Interrupted time series regression for the evaluation of public health interventions: a tutorial</a> — 方法教程。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="d8-ddd">D8 · 三重差分（DDD）</h2>
+<ul>
+<li><a href="https://doi.org/10.1093/ectj/utac010">The triple difference estimator</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="e1">E1 · 缺失数据与多重插补</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/mi.pdf">Stata：多重插补</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="e2">E2 · 样本量与统计效能计算</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/pss.pdf">Stata：功效、精度与样本量</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="e3-lasso">E3 · LASSO/弹性网与正则化</h2>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/glmnet/glmnet.pdf">glmnet：LASSO 与弹性网官方文档</a> — 作者软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="e4-xgboost">E4 · 随机森林与 XGBoost</h2>
+<ul>
+<li><a href="https://doi.org/10.1023/A:1010933404324">Random Forests</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://xgboost.readthedocs.io/en/stable/">XGBoost：官方文档</a> — 官方软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="e5-k-means">E5 · 聚类分析（K-means/层次聚类）</h2>
+<ul>
+<li><a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/kmeans.html">R stats: K-Means Clustering</a> — 官方指南／作者文档。Usage / Arguments / Details。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="e6">E6 · 贝叶斯统计入门</h2>
+<ul>
+<li><a href="https://mc-stan.org/docs/stan-users-guide/">Stan：贝叶斯建模用户手册</a> — 官方软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="f1-andersen">F1 · Andersen 卫生服务利用行为模型</h2>
+<ul>
+<li><a href="https://doi.org/10.2307/2137284">Revisiting the Behavioral Model and Access to Medical Care: Does it Matter?</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="f2-grossman">F2 · Grossman 健康需求模型</h2>
+<ul>
+<li><a href="https://doi.org/10.1086/259880">On the Concept of Health Capital and the Demand for Health</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="f3-hbm">F3 · 健康信念模型 HBM</h2>
+<ul>
+<li><a href="https://doi.org/10.1177/109019817400200403">Historical Origins of the Health Belief Model</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="f4-tpb">F4 · 计划行为理论 TPB</h2>
+<ul>
+<li><a href="https://doi.org/10.1016/0749-5978(91)90020-T">The theory of planned behavior</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="f5">F5 · 社会生态学模型</h2>
+<ul>
+<li><a href="https://doi.org/10.1177/109019818801500401">An Ecological Perspective on Health Promotion Programs</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="f6-rawls-sen">F6 · 健康公平与正义理论（Rawls / Sen 可行能力）</h2>
+<ul>
+<li><a href="https://doi.org/10.1002/hec.762">Why health equity?</a> — 理论论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://doi.org/10.4159/9780674042605">A Theory of Justice</a> — 原始理论著作。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="f7-csdh">F7 · 健康社会决定因素框架（CSDH）</h2>
+<ul>
+<li><a href="https://www.who.int/publications/i/item/9789241500852">WHO：A conceptual framework for action on the social determinants of health</a> — 官方理论框架。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="f8-sid">F8 · 委托代理与供方诱导需求（SID）</h2>
+<ul>
+<li><a href="https://doi.org/10.1016/S1574-0064(00)80168-7">Physician Agency</a> — 方法与理论教材。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="f9">F9 · 市场失灵与政府干预（公共品 / 外部性 / 信息不对称）</h2>
+<ul>
+<li><a href="https://assets.aeaweb.org/asset-server/files/9442.pdf">Uncertainty and the Welfare Economics of Medical Care</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="f10">F10 · 制度变迁与路径依赖（医改分析）</h2>
+<ul>
+<li><a href="https://doi.org/10.1017/CBO9780511808678">Institutions, Institutional Change and Economic Performance</a> — 原始理论著作。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="g1-grounded-theory">G1 · 扎根理论（Grounded Theory）</h2>
+<ul>
+<li><a href="https://doi.org/10.4324/9780203793206">The Discovery of Grounded Theory: Strategies for Qualitative Research</a> — 原始方法著作。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="g2-sem">G2 · 结构方程模型（SEM）</h2>
+<ul>
+<li><a href="https://lavaan.ugent.be/tutorial/">lavaan：结构方程模型教程</a> — 作者软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="g3-semmultilevel-sem">G3 · 多层 / 多重嵌套 SEM（Multilevel SEM）</h2>
+<ul>
+<li><a href="https://lavaan.ugent.be/tutorial/multilevel.html">lavaan：多层结构方程模型</a> — 作者软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="g4-fsqca">G4 · fsQCA 模糊集定性比较分析</h2>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/QCA/QCA.pdf">QCA：作者软件与方法文档</a> — 作者软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="a9">A9 · 复杂抽样与调查权重</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/svy.pdf">Stata：复杂抽样与调查估计</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b11-kappa-icc">B11 · 一致性评价：Kappa / ICC</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rkappa.pdf">Stata：Kappa 一致性</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+<li><a href="https://www.stata.com/manuals/ricc.pdf">Stata：组内相关系数</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b12">B12 · 竞争风险与累积发生率</h2>
+<ul>
+<li><a href="https://doi.org/10.1080/01621459.1999.10474144">A Proportional Hazards Model for the Subdistribution of a Competing Risk</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://www.stata.com/manuals/st.pdf">Stata：生存分析</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="d9-tte">D9 · 目标试验模拟 TTE</h2>
+<ul>
+<li><a href="https://doi.org/10.1093/aje/kwv254">Using Big Data to Emulate a Target Trial When a Randomized Trial Is Not Available</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://target-guideline.org/">TARGET guideline</a> — 官方指南／作者文档。协议对应表、流程与透明报告。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="d10-ipw-msm">D10 · IPW与边际结构模型 MSM</h2>
+<ul>
+<li><a href="https://doi.org/10.1097/00001648-200009000-00011">Marginal structural models and causal inference in epidemiology</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://miguelhernan.org/whatifbook">Hernán &amp; Robins：Causal Inference: What If</a> — 作者方法教材。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="d11-g-formula">D11 · g-formula与双稳健估计</h2>
+<ul>
+<li><a href="https://miguelhernan.org/whatifbook">Hernán &amp; Robins：Causal Inference: What If</a> — 作者方法教材。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="d12-dml">D12 · 双重机器学习 DML</h2>
+<ul>
+<li><a href="https://doi.org/10.1111/ectj.12097">Double/debiased machine learning for treatment and structural parameters</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://docs.doubleml.org/stable/guide/resampling.html">DoubleML sample splitting and cross-fitting</a> — 官方指南／作者文档。折分与交叉拟合。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="d13-sdid">D13 · 合成双重差分 SDID</h2>
+<ul>
+<li><a href="https://doi.org/10.1257/aer.20190159">Synthetic Difference-in-Differences</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://synth-inference.github.io/synthdid/">Synthetic Difference-in-Difference Estimation</a> — 官方指南／作者文档。同时处理的块状结构与示例。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="d14">D14 · 定量偏倚与敏感性分析</h2>
+<ul>
+<li><a href="https://doi.org/10.7326/M16-2607">Sensitivity Analysis in Observational Research: Introducing the E-Value</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="e7">E7 · 纵向轨迹与潜类别</h2>
+<ul>
+<li><a href="https://cecileproust-lima.github.io/lcmm/">lcmm：纵向潜类别与混合模型</a> — 作者软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="e8">E8 · 预测验证、校准与净获益</h2>
+<ul>
+<li><a href="https://www.tripod-statement.org/">TRIPOD：预测模型报告规范</a> — 官方报告指南。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+<li><a href="https://doi.org/10.1177/0272989X06295361">Decision Curve Analysis: A Novel Method for Evaluating Prediction Models</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="f11-cfir-re-aim">F11 · 实施科学：CFIR / RE-AIM</h2>
+<ul>
+<li><a href="https://cfirguide.org/">CFIR official guide</a> — 官方指南／作者文档。框架与版本入口。核对：2026-10-24，页面可访问。</li>
+<li><a href="https://re-aim.org/">RE-AIM official guide</a> — 官方指南／作者文档。五维结局及公平、实施语境。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="h1">H1 · 系统评价与证据分级</h2>
+<ul>
+<li><a href="https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current">Cochrane Handbook：系统评价方法</a> — 官方方法手册。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="h2-meta">H2 · 成对 Meta 分析</h2>
+<ul>
+<li><a href="https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-10">Cochrane Handbook Chapter 10：Meta 分析</a> — 官方方法手册。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="h3-meta-nma">H3 · 网状 Meta 分析 NMA</h2>
+<ul>
+<li><a href="https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-11">Cochrane Handbook, Chapter 11</a> — 官方指南／作者文档。NMA的可比性与不一致性；Key Points / 11.4.4。核对：2026-10-24，页面可访问。</li>
+<li><a href="https://www.prisma-statement.org/nma">PRISMA-NMA</a> — 官方指南／作者文档。网状Meta报告清单。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="h4-meta-meta">H4 · meta-meta / 伞状综述</h2>
+<ul>
+<li><a href="https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-v">Cochrane Handbook, Chapter V: Overviews of Reviews</a> — 官方指南／作者文档。研究单位、重叠与CCA；V.4.4 / V.4.7。核对：2026-10-24，页面可访问。</li>
+<li><a href="https://amstar.ca/FAQs.php">AMSTAR official FAQs</a> — 官方指南／作者文档。方法质量与关键领域。核对：2026-10-24，本次连接未成功。</li>
+</ul>
+<h2 id="h5-scoping-review">H5 · 范围综述 Scoping review</h2>
+<ul>
+<li><a href="https://www.prisma-statement.org/scoping">PRISMA Scoping Reviews</a> — 官方指南／作者文档。范围综述报告清单。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="i1">I1 · 蒙特卡洛方法学模拟</h2>
+<ul>
+<li><a href="https://doi.org/10.1002/sim.8086">Using simulation studies to evaluate statistical methods</a> — 方法论文／指南论文。ADEMP、性能与MCSE；3 / 5 / 6。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="i2-psa">I2 · 概率敏感性分析 PSA</h2>
+<ul>
+<li><a href="https://www.ispor.org/publications/journals/value-in-health/abstract/Volume-15--Issue-6/Model-Parameter-Estimation-and-Uncertainty--A-Report-of-the-ISPOR-SMDM-Modeling-Good-Research-Practices-Task-Force-6">Model Parameter Estimation and Uncertainty: ISPOR-SMDM Task Force-6</a> — 方法论文／指南论文。参数不确定性、PSA。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="i3">I3 · 个体微观模拟</h2>
+<ul>
+<li><a href="https://doi.org/10.1177/0272989X18754513">Microsimulation Modeling for Health Decision Sciences Using R: A Tutorial</a> — 方法教程。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="i4-des">I4 · 离散事件模拟 DES</h2>
+<ul>
+<li><a href="https://effectivehealthcare.ahrq.gov/products/decision-models-guidance/methods">Guidance for the Conduct and Reporting of Modeling and Simulation Studies in HTA</a> — 官方指南／作者文档。结构、验证与不确定性。核对：2026-10-24，页面可访问。</li>
+<li><a href="https://simpy.readthedocs.io/en/latest/">SimPy：离散事件模拟</a> — 官方软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="i5-sd">I5 · 系统动力学 SD</h2>
+<ul>
+<li><a href="https://ocw.mit.edu/courses/15-871-introduction-to-system-dynamics-fall-2013/">MIT：System Dynamics 教学与方法资源</a> — 机构方法课程。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="i6-abm">I6 · 多主体模型 ABM</h2>
+<ul>
+<li><a href="https://docs.netlogo.org/programming.html">NetLogo：模型编程指南</a> — 官方软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="j1-pmc">J1 · 三维政策框架与 PMC</h2>
+<ul>
+<li><a href="https://doi.org/10.1016/j.jpolmod.2011.02.003">Policy modeling: Definition, classification and evaluation</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="j2-lda-bertopic">J2 · LDA / BERTopic 主题分析</h2>
+<ul>
+<li><a href="https://www.jmlr.org/papers/v3/blei03a.html">Latent Dirichlet Allocation</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+<li><a href="https://maartengr.github.io/BERTopic/">BERTopic：作者文档</a> — 作者软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="j3-llm">J3 · LLM辅助编码与关系抽取</h2>
+<ul>
+<li><a href="https://doi.org/10.1017/pan.2025.10017">Codebook LLMs: Evaluating LLMs as Measurement Tools for Political Science Concepts</a> — 方法论文／指南论文。测量定义与验证；出版社题名/正文核对。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul>
+<h2 id="j4">J4 · 医疗大模型配对评价</h2>
+<ul>
+<li><a href="https://www.tripod-statement.org/tripod-llm/">TRIPOD-LLM</a> — 官方指南／作者文档。医疗LLM报告规范。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="b13-glm">B13 · 广义线性模型 GLM</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rglm.pdf">Stata：广义线性模型</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b14">B14 · 费用两部模型</h2>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/twopartm/twopartm.pdf">twopartm：两部回归模型</a> — 官方软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b15-fe-re-cre">B15 · 面板 FE / RE / CRE</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/xtxtreg.pdf">Stata：面板回归 FE/RE/CRE</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b16">B16 · 分位数回归</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/rqreg.pdf">Stata：分位数回归</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b17-hurdle">B17 · 零膨胀与 hurdle 计数模型</h2>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/pscl/pscl.pdf">pscl：零膨胀与 hurdle 模型</a> — 官方软件文档。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，官方PDF可访问。</li>
+<li><a href="https://www.stata.com/manuals/rzip.pdf">Stata：零膨胀 Poisson</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="b18">B18 · 空间计量与溢出</h2>
+<ul>
+<li><a href="https://www.stata.com/manuals/spspregress.pdf">Stata：空间自回归模型</a> — 官方软件文档。命令定义、公式与示例；不代表本库代码已经运行。核对：2026-10-24，官方PDF可访问。</li>
+</ul>
+<h2 id="d15-did">D15 · 交错 DID / 分批处理</h2>
+<ul>
+<li><a href="https://doi.org/10.1016/j.jeconom.2020.12.001">Difference-in-Differences with multiple time periods</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://bcallaway11.github.io/did/articles/did-basics.html">Getting Started with the did Package</a> — 官方指南／作者文档。ATT(g,t)、聚合与示例。核对：2026-10-24，页面可访问。</li>
+<li><a href="https://lrberge.github.io/fixest/reference/sunab.html">Sun and Abraham interactions — sunab</a> — 官方指南／作者文档。Usage / cohort / ref.c；编码差异。核对：2026-10-24，页面可访问。</li>
+</ul>
+<h2 id="d16">D16 · 熵平衡与重叠权重</h2>
+<ul>
+<li><a href="https://doi.org/10.1093/pan/mpr025">Entropy Balancing for Causal Effects</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+<li><a href="https://doi.org/10.1080/01621459.2016.1260466">Balancing Covariates via Propensity Score Weighting</a> — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。</li>
+</ul><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

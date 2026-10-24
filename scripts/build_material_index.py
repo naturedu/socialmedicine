@@ -32,6 +32,7 @@ def build():
       ('research-theses','博士论文题录与入口','论文','research-resources.html'),
       ('studio-classics','经典理论书架','理论','index.html#classics'),
       ('insurance-timeline','医保制度时间线','政策','insurance-timeline.html'),
+      ('nsfc-health-projects','国自然经管与健康治理汇编（2010—2025）','项目','nsfc-health.html'),
       ('nssf-projects','国社科正式立项与热点（2016—2026）','项目','nssfc-projects.html'),
       ('moe-projects','教育部领域项目（2016—2025）','项目','grants.html')]
     records=[];collections=[]

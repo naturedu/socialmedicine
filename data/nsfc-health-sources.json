@@ -1,0 +1,228 @@
+[
+  {
+    "id": "nsfc-compilation-1",
+    "filename": "2010-2023国自科.xls",
+    "sha256": "594cfc3aae03cd99c365e8311aeacc8dc57257e63860fa29b422004123e3eb74",
+    "sheets": [
+      {
+        "name": "2010-2019年",
+        "readRows": 17252,
+        "usableRows": 17252
+      },
+      {
+        "name": "2020",
+        "readRows": 1960,
+        "usableRows": 1960
+      },
+      {
+        "name": "2021",
+        "readRows": 1982,
+        "usableRows": 1982
+      },
+      {
+        "name": "2022",
+        "readRows": 2081,
+        "usableRows": 2081
+      },
+      {
+        "name": "2023年",
+        "readRows": 1566,
+        "usableRows": 1566
+      }
+    ],
+    "skippedSheets": [
+      {
+        "name": "2019",
+        "rows": 771,
+        "reason": "与2010—2019主表年份重叠，口径不同，未重复合并"
+      },
+      {
+        "name": "2018",
+        "rows": 1890,
+        "reason": "与2010—2019主表年份重叠，口径不同，未重复合并"
+      },
+      {
+        "name": "2017",
+        "rows": 1810,
+        "reason": "与2010—2019主表年份重叠，口径不同，未重复合并"
+      },
+      {
+        "name": "2016",
+        "rows": 1623,
+        "reason": "与2010—2019主表年份重叠，口径不同，未重复合并"
+      },
+      {
+        "name": "2015",
+        "rows": 1730,
+        "reason": "与2010—2019主表年份重叠，口径不同，未重复合并"
+      }
+    ],
+    "provenance": "用户提供的第三方清单汇编；非本次从基金委逐项提取",
+    "officialVerification": "https://kd.nsfc.cn/"
+  },
+  {
+    "id": "nsfc-compilation-2",
+    "filename": "2024年国家自然科学基金立项名单 - 分学校版（经管类） .xlsx",
+    "sha256": "d16bf916c1dcbb1128c65d5fb79da09a68a4ab84e66cefd7af75f11b0312375d",
+    "sheets": [
+      {
+        "name": "2024年国家自然科学基金立项名单（经管类）",
+        "readRows": 571,
+        "usableRows": 571,
+        "excludedUncertainFunder": 0
+      }
+    ],
+    "skippedSheets": [],
+    "provenance": "用户提供的第三方清单汇编；非本次从基金委逐项提取",
+    "officialVerification": "https://kd.nsfc.cn/"
+  },
+  {
+    "id": "nsfc-compilation-3",
+    "filename": "2024年国家自然科学基金立项名单- 分专业版（经管类） .xlsx",
+    "sha256": "b26788c4ac94facd9d535756a5e1af87333cd8b3168fa7c4d273dc4de9ba5369",
+    "sheets": [
+      {
+        "name": "人口与劳动经济",
+        "readRows": 21,
+        "usableRows": 21,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "财税与公共经济",
+        "readRows": 19,
+        "usableRows": 19,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "环境与能源",
+        "readRows": 34,
+        "usableRows": 34,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "行为与微观经济",
+        "readRows": 24,
+        "usableRows": 24,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "创新",
+        "readRows": 34,
+        "usableRows": 34,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "金融 ESG、投资与定价",
+        "readRows": 23,
+        "usableRows": 23,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "金融 货币、风险与信贷等",
+        "readRows": 28,
+        "usableRows": 28,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "企业管理",
+        "readRows": 22,
+        "usableRows": 22,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "国贸与产业经济",
+        "readRows": 30,
+        "usableRows": 30,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "农业经济",
+        "readRows": 19,
+        "usableRows": 19,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "数字经济",
+        "readRows": 25,
+        "usableRows": 25,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "人工智能",
+        "readRows": 31,
+        "usableRows": 31,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "算法与数据要素",
+        "readRows": 20,
+        "usableRows": 20,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "统计与计量",
+        "readRows": 21,
+        "usableRows": 21,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "管科 优化",
+        "readRows": 20,
+        "usableRows": 20,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "管科 策略与协同等",
+        "readRows": 31,
+        "usableRows": 31,
+        "excludedUncertainFunder": 0
+      }
+    ],
+    "skippedSheets": [],
+    "provenance": "用户提供的第三方清单汇编；非本次从基金委逐项提取",
+    "officialVerification": "https://kd.nsfc.cn/"
+  },
+  {
+    "id": "nsfc-compilation-4",
+    "filename": "2025经管类国自科项目.xlsx",
+    "sha256": "cc83382e31ffd5a0b6a66d276763ddc8257bb8cfdfed240ab72fc1838aed5a2c",
+    "sheets": [
+      {
+        "name": "经管",
+        "readRows": 376,
+        "usableRows": 376,
+        "excludedUncertainFunder": 0
+      },
+      {
+        "name": "财经大学",
+        "readRows": 112,
+        "usableRows": 112,
+        "excludedUncertainFunder": 0
+      }
+    ],
+    "skippedSheets": [
+      {
+        "name": "Sheet4",
+        "reason": "院校汇总计数表，不是逐项记录"
+      }
+    ],
+    "provenance": "用户提供的第三方清单汇编；非本次从基金委逐项提取",
+    "officialVerification": "https://kd.nsfc.cn/"
+  },
+  {
+    "id": "nsfc-compilation-5",
+    "filename": "2025年已发布国自然、社科清单.xlsx",
+    "sha256": "0d4a232f6cc9a754e24b9b0a73d23dcdf000e75d43b966fe6b9ec6317d4372a2",
+    "sheets": [
+      {
+        "name": "Sheet1",
+        "readRows": 399,
+        "usableRows": 361,
+        "excludedUncertainFunder": 38
+      }
+    ],
+    "skippedSheets": [],
+    "provenance": "用户提供的第三方清单汇编；非本次从基金委逐项提取",
+    "officialVerification": "https://kd.nsfc.cn/"
+  }
+]

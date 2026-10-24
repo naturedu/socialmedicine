@@ -624,6 +624,42 @@
         "R",
         "Stata"
       ]
+    },
+    {
+      "icon": "📚",
+      "name": "科研公众号图文",
+      "file": "research-public-posts-skill.md",
+      "group": "writing",
+      "desc": "依据公开方法和官方来源制作清晰简洁的公众号图文，检查手机可读性、来源、二维码与素材边界。",
+      "tags": [
+        "科研传播",
+        "公众号",
+        "证据核验"
+      ]
+    },
+    {
+      "icon": "📚",
+      "name": "Skill 下载记录",
+      "file": "skill-download-stats/SKILL.md",
+      "group": "writing",
+      "desc": "按GitHub Release附件ID记录下载计数和日期快照，区分点击、下载、安装与调用。",
+      "tags": [
+        "下载统计",
+        "公开发布",
+        "隐私"
+      ]
+    },
+    {
+      "icon": "📚",
+      "name": "国自然经管与健康治理清单分析",
+      "file": "nsfc-health-synthesis/SKILL.md",
+      "group": "writing",
+      "desc": "读取本地清单，核对年份与重复记录，隐去编号姓名，分析机构、主题、关键词共现和时期构成；第三方汇编标明待逐项核验。",
+      "tags": [
+        "国自然",
+        "健康治理",
+        "脱敏"
+      ]
     }
   ],
   "METHODS": [

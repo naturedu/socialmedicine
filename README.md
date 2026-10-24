@@ -1,5 +1,21 @@
 # 普贤 · AI 互动与研究工作台
 
+## Skill 安装包、下载记录与方法出处
+
+[下载与记录页面](https://naturedu.github.io/socialmedicine/skill-downloads.html) · [完整研究 Skill 包](https://github.com/naturedu/socialmedicine/releases/latest/download/socialmedicineskills.zip) · [独立下载记录工具](https://github.com/naturedu/socialmedicine/releases/latest/download/skill-download-stats.zip) · [89个方法的原始论文与官方来源](https://naturedu.github.io/socialmedicine/method-sources.html)
+
+安装包内为技能说明、原创脚本和公开资料索引，不包含人物照片、原始对话、私人稿件、受限数据或论文全文。新增科研公众号图文流程与返修证据对应规则；已有绘图、PPT、数据库及微观模拟内容继续保留。此次整理基于可访问对话与已有公开库交叉核对，并非导出整个账号的全部历史。
+
+方法卡片标题可直达代表性原始方法或官方来源，另保留本站中文教程与代码。`data/method-authorities.json` 记录89个方法的来源对应、来源类型及核对状态；不把报告清单当作设计标准，不把链接检查当作全文或代码验证。
+
+下载记录使用 GitHub Release 附件 `download_count`，与原有网页“下载点击”分开。按安装包和版本记录，首次观测是基线；原始文件、仓库 clone、源码 ZIP、镜像和 Skill 调用不计入，不等于独立用户或成功安装。重复下载及维护者测试可能计入。附件移除后保留最后观测值，未观测部分不可追溯。
+
+GitHub 自动累计附件下载计数，网页打开或刷新时从公开 API 查询；速率限制或网络失败时明确显示归档快照/上次读取，缺失不补0。查询只读，不上传用户标识。`data/skill-downloads.json` 保留已采集快照和首次基线。
+
+每日归档配置已准备在 [docs/skill-download-stats.workflow.yml](docs/skill-download-stats.workflow.yml)，**尚未启用**：当前发布凭据缺少 GitHub `workflow` 权限，GitHub 拒绝创建工作流。权限补齐后，将该文件保存为 `.github/workflows/skill-download-stats.yml` 即可使用每天约北京时间09:17、发布后及手动触发；计划运行可能延迟或停用。此限制不影响 GitHub 自身的累计下载计数。归档也可手动运行技能中的脚本，不需要为公开读取提供令牌。
+
+复现：`python scripts/build_socialmedicine_bundle.py` 生成 `dist/` 下两个 ZIP、文件清单及 SHA-256。新版本使用新的 Release，保留旧附件，避免覆盖导致计数丢失。修改来源后运行 `python scripts/build_method_authorities.py` 与 `python scripts/build_guides.py`。验证：`python -m unittest discover -s tests -p test_download_stats.py` 和 `node --test tests/method-authorities.test.mjs`。
+
 2026-10-24：首页改为绿色科研聊天入口，标语为 **All for the health**。支持方法比较、Stata/R 代码追问、研究设计、院校、数据库、项目题目与经典资料；回答给出站内资料或官方出处。结构化学习与申请路线仍可展开使用。当前采用本地规则与资料检索，未接入通用模型 API。
 
 右上角展示全站访问、预设功能点击与下载点击，点击可查看明细和导出。统计服务将提问、已回答、需补充、未匹配、失败、追问及反馈分别汇总；互动事件没有原文或访客身份字段。对话仅在用户勾选后保留本机，可清除或导出。重复投递按事件 ID 去重；统计不代表独立人数、答案正确率或下载完成率。问答统计从本版本启用后开始，历史不可回溯。
@@ -35,7 +51,7 @@
 | [期刊](journals.html) | 97 个期刊／刊名入口，22 个中文入口；并入指定的 43 条清单 | 包含历史刊名，不是 97 本独立现刊；不展示未核实的当前 IF、分区或审稿时长 |
 | [文献](library.html) | 69 条：54 条领域文献、15 条方法参考 | 逐条显示继承的核验状态，不是新完成的系统综述 |
 | [图表](figures.html) | 27 张原图、截图或处理参考图 | 含完整图源与引用，处理记录可查；图片许可未逐图核定 |
-| [方法](methods.html) / [代码](code.html) / [工具](tools.html) | 89个方法、288段代码、55份完整专题工具 | Stata/R 模板未逐项执行，混合片段需拆分并核对上下文 |
+| [方法](methods.html) / [代码](code.html) / [工具](tools.html) | 89个方法、288段代码、58份完整专题工具 | Stata/R 模板未逐项执行，混合片段需拆分并核对上下文 |
 | [机构](institutions.html) | 91 个院校／机构／院系导航条目 | 部分仅核到学校主页；不是全部院校、招生目录或排名 |
 | [检索与数据](sources.html) | 40 个资源入口 | 公开入口不代表全文与微观数据可自由下载 |
 | [医保时间线](insurance-timeline.html) | 1998–2026 年 21 个国家级节点 | 成文、公布、生效分开，不是全部政策；2026 年医保法自 2027-01-01 施行 |
@@ -88,7 +104,7 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cel
 院校互动目录扩展为 53 条院系档案，新增名称检索与中山大学／南方医科大学快捷入口。保留原有来源核验边界。招聘与学术润色模块仅处理公开导航或浏览器本地文本。
 ## 方法、政策与数据库扩充
 
-[方法逻辑地图](guides/method-map.html)按问题→估计目标→数据结构→识别假设→模型→诊断选方法。完整Skill书架55份、速查89条、代码288段，保留原有12份专题；静态阅读页76个，R/Stata接口未逐项执行。
+[方法逻辑地图](guides/method-map.html)按问题→估计目标→数据结构→识别假设→模型→诊断选方法。完整Skill书架58份、速查89条、代码288段，保留原有12份专题；静态阅读页76个，R/Stata接口未逐项执行。
 
 [政策主题库](policy-topics.html)包含14个主题、27个官方文件/入口，重点展开长期护理保险、家庭病床、居家医疗和支付组织改革。发文、生效、地方规则与真实执行分开；变量和机制为研究建议。
 
@@ -102,7 +118,7 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cel
 
 ## 画图与 PPT 工作坊
 
-[工作坊](visual-skills.html)新增12份公开技能：6份科研画图、5份PPT和1份质量检查；完整书架55份。支持分类检索、逐项展开、完整阅读、下载Markdown和复制任务书。原有方法、数据库、政策及历史资料保持。
+[工作坊](visual-skills.html)新增12份公开技能：6份科研画图、5份PPT和1份质量检查；完整书架58份。支持分类检索、逐项展开、完整阅读、下载Markdown和复制任务书。原有方法、数据库、政策及历史资料保持。
 
 这些手册提炼既有任务中可复用的方法；不含原始对话、未发表项目和私人素材。第三方技能为明确标注的可选上游入口，不捆绑其软件、账号或生成额度。详情见[来源与能力边界](skills/references/visual-skill-sources.md)。本次原创脚本可生成效应图、简洁可编辑PPT底稿和有限结构检查，需另外进行视觉检查。
 
@@ -119,3 +135,9 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cel
 2026-10-24：补齐个体状态与病史、竞争事件、成本/QALY、校准验证、共同随机数、MCSE及PSA。收录8条核验的方法/应用来源，明确中国痴呆负担预测中的宏观Markov对照。原创base R教学模型实际运行，29项检查通过；Stata模板尚未执行。全部示例参数虚构，未验证真实人群。公开包不含个体数据、私人研究方案、EndNote库或论文原文。
 
 运行：在仓库根目录执行 `Rscript skills/scripts/microsimulation_demo.R --out microsimulation-demo`；验证：`Rscript skills/scripts/validate_microsimulation.R`。重建下载包：`python scripts/build_microsimulation_bundle.py`；其后按现有流程重建阅读页、目录及代码包。
+
+## 国自然经管与健康治理
+
+[交互分析](nsfc-health.html) · [脱敏清单](data/nsfc-health-projects.csv) · [分析与技能包](downloads/nsfc-health-analysis.zip)。1934项健康相关条目，涉及313个原层级机构，来自5份本地第三方汇编，实际覆盖2010—2025年，未逐项官方核验。1991—2009为缺口；2024—2025为局部院校汇编。网页、索引、CSV和ZIP均移除人员与项目编号，原工作簿及申请书不上传。
+
+国社科现有4471项及398项历史待核记录同步移除姓名、批准号和原始编号；统计数量保持。外部官方原名单及既有Git历史不属于本次清理范围。

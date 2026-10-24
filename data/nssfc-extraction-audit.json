@@ -134,6 +134,6 @@
       "issues": []
     }
   ],
-  "duplicateIds": [],
-  "conflicts": []
+  "duplicateCount": 0,
+  "conflictCount": 0
 }

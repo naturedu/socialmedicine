@@ -43,6 +43,20 @@ def csvwrite(name,rows,fields):
   w=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore');w.writeheader()
   for r in rows:w.writerow({k:'；'.join(v) if isinstance(v,list) else v for k,v in r.items() if k in fields})
 def canonical_org(s):return unicodedata.normalize('NFKC',s).strip()
+
+PUBLIC_REDACTION='公开汇总不含项目批准号、原始编号、负责人或首席专家姓名；仅保留题名、年份、机构、类别、统计标签和官方来源。原始名单与提取缓存仅供本地核验，不上传。'
+PUBLIC_FIELDS=set('date title organization category project_type program source_id sheet page health_core scope_groups topics keywords funder organization_normalized status approval_status state source notice official_notice notice_status source_level scope theme'.split())
+
+def public_record(record):
+ """Whitelist public fields; never derive the public identity from a name or grant code."""
+ result={k:v for k,v in record.items() if k in PUBLIC_FIELDS}
+ identity=str(record.get('id',''))
+ if not re.fullmatch(r'nssfc-public-[a-f0-9]{24}',identity):
+  parts=[record.get(k,'') for k in ['date','title','organization','program','source_id','source','page','table_row']]
+  identity='nssfc-public-'+hashlib.sha256(json.dumps(parts,ensure_ascii=False).encode()).hexdigest()[:24]
+ result['id']=identity
+ result['locator']=('原附件第 '+str(result['page'])+' 页' if result.get('page') else '见来源附件；公开汇总已隐藏原始编号及姓名')
+ return result
 def classify(title):
  clean=re.sub(FALSE_HEALTH,'',title)
  clean=clean.replace('健康发展','')
@@ -66,7 +80,8 @@ def main(cache,output=None,manifest_path=None):
  # Keep the historical unverified corpus apart from the approved-only catalogue.
  archive=ROOT/'data/archive/nssf-unverified-2026-10-23.json'
  if not archive.exists() and (ROOT/'data/nssf-projects.json').exists():
-  prior=read(ROOT/'data/nssf-projects.json');write('archive/nssf-unverified-2026-10-23.json',[r for r in prior if not r['status'].startswith('正式立项')])
+  prior=read(ROOT/'data/nssf-projects.json');write('archive/nssf-unverified-2026-10-23.json',[public_record(r) for r in prior if not r['status'].startswith('正式立项')])
+ if archive.exists():write('archive/nssf-unverified-2026-10-23.json',[public_record(r) for r in read(archive)])
  all_unique={};selected={};duplicates=[];conflicts=[]
  for r in raw:
   m=metas[r['source_id']];code=r['project_code']
@@ -132,9 +147,12 @@ def main(cache,output=None,manifest_path=None):
    counting='以批准号去重；无批准号时以年份、项目系列、题名、责任单位、负责人组合建立稳定标识。同题不同单位或首席专家保留独立项目。每项目机构全计数；主题及关键词按项目文档频次计数，标签可交叉。',
    hotspot='热点为题名中主题频次与共现的描述性汇聚，不是效应量Meta分析。共现剔除包含关系的词对及数字化/数字政府的机械共现。时期比较仅用全国条数核对完成的重点、一般、青年批次（2018—2020 对 2023—2025），分母为各期全学科正式立项总数，报告每千项频次变化。',
    limitations=['不代表三领域的全部项目：关键词法存在漏检和误检，题目略的项目无法判定主题。','2026年度重点、一般、青年项目尚无本次可核实的正式名单；公示不计数。','西部2017未取得正式完整附件；后期资助2021—2023及2026、教育学/艺术学/军事学单列与其他专项未系统覆盖。','重大专项仅收录2023二十大精神、2026二十届四中全会精神两批，其他专项待补。','立项状态指当年公布状态，未逐条追溯后来撤项、变更或结项。','机构频次反映本库覆盖与题名规则，不能解释为学术质量排名或申报成功率。'])
+ rules['publicRedaction']=PUBLIC_REDACTION
+ rows=[public_record(r) for r in rows]
+ assert len({r['id'] for r in rows})==len(rows),'Public identity collision requires review'
  write('nssf-projects.json',rows);write('nssfc-analysis.json',stats);write('nssfc-coverage.json',dict(updated=UPDATED,coverage=coverage,batches=batches,limitations=rules['limitations']))
- write('nssfc-methodology.json',rules);write('nssfc-extraction-audit.json',dict(updated=UPDATED,audits=audits,duplicateIds=duplicates,conflicts=conflicts))
- fields=['id','date','project_code','title','organization','organization_normalized','principal','category','project_type','program','scope_groups','topics','keywords','status','source_level','official_notice','notice','source','source_id','locator']
+ write('nssfc-methodology.json',rules);write('nssfc-extraction-audit.json',dict(updated=UPDATED,audits=audits,duplicateCount=len(duplicates),conflictCount=len(conflicts)))
+ fields=['id','date','title','organization','organization_normalized','category','project_type','program','scope_groups','topics','keywords','status','source_level','official_notice','notice','source','source_id','locator']
  csvwrite('nssf-projects.csv',rows,fields);csvwrite('nssfc-batches.csv',batches,list(batches[0]));csvwrite('nssfc-institutions.csv',[dict(name=k,count=v) for k,v in org.most_common()],['name','count'])
  csvwrite('nssfc-cooccurrence.csv',pairs,['a','b','count','jaccard']);csvwrite('nssfc-topic-changes.csv',changes,list(changes[0]))
  if (ROOT/'data/moe-projects.json').exists():

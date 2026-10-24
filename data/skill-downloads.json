@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "repository": "naturedu/socialmedicine",
+  "assetNames": [
+    "skill-download-stats.zip",
+    "socialmedicineskills.zip"
+  ],
+  "startedAt": "2026-10-24T08:56:13Z",
+  "metric": "github_release_asset_download_count",
+  "scope": "Release附件下载次数；非独立人数、成功安装或调用。排除源码ZIP、Raw、clone和镜像。",
+  "timezone": "UTC",
+  "assets": [],
+  "daily": [
+    {
+      "day": "2026-10-24",
+      "recordedAt": "2026-10-24T08:56:13Z",
+      "observedTotal": 0,
+      "availableTotal": 0,
+      "increaseSincePreviousRecord": null,
+      "packages": {
+        "skill-download-stats.zip": 0,
+        "socialmedicineskills.zip": 0
+      }
+    }
+  ],
+  "updatedAt": "2026-10-24T08:56:13Z",
+  "observedTotal": 0,
+  "availableTotal": 0,
+  "byPackage": {
+    "skill-download-stats.zip": 0,
+    "socialmedicineskills.zip": 0
+  }
+}

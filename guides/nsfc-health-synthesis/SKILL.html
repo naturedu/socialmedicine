@@ -1,0 +1,26 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>国自然经管与健康治理清单分析 · 普贤</title><link rel="stylesheet" href="../../guide.css"></head><body><header><a class="back" href="../../index.html#methods">← 方法工作台</a><a href="../../database-skills.html">🌱 数据库</a><a href="../../guides/method-map.html">🧭 逻辑地图</a><a href="../../skills/nsfc-health-synthesis/SKILL.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">来源与筛选</a></li>
+<li><a href="#_3">使用本次适配的脚本</a></li>
+<li><a href="#_4">公开字段与分析</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">国自然经管与健康治理清单分析</h1>
+<p>先核对文件内容，再确定年份、学部、来源可信度与输出范围。目录名不能作为覆盖证据。国自然与国社科分别统计，不把申请书、论文或公示材料当作正式项目清单。</p>
+<h2 id="_2">来源与筛选</h2>
+<ul>
+<li><a href="https://www.nsfc.gov.cn/p1/2857/3201/3210/glkxsc.html">基金委管理科学三处</a>列有经济科学与宏观管理与政策。历史申请代码有调整，不以现行细分代码倒推旧项目。</li>
+<li>用<a href="https://kd.nsfc.cn/">基金委知识管理平台</a>核验具体题名、机构、年度与类别。仅提供官网入口不等于已经核验；第三方汇编须如实标注，保留缺口。</li>
+<li>先按原表学部或经管清单来源确定范围，再按健康、医疗、医保、公共卫生、老龄照护、人口生育、健康公平等题名词筛选。检查设备健康、机械寿命、泛指企业健康发展和消费心理等误检。纯生物机制条目与健康管理研究分开。</li>
+<li>同工作簿重叠年份页、学校版与专业版、跨文件重复记录不能相加。只在本地使用编号和人员辅助去重；同号不同题名/机构、同题不同人员等冲突须单列核查。无把握时明确排除计数，不编造纠错。</li>
+</ul>
+<h2 id="_3">使用本次适配的脚本</h2>
+<p>依赖 Python、openpyxl、xlrd。脚本针对本次五份Excel的表头和工作表适配；其他清单先查看表结构，修改读取映射后用小样本验证，不承诺通用解析。</p>
+<pre><code class="language-text">python -m pip install -r &lt;技能目录&gt;/requirements.txt
+python &lt;技能目录&gt;/scripts/build_nsfc_health.py --input &lt;本地清单目录&gt; --output &lt;任务结果目录&gt;
+</code></pre>
+<p>输出为结果目录的 <code>data/nsfc-health-*.json</code>、CSV与分析Markdown。脚本不复制原文件，不读取目录中的申请书PDF。原件和含编号/姓名的核验材料留在本地。</p>
+<h2 id="_4">公开字段与分析</h2>
+<p>公开保留年份、题名、机构、类别、来源说明、核验状态及题名主题。删除批准号、原始编号、姓名、经费、联系方式、个人路径及原名单行号；CSV、JSON、网页、索引、ZIP同步处理。技术ID由已公开的年份、题名、机构产生，不能内嵌原编号。</p>
+<p>输出机构频次、受控主题、关键词文档频次、共现/Jaccard、年份覆盖和时期构成。主题可交叉。时期占比须明确分母；局部院校汇编不能充当全国资助趋势、成功率或机构实力排名。缺失年份显示未提供，不能填零。单位层级不自动合并；同一项目在不同版本中的学校/学院表述只在证据一致时去重，保留来源。</p>
+<p>交付前验证：输入/去重/重复/冲突数量守恒、公开ID唯一、筛选边界、CSV公式注入防护、官方入口用途、所有下载包字段与网页一致。结果页为<a href="https://naturedu.github.io/socialmedicine/nsfc-health.html">国自然经管与健康治理</a>，数据状态与覆盖以该次输出为准。</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main></body></html>

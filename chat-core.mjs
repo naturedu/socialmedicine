@@ -84,7 +84,7 @@ export function makeReply(question,previous={},data={}){
   const all=(data.projects||[]).filter(r=>(!year||r.date===year)&&(!provider||r.funder===provider));
   const key=context.replace(/20\d{2}|国社科|教育部|项目|题目|立项|给我|看看|有哪些|总览|研究|年/g,' ').trim();
   const rows=(key?relevant(all,key,r=>[r.title,r.organization,r.theme],5):all.slice(0,5));
-  return finish(answer(rows.length?'找到这些公开项目题目。':'当前题目库没有匹配结果。',['本站按领域相关题名筛选，不是全国全部项目。国社科仅正式立项，教育部保留各条原始状态；题名匹配不能代替项目内容审读。',...(data.coverage?.limitations||[]).slice(0,2)],{status:rows.length?'answered':'unmatched',sections:rows.map(r=>({heading:r.title,items:[`${r.date} · ${r.funder} · ${r.project_type}`,`${r.principal} · ${r.organization}`,r.status]})),sources:[...rows.map(r=>source(r.title+' · 原名单',r.source,r.locator)),source('完整筛选与年度覆盖','grants.html'),source('国社科立项图谱','nssfc-projects.html')],suggestions:['找2025年教育部养老项目','找2024年国社科医保项目']}));
+  return finish(answer(rows.length?'找到这些公开项目题目。':'当前题目库没有匹配结果。',['本站按领域相关题名筛选，不是全国全部项目。国社科仅正式立项，教育部保留各条原始状态；题名匹配不能代替项目内容审读。',...(data.coverage?.limitations||[]).slice(0,2)],{status:rows.length?'answered':'unmatched',sections:rows.map(r=>({heading:r.title,items:[`${r.date} · ${r.funder} · ${r.project_type}`,r.funder==='国社科'?r.organization:[r.principal,r.organization].filter(Boolean).join(' · '),r.status]})),sources:[...rows.map(r=>source(r.title+' · 原名单',r.source,r.locator)),source('完整筛选与年度覆盖','grants.html'),source('国社科立项图谱','nssfc-projects.html')],suggestions:['找2025年教育部养老项目','找2024年国社科医保项目']}));
  }
  if(intent.kind==='goal'){
   const plan=buildGoal({target:context,type:intent.goal,background:'',weeks:12},data.library||[]);

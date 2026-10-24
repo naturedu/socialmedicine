@@ -6,12 +6,11 @@ const root=new URL('../',import.meta.url),read=p=>readFile(new URL(p,root),'utf8
 test('approved-only records have unique identities and locatable official evidence',async()=>{
  const rows=await json('data/nssf-projects.json'),sources=await json('data/nssfc-source-files.json'),stats=await json('data/nssfc-analysis.json');
  assert.equal(rows.length,stats.projects);assert.equal(new Set(rows.map(r=>r.id)).size,rows.length);assert.ok(rows.length>4000);
- assert.equal(rows.filter(r=>r.project_code).length,stats.withCode);assert.equal(rows.filter(r=>r.health_core).length,stats.healthProjects);
+ assert.ok(rows.every(r=>!Object.hasOwn(r,"project_code")&&!Object.hasOwn(r,"principal")&&!Object.hasOwn(r,"serial")));assert.equal(rows.filter(r=>r.health_core).length,stats.healthProjects);
  for(const r of rows){assert.equal(r.approval_status,'approved');assert.equal(r.state,'正式立项名单');assert.doesNotMatch(r.status,/公示|待核/);assert.match(r.notice,/^https?:\/\//);assert.ok(r.locator);assert.ok(r.scope_groups.length);assert.ok(r.topics.length);const s=sources.find(x=>x.key===r.source_id);assert.ok(s);assert.equal(r.source.split('#')[0],s.url);assert.match(s.sha256,/^[a-f0-9]{64}$/);assert.match(s.source_level,/官网/);assert.doesNotMatch(r.title,/_x000D_/);}
- assert.ok(rows.some(r=>r.project_code==='20BGL271'&&r.title.includes('疾控')));
- assert.ok(!rows.some(r=>r.project_code==='23BJY246')); // generic market health is outside the declared field.
+ assert.ok(rows.some(r=>r.title.includes('疾控')));
  assert.ok(!rows.some(r=>r.title==='推动平台经济创新和健康发展研究'));
- assert.ok(rows.some(r=>r.project_code==='24ASH013'&&r.health_core)); // genuine population health development remains.
+ assert.ok(rows.some(r=>r.title.includes('健康发展')&&r.health_core)); // genuine population health development remains.
 });
 test('coverage conserves records and national annual denominators without treating missing as zero',async()=>{
  const rows=await json('data/nssf-projects.json'),{coverage,batches}=await json('data/nssfc-coverage.json'),stats=await json('data/nssfc-analysis.json');
@@ -21,7 +20,7 @@ test('coverage conserves records and national annual denominators without treati
  assert.equal(batches.reduce((n,b)=>n+b.selectedRows,0),rows.length);assert.equal(batches.reduce((n,b)=>n+b.parsedRows,0),stats.parsedRows);
  for(const b of batches)if(b.expectedRows!==null)assert.equal(b.expectedRows,b.parsedRows);
  for(const x of stats.changes){assert.equal(x.beforeTotal,13758);assert.equal(x.afterTotal,15182);assert.ok(Math.abs(x.beforePer1000-x.before/x.beforeTotal*1000)<.006);assert.ok(Math.abs(x.afterPer1000-x.after/x.afterTotal*1000)<.006);}
- const audit=await json('data/nssfc-extraction-audit.json');assert.deepEqual(audit.conflicts,[]);assert.ok(audit.audits.every(a=>a.issues.length===0));
+ const audit=await json('data/nssfc-extraction-audit.json');assert.equal(audit.conflictCount,0);assert.ok(audit.audits.every(a=>a.issues.length===0));
 });
 test('filters, institution full counting, document frequency and Jaccard handle overlap and empty results',()=>{
  const rows=[{approval_status:'approved',date:'2025',title:'数字养老',organization:'甲校',organization_normalized:'甲校',project_code:'25B001',project_type:'一般项目',scope_groups:['卫生健康'],topics:['养老'],keywords:['数字化','养老','养老']},{approval_status:'approved',date:'2024',title:'农村养老',organization:'乙校',organization_normalized:'乙校',project_code:'24C001',project_type:'青年项目',scope_groups:['卫生健康'],topics:['养老'],keywords:['农村','养老']},{approval_status:'publicity',date:'2025',title:'数字养老',keywords:['养老']}];

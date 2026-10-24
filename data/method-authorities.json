@@ -1,0 +1,1787 @@
+{
+  "updated": "2026-10-24",
+  "note": "代表性原始方法、官方指南和作者文档；不作唯一权威排名。报告指南不替代设计方法，软件文档不代表本站代码已验证。",
+  "sources": {
+    "strobe": {
+      "id": "strobe",
+      "title": "STROBE：观察性研究报告规范",
+      "url": "https://www.strobe-statement.org/",
+      "type": "官方报告指南",
+      "scope": "适用于横断面、病例对照和队列研究的报告，不是设计质量评分工具",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "STROBE - Strengthening the reporting of observational studies in epidemiology",
+      "resolvedUrl": "https://www.strobe-statement.org/"
+    },
+    "consort": {
+      "id": "consort",
+      "title": "SPIRIT–CONSORT：随机试验方案与报告",
+      "url": "https://www.consort-spirit.org/",
+      "type": "官方报告指南",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "SPIRIT CONSORT",
+      "resolvedUrl": "https://www.consort-spirit.org/"
+    },
+    "mixed": {
+      "id": "mixed",
+      "title": "Creswell & Plano Clark：混合方法研究",
+      "url": "https://study.sagepub.com/creswell3e",
+      "type": "作者教材／出版者资源",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Designing and Conducting Mixed Methods Research | Online Resources",
+      "resolvedUrl": "https://study.sagepub.com/creswell3e"
+    },
+    "ecological": {
+      "id": "ecological",
+      "title": "Ecologic Studies in Epidemiology: Concepts, Principles, and Methods",
+      "url": "https://doi.org/10.1146/annurev.pu.16.050195.000425",
+      "type": "方法综述",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Ecologic Studies in Epidemiology: Concepts, Principles, and Methods",
+      "resolvedUrl": "https://api.crossref.org/works/10.1146%2Fannurev.pu.16.050195.000425"
+    },
+    "accord": {
+      "id": "accord",
+      "title": "ACCORD: A reporting guideline for consensus methods in biomedicine",
+      "url": "https://doi.org/10.1371/journal.pmed.1004326",
+      "type": "报告指南论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "ACCORD (ACcurate COnsensus Reporting Document): A reporting guideline for consensus methods in biomedicine developed via a modified Delphi",
+      "resolvedUrl": "https://api.crossref.org/works/10.1371%2Fjournal.pmed.1004326"
+    },
+    "describe": {
+      "id": "describe",
+      "title": "Stata：描述统计",
+      "url": "https://www.stata.com/manuals/rsummarize.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：描述统计",
+      "resolvedUrl": "https://www.stata.com/manuals/rsummarize.pdf"
+    },
+    "normal": {
+      "id": "normal",
+      "title": "Stata：正态性检验",
+      "url": "https://www.stata.com/manuals/rswilk.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：正态性检验",
+      "resolvedUrl": "https://www.stata.com/manuals/rswilk.pdf"
+    },
+    "ttest": {
+      "id": "ttest",
+      "title": "Stata：t 检验",
+      "url": "https://www.stata.com/manuals/rttest.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：t 检验",
+      "resolvedUrl": "https://www.stata.com/manuals/rttest.pdf"
+    },
+    "anova": {
+      "id": "anova",
+      "title": "Stata：方差分析",
+      "url": "https://www.stata.com/manuals/ranova.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：方差分析",
+      "resolvedUrl": "https://www.stata.com/manuals/ranova.pdf"
+    },
+    "chi": {
+      "id": "chi",
+      "title": "Stata：列联表与卡方检验",
+      "url": "https://www.stata.com/manuals/rtabulatetwoway.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：列联表与卡方检验",
+      "resolvedUrl": "https://www.stata.com/manuals/rtabulatetwoway.pdf"
+    },
+    "ranksum": {
+      "id": "ranksum",
+      "title": "Stata：秩和检验",
+      "url": "https://www.stata.com/manuals/rranksum.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：秩和检验",
+      "resolvedUrl": "https://www.stata.com/manuals/rranksum.pdf"
+    },
+    "regress": {
+      "id": "regress",
+      "title": "Stata：线性回归",
+      "url": "https://www.stata.com/manuals/rregress.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：线性回归",
+      "resolvedUrl": "https://www.stata.com/manuals/rregress.pdf"
+    },
+    "logit": {
+      "id": "logit",
+      "title": "Stata：Logistic 回归",
+      "url": "https://www.stata.com/manuals/rlogit.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：Logistic 回归",
+      "resolvedUrl": "https://www.stata.com/manuals/rlogit.pdf"
+    },
+    "ologit": {
+      "id": "ologit",
+      "title": "Stata：有序 Logistic",
+      "url": "https://www.stata.com/manuals/rologit.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：有序 Logistic",
+      "resolvedUrl": "https://www.stata.com/manuals/rologit.pdf"
+    },
+    "mlogit": {
+      "id": "mlogit",
+      "title": "Stata：多项 Logistic",
+      "url": "https://www.stata.com/manuals/rmlogit.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：多项 Logistic",
+      "resolvedUrl": "https://www.stata.com/manuals/rmlogit.pdf"
+    },
+    "poisson": {
+      "id": "poisson",
+      "title": "Stata：Poisson 回归",
+      "url": "https://www.stata.com/manuals/rpoisson.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：Poisson 回归",
+      "resolvedUrl": "https://www.stata.com/manuals/rpoisson.pdf"
+    },
+    "nbreg": {
+      "id": "nbreg",
+      "title": "Stata：负二项回归",
+      "url": "https://www.stata.com/manuals/rnbreg.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：负二项回归",
+      "resolvedUrl": "https://www.stata.com/manuals/rnbreg.pdf"
+    },
+    "survival": {
+      "id": "survival",
+      "title": "Stata：生存分析",
+      "url": "https://www.stata.com/manuals/st.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：生存分析",
+      "resolvedUrl": "https://www.stata.com/manuals/st.pdf"
+    },
+    "mixed-stata": {
+      "id": "mixed-stata",
+      "title": "Stata：混合效应模型",
+      "url": "https://www.stata.com/manuals/memixed.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：混合效应模型",
+      "resolvedUrl": "https://www.stata.com/manuals/memixed.pdf"
+    },
+    "pca": {
+      "id": "pca",
+      "title": "Stata：主成分分析",
+      "url": "https://www.stata.com/manuals/mvpca.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "checkError": "HTTPError",
+      "resolvedTitle": "Stata：主成分分析",
+      "resolvedUrl": "https://www.stata.com/manuals/mvpca.pdf"
+    },
+    "factor": {
+      "id": "factor",
+      "title": "Stata：因子分析",
+      "url": "https://www.stata.com/manuals/mvfactor.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "checkError": "HTTPError",
+      "resolvedTitle": "Stata：因子分析",
+      "resolvedUrl": "https://www.stata.com/manuals/mvfactor.pdf"
+    },
+    "frontier": {
+      "id": "frontier",
+      "title": "Stata：随机前沿模型",
+      "url": "https://www.stata.com/manuals/rfrontier.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：随机前沿模型",
+      "resolvedUrl": "https://www.stata.com/manuals/rfrontier.pdf"
+    },
+    "iv": {
+      "id": "iv",
+      "title": "Stata：工具变量回归",
+      "url": "https://www.stata.com/manuals/rivregress.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：工具变量回归",
+      "resolvedUrl": "https://www.stata.com/manuals/rivregress.pdf"
+    },
+    "mi": {
+      "id": "mi",
+      "title": "Stata：多重插补",
+      "url": "https://www.stata.com/manuals/mi.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：多重插补",
+      "resolvedUrl": "https://www.stata.com/manuals/mi.pdf"
+    },
+    "power": {
+      "id": "power",
+      "title": "Stata：功效、精度与样本量",
+      "url": "https://www.stata.com/manuals/pss.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：功效、精度与样本量",
+      "resolvedUrl": "https://www.stata.com/manuals/pss.pdf"
+    },
+    "svy": {
+      "id": "svy",
+      "title": "Stata：复杂抽样与调查估计",
+      "url": "https://www.stata.com/manuals/svy.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：复杂抽样与调查估计",
+      "resolvedUrl": "https://www.stata.com/manuals/svy.pdf"
+    },
+    "kappa": {
+      "id": "kappa",
+      "title": "Stata：Kappa 一致性",
+      "url": "https://www.stata.com/manuals/rkappa.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "checkError": "HTTPError",
+      "resolvedTitle": "Stata：Kappa 一致性",
+      "resolvedUrl": "https://www.stata.com/manuals/rkappa.pdf"
+    },
+    "icc": {
+      "id": "icc",
+      "title": "Stata：组内相关系数",
+      "url": "https://www.stata.com/manuals/ricc.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：组内相关系数",
+      "resolvedUrl": "https://www.stata.com/manuals/ricc.pdf"
+    },
+    "glm": {
+      "id": "glm",
+      "title": "Stata：广义线性模型",
+      "url": "https://www.stata.com/manuals/rglm.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：广义线性模型",
+      "resolvedUrl": "https://www.stata.com/manuals/rglm.pdf"
+    },
+    "panel": {
+      "id": "panel",
+      "title": "Stata：面板回归 FE/RE/CRE",
+      "url": "https://www.stata.com/manuals/xtxtreg.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：面板回归 FE/RE/CRE",
+      "resolvedUrl": "https://www.stata.com/manuals/xtxtreg.pdf"
+    },
+    "quantile": {
+      "id": "quantile",
+      "title": "Stata：分位数回归",
+      "url": "https://www.stata.com/manuals/rqreg.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：分位数回归",
+      "resolvedUrl": "https://www.stata.com/manuals/rqreg.pdf"
+    },
+    "zip": {
+      "id": "zip",
+      "title": "Stata：零膨胀 Poisson",
+      "url": "https://www.stata.com/manuals/rzip.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：零膨胀 Poisson",
+      "resolvedUrl": "https://www.stata.com/manuals/rzip.pdf"
+    },
+    "spatial": {
+      "id": "spatial",
+      "title": "Stata：空间自回归模型",
+      "url": "https://www.stata.com/manuals/spspregress.pdf",
+      "type": "官方软件文档",
+      "scope": "命令定义、公式与示例；不代表本库代码已经运行",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Stata：空间自回归模型",
+      "resolvedUrl": "https://www.stata.com/manuals/spspregress.pdf"
+    },
+    "nice": {
+      "id": "nice",
+      "title": "NICE：经济评价方法",
+      "url": "https://www.nice.org.uk/process/pmg36/chapter/economic-evaluation-2",
+      "type": "官方方法指南",
+      "scope": "NICE 决策语境；不自动等同其他国家的评价规则",
+      "checkedDate": "2026-10-24",
+      "verification": "官网检索可核对，直接访问受限",
+      "verificationScope": "NICE官网检索结果核对题名；HTTP访问受限，使用时回访",
+      "checkError": "HTTPError"
+    },
+    "cheers": {
+      "id": "cheers",
+      "title": "CHEERS 2022 statement: updated reporting guidance for health economic evaluations",
+      "url": "https://doi.org/10.1136/bmj-2021-067975",
+      "type": "报告指南论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Consolidated Health Economic Evaluation Reporting Standards 2022 (CHEERS 2022) statement: updated reporting guidance for health economic evaluations",
+      "resolvedUrl": "https://api.crossref.org/works/10.1136%2Fbmj-2021-067975"
+    },
+    "daly": {
+      "id": "daly",
+      "title": "WHO：Global Health Estimates 方法与数据",
+      "url": "https://www.who.int/data/global-health-estimates",
+      "type": "官方方法与数据",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Global Health Estimates",
+      "resolvedUrl": "https://www.who.int/data/global-health-estimates"
+    },
+    "bia": {
+      "id": "bia",
+      "title": "ISPOR：预算影响分析良好实践",
+      "url": "https://www.ispor.org/heor-resources/good-practices/article/principles-of-good-practice-for-budget-impact-analysis-ii",
+      "type": "学会方法指南",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "ISPOR - Principles of Good Practice for Budget Impact Analysis II",
+      "resolvedUrl": "https://www.ispor.org/heor-resources/good-practices/article/principles-of-good-practice-for-budget-impact-analysis-ii"
+    },
+    "hta": {
+      "id": "hta",
+      "title": "NICE：卫生技术评价方法与流程",
+      "url": "https://www.nice.org.uk/process/pmg36",
+      "type": "官方方法指南",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "官网检索可核对，直接访问受限",
+      "verificationScope": "NICE官网检索结果核对题名；HTTP访问受限，使用时回访",
+      "checkError": "HTTPError"
+    },
+    "dea": {
+      "id": "dea",
+      "title": "Benchmarking：DEA 与效率分析文档",
+      "url": "https://cran.r-project.org/web/packages/Benchmarking/Benchmarking.pdf",
+      "type": "官方软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "Benchmarking：DEA 与效率分析文档",
+      "resolvedUrl": "https://cran.r-project.org/web/packages/Benchmarking/Benchmarking.pdf"
+    },
+    "drg": {
+      "id": "drg",
+      "title": "国家医保局：DRG/DIP 2.0 分组通知",
+      "url": "https://www.nhsa.gov.cn/art/2024/7/23/art_53_13314.html",
+      "type": "官方政策原文",
+      "scope": "核对分组版本；点值、预算和结算标准需另查当地现行文件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "国家医疗保障局 政策法规 国家医疗保障局办公室关于印发按病组和病种分值付费2.0版分组方案并深入推进相关工作的通知",
+      "resolvedUrl": "https://www.nhsa.gov.cn/art/2024/7/23/art_53_13314.html"
+    },
+    "equity": {
+      "id": "equity",
+      "title": "Analyzing Health Equity Using Household Survey Data",
+      "url": "https://doi.org/10.1596/978-0-8213-6933-3",
+      "type": "机构方法教材",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Analyzing Health Equity Using Household Survey Data",
+      "resolvedUrl": "https://api.crossref.org/works/10.1596%2F978-0-8213-6933-3"
+    },
+    "psm": {
+      "id": "psm",
+      "title": "The central role of the propensity score in observational studies for causal effects",
+      "url": "https://doi.org/10.1093/biomet/70.1.41",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "The central role of the propensity score in observational studies for causal effects",
+      "resolvedUrl": "https://api.crossref.org/works/10.1093%2Fbiomet%2F70.1.41"
+    },
+    "rdd": {
+      "id": "rdd",
+      "title": "RD Packages：断点回归作者工具与论文",
+      "url": "https://rdpackages.github.io/",
+      "type": "作者软件与方法文献",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "RD Packages · RD Software Packages",
+      "resolvedUrl": "https://rdpackages.github.io/"
+    },
+    "scm": {
+      "id": "scm",
+      "title": "Synthetic Control Methods for Comparative Case Studies",
+      "url": "https://doi.org/10.1198/jasa.2009.ap08746",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Synthetic Control Methods for Comparative Case Studies: Estimating the Effect of California’s Tobacco Control Program",
+      "resolvedUrl": "https://api.crossref.org/works/10.1198%2Fjasa.2009.ap08746"
+    },
+    "did-paper": {
+      "id": "did-paper",
+      "title": "Difference-in-Differences with multiple time periods",
+      "url": "https://doi.org/10.1016/j.jeconom.2020.12.001",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Difference-in-Differences with multiple time periods",
+      "resolvedUrl": "https://api.crossref.org/works/10.1016%2Fj.jeconom.2020.12.001"
+    },
+    "its": {
+      "id": "its",
+      "title": "Interrupted time series regression for the evaluation of public health interventions: a tutorial",
+      "url": "https://doi.org/10.1093/ije/dyw098",
+      "type": "方法教程",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Interrupted time series regression for the evaluation of public health interventions: a tutorial",
+      "resolvedUrl": "https://api.crossref.org/works/10.1093%2Fije%2Fdyw098"
+    },
+    "ddd": {
+      "id": "ddd",
+      "title": "The triple difference estimator",
+      "url": "https://doi.org/10.1093/ectj/utac010",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "The triple difference estimator",
+      "resolvedUrl": "https://api.crossref.org/works/10.1093%2Fectj%2Futac010"
+    },
+    "glmnet": {
+      "id": "glmnet",
+      "title": "glmnet：LASSO 与弹性网官方文档",
+      "url": "https://cran.r-project.org/web/packages/glmnet/glmnet.pdf",
+      "type": "作者软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "checkError": "URLError",
+      "resolvedTitle": "glmnet：LASSO 与弹性网",
+      "resolvedUrl": "https://cran.r-project.org/web/packages/glmnet/glmnet.pdf"
+    },
+    "forest": {
+      "id": "forest",
+      "title": "Random Forests",
+      "url": "https://doi.org/10.1023/A:1010933404324",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Random Forests",
+      "resolvedUrl": "https://api.crossref.org/works/10.1023%2FA%3A1010933404324"
+    },
+    "xgb": {
+      "id": "xgb",
+      "title": "XGBoost：官方文档",
+      "url": "https://xgboost.readthedocs.io/en/stable/",
+      "type": "官方软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "XGBoost Documentation — xgboost 3.4.2 documentation",
+      "resolvedUrl": "https://xgboost.readthedocs.io/en/stable/"
+    },
+    "stan": {
+      "id": "stan",
+      "title": "Stan：贝叶斯建模用户手册",
+      "url": "https://mc-stan.org/docs/stan-users-guide/",
+      "type": "官方软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Stan User’s Guide",
+      "resolvedUrl": "https://mc-stan.org/docs/stan-users-guide/"
+    },
+    "andersen": {
+      "id": "andersen",
+      "title": "Revisiting the Behavioral Model and Access to Medical Care: Does it Matter?",
+      "url": "https://doi.org/10.2307/2137284",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Revisiting the Behavioral Model and Access to Medical Care: Does it Matter?",
+      "resolvedUrl": "https://api.crossref.org/works/10.2307%2F2137284"
+    },
+    "grossman": {
+      "id": "grossman",
+      "title": "On the Concept of Health Capital and the Demand for Health",
+      "url": "https://doi.org/10.1086/259880",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "checkError": "HTTPError",
+      "resolvedTitle": "On the Concept of Health Capital and the Demand for Health",
+      "resolvedUrl": "https://api.crossref.org/works/10.1086%2F259880"
+    },
+    "hbm": {
+      "id": "hbm",
+      "title": "Historical Origins of the Health Belief Model",
+      "url": "https://doi.org/10.1177/109019817400200403",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Historical Origins of the Health Belief Model",
+      "resolvedUrl": "https://api.crossref.org/works/10.1177%2F109019817400200403"
+    },
+    "tpb": {
+      "id": "tpb",
+      "title": "The theory of planned behavior",
+      "url": "https://doi.org/10.1016/0749-5978(91)90020-T",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "The theory of planned behavior",
+      "resolvedUrl": "https://api.crossref.org/works/10.1016%2F0749-5978%2891%2990020-T"
+    },
+    "ecology": {
+      "id": "ecology",
+      "title": "An Ecological Perspective on Health Promotion Programs",
+      "url": "https://doi.org/10.1177/109019818801500401",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "An Ecological Perspective on Health Promotion Programs",
+      "resolvedUrl": "https://api.crossref.org/works/10.1177%2F109019818801500401"
+    },
+    "sen": {
+      "id": "sen",
+      "title": "Why health equity?",
+      "url": "https://doi.org/10.1002/hec.762",
+      "type": "理论论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Why health equity?",
+      "resolvedUrl": "https://api.crossref.org/works/10.1002%2Fhec.762"
+    },
+    "rawls": {
+      "id": "rawls",
+      "title": "A Theory of Justice",
+      "url": "https://doi.org/10.4159/9780674042605",
+      "type": "原始理论著作",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "A Theory of Justice",
+      "resolvedUrl": "https://api.crossref.org/works/10.4159%2F9780674042605"
+    },
+    "csdh": {
+      "id": "csdh",
+      "title": "WHO：A conceptual framework for action on the social determinants of health",
+      "url": "https://www.who.int/publications/i/item/9789241500852",
+      "type": "官方理论框架",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "A Conceptual Framework for Action on the Social Determinants of Health",
+      "resolvedUrl": "https://www.who.int/publications/i/item/9789241500852"
+    },
+    "agency": {
+      "id": "agency",
+      "title": "Physician Agency",
+      "url": "https://doi.org/10.1016/S1574-0064(00)80168-7",
+      "type": "方法与理论教材",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Physician Agency",
+      "resolvedUrl": "https://api.crossref.org/works/10.1016%2FS1574-0064%2800%2980168-7"
+    },
+    "arrow": {
+      "id": "arrow",
+      "title": "Uncertainty and the Welfare Economics of Medical Care",
+      "url": "https://assets.aeaweb.org/asset-server/files/9442.pdf",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "checkError": "HTTPError",
+      "resolvedTitle": "Uncertainty and the Welfare Economics of Medical Care",
+      "resolvedUrl": "https://assets.aeaweb.org/asset-server/files/9442.pdf"
+    },
+    "north": {
+      "id": "north",
+      "title": "Institutions, Institutional Change and Economic Performance",
+      "url": "https://doi.org/10.1017/CBO9780511808678",
+      "type": "原始理论著作",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Institutions, Institutional Change and Economic Performance",
+      "resolvedUrl": "https://api.crossref.org/works/10.1017%2FCBO9780511808678"
+    },
+    "grounded": {
+      "id": "grounded",
+      "title": "The Discovery of Grounded Theory: Strategies for Qualitative Research",
+      "url": "https://doi.org/10.4324/9780203793206",
+      "type": "原始方法著作",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "The Discovery of Grounded Theory",
+      "resolvedUrl": "https://api.crossref.org/works/10.4324%2F9780203793206"
+    },
+    "lavaan": {
+      "id": "lavaan",
+      "title": "lavaan：结构方程模型教程",
+      "url": "https://lavaan.ugent.be/tutorial/",
+      "type": "作者软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Overview – lavaan.org",
+      "resolvedUrl": "https://lavaan.ugent.be/tutorial/"
+    },
+    "multilevel": {
+      "id": "multilevel",
+      "title": "lavaan：多层结构方程模型",
+      "url": "https://lavaan.ugent.be/tutorial/multilevel.html",
+      "type": "作者软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Multilevel SEM – lavaan.org",
+      "resolvedUrl": "https://lavaan.ugent.be/tutorial/multilevel.html"
+    },
+    "qca": {
+      "id": "qca",
+      "title": "QCA：作者软件与方法文档",
+      "url": "https://cran.r-project.org/web/packages/QCA/QCA.pdf",
+      "type": "作者软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "checkError": "URLError",
+      "resolvedTitle": "QCA with R：作者方法手册",
+      "resolvedUrl": "https://cran.r-project.org/web/packages/QCA/QCA.pdf"
+    },
+    "finegray": {
+      "id": "finegray",
+      "title": "A Proportional Hazards Model for the Subdistribution of a Competing Risk",
+      "url": "https://doi.org/10.1080/01621459.1999.10474144",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "A Proportional Hazards Model for the Subdistribution of a Competing Risk",
+      "resolvedUrl": "https://api.crossref.org/works/10.1080%2F01621459.1999.10474144"
+    },
+    "tte-original": {
+      "id": "tte-original",
+      "title": "Using Big Data to Emulate a Target Trial When a Randomized Trial Is Not Available",
+      "url": "https://doi.org/10.1093/aje/kwv254",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Using Big Data to Emulate a Target Trial When a Randomized Trial Is Not Available: Table 1.",
+      "resolvedUrl": "https://api.crossref.org/works/10.1093%2Faje%2Fkwv254"
+    },
+    "msm": {
+      "id": "msm",
+      "title": "Marginal structural models and causal inference in epidemiology",
+      "url": "https://doi.org/10.1097/00001648-200009000-00011",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Marginal Structural Models and Causal Inference in Epidemiology",
+      "resolvedUrl": "https://api.crossref.org/works/10.1097%2F00001648-200009000-00011"
+    },
+    "causal-book": {
+      "id": "causal-book",
+      "title": "Hernán & Robins：Causal Inference: What If",
+      "url": "https://miguelhernan.org/whatifbook",
+      "type": "作者方法教材",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Causal Inference: What If (the book) — Miguel Hernán",
+      "resolvedUrl": "https://miguelhernan.org/whatifbook"
+    },
+    "dml-paper": {
+      "id": "dml-paper",
+      "title": "Double/debiased machine learning for treatment and structural parameters",
+      "url": "https://doi.org/10.1111/ectj.12097",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Double/debiased machine learning for treatment and structural parameters",
+      "resolvedUrl": "https://api.crossref.org/works/10.1111%2Fectj.12097"
+    },
+    "sdid-paper": {
+      "id": "sdid-paper",
+      "title": "Synthetic Difference-in-Differences",
+      "url": "https://doi.org/10.1257/aer.20190159",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Synthetic Difference-in-Differences",
+      "resolvedUrl": "https://api.crossref.org/works/10.1257%2Faer.20190159"
+    },
+    "evalue": {
+      "id": "evalue",
+      "title": "Sensitivity Analysis in Observational Research: Introducing the E-Value",
+      "url": "https://doi.org/10.7326/M16-2607",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Sensitivity Analysis in Observational Research: Introducing the E-Value",
+      "resolvedUrl": "https://api.crossref.org/works/10.7326%2FM16-2607"
+    },
+    "lcmm": {
+      "id": "lcmm",
+      "title": "lcmm：纵向潜类别与混合模型",
+      "url": "https://cecileproust-lima.github.io/lcmm/",
+      "type": "作者软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Extended Mixed Models Using Latent Classes and Latent Processes • lcmm",
+      "resolvedUrl": "https://cecileproust-lima.github.io/lcmm/"
+    },
+    "tripod-main": {
+      "id": "tripod-main",
+      "title": "TRIPOD：预测模型报告规范",
+      "url": "https://www.tripod-statement.org/",
+      "type": "官方报告指南",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Tripod statement",
+      "resolvedUrl": "https://www.tripod-statement.org/"
+    },
+    "dca": {
+      "id": "dca",
+      "title": "Decision Curve Analysis: A Novel Method for Evaluating Prediction Models",
+      "url": "https://doi.org/10.1177/0272989X06295361",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Decision Curve Analysis: A Novel Method for Evaluating Prediction Models",
+      "resolvedUrl": "https://api.crossref.org/works/10.1177%2F0272989X06295361"
+    },
+    "cochrane": {
+      "id": "cochrane",
+      "title": "Cochrane Handbook：系统评价方法",
+      "url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current",
+      "type": "官方方法手册",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Cochrane Handbook for Systematic Reviews of Interventions (current version) | Cochrane",
+      "resolvedUrl": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current"
+    },
+    "meta": {
+      "id": "meta",
+      "title": "Cochrane Handbook Chapter 10：Meta 分析",
+      "url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-10",
+      "type": "官方方法手册",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Chapter 10: Analysing data and undertaking meta-analyses | Cochrane",
+      "resolvedUrl": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-10"
+    },
+    "micro": {
+      "id": "micro",
+      "title": "Microsimulation Modeling for Health Decision Sciences Using R: A Tutorial",
+      "url": "https://doi.org/10.1177/0272989X18754513",
+      "type": "方法教程",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Microsimulation Modeling for Health Decision Sciences Using R: A Tutorial",
+      "resolvedUrl": "https://api.crossref.org/works/10.1177%2F0272989X18754513"
+    },
+    "simpy": {
+      "id": "simpy",
+      "title": "SimPy：离散事件模拟",
+      "url": "https://simpy.readthedocs.io/en/latest/",
+      "type": "官方软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Overview — SimPy 4.1.2.dev16+gf43816490 documentation",
+      "resolvedUrl": "https://simpy.readthedocs.io/en/latest/"
+    },
+    "sd": {
+      "id": "sd",
+      "title": "MIT：System Dynamics 教学与方法资源",
+      "url": "https://ocw.mit.edu/courses/15-871-introduction-to-system-dynamics-fall-2013/",
+      "type": "机构方法课程",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Introduction to System Dynamics | Sloan School of Management | MIT OpenCourseWare",
+      "resolvedUrl": "https://ocw.mit.edu/courses/15-871-introduction-to-system-dynamics-fall-2013/"
+    },
+    "abm": {
+      "id": "abm",
+      "title": "NetLogo：模型编程指南",
+      "url": "https://docs.netlogo.org/programming.html",
+      "type": "官方软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Programming Guide - NetLogo 7.0.4 User Manual",
+      "resolvedUrl": "https://docs.netlogo.org/programming.html"
+    },
+    "pmc": {
+      "id": "pmc",
+      "title": "Policy modeling: Definition, classification and evaluation",
+      "url": "https://doi.org/10.1016/j.jpolmod.2011.02.003",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Policy modeling: Definition, classification and evaluation",
+      "resolvedUrl": "https://api.crossref.org/works/10.1016%2Fj.jpolmod.2011.02.003"
+    },
+    "lda": {
+      "id": "lda",
+      "title": "Latent Dirichlet Allocation",
+      "url": "https://www.jmlr.org/papers/v3/blei03a.html",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "",
+      "resolvedUrl": "https://www.jmlr.org/papers/v3/blei03a.html"
+    },
+    "bertopic": {
+      "id": "bertopic",
+      "title": "BERTopic：作者文档",
+      "url": "https://maartengr.github.io/BERTopic/",
+      "type": "作者软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "BERTopic",
+      "resolvedUrl": "https://maartengr.github.io/BERTopic/"
+    },
+    "twopart": {
+      "id": "twopart",
+      "title": "twopartm：两部回归模型",
+      "url": "https://cran.r-project.org/web/packages/twopartm/twopartm.pdf",
+      "type": "官方软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "twopartm：两部回归模型",
+      "resolvedUrl": "https://cran.r-project.org/web/packages/twopartm/twopartm.pdf"
+    },
+    "hurdle": {
+      "id": "hurdle",
+      "title": "pscl：零膨胀与 hurdle 模型",
+      "url": "https://cran.r-project.org/web/packages/pscl/pscl.pdf",
+      "type": "官方软件文档",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "pscl：零膨胀与 hurdle 模型",
+      "resolvedUrl": "https://cran.r-project.org/web/packages/pscl/pscl.pdf"
+    },
+    "entropy": {
+      "id": "entropy",
+      "title": "Entropy Balancing for Causal Effects",
+      "url": "https://doi.org/10.1093/pan/mpr025",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Entropy Balancing for Causal Effects: A Multivariate Reweighting Method to Produce Balanced Samples in Observational Studies",
+      "resolvedUrl": "https://api.crossref.org/works/10.1093%2Fpan%2Fmpr025"
+    },
+    "overlap": {
+      "id": "overlap",
+      "title": "Balancing Covariates via Propensity Score Weighting",
+      "url": "https://doi.org/10.1080/01621459.2016.1260466",
+      "type": "原始方法论文",
+      "scope": "题名与链接身份；使用时仍需阅读适用条件",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Balancing Covariates via Propensity Score Weighting",
+      "resolvedUrl": "https://api.crossref.org/works/10.1080%2F01621459.2016.1260466"
+    },
+    "network": {
+      "id": "network",
+      "title": "Cochrane Handbook, Chapter 11",
+      "url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-11",
+      "type": "官方指南／作者文档",
+      "scope": "NMA的可比性与不一致性；Key Points / 11.4.4",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Chapter 11: Undertaking network meta-analyses | Cochrane",
+      "resolvedUrl": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-11"
+    },
+    "netmeta": {
+      "id": "netmeta",
+      "title": "netmeta: Network meta-analysis using graph-theoretical method",
+      "url": "https://search.r-project.org/CRAN/refmans/netmeta/html/netmeta.html",
+      "type": "官方指南／作者文档",
+      "scope": "Usage / Arguments；接口与多臂结构",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "R: Network meta-analysis using graph-theoretical method",
+      "resolvedUrl": "https://search.r-project.org/CRAN/refmans/netmeta/html/netmeta.html"
+    },
+    "cinema": {
+      "id": "cinema",
+      "title": "CINeMA",
+      "url": "https://cinema.ispm.unibe.ch/",
+      "type": "官方指南／作者文档",
+      "scope": "证据确定性框架，配套官方手册",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "CINeMA",
+      "resolvedUrl": "https://cinema.med.auth.gr/"
+    },
+    "prisma-nma": {
+      "id": "prisma-nma",
+      "title": "PRISMA-NMA",
+      "url": "https://www.prisma-statement.org/nma",
+      "type": "官方指南／作者文档",
+      "scope": "网状Meta报告清单",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "NMA — PRISMA statement",
+      "resolvedUrl": "https://www.prisma-statement.org/nma"
+    },
+    "overview": {
+      "id": "overview",
+      "title": "Cochrane Handbook, Chapter V: Overviews of Reviews",
+      "url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-v",
+      "type": "官方指南／作者文档",
+      "scope": "研究单位、重叠与CCA；V.4.4 / V.4.7",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Chapter V: Overviews of Reviews | Cochrane",
+      "resolvedUrl": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-v"
+    },
+    "amstar": {
+      "id": "amstar",
+      "title": "AMSTAR official FAQs",
+      "url": "https://amstar.ca/FAQs.php",
+      "type": "官方指南／作者文档",
+      "scope": "方法质量与关键领域",
+      "checkedDate": "2026-10-24",
+      "verification": "本次连接未成功",
+      "verificationScope": "保留来源入口，不能据此断言链接失效；正式使用需回访",
+      "checkError": "HTTPError"
+    },
+    "target": {
+      "id": "target",
+      "title": "TARGET guideline",
+      "url": "https://target-guideline.org/",
+      "type": "官方指南／作者文档",
+      "scope": "协议对应表、流程与透明报告",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "The TARGET Guideline",
+      "resolvedUrl": "https://target-guideline.org/"
+    },
+    "tte": {
+      "id": "tte",
+      "title": "The Target Trial Framework for Causal Inference From Observational Data: Why and When Is It Helpful?",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39961105/",
+      "type": "方法论文／指南论文",
+      "scope": "框架定义与识别假设；Abstract",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "pubmed.ncbi.nlm.nih.gov",
+      "resolvedUrl": "https://pubmed.ncbi.nlm.nih.gov/39961105/"
+    },
+    "ademp": {
+      "id": "ademp",
+      "title": "Using simulation studies to evaluate statistical methods",
+      "url": "https://doi.org/10.1002/sim.8086",
+      "type": "方法论文／指南论文",
+      "scope": "ADEMP、性能与MCSE；3 / 5 / 6",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Using simulation studies to evaluate statistical methods",
+      "resolvedUrl": "https://api.crossref.org/works/10.1002%2Fsim.8086"
+    },
+    "ispor": {
+      "id": "ispor",
+      "title": "Model Parameter Estimation and Uncertainty: ISPOR-SMDM Task Force-6",
+      "url": "https://www.ispor.org/publications/journals/value-in-health/abstract/Volume-15--Issue-6/Model-Parameter-Estimation-and-Uncertainty--A-Report-of-the-ISPOR-SMDM-Modeling-Good-Research-Practices-Task-Force-6",
+      "type": "方法论文／指南论文",
+      "scope": "参数不确定性、PSA",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Model Parameter Estimation and Uncertainty- A Report of the ISPOR-SMDM Modeling Good Research Practices Task Force-6",
+      "resolvedUrl": "https://www.ispor.org/publications/journals/value-in-health/abstract/Volume-15--Issue-6/Model-Parameter-Estimation-and-Uncertainty--A-Report-of-the-ISPOR-SMDM-Modeling-Good-Research-Practices-Task-Force-6"
+    },
+    "ahrq": {
+      "id": "ahrq",
+      "title": "Guidance for the Conduct and Reporting of Modeling and Simulation Studies in HTA",
+      "url": "https://effectivehealthcare.ahrq.gov/products/decision-models-guidance/methods",
+      "type": "官方指南／作者文档",
+      "scope": "结构、验证与不确定性",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "",
+      "resolvedUrl": "https://effectivehealthcare.ahrq.gov/products/decision-models-guidance/methods"
+    },
+    "did": {
+      "id": "did",
+      "title": "Getting Started with the did Package",
+      "url": "https://bcallaway11.github.io/did/articles/did-basics.html",
+      "type": "官方指南／作者文档",
+      "scope": "ATT(g,t)、聚合与示例",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Getting Started with the did Package • did",
+      "resolvedUrl": "https://bcallaway11.github.io/did/articles/did-basics.html"
+    },
+    "sunab": {
+      "id": "sunab",
+      "title": "Sun and Abraham interactions — sunab",
+      "url": "https://lrberge.github.io/fixest/reference/sunab.html",
+      "type": "官方指南／作者文档",
+      "scope": "Usage / cohort / ref.c；编码差异",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Sun and Abraham interactions — sunab • fixest",
+      "resolvedUrl": "https://lrberge.github.io/fixest/reference/sunab.html"
+    },
+    "matchit": {
+      "id": "matchit",
+      "title": "MatchIt: Getting Started",
+      "url": "https://kosukeimai.github.io/MatchIt/articles/MatchIt.html",
+      "type": "官方指南／作者文档",
+      "scope": "匹配流程与平衡诊断",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "MatchIt: Getting Started • MatchIt",
+      "resolvedUrl": "https://kosukeimai.github.io/MatchIt/articles/MatchIt.html"
+    },
+    "kmeans": {
+      "id": "kmeans",
+      "title": "R stats: K-Means Clustering",
+      "url": "https://stat.ethz.ch/R-manual/R-devel/library/stats/html/kmeans.html",
+      "type": "官方指南／作者文档",
+      "scope": "Usage / Arguments / Details",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "R: K-Means Clustering",
+      "resolvedUrl": "https://stat.ethz.ch/R-manual/R-devel/library/stats/html/kmeans.html"
+    },
+    "doubleml": {
+      "id": "doubleml",
+      "title": "DoubleML sample splitting and cross-fitting",
+      "url": "https://docs.doubleml.org/stable/guide/resampling.html",
+      "type": "官方指南／作者文档",
+      "scope": "折分与交叉拟合",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "9. Sample-splitting, cross-fitting and repeated cross-fitting — DoubleML documentation",
+      "resolvedUrl": "https://docs.doubleml.org/stable/guide/resampling.html"
+    },
+    "synthdid": {
+      "id": "synthdid",
+      "title": "Synthetic Difference-in-Difference Estimation",
+      "url": "https://synth-inference.github.io/synthdid/",
+      "type": "官方指南／作者文档",
+      "scope": "同时处理的块状结构与示例",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Synthetic Difference-in-Difference Estimation • synthdid",
+      "resolvedUrl": "https://synth-inference.github.io/synthdid/"
+    },
+    "tripod": {
+      "id": "tripod",
+      "title": "TRIPOD-LLM",
+      "url": "https://www.tripod-statement.org/tripod-llm/",
+      "type": "官方指南／作者文档",
+      "scope": "医疗LLM报告规范",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Tripod statement",
+      "resolvedUrl": "https://www.tripod-statement.org/tripod-llm/"
+    },
+    "cfir": {
+      "id": "cfir",
+      "title": "CFIR official guide",
+      "url": "https://cfirguide.org/",
+      "type": "官方指南／作者文档",
+      "scope": "框架与版本入口",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Consolidated Framework for Implementation Research",
+      "resolvedUrl": "https://cfirguide.org/"
+    },
+    "reaim": {
+      "id": "reaim",
+      "title": "RE-AIM official guide",
+      "url": "https://re-aim.org/",
+      "type": "官方指南／作者文档",
+      "scope": "五维结局及公平、实施语境",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "RE-AIM – Home – Reach Effectiveness Adoption Implementation Maintenance",
+      "resolvedUrl": "https://re-aim.org/"
+    },
+    "prisma-scr": {
+      "id": "prisma-scr",
+      "title": "PRISMA Scoping Reviews",
+      "url": "https://www.prisma-statement.org/scoping",
+      "type": "官方指南／作者文档",
+      "scope": "范围综述报告清单",
+      "checkedDate": "2026-10-24",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Scoping — PRISMA statement",
+      "resolvedUrl": "https://www.prisma-statement.org/scoping"
+    },
+    "codebook": {
+      "id": "codebook",
+      "title": "Codebook LLMs: Evaluating LLMs as Measurement Tools for Political Science Concepts",
+      "url": "https://doi.org/10.1017/pan.2025.10017",
+      "type": "方法论文／指南论文",
+      "scope": "测量定义与验证；出版社题名/正文核对",
+      "checkedDate": "2026-10-24",
+      "verification": "DOI登记元数据可读取",
+      "verificationScope": "Crossref题名与DOI；未据此声称阅读全文",
+      "resolvedTitle": "Codebook LLMs: Evaluating LLMs as Measurement Tools for Political Science Concepts",
+      "resolvedUrl": "https://api.crossref.org/works/10.1017%2Fpan.2025.10017"
+    },
+    "dce": {
+      "id": "dce",
+      "title": "ISPOR：离散选择实验设计良好实践",
+      "url": "https://www.ispor.org/docs/default-source/resources/outcomes-research-guidelines-index/piis1098301512041629.pdf?sfvrsn=d9c2e90c_0",
+      "type": "官方方法指南",
+      "scope": "设计与适用条件；不是代码执行验证",
+      "verification": "官方PDF可访问",
+      "verificationScope": "链接与PDF格式；未逐页核对",
+      "resolvedTitle": "ISPOR：离散选择实验设计良好实践",
+      "resolvedUrl": "https://www.ispor.org/docs/default-source/resources/outcomes-research-guidelines-index/piis1098301512041629.pdf?sfvrsn=d9c2e90c_0",
+      "checkedDate": "2026-10-24"
+    },
+    "hiap": {
+      "id": "hiap",
+      "title": "WHO：Health in All Policies，Helsinki statement and framework for country action",
+      "url": "https://www.who.int/publications/i/item/9789241506908",
+      "type": "官方方法指南",
+      "scope": "设计与适用条件；不是代码执行验证",
+      "verification": "页面可访问",
+      "verificationScope": "HTTP与页面标题；不等于全文论断或代码已验证",
+      "resolvedTitle": "Health in all policies: Helsinki statement. Framework for country action",
+      "resolvedUrl": "https://www.who.int/publications/i/item/9789241506908",
+      "checkedDate": "2026-10-24"
+    }
+  },
+  "methods": {
+    "A1": [
+      "strobe"
+    ],
+    "A2": [
+      "strobe"
+    ],
+    "A3": [
+      "strobe"
+    ],
+    "A4": [
+      "consort"
+    ],
+    "A5": [
+      "causal-book",
+      "did-paper",
+      "its"
+    ],
+    "A6": [
+      "ecological"
+    ],
+    "A7": [
+      "mixed"
+    ],
+    "A8": [
+      "accord"
+    ],
+    "A9": [
+      "svy"
+    ],
+    "B1": [
+      "describe",
+      "normal"
+    ],
+    "B2": [
+      "ttest",
+      "anova"
+    ],
+    "B3": [
+      "chi",
+      "ranksum"
+    ],
+    "B4": [
+      "regress"
+    ],
+    "B5": [
+      "logit"
+    ],
+    "B6": [
+      "ologit",
+      "mlogit"
+    ],
+    "B7": [
+      "poisson",
+      "nbreg"
+    ],
+    "B8": [
+      "survival"
+    ],
+    "B9": [
+      "mixed-stata"
+    ],
+    "B10": [
+      "pca",
+      "factor"
+    ],
+    "B11": [
+      "kappa",
+      "icc"
+    ],
+    "B12": [
+      "finegray",
+      "survival"
+    ],
+    "B13": [
+      "glm"
+    ],
+    "B14": [
+      "twopart"
+    ],
+    "B15": [
+      "panel"
+    ],
+    "B16": [
+      "quantile"
+    ],
+    "B17": [
+      "hurdle",
+      "zip"
+    ],
+    "B18": [
+      "spatial"
+    ],
+    "C1": [
+      "nice"
+    ],
+    "C2": [
+      "nice",
+      "cheers"
+    ],
+    "C3": [
+      "nice",
+      "daly"
+    ],
+    "C4": [
+      "bia"
+    ],
+    "C5": [
+      "hta"
+    ],
+    "C6": [
+      "frontier",
+      "dea"
+    ],
+    "C7": [
+      "drg"
+    ],
+    "C8": [
+      "equity"
+    ],
+    "D1": [
+      "psm",
+      "matchit"
+    ],
+    "D2": [
+      "iv",
+      "causal-book"
+    ],
+    "D3": [
+      "rdd"
+    ],
+    "D4": [
+      "scm"
+    ],
+    "D5": [
+      "sunab",
+      "did-paper"
+    ],
+    "D6": [
+      "did-paper",
+      "did"
+    ],
+    "D7": [
+      "its"
+    ],
+    "D8": [
+      "ddd"
+    ],
+    "D9": [
+      "tte-original",
+      "target"
+    ],
+    "D10": [
+      "msm",
+      "causal-book"
+    ],
+    "D11": [
+      "causal-book"
+    ],
+    "D12": [
+      "dml-paper",
+      "doubleml"
+    ],
+    "D13": [
+      "sdid-paper",
+      "synthdid"
+    ],
+    "D14": [
+      "evalue"
+    ],
+    "D15": [
+      "did-paper",
+      "did",
+      "sunab"
+    ],
+    "D16": [
+      "entropy",
+      "overlap"
+    ],
+    "E1": [
+      "mi"
+    ],
+    "E2": [
+      "power"
+    ],
+    "E3": [
+      "glmnet"
+    ],
+    "E4": [
+      "forest",
+      "xgb"
+    ],
+    "E5": [
+      "kmeans"
+    ],
+    "E6": [
+      "stan"
+    ],
+    "E7": [
+      "lcmm"
+    ],
+    "E8": [
+      "tripod-main",
+      "dca"
+    ],
+    "F1": [
+      "andersen"
+    ],
+    "F2": [
+      "grossman"
+    ],
+    "F3": [
+      "hbm"
+    ],
+    "F4": [
+      "tpb"
+    ],
+    "F5": [
+      "ecology"
+    ],
+    "F6": [
+      "sen",
+      "rawls"
+    ],
+    "F7": [
+      "csdh"
+    ],
+    "F8": [
+      "agency"
+    ],
+    "F9": [
+      "arrow"
+    ],
+    "F10": [
+      "north"
+    ],
+    "F11": [
+      "cfir",
+      "reaim"
+    ],
+    "G1": [
+      "grounded"
+    ],
+    "G2": [
+      "lavaan"
+    ],
+    "G3": [
+      "multilevel"
+    ],
+    "G4": [
+      "qca"
+    ],
+    "H1": [
+      "cochrane"
+    ],
+    "H2": [
+      "meta"
+    ],
+    "H3": [
+      "network",
+      "prisma-nma"
+    ],
+    "H4": [
+      "overview",
+      "amstar"
+    ],
+    "H5": [
+      "prisma-scr"
+    ],
+    "I1": [
+      "ademp"
+    ],
+    "I2": [
+      "ispor"
+    ],
+    "I3": [
+      "micro"
+    ],
+    "I4": [
+      "ahrq",
+      "simpy"
+    ],
+    "I5": [
+      "sd"
+    ],
+    "I6": [
+      "abm"
+    ],
+    "J1": [
+      "pmc"
+    ],
+    "J2": [
+      "lda",
+      "bertopic"
+    ],
+    "J3": [
+      "codebook"
+    ],
+    "J4": [
+      "tripod"
+    ]
+  },
+  "skills": {
+    "active-health-hiap-skill": [
+      "hiap",
+      "csdh"
+    ],
+    "binary-studio": [
+      "logit"
+    ],
+    "dce-design-assistant-skill": [
+      "dce"
+    ],
+    "ddd-skill": [
+      "ddd"
+    ],
+    "did-skill": [
+      "did-paper",
+      "did"
+    ],
+    "event-study-studio": [
+      "did-paper",
+      "sunab"
+    ],
+    "health-economics-tutorial-skill": [
+      "nice",
+      "cheers"
+    ],
+    "its-skill": [
+      "its"
+    ],
+    "longitudinal-studio": [
+      "mixed-stata",
+      "lcmm"
+    ],
+    "machine-learning-skill": [
+      "forest",
+      "xgb",
+      "tripod-main"
+    ],
+    "markov-model-skill": [
+      "ahrq",
+      "ispor"
+    ],
+    "meta-analysis-skill": [
+      "meta"
+    ],
+    "microsimulation-studio": [
+      "micro"
+    ],
+    "rdd-studio": [
+      "rdd"
+    ],
+    "sdid-studio": [
+      "sdid-paper",
+      "synthdid"
+    ],
+    "sem-qca-qualitative-skill": [
+      "lavaan",
+      "qca",
+      "grounded"
+    ],
+    "survival-studio": [
+      "survival",
+      "finegray"
+    ],
+    "network-meta-analysis-skill": [
+      "network",
+      "prisma-nma"
+    ],
+    "umbrella-review-skill": [
+      "overview",
+      "amstar"
+    ],
+    "target-trial-emulation-skill": [
+      "tte-original",
+      "target"
+    ],
+    "monte-carlo-simulation-skill": [
+      "ademp",
+      "ispor"
+    ],
+    "advanced-causal-inference-skill": [
+      "causal-book",
+      "dml-paper"
+    ],
+    "policy-text-analysis-skill": [
+      "pmc",
+      "codebook"
+    ],
+    "medical-ai-evaluation-skill": [
+      "tripod"
+    ],
+    "longitudinal-public-data-skill": [
+      "svy",
+      "mixed-stata"
+    ],
+    "simulation-models-skill": [
+      "ahrq"
+    ],
+    "implementation-equity-skill": [
+      "cfir",
+      "reaim"
+    ],
+    "propensity-score-skill": [
+      "psm",
+      "matchit"
+    ],
+    "staggered-did-skill": [
+      "did-paper",
+      "sunab"
+    ],
+    "clustering-analysis-skill": [
+      "kmeans"
+    ],
+    "econometric-modeling-skill": [
+      "glm",
+      "panel",
+      "twopart"
+    ]
+  }
+}
