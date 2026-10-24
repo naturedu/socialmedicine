@@ -32,7 +32,7 @@
 | 无标签探索患者或机构分型 | [特征→距离→算法→类数→稳定性](clustering-analysis-skill.md) |
 | 观察数据评价治疗策略 | [先写目标试验协议](target-trial-emulation-skill.md) |
 | 多干预比较/多综述总结 | [网状Meta](network-meta-analysis-skill.md) · [伞状综述](umbrella-review-skill.md) |
-| 模型性能与政策情景 | [蒙特卡洛](monte-carlo-simulation-skill.md) · [模拟选型](simulation-models-skill.md) |
+| 模型性能与政策情景 | [蒙特卡洛](monte-carlo-simulation-skill.md) · [模拟选型](simulation-models-skill.md) · [个体微观模拟](microsimulation-studio.md) |
 | 政策文本/医疗AI/公共队列 | [文本测量](policy-text-analysis-skill.md) · [AI评价](medical-ai-evaluation-skill.md) · [纵向数据](longitudinal-public-data-skill.md) |
 
 ## 第五步：让诊断决定能解释多远

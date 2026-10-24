@@ -862,22 +862,22 @@
   {
     "id": "microsimulation-studio",
     "title": "个体微观模拟 · Microsimulation",
-    "tags": "模拟 individual Markov microsimulation",
-    "use": "个体异质性、路径依赖与随机转移；演示仅使用虚构参数。",
-    "url": "skills/microsimulation-studio.md",
+    "tags": "微观模拟 microsimulation 痴呆 dementia 衰弱 frailty 照护 CHIME MISCAN JFEM 共同随机数 校准 验证 PSA",
+    "use": "从个体状态和病史到竞争事件、成本/QALY、校准验证、共同随机数、MCSE与PSA；含痴呆、衰弱和慢病文献示例。",
+    "url": "guides/microsimulation-studio.html",
     "codes": [
       {
         "lang": "r",
-        "heading": "R 模板",
-        "code": "# 教学模拟；参数不来自真实疾病，禁止直接作临床或政策结论\nset.seed(2026)\nN <- 10000; T <- 20\nstate <- rep(1L, N) # 1健康、2患病、3死亡\nage <- runif(N, 40, 60); qaly <- numeric(N)\nfor (t in seq_len(T)) {\n  old <- state\n  pdeath <- pmin(0.20, 0.005 * exp(0.06 * (age + t - 40)))\n  for (s in 1:2) {\n    ids <- which(old == s); u <- runif(length(ids))\n    pd <- pdeath[ids] * ifelse(s == 2, 1.5, 1)\n    psick <- if (s == 1) 0.03 else 0\n    stopifnot(all(pd + psick <= 1))\n    state[ids[u < pd]] <- 3L\n    state[ids[u >= pd & u < pd + psick]] <- 2L\n  }\n  # 半周期近似；贴现率仅为教学输入，实际需依据指南\n  utility <- c(1, 0.7, 0)\n  qaly <- qaly + (utility[old] + utility[state])/2 / 1.03^(t-0.5)\n}\nprint(table(state)); print(mean(qaly))\n# 政策比较需共同随机数、多次重复、参数与一阶不确定性分开评估"
+        "heading": "个体微观模拟 · R教学模型",
+        "code": "# 虚构四状态教学模型，不读取任何受访者数据。\nsource(\"scripts/microsimulation_demo.R\")\ndemo <- run_demo(n = 5000, cycles = 20, reps = 8, psa_draws = 40,\n                 seed = 20261024, out = \"microsimulation-demo\")\ndemo$comparison\ndemo$mcse"
       },
       {
         "lang": "stata",
-        "heading": "STATA 模板",
-        "code": "* 教学微模拟；虚构参数，年度周期\nclear\nset seed 2026\nset obs 10000\ngen id = _n\ngen age = 40 + 20*runiform()\ngen state = 1\ngen qaly = 0\nforvalues t = 1/20 {\n  gen old = state\n  gen pd = min(.20, .005*exp(.06*(age+`t'-40)))\n  replace pd = 1.5*pd if old==2\n  gen u = runiform()\n  replace state = 3 if old<3 & u<pd\n  replace state = 2 if old==1 & u>=pd & u<pd+.03\n  gen u0 = cond(old==1,1,cond(old==2,.7,0))\n  gen u1 = cond(state==1,1,cond(state==2,.7,0))\n  replace qaly = qaly + (u0+u1)/2/1.03^(`t'-.5)\n  drop old pd u u0 u1\n}\ntab state\nsummarize qaly"
+        "heading": "个体微观模拟 · Stata模板",
+        "code": "* 虚构参数；此模板尚未在Stata执行，使用前核对版本和路径。\ndo \"scripts/microsimulation_demo.do\" \"microsimulation-demo-stata\""
       }
     ],
-    "status": "教学模板 / 原有代码摘录；本轮未在 R 或 Stata 执行，需核对依赖与变量"
+    "status": "原创R教学脚本已运行，29项检查通过；虚构参数。Stata模板未执行；未复现真实数据或论文模型。"
   },
   {
     "id": "rdd-studio",

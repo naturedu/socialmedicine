@@ -1769,7 +1769,7 @@ English: Du, S. (2026). *socialmedicineskills: A methods quick-reference for soc
 
 **适用**：模拟具有异质风险和历史依赖的个体路径。
 
-**逻辑与操作**：明确研究单位与目标，按专题完成设计、估计与验证。详细流程和示例见 [个体微观模拟专题](simulation-models-skill.md)。
+**逻辑与操作**：明确研究单位与目标，按专题完成设计、估计与验证。详细流程和示例见 [个体微观模拟专题](microsimulation-studio.md)。
 
 **报告要点**：个体属性、事件风险、路径记忆、校准、验证与随机数。
 

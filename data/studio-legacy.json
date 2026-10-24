@@ -609,6 +609,21 @@
         "可编辑",
         "验收"
       ]
+    },
+    {
+      "icon": "🧩",
+      "name": "个体微观模拟",
+      "file": "microsimulation-studio.md",
+      "group": "simulation",
+      "desc": "从个体状态和病史到竞争事件、成本/QALY、校准验证、共同随机数、MCSE与PSA；含痴呆、衰弱和慢病文献示例。",
+      "tags": [
+        "微观模拟",
+        "痴呆与衰弱",
+        "成本QALY",
+        "校准验证",
+        "R",
+        "Stata"
+      ]
     }
   ],
   "METHODS": [
