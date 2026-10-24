@@ -54,7 +54,7 @@ class VisualTests(unittest.TestCase):
         self.assertEqual(current['SKILLS'][:len(old['SKILLS'])],old['SKILLS'])
         for key in old:
             if key!='SKILLS':self.assertEqual(current[key],old[key],key)
-        self.assertEqual(len(current['SKILLS']),54)
+        self.assertEqual(len(current['SKILLS']),len(json.loads((R/'data/tools.json').read_text(encoding='utf-8'))))
         for r in rows:
             self.assertTrue((R/'skills'/(r['guide']+'.md')).is_file())
             self.assertTrue((R/'guides'/(r['guide']+'.html')).is_file())

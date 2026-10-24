@@ -32,6 +32,7 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 - [医疗 AI 与人工评价](medical-ai-evaluation-skill.md)：准确性、一致性、配对比较、校准、安全错误和TRIPOD-LLM。
 - [公共数据库与纵向研究](longitudinal-public-data-skill.md)：CHARLS/CLHLS/CFPS口径、抽样、失访、轨迹与竞争风险。
 - [模拟模型选型](simulation-models-skill.md)：Markov、微观、DES、系统动力学、ABM：结构、参数、校准与验证。
+- [个体微观模拟](microsimulation-studio.md)：个体异质性、病史、竞争事件、成本/QALY、校准验证、共同随机数、MCSE与PSA；R教学实现已运行，Stata模板未执行。
 - [实施科学与健康公平](implementation-equity-skill.md)：CFIR/RE-AIM、可测机制链、定性定量整合和公平性评价。
 - [从选题到论文的研究流程](research-workflow-skill.md)：文献核验、综述分流、变量与图表计划、写作修订和投稿材料。
 - [PSM、匹配与加权](propensity-score-skill.md)：ATE/ATT/ATO、变量选择、共同支持、Love plot与匹配后推断。
@@ -51,7 +52,7 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 
 范围仅为社会医学与卫生事业管理及其必要方法参考。公共资料含 69 条题录（54 条领域文献、15 条方法参考）、27 张图表、97 个期刊／刊名入口、91 个机构入口；项目为 3,413 条国社科及教育部题名候选，非逐项全文核验。
 
-当前目录保留原有12份完整工具手册，完整Skill书架共54份；集中索引89个方法与286段教学代码，另有进阶方法与耦合脚本。文献库包含已有 CSSCI 题录、Nature/Science 书单、Nature Medicine 与相关数字医学资料以及 JAMA 图表文献。Cell 已列入期刊入口，但没有已提供且确认属于 Cell 主刊的题录，不能虚报为完整 CNS 语料。
+当前目录保留原有12份完整工具手册，完整Skill书架共55份；集中索引89个方法与288段教学代码，另有进阶方法与耦合脚本。文献库包含已有 CSSCI 题录、Nature/Science 书单、Nature Medicine 与相关数字医学资料以及 JAMA 图表文献。Cell 已列入期刊入口，但没有已提供且确认属于 Cell 主刊的题录，不能虚报为完整 CNS 语料。
 
 期刊和院校目录属于导航索引，不是排名、完整学科普查或招生承诺。项目按2016—2025年整理，来源版本、地域范围与公示／正式立项分开，见年度覆盖表。
 

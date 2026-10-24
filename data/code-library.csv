@@ -3471,3 +3471,11 @@ tot <- aggregate(amount ~ encounter_id, cost_detail, sum)
 a <- merge(encounter, tot, by=""encounter_id"", all.x=TRUE)
 stopifnot(nrow(a)==nrow(encounter))
 # 缺少明细先核查，不能不加判断地将NA替换为0。",数据接口模板；未在R/Stata运行，必须先完成实际字段映射
+microsimulation-studio-1,个体微观模拟 · R教学模型,r,skills/microsimulation-studio.md,42,"# 虚构四状态教学模型，不读取任何受访者数据。
+source(""scripts/microsimulation_demo.R"")
+demo <- run_demo(n = 5000, cycles = 20, reps = 8, psa_draws = 40,
+                 seed = 20261024, out = ""microsimulation-demo"")
+demo$comparison
+demo$mcse",base R教学示例已运行，29项行为/不变量检查通过；未验证真实数据
+microsimulation-studio-2,个体微观模拟 · Stata模板,stata,skills/microsimulation-studio.md,59,"* 虚构参数；此模板尚未在Stata执行，使用前核对版本和路径。
+do ""scripts/microsimulation_demo.do"" ""microsimulation-demo-stata""",Stata模板；尚未在Stata执行

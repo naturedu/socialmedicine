@@ -63,7 +63,7 @@ def build():
         pages.append(dict(title=title[1] if title else p.stem,path=p.relative_to(R).as_posix()))
     add('reading-pages','完整方法与数据库阅读页','方法','method-garden.html#methods',pages,'guides/')
     for rec,page in zip(records[-len(pages):],pages):rec['url']=page['path'];rec['source']=page['path']
-    payload=dict(updated='2026-10-23',count=len(records),collections=collections,records=records)
+    payload=dict(updated='2026-10-24',count=len(records),collections=collections,records=records)
     (R/'data/material-index.json').write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
     print('PUBLIC INDEX',len(records),'records',len(collections),'collections')
 if __name__=='__main__':build()

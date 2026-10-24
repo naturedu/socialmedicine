@@ -1,61 +1,76 @@
+---
+name: microsimulation
+description: 构建、审查和运行卫生政策与卫生经济个体微观模拟，处理个体异质性、病史依赖、竞争事件、成本与QALY、校准验证、共同随机数和PSA；适用于痴呆、慢病、筛查与照护的长期情景比较。包含R教学实现与Stata模板，不将宏观Markov、单纯蒙特卡洛抽样或ABM混称为微观模拟。
+---
+
 # 个体微观模拟 · Microsimulation
 
-个体异质性、路径依赖与随机转移；演示仅使用虚构参数。
+把研究问题转换成可追踪的个体生命历程，再比较策略的长期健康、费用和分布结果。按任务选择设计、实现、审查或资料复现，已有足够信息时直接推进。
 
-## 边界
-所有代码为教学模板，未在真实数据执行；请核对数据字典、版本和包依赖。
+## 任务入口
 
-## R 模板
+| 任务 | 使用的资源 | 应交付什么 |
+|---|---|---|
+| 设计模型 | 下方流程与[建模细节](references/microsimulation-methods.md) | 模型说明卡、状态/事件规则、参数与证据缺口 |
+| 学习或运行最小模型 | [R脚本](scripts/microsimulation_demo.R)与[验证脚本](scripts/validate_microsimulation.R) | 策略比较、状态轨迹、重复模拟MCSE、简化PSA |
+| 使用Stata | [Stata模板](scripts/microsimulation_demo.do) | 同一机制的教学实现；执行状态单独说明 |
+| 痴呆、衰弱、照护或慢病应用 | [论文示例与证据边界](references/microsimulation-sources.md) | 可借鉴的机制、参数来源与本地验证路线 |
+| 审查已有模型 | 建模细节中的验证清单 | 错误及影响、可复现实验和修正建议 |
+
+## 先明确为什么逐人模拟
+
+当年龄、性别、合并症、病程、既往事件或干预依从性使风险随人和历史变化时，逐人模拟通常有实际价值。若少数状态已充分表达病史，队列Markov可能更简洁。等候、床位和服务容量决定结果时考虑DES；主体互动、传播或适应行为是关键时考虑ABM。逐人循环本身不能证明需要微观模拟。
+
+微观模拟是条件于机制和输入的情景推演，不自动识别干预的因果效应。观察数据中的关联系数不应未经说明直接用作干预效应。
+
+## 从问题到可执行模型
+
+1. **写模型说明卡。** 目标人群、决策者与视角、基线年、比较策略、预测或因果目标、周期/时间范围、结局与报告人群。区分封闭队列与每年有新成员进入的开放人口。
+2. **定义状态与历史。** 状态互斥且穷尽；死亡为吸收态。痴呆严重度、照护地点、ADL和合并症可作为状态维度或属性，但需说明允许的组合。单独保存发病时点、病程、既往事件和累计暴露。
+3. **建立基线人群。** 核对抽样权重、目标总体、基线患病情况、变量相关性与缺失。调查样本、合成人群和全国人口使用不同分母。独立抽样的边际分布不代表保留了真实相关性。
+4. **估计转移与事件。** 对每个允许转移注明单位、风险窗、估计样本、系数/协方差、基线风险及适用人群。跨波调查间隔、连续时间率和年度概率须转换；竞争事件联合处理，详见建模细节。
+5. **落实策略机制。** 写清资格、实际覆盖、依从、作用点、起效/衰减与停止规则。区分达到某风险因素水平的理想情景与实施项目所需资源、行为改变及实际效果。
+6. **累计健康和成本。** 记录价格年、币种、视角、成本率和一次性事件成本；效用来源、合并症调整、照护者影响及重复计算风险。成本与健康可分别贴现。年负担预测与终身成本效果分开报告。
+7. **验证程序和结构。** 先检查转移合法、死亡吸收、零风险和恒等策略，再做内部重现及独立时期/地区/结局验证。校准使用过的数据不能同时称独立外部验证。
+8. **分析不确定性。** 固定参数增加人数和独立随机流，评估增量结果的模拟噪声；再做参数PSA、结构与实施情景。共同随机数按人、周期、事件类型对应，避免策略间抽样错位。
+
+## R运行入口
+
+在本技能目录运行；需要可用的Rscript，仅使用base R，不安装包。网页下载单个Markdown后还需取得支持脚本，也可下载[完整技能ZIP](https://naturedu.github.io/socialmedicine/data/microsimulation-skill.zip)。
 
 ```r
-# 教学模拟；参数不来自真实疾病，禁止直接作临床或政策结论
-set.seed(2026)
-N <- 10000; T <- 20
-state <- rep(1L, N) # 1健康、2患病、3死亡
-age <- runif(N, 40, 60); qaly <- numeric(N)
-for (t in seq_len(T)) {
-  old <- state
-  pdeath <- pmin(0.20, 0.005 * exp(0.06 * (age + t - 40)))
-  for (s in 1:2) {
-    ids <- which(old == s); u <- runif(length(ids))
-    pd <- pdeath[ids] * ifelse(s == 2, 1.5, 1)
-    psick <- if (s == 1) 0.03 else 0
-    stopifnot(all(pd + psick <= 1))
-    state[ids[u < pd]] <- 3L
-    state[ids[u >= pd & u < pd + psick]] <- 2L
-  }
-  # 半周期近似；贴现率仅为教学输入，实际需依据指南
-  utility <- c(1, 0.7, 0)
-  qaly <- qaly + (utility[old] + utility[state])/2 / 1.03^(t-0.5)
-}
-print(table(state)); print(mean(qaly))
-# 政策比较需共同随机数、多次重复、参数与一阶不确定性分开评估
+# 虚构四状态教学模型，不读取任何受访者数据。
+source("scripts/microsimulation_demo.R")
+demo <- run_demo(n = 5000, cycles = 20, reps = 8, psa_draws = 40,
+                 seed = 20261024, out = "microsimulation-demo")
+demo$comparison
+demo$mcse
 ```
 
-## STATA 模板
+命令行可运行 `Rscript scripts/microsimulation_demo.R --out microsimulation-demo`；验证运行 `Rscript scripts/validate_microsimulation.R`。输出为汇总CSV和R会话信息，不导出逐人记录。
+
+实现包含健康→轻症→重症及各存活状态→死亡，年龄/性别/基线异质性、病程影响、互斥竞争事件、半周期近似、状态成本、发病成本和策略成本。一个周期最多一次转移；正式研究还需检查周期长度。它不是MISCAN、JFEM、CHIME或任何论文模型的复刻。
+
+重复模拟固定合成基线人群和参数，仅改变事件随机流。`mcse_single_run`估计一次运行均值的随机误差标准差；`mcse_average`估计多次运行平均值的MCSE，均不是参数不确定区间。教学PSA只随机化起病HR与项目成本，复用同一事件随机矩阵；分布无实证依据，仍需检查人数收敛和残余一阶噪声。
+
+## Stata运行入口
 
 ```stata
-* 教学微模拟；虚构参数，年度周期
-clear
-set seed 2026
-set obs 10000
-gen id = _n
-gen age = 40 + 20*runiform()
-gen state = 1
-gen qaly = 0
-forvalues t = 1/20 {
-  gen old = state
-  gen pd = min(.20, .005*exp(.06*(age+`t'-40)))
-  replace pd = 1.5*pd if old==2
-  gen u = runiform()
-  replace state = 3 if old<3 & u<pd
-  replace state = 2 if old==1 & u>=pd & u<pd+.03
-  gen u0 = cond(old==1,1,cond(old==2,.7,0))
-  gen u1 = cond(state==1,1,cond(state==2,.7,0))
-  replace qaly = qaly + (u0+u1)/2/1.03^(`t'-.5)
-  drop old pd u u0 u1
-}
-tab state
-summarize qaly
+* 虚构参数；此模板尚未在Stata执行，使用前核对版本和路径。
+do "scripts/microsimulation_demo.do" "microsimulation-demo-stata"
 ```
 
+模板复用逐人逐周期随机数，比较两种策略的成本与QALY。使用preserve/restore保留当前内存数据；输出路径存在时覆盖同名汇总CSV。Stata与R的随机数发生器不同，不能根据单次结果不同判定错误。完整重复模拟和PSA接口见R示例。
+
+## 应用中优先核对
+
+- **痴呆/衰弱：** 认知损害与临床痴呆定义、严重度与照护地点、死亡竞争、非正式照护及照护者效用。
+- **CHARLS/CLHLS：** 真实访问日期、失访与死亡区分、代理回答、跨波测量、调查设计及高龄外推。两次访问间转移不能直接解释为一年概率。
+- **筛查：** 自然史、筛查发现和临床发现分开；处理敏感度、特异度、过度诊断、随访和治疗，避免把提前诊断时间当生存获益。
+- **政策比较：** 纳入覆盖/依从、实施成本、资源约束及异质性。无限容量、完美依从和永久疗效均须明确标注。
+
+## 每次交付
+
+交付模型说明卡、可追踪参数表、结构/事件规则、环境与种子、策略及增量汇总、验证与不确定性报告。至少报告ΔC、ΔQALY及净货币收益；ΔQALY近零或存在支配时不要只给一个ICER。成本效果可接受概率不是临床有效的概率。
+
+本模块于2026-10-24依据公开方法论文与补充材料整理。公开库包含重新编写的说明、文献入口与原创教学代码，不含个体数据、私人方案、EndNote库或论文原文。执行状态见[建模细节](references/microsimulation-methods.md)；教学代码通过不代表真实数据模型已验证。
