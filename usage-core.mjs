@@ -1,5 +1,9 @@
 const count=value=>{const n=Number(value);if(value===null||value===undefined||!Number.isFinite(n)||n<0)throw new Error('统计字段不完整');return n;};
 const since=(day,days)=>new Date(Date.parse(day+'T00:00:00Z')-(days-1)*86400000).toISOString().slice(0,10);
+export function socialmedicineSkillUsage(data){
+ const row=data?.skills?.find(x=>x.id==='socialmedicineskills');
+ return row?{opens:count(row.opens),downloadClicks:count(row.downloads)}:{opens:null,downloadClicks:null};
+}
 export function summarizeUsage(data){
  if(!data?.totals||!/^\d{4}-\d{2}-\d{2}$/.test(data.today||'')||!Array.isArray(data.daily))throw new Error('统计数据暂不可用');
  const visits=count(data.totals.visits),clicks=count(data.totals.clicks);
@@ -10,6 +14,8 @@ export function usageCsv(data){
  const s=summarizeUsage(data),scope=`${data.totals.started||'未开始'} 至 ${data.today}（Asia/Shanghai）`,rows=[['类型','项目','数量','单位','统计范围','数据更新时间']];
  const add=(type,label,n,unit='次',range=scope)=>rows.push([type,label,n,unit,range,data.updatedAt]);
  add('总计','页面访问',s.visits);add('总计','已记录按钮点击',s.clicks);add('Skill','打开',s.opens);add('Skill','下载点击',s.downloads);
+ const mainSkill=socialmedicineSkillUsage(data);
+ if(mainSkill.opens!==null){add('社会医学主技能','网页打开',mainSkill.opens);add('社会医学主技能','下载点击',mainSkill.downloadClicks);}
  if(data.downloadTotals)add('总计','全部下载点击',count(data.downloadTotals.total));
  if(data.chatTotals)for(const [key,label]of Object.entries({questions:'提问',answered:'已回答',clarifications:'需要补充',unmatched:'未匹配',errors:'回答失败',followups:'追问',helpful:'有帮助',unhelpful:'还没解决',exports:'导出对话'}))add('科研对话',label,count(data.chatTotals[key]),'次',`${data.chatStarted||'2026-10-24'} 至 ${data.today}`);
  for(const p of data.pages||[])add('页面',p.label||p.page,count(p.count));

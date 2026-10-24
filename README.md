@@ -145,3 +145,5 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。Cel
 ## 机器学习预测模型
 
 [简明 HTML 教程](prediction-models.html)：数据划分与泄漏、模型比较、评价指标、SHAP/LIME及报告。仅作方法解读，无课程、数据或模型文件下载。
+
+主页顶部与“使用与资源总览”单列 `socialmedicineskills`：GitHub Release安装包累计下载、主技能网页打开和下载点击。外部Release链接和下载页面已接入同一预设事件；三项不相加，不推断独立人数、成功安装或离线调用。读取失败显示不可用或带日期的上次快照，不用零补缺；未向技能包添加调用追踪。

@@ -1,4 +1,4 @@
-import {summarizeUsage,usageCsv} from './usage-core.mjs?v=20261024chat1';
+import {summarizeUsage,usageCsv} from './usage-core.mjs?v=20261024skills1';
 const root=document.getElementById('usageDashboard');
 const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
 const number=n=>Number(n).toLocaleString('zh-CN');
