@@ -9,11 +9,36 @@
   "metric": "github_release_asset_download_count",
   "scope": "Release附件下载次数；非独立人数、成功安装或调用。排除源码ZIP、Raw、clone和镜像。",
   "timezone": "UTC",
-  "assets": [],
+  "assets": [
+    {
+      "id": 671845793,
+      "name": "skill-download-stats.zip",
+      "tag": "skills-v2026.10.24.1",
+      "releaseId": 422637537,
+      "publishedAt": "2026-10-24T09:32:01Z",
+      "url": "https://github.com/naturedu/socialmedicine/releases/download/skills-v2026.10.24.1/skill-download-stats.zip",
+      "downloadCount": 0,
+      "available": true,
+      "firstSeenAt": "2026-10-24T09:33:26Z",
+      "lastSeenAt": "2026-10-24T09:33:26Z"
+    },
+    {
+      "id": 671845807,
+      "name": "socialmedicineskills.zip",
+      "tag": "skills-v2026.10.24.1",
+      "releaseId": 422637537,
+      "publishedAt": "2026-10-24T09:32:01Z",
+      "url": "https://github.com/naturedu/socialmedicine/releases/download/skills-v2026.10.24.1/socialmedicineskills.zip",
+      "downloadCount": 0,
+      "available": true,
+      "firstSeenAt": "2026-10-24T09:33:26Z",
+      "lastSeenAt": "2026-10-24T09:33:26Z"
+    }
+  ],
   "daily": [
     {
       "day": "2026-10-24",
-      "recordedAt": "2026-10-24T08:56:13Z",
+      "recordedAt": "2026-10-24T09:33:26Z",
       "observedTotal": 0,
       "availableTotal": 0,
       "increaseSincePreviousRecord": null,
@@ -23,7 +48,7 @@
       }
     }
   ],
-  "updatedAt": "2026-10-24T08:56:13Z",
+  "updatedAt": "2026-10-24T09:33:26Z",
   "observedTotal": 0,
   "availableTotal": 0,
   "byPackage": {
