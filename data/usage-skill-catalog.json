@@ -1,0 +1,443 @@
+{
+  "academic-copyediting-skill": {
+    "id": "academic-copyediting-skill",
+    "label": "Skill：学术写作规范润色（中文学术文本）",
+    "category": "writing",
+    "file": "skills/academic-copyediting-skill.md",
+    "guide": "guides/academic-copyediting-skill.html"
+  },
+  "active-health-hiap-skill": {
+    "id": "active-health-hiap-skill",
+    "label": "Skill：主动健康与健康融入万策（Health in All Policies，总纲旗舰）",
+    "category": "method",
+    "file": "skills/active-health-hiap-skill.md",
+    "guide": "guides/active-health-hiap-skill.html"
+  },
+  "advanced-causal-inference-skill": {
+    "id": "advanced-causal-inference-skill",
+    "label": "因果方法进阶：让设计带路，让算法帮忙",
+    "category": "method",
+    "file": "skills/advanced-causal-inference-skill.md",
+    "guide": "guides/advanced-causal-inference-skill.html"
+  },
+  "aging-family-extension-skill": {
+    "id": "aging-family-extension-skill",
+    "label": "HRS家族扩展 · JSTAR、TILDA、CRELES、SPS、MARS与HCAP",
+    "category": "database",
+    "file": "skills/aging-family-extension-skill.md",
+    "guide": "guides/aging-family-extension-skill.html"
+  },
+  "binary-studio": {
+    "id": "binary-studio",
+    "label": "二元结局与边际效应",
+    "category": "method",
+    "file": "skills/binary-studio.md",
+    "guide": "guides/binary-studio.html"
+  },
+  "cfps-chns-database-skill": {
+    "id": "cfps-chns-database-skill",
+    "label": "CFPS、CHNS与NHIS · 扩展调查选型",
+    "category": "database",
+    "file": "skills/cfps-chns-database-skill.md",
+    "guide": "guides/cfps-chns-database-skill.html"
+  },
+  "charls-database-skill": {
+    "id": "charls-database-skill",
+    "label": "CHARLS · 中国健康与养老追踪调查",
+    "category": "database",
+    "file": "skills/charls-database-skill.md",
+    "guide": "guides/charls-database-skill.html"
+  },
+  "claims-clinical-database-skill": {
+    "id": "claims-clinical-database-skill",
+    "label": "医保结算、临床登记与MEPS · 费用和事件数据",
+    "category": "database",
+    "file": "skills/claims-clinical-database-skill.md",
+    "guide": "guides/claims-clinical-database-skill.html"
+  },
+  "clhls-database-skill": {
+    "id": "clhls-database-skill",
+    "label": "CLHLS / CLHLS-HF · 老年健康与家庭追踪",
+    "category": "database",
+    "file": "skills/clhls-database-skill.md",
+    "guide": "guides/clhls-database-skill.html"
+  },
+  "clinical-statistical-figures-skill": {
+    "id": "clinical-statistical-figures-skill",
+    "label": "JAMA八类图表阅读与绘制",
+    "category": "figure",
+    "file": "skills/clinical-statistical-figures-skill.md",
+    "guide": "guides/clinical-statistical-figures-skill.html"
+  },
+  "clustering-analysis-skill": {
+    "id": "clustering-analysis-skill",
+    "label": "聚类分析：把相似放在一起，也检查它们是否真的像",
+    "category": "method",
+    "file": "skills/clustering-analysis-skill.md",
+    "guide": "guides/clustering-analysis-skill.html"
+  },
+  "conceptual-mechanism-figure-skill": {
+    "id": "conceptual-mechanism-figure-skill",
+    "label": "理论框架、机制图与DAG",
+    "category": "figure",
+    "file": "skills/conceptual-mechanism-figure-skill.md",
+    "guide": "guides/conceptual-mechanism-figure-skill.html"
+  },
+  "cross-cohort-harmonization-skill": {
+    "id": "cross-cohort-harmonization-skill",
+    "label": "HRS家族 · 跨国协调与外部验证",
+    "category": "database",
+    "file": "skills/cross-cohort-harmonization-skill.md",
+    "guide": "guides/cross-cohort-harmonization-skill.html"
+  },
+  "dce-design-assistant-skill": {
+    "id": "dce-design-assistant-skill",
+    "label": "Skill：DCE 设计助手（离散选择实验设计与分析，Stata / R）",
+    "category": "method",
+    "file": "skills/dce-design-assistant-skill.md",
+    "guide": "guides/dce-design-assistant-skill.html"
+  },
+  "ddd-skill": {
+    "id": "ddd-skill",
+    "label": "Skill：三重差分助手（DDD 政策效果评估，Stata / R）",
+    "category": "method",
+    "file": "skills/ddd-skill.md",
+    "guide": "guides/ddd-skill.html"
+  },
+  "did-skill": {
+    "id": "did-skill",
+    "label": "Skill：DID 双重差分助手（卫生政策效果评估，Stata / R）",
+    "category": "method",
+    "file": "skills/did-skill.md",
+    "guide": "guides/did-skill.html"
+  },
+  "econometric-modeling-skill": {
+    "id": "econometric-modeling-skill",
+    "label": "卫生计量模型：先看问题和数据，再打开工具箱",
+    "category": "method",
+    "file": "skills/econometric-modeling-skill.md",
+    "guide": "guides/econometric-modeling-skill.html"
+  },
+  "elsa-database-skill": {
+    "id": "elsa-database-skill",
+    "label": "ELSA · English Longitudinal Study of Ageing",
+    "category": "database",
+    "file": "skills/elsa-database-skill.md",
+    "guide": "guides/elsa-database-skill.html"
+  },
+  "event-study-studio": {
+    "id": "event-study-studio",
+    "label": "交错 DID 与多时点事件研究",
+    "category": "method",
+    "file": "skills/event-study-studio.md",
+    "guide": "guides/event-study-studio.html"
+  },
+  "figure-ppt-quality-skill": {
+    "id": "figure-ppt-quality-skill",
+    "label": "科研图与PPT质量检查",
+    "category": "slides",
+    "file": "skills/figure-ppt-quality-skill.md",
+    "guide": "guides/figure-ppt-quality-skill.html"
+  },
+  "grant-roadmap-figure-skill": {
+    "id": "grant-roadmap-figure-skill",
+    "label": "基金申报与研究技术路线图",
+    "category": "figure",
+    "file": "skills/grant-roadmap-figure-skill.md",
+    "guide": "guides/grant-roadmap-figure-skill.html"
+  },
+  "graphical-abstract-skill": {
+    "id": "graphical-abstract-skill",
+    "label": "图形摘要与AI辅助示意图",
+    "category": "figure",
+    "file": "skills/graphical-abstract-skill.md",
+    "guide": "guides/graphical-abstract-skill.html"
+  },
+  "health-economics-tutorial-skill": {
+    "id": "health-economics-tutorial-skill",
+    "label": "Skill：卫生经济学评价教程（CEA/CUA 总纲，Stata / R）",
+    "category": "method",
+    "file": "skills/health-economics-tutorial-skill.md",
+    "guide": "guides/health-economics-tutorial-skill.html"
+  },
+  "home-hospital-bed-policy-skill": {
+    "id": "home-hospital-bed-policy-skill",
+    "label": "家庭病床：把连续医疗服务送到居住场所",
+    "category": "policy",
+    "file": "skills/home-hospital-bed-policy-skill.md",
+    "guide": "guides/home-hospital-bed-policy-skill.html"
+  },
+  "hrs-database-skill": {
+    "id": "hrs-database-skill",
+    "label": "HRS · Health and Retirement Study",
+    "category": "database",
+    "file": "skills/hrs-database-skill.md",
+    "guide": "guides/hrs-database-skill.html"
+  },
+  "image-based-slides-skill": {
+    "id": "image-based-slides-skill",
+    "label": "统一视觉的图片型PPT",
+    "category": "slides",
+    "file": "skills/image-based-slides-skill.md",
+    "guide": "guides/image-based-slides-skill.html"
+  },
+  "image-to-editable-slides-skill": {
+    "id": "image-to-editable-slides-skill",
+    "label": "图片、扫描PDF转可编辑PPT",
+    "category": "slides",
+    "file": "skills/image-to-editable-slides-skill.md",
+    "guide": "guides/image-to-editable-slides-skill.html"
+  },
+  "implementation-equity-skill": {
+    "id": "implementation-equity-skill",
+    "label": "实施与公平：有效的服务，也要有人能用上",
+    "category": "method",
+    "file": "skills/implementation-equity-skill.md",
+    "guide": "guides/implementation-equity-skill.html"
+  },
+  "its-skill": {
+    "id": "its-skill",
+    "label": "Skill：间断时间序列助手（ITS 政策效果评估，Stata / R）",
+    "category": "method",
+    "file": "skills/its-skill.md",
+    "guide": "guides/its-skill.html"
+  },
+  "klosa-database-skill": {
+    "id": "klosa-database-skill",
+    "label": "KLoSA · Korean Longitudinal Study of Aging",
+    "category": "database",
+    "file": "skills/klosa-database-skill.md",
+    "guide": "guides/klosa-database-skill.html"
+  },
+  "lasi-database-skill": {
+    "id": "lasi-database-skill",
+    "label": "LASI / LASI-DAD · Longitudinal Ageing Study in India",
+    "category": "database",
+    "file": "skills/lasi-database-skill.md",
+    "guide": "guides/lasi-database-skill.html"
+  },
+  "long-term-care-policy-skill": {
+    "id": "long-term-care-policy-skill",
+    "label": "长期护理保险：从失能照护问题，走到制度与数据",
+    "category": "policy",
+    "file": "skills/long-term-care-policy-skill.md",
+    "guide": "guides/long-term-care-policy-skill.html"
+  },
+  "longitudinal-public-data-skill": {
+    "id": "longitudinal-public-data-skill",
+    "label": "公共数据库与纵向研究：让同一个人，在时间里对得上",
+    "category": "method",
+    "file": "skills/longitudinal-public-data-skill.md",
+    "guide": "guides/longitudinal-public-data-skill.html"
+  },
+  "longitudinal-studio": {
+    "id": "longitudinal-studio",
+    "label": "纵向轨迹、混合模型与多时点作图",
+    "category": "method",
+    "file": "skills/longitudinal-studio.md",
+    "guide": "guides/longitudinal-studio.html"
+  },
+  "machine-learning-skill": {
+    "id": "machine-learning-skill",
+    "label": "Skill：机器学习助手（卫生经济与社会医学预测建模，Stata / R）",
+    "category": "method",
+    "file": "skills/machine-learning-skill.md",
+    "guide": "guides/machine-learning-skill.html"
+  },
+  "markov-model-skill": {
+    "id": "markov-model-skill",
+    "label": "Skill：Markov 模型助手（卫生经济学成本-效果分析，Stata / R）",
+    "category": "method",
+    "file": "skills/markov-model-skill.md",
+    "guide": "guides/markov-model-skill.html"
+  },
+  "medical-ai-evaluation-skill": {
+    "id": "medical-ai-evaluation-skill",
+    "label": "医疗AI评价：答得像、答得对、用起来有益，分别检查",
+    "category": "method",
+    "file": "skills/medical-ai-evaluation-skill.md",
+    "guide": "guides/medical-ai-evaluation-skill.html"
+  },
+  "meta-analysis-skill": {
+    "id": "meta-analysis-skill",
+    "label": "Skill：Meta 分析助手（系统评价效应合并，Stata / R）",
+    "category": "method",
+    "file": "skills/meta-analysis-skill.md",
+    "guide": "guides/meta-analysis-skill.html"
+  },
+  "method-map": {
+    "id": "method-map",
+    "label": "方法逻辑地图：从问题走到模型",
+    "category": "method",
+    "file": "skills/method-map.md",
+    "guide": "guides/method-map.html"
+  },
+  "mhas-database-skill": {
+    "id": "mhas-database-skill",
+    "label": "MHAS / ENASEM · Mexican Health and Aging Study",
+    "category": "database",
+    "file": "skills/mhas-database-skill.md",
+    "guide": "guides/mhas-database-skill.html"
+  },
+  "microsimulation-studio": {
+    "id": "microsimulation-studio",
+    "label": "个体微观模拟 · Microsimulation",
+    "category": "method",
+    "file": "skills/microsimulation-studio.md",
+    "guide": "guides/microsimulation-studio.html"
+  },
+  "monte-carlo-simulation-skill": {
+    "id": "monte-carlo-simulation-skill",
+    "label": "蒙特卡洛模拟：让方法先在“知道答案的小世界”里练习",
+    "category": "method",
+    "file": "skills/monte-carlo-simulation-skill.md",
+    "guide": "guides/monte-carlo-simulation-skill.html"
+  },
+  "network-meta-analysis-skill": {
+    "id": "network-meta-analysis-skill",
+    "label": "网状 Meta：让没有直接交手的干预，也能谨慎比较",
+    "category": "method",
+    "file": "skills/network-meta-analysis-skill.md",
+    "guide": "guides/network-meta-analysis-skill.html"
+  },
+  "nhanes-database-skill": {
+    "id": "nhanes-database-skill",
+    "label": "NHANES · 复杂抽样与健康检查实操",
+    "category": "database",
+    "file": "skills/nhanes-database-skill.md",
+    "guide": "guides/nhanes-database-skill.html"
+  },
+  "paper-to-ppt-skill": {
+    "id": "paper-to-ppt-skill",
+    "label": "论文精读与中文文献汇报PPT",
+    "category": "slides",
+    "file": "skills/paper-to-ppt-skill.md",
+    "guide": "guides/paper-to-ppt-skill.html"
+  },
+  "policy-evaluation-figures-skill": {
+    "id": "policy-evaluation-figures-skill",
+    "label": "政策评估与卫生经济图表",
+    "category": "figure",
+    "file": "skills/policy-evaluation-figures-skill.md",
+    "guide": "guides/policy-evaluation-figures-skill.html"
+  },
+  "policy-text-analysis-skill": {
+    "id": "policy-text-analysis-skill",
+    "label": "卫生政策文本：把文件读成有出处的变量",
+    "category": "policy",
+    "file": "skills/policy-text-analysis-skill.md",
+    "guide": "guides/policy-text-analysis-skill.html"
+  },
+  "propensity-score-skill": {
+    "id": "propensity-score-skill",
+    "label": "PSM与加权：先让比较对象站到合适的位置",
+    "category": "method",
+    "file": "skills/propensity-score-skill.md",
+    "guide": "guides/propensity-score-skill.html"
+  },
+  "rdd-studio": {
+    "id": "rdd-studio",
+    "label": "断点回归 · RDD",
+    "category": "method",
+    "file": "skills/rdd-studio.md",
+    "guide": "guides/rdd-studio.html"
+  },
+  "research-figure-skill": {
+    "id": "research-figure-skill",
+    "label": "科研数据图与多面板排版",
+    "category": "figure",
+    "file": "skills/research-figure-skill.md",
+    "guide": "guides/research-figure-skill.html"
+  },
+  "research-public-posts-skill": {
+    "id": "research-public-posts-skill",
+    "label": "科研公众号图文",
+    "category": "method",
+    "file": "skills/research-public-posts-skill.md",
+    "guide": "guides/research-public-posts-skill.html"
+  },
+  "research-workflow-skill": {
+    "id": "research-workflow-skill",
+    "label": "从一个问题到一篇论文：给研究留一条能走回去的路",
+    "category": "writing",
+    "file": "skills/research-workflow-skill.md",
+    "guide": "guides/research-workflow-skill.html"
+  },
+  "sdid-studio": {
+    "id": "sdid-studio",
+    "label": "合成双重差分 · Synthetic DID",
+    "category": "method",
+    "file": "skills/sdid-studio.md",
+    "guide": "guides/sdid-studio.html"
+  },
+  "sem-qca-qualitative-skill": {
+    "id": "sem-qca-qualitative-skill",
+    "label": "Skill：定性方法与结构方程专题（扎根理论 / SEM / 多层SEM / fsQCA，R / Stata）",
+    "category": "method",
+    "file": "skills/sem-qca-qualitative-skill.md",
+    "guide": "guides/sem-qca-qualitative-skill.html"
+  },
+  "share-database-skill": {
+    "id": "share-database-skill",
+    "label": "SHARE · Survey of Health, Ageing and Retirement in Europe",
+    "category": "database",
+    "file": "skills/share-database-skill.md",
+    "guide": "guides/share-database-skill.html"
+  },
+  "simulation-models-skill": {
+    "id": "simulation-models-skill",
+    "label": "模拟模型选型：先描述世界怎样运转",
+    "category": "method",
+    "file": "skills/simulation-models-skill.md",
+    "guide": "guides/simulation-models-skill.html"
+  },
+  "socialmedicineskills": {
+    "id": "socialmedicineskills",
+    "label": "社医卫管 · 方法与证据工作台",
+    "category": "general",
+    "file": "skills/socialmedicineskills.md",
+    "guide": "guides/socialmedicineskills.html"
+  },
+  "staggered-did-skill": {
+    "id": "staggered-did-skill",
+    "label": "交错DID：每一批政策，都找对它的参照",
+    "category": "method",
+    "file": "skills/staggered-did-skill.md",
+    "guide": "guides/staggered-did-skill.html"
+  },
+  "survival-studio": {
+    "id": "survival-studio",
+    "label": "生存分析与竞争风险",
+    "category": "method",
+    "file": "skills/survival-studio.md",
+    "guide": "guides/survival-studio.html"
+  },
+  "target-trial-emulation-skill": {
+    "id": "target-trial-emulation-skill",
+    "label": "目标试验模拟：先写想做的试验，再看数据够不够",
+    "category": "method",
+    "file": "skills/target-trial-emulation-skill.md",
+    "guide": "guides/target-trial-emulation-skill.html"
+  },
+  "teaching-storyboard-ppt-skill": {
+    "id": "teaching-storyboard-ppt-skill",
+    "label": "科研教学、方法科普与分镜PPT",
+    "category": "slides",
+    "file": "skills/teaching-storyboard-ppt-skill.md",
+    "guide": "guides/teaching-storyboard-ppt-skill.html"
+  },
+  "thesis-defense-ppt-skill": {
+    "id": "thesis-defense-ppt-skill",
+    "label": "开题、中期与答辩PPT",
+    "category": "slides",
+    "file": "skills/thesis-defense-ppt-skill.md",
+    "guide": "guides/thesis-defense-ppt-skill.html"
+  },
+  "umbrella-review-skill": {
+    "id": "umbrella-review-skill",
+    "label": "meta-meta / 伞状综述：先看伞下有没有重复的人",
+    "category": "method",
+    "file": "skills/umbrella-review-skill.md",
+    "guide": "guides/umbrella-review-skill.html"
+  }
+}
