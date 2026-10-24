@@ -1,0 +1,22 @@
+{
+  "updated": "2026-10-24",
+  "backend": "python/matplotlib",
+  "font": "Microsoft YaHei",
+  "healthProjects": 2659,
+  "healthInstitutions": 579,
+  "beforeProjects": 4471,
+  "subsetRule": "health_core is true",
+  "omittedFromInstitutionDisplay": "Only top 12 responsibility-unit frequencies displayed; full institution CSV retained",
+  "heatmapRule": "Health title subset, annual key/general/youth programs; national all-discipline annual totals as denominators",
+  "missing2026": true,
+  "synthesis": "Seven prespecified Healthy China-related topics; show all pair edges with co-occurrence >= 10; positions are manual layout",
+  "statistics": "Descriptive project document frequencies. No hypothesis tests, confidence intervals or causal estimates. Topic co-occurrence may arise from overlapping matching rules.",
+  "preflightNotes": "Mobile WeChat typography: 132-147 mm logical canvas, enlarged labels; not a journal submission. PNG at 300 dpi meets this delivery contract.",
+  "names": "No principal names or principal fields exported to this article evidence bundle",
+  "exports": [
+    "PNG 300dpi",
+    "SVG editable text",
+    "PDF TrueType"
+  ],
+  "source": "data/nssf-projects.json and data/nssfc-coverage.json; representative source links included"
+}
