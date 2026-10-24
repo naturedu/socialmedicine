@@ -1,4 +1,4 @@
-﻿id,title,language,source,line,code,status
+id,title,language,source,line,code,status
 methods-54-1,A1 横断面研究,Stata + R（混合片段）,skills/references/methods-54.md,32,"* ===== Stata =====
 proportion disease                       // 患病率及 CI（默认 Wald）
 ci proportions disease, wilson           // Wilson CI，小样本更稳
@@ -3479,3 +3479,122 @@ demo$comparison
 demo$mcse",base R教学示例已运行，29项行为/不变量检查通过；未验证真实数据
 microsimulation-studio-2,个体微观模拟 · Stata模板,stata,skills/microsimulation-studio.md,59,"* 虚构参数；此模板尚未在Stata执行，使用前核对版本和路径。
 do ""scripts/microsimulation_demo.do"" ""microsimulation-demo-stata""",Stata模板；尚未在Stata执行
+standardized-patient-skill-1,模拟与标准化病人 SP / USP · 机构层级分析 · R,r,skills/standardized-patient-skill.md,88,"# Original teaching simulation. No patient data and no clinical recommendations.
+# Balanced cases/actors at every clinic; inference is conditional on this set.
+set.seed(20261024)
+clinics <- data.frame(clinic_id=1:36, arm=sample(rep(0:1, each=18)))
+visits <- merge(clinics, expand.grid(case_id=1:3, actor_id=1:4))
+clinic_effect <- rnorm(36, 0, 0.45)
+p <- plogis(-0.55 + 0.5*visits$arm + clinic_effect[visits$clinic_id] +
+             c(-0.2,0,0.2)[visits$case_id])
+visits$correct <- rbinom(nrow(visits), 1, p)
+visits$detected <- rbinom(nrow(visits), 1, 0.07)
+stopifnot(nrow(visits)==432, all(table(visits$clinic_id)==12))
+clinic_scores <- aggregate(correct ~ clinic_id + arm, visits, mean)
+# Clinic allocation means visits are not independent trial units.
+comparison <- t.test(clinic_scores$correct[clinic_scores$arm==1],
+                     clinic_scores$correct[clinic_scores$arm==0])
+rd <- unname(diff(rev(comparison$estimate)))
+stopifnot(abs(rd - (mean(clinic_scores$correct[clinic_scores$arm==1]) -
+                   mean(clinic_scores$correct[clinic_scores$arm==0]))) < 1e-12)
+print(data.frame(estimand='Equal-clinic mean risk difference (arm 1 minus 0)',
+                 estimate=rd, lower=comparison$conf.int[1], upper=comparison$conf.int[2]))
+# Detection is reported, not silently deleted; exclusions may select on treatment.
+print(aggregate(detected ~ arm, visits, mean))
+print(aggregate(correct ~ arm + case_id, visits, mean))
+# For observational samples these contrasts are descriptive, not causal effects.
+# Unbalanced scripts/actors, few clusters, or cross-classified random actors need
+# a prespecified adjustment model and suitable uncertainty estimation.
+stopifnot(all(visits$correct %in% 0:1), all(is.finite(comparison$conf.int)))
+cat('PASS: 432 visits; 36 randomized clinics; balanced scripts; finite clinic-level interval\n')",R 4.6.1 已运行教学模拟与断言；未验证真实研究数据
+standardized-patient-skill-2,模拟与标准化病人 SP / USP · 机构层级分析 · STATA,stata,skills/standardized-patient-skill.md,123,"* Original teaching simulation; not run in Stata in this release.
+clear all
+set seed 20261024
+set obs 36
+gen clinic_id = _n
+gen allocation_order = runiform()
+sort allocation_order
+gen arm = (_n > 18)
+gen clinic_effect = rnormal(0, .45)
+expand 12
+bysort clinic_id: gen visit = _n
+gen case_id = mod(visit-1,3)+1
+gen actor_id = ceil(visit/3)
+gen p = invlogit(-.55 + .5*arm + clinic_effect + .2*(case_id-2))
+gen correct = (runiform() < p)
+gen detected = (runiform() < .07)
+assert inlist(correct,0,1)
+assert _N == 432
+tabstat detected, by(arm) stat(mean n)
+* Equal clinic weighting; case and actor assignments are balanced by construction.
+preserve
+collapse (mean) correct, by(clinic_id arm)
+assert _N == 36
+regress correct i.arm, vce(robust)
+lincom 1.arm
+restore
+* The individual-visit model is an alternative, not an independent replication.
+regress correct i.arm i.case_id i.actor_id, vce(cluster clinic_id)
+lincom 1.arm
+* Few clusters, unbalanced case mixes and observational allocation require
+* separate design-based decisions. Do not delete detected visits without a plan.",Stata教学模板；未执行
+implementation-science-skill-1,实施科学：从框架到研究设计 · 机构层级分析 · R,r,skills/implementation-science-skill.md,102,"# Original teaching simulation: same clinical service, two implementation strategies.
+set.seed(20261025)
+d <- data.frame(site_id=1:40, strategy=sample(rep(0:1,each=20)))
+d$eligible <- sample(50:100, 40, replace=TRUE)
+d$adopted <- rbinom(40, 1, plogis(-0.1 + 0.6*d$strategy))
+d$reached <- ifelse(d$adopted==1,
+                    rbinom(40, d$eligible, plogis(-0.3 + 0.3*d$strategy)), 0)
+d$completed <- rbinom(40, d$reached, 0.8)
+safe_ratio <- function(num,den) ifelse(den>0,num/den,NA_real_)
+d$reach <- safe_ratio(d$reached,d$eligible)
+d$fidelity <- safe_ratio(d$completed,d$reached)
+d$implementation_cost <- 500 + 15*d$reached
+summary_by_arm <- do.call(rbind,lapply(split(d,d$strategy), function(x)
+ data.frame(strategy=x$strategy[1], sites=nrow(x),
+ adoption=mean(x$adopted), reach_person_weighted=sum(x$reached)/sum(x$eligible),
+ reach_site_weighted=mean(x$reach), fidelity_among_reached=safe_ratio(sum(x$completed),sum(x$reached)),
+ cost_per_reached=safe_ratio(sum(x$implementation_cost),sum(x$reached)))))
+print(summary_by_arm)
+# Primary example: strategy effect on equal-site reach, at one prespecified time.
+fit <- t.test(d$reach[d$strategy==1],d$reach[d$strategy==0])
+print(data.frame(reach_difference=unname(fit$estimate[1]-fit$estimate[2]),
+                 lower=fit$conf.int[1],upper=fit$conf.int[2]))
+# Fidelity conditions on reach. Its between-arm contrast is not automatically
+# a causal strategy effect because reaching the service is post-allocation.
+stopifnot(all(d$completed<=d$reached),all(d$reached<=d$eligible),
+          is.na(safe_ratio(0,0)),all(is.na(d$fidelity[d$reached==0])),
+          all(is.finite(fit$conf.int)))
+cat('PASS: denominators, missing zero-denominator ratios, 40 randomized sites, finite interval\n')",R 4.6.1 已运行教学模拟与断言；未验证真实研究数据
+implementation-science-skill-2,实施科学：从框架到研究设计 · 机构层级分析 · STATA,stata,skills/implementation-science-skill.md,137,"* Teaching template. Not run in Stata in this release.
+clear all
+set seed 20261025
+set obs 40
+gen site_id = _n
+gen allocation_order = runiform()
+sort allocation_order
+gen strategy = (_n > 20)
+gen eligible = 50 + floor(51*runiform())
+gen adopted = runiform() < invlogit(-.1+.6*strategy)
+gen reached = rbinomial(eligible, invlogit(-.3+.3*strategy)) if adopted==1
+replace reached = 0 if adopted==0
+gen completed = rbinomial(reached,.8)
+gen reach = reached/eligible if eligible>0
+gen fidelity = completed/reached if reached>0
+gen implementation_cost = 500+15*reached
+assert completed<=reached & reached<=eligible
+assert missing(fidelity) if reached==0
+tabstat adopted reach fidelity, by(strategy) stat(mean n)
+* Site-weighted reach contrast. Zero reach remains in the primary analysis.
+regress reach i.strategy, vce(robust)
+lincom 1.strategy
+* Person-weighted summaries use pooled numerators AND denominators.
+preserve
+collapse (sum) reached eligible completed implementation_cost, by(strategy)
+gen pooled_reach = reached/eligible
+gen pooled_fidelity = completed/reached if reached>0
+gen cost_per_reached = implementation_cost/reached if reached>0
+list, noobs
+restore
+* These are different estimands; do not equate a conditional fidelity contrast
+* with a randomized strategy effect on everyone originally eligible.",Stata教学模板；未执行

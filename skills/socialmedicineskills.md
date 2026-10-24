@@ -119,3 +119,9 @@ description: 社会医学与卫生事业管理研究工具：方法与 Stata/R �
 基金资料仅保留汇总 HTML，不提供名单、编号、姓名、原始文件或打包数据；不将已撤下的明细重新生成到公共仓库、搜索索引或 Release。机器学习新增内容见[预测模型简明教程](https://naturedu.github.io/socialmedicine/prediction-models.html)，仅作方法解读，不上传课程包、模型文件或个体记录。
 
 盖茨基金另按最新公开范围要求保留 1,455 个去重资助 ID 与公开用途、机构、承诺金额；详见[公开主题库](references/public-topics.md)。这不改变其他三类基金的汇总展示方式。
+
+
+## 标准化病人与实施研究
+
+- [模拟与标准化病人 SP / USP](standardized-patient-skill.md)：剧本、评分、一致性与机构层级分析。
+- [实施科学](implementation-science-skill.md)：CFIR、RE-AIM、Proctor、ERIC、hybrid与StaRI，含字段模板与教学代码。

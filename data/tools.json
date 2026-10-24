@@ -601,5 +601,34 @@
       "健康治理",
       "脱敏"
     ]
+  },
+  {
+    "name": "模拟与标准化病人 SP / USP",
+    "category": "研究设计",
+    "description": "用训练过的扮演者在统一情境下测量服务过程，区分教学考核与未预先告知的质量研究。",
+    "url": "skills/standardized-patient-skill.md",
+    "tags": [
+      "标准化病人",
+      "模拟病人",
+      "SP",
+      "USP",
+      "OSCE",
+      "服务质量"
+    ]
+  },
+  {
+    "name": "实施科学：从框架到研究设计",
+    "category": "研究设计",
+    "description": "区分服务干预与实施策略，把障碍、策略、实施结局、健康结局和持续使用连接到具体设计。",
+    "url": "skills/implementation-science-skill.md",
+    "tags": [
+      "实施科学",
+      "CFIR",
+      "RE-AIM",
+      "Proctor",
+      "ERIC",
+      "hybrid",
+      "StaRI"
+    ]
   }
 ]

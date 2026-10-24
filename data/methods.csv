@@ -1,4 +1,4 @@
-﻿id,name,category,content,source
+id,name,category,content,source
 A1,横断面研究,A,"**适用**：在某一时点同时测量暴露与结局，描述疾病分布或探索暴露-结局关联（如国家卫生服务调查、体检数据、居民健康素养调查）。
 
 **要点**：核心是一次性调查，暴露与结局同时收集、无时间先后，只能得关联不能定因果。患病率 = 现患病例数 / 调查人口数（时点患病率）；关联指标推荐患病率比 PR（log-binomial）或暴露患病比值比 POR，结局常见时 OR 会高估关联。抽样常为多阶段/分层抽样，需加权估计总体；典型偏倚有奈曼偏倚（病程长短影响入选，长病程者过度代表）、无应答偏倚与回忆偏倚。
@@ -1220,11 +1220,13 @@ I2,概率敏感性分析 PSA,I,"**适用**：传播模型参数不确定性，�
 **常见错误**：破坏参数相关性，把成本效果概率当临床有效概率。",guides/monte-carlo-simulation-skill.html
 I3,个体微观模拟,I,"**适用**：模拟具有异质风险和历史依赖的个体路径。
 
-**逻辑与操作**：明确研究单位与目标，按专题完成设计、估计与验证。详细流程和示例见 [个体微观模拟专题](simulation-models-skill.md)。
+**逻辑与操作**：明确研究单位与目标，按专题完成设计、估计与验证。详细流程和示例见 [个体微观模拟专题](microsimulation-studio.md)。
 
 **报告要点**：个体属性、事件风险、路径记忆、校准、验证与随机数。
 
-**常见错误**：混淆个体随机变异与参数不确定性，忽略模拟噪声收敛。",guides/simulation-models-skill.html
+**常见错误**：混淆个体随机变异与参数不确定性，忽略模拟噪声收敛。
+
+**实现**：base R四状态教学脚本已运行并通过29项检查，Stata未执行；见完整技能与支持脚本。",guides/microsimulation-studio.html
 I4,离散事件模拟 DES,I,"**适用**：分析到达、排队、床位与转诊等资源受限系统。
 
 **逻辑与操作**：明确研究单位与目标，按专题完成设计、估计与验证。详细流程和示例见 [离散事件模拟 DES专题](simulation-models-skill.md)。
@@ -1330,3 +1332,340 @@ D16,熵平衡与重叠权重,D,"**适用**：通过矩约束或强调重叠构�
 **报告要点**：目标、约束/权重公式、重叠、有效样本量与推断。
 
 **常见错误**：只看平衡不看权重集中，或把ATO结果仍称原总体ATE。",guides/propensity-score-skill.html
+A10,模拟与标准化病人 SP / USP,A,"**适用**：用训练过的扮演者在统一情境下测量服务过程，区分教学考核与未预先告知的质量研究。
+
+**准备**：先明确场景、剧本、评分依据、伦理安全、机构抽样、重复访问与识别记录。
+
+**代码**与完整说明：
+
+---
+name: standardized-patient
+description: 模拟/标准化病人SP与未预先告知标准化病人USP：教学考核、医疗服务质量测量、剧本与评分表、训练一致性、伦理安全、抽样与机构聚类分析，配R/Stata教学代码。
+---
+
+# 模拟与标准化病人：把服务过程变成可比较的证据
+
+标准化病人（standardized patient, SP）通常由经过训练的人按剧本稳定呈现病史、行为和反应；模拟病人（simulated patient）在文献中有时与之互用。这里强调可重复呈现和测量一致性。它不是 Markov 微观模拟，也不是让大模型生成“真实患者”。
+
+## 1. 先选研究用途
+
+| 用途 | 主要问题 | 能测量什么 | 不能直接声称什么 |
+|---|---|---|---|
+| 教学、沟通训练与OSCE | 学员在统一情境下如何表现 | 问诊、沟通、决策和程序表现；按站点评分 | 考场表现等于长期真实临床表现 |
+| 告知式服务评估 | 机构在知道评估存在时怎样服务 | 统一情境的质量与流程 | 不存在观察反应 |
+| 未预先告知标准化病人 USP | 常规服务中的实际行为如何 | 适当处置、询问检查、转诊、费用及沟通 | 覆盖所有疾病、重症体征和后续健康结局 |
+| 标准化病例/临床情境问卷 | 医务人员“知道该怎么做” | 知识或陈述决策 | 与USP测得的实际行为完全相同 |
+
+ASPE 标准主要面向人类模拟教学与评估；USP 质量研究还需研究方案、抽样、识别与安全管理。先确定对象、场景、主要结局、比较与时间窗，再选是否适合 SP。[S1–S3]
+
+## 2. 剧本与评分表怎样制作
+
+选择可安全、可信地呈现且与研究问题相关的场景。明确开场陈述、只有被问到才提供的信息、允许的标准回答、情绪与行为、不可模拟的体征，以及何时停止访问。临床处置评分应由相应专业人员依据适用指南制定，注明指南日期与评分规则；本站不提供自行施行检查或治疗的脚本。
+
+评分表逐项定义“应询问/应检查/应处置/不适当操作”、信息来源、缺失、不适用和分母。主要结局应预先规定，例如符合预定处置标准的访问比例；不能看完结果才挑最显著条目。复杂综合分数需说明权重和测量依据，不能自动视为已验证量表。
+
+先做小规模可行性试演：对同一剧本重复训练，检查扮演者间与扮演者内一致性、评分者一致性及回忆遗漏。二分类可考虑一致率与κ，连续分数按设计考虑ICC；同时查看分布，因为高一致率与低κ可能并存。
+
+## 3. 抽样、分配与访视安排
+
+1. 写清机构抽样框、纳排、地区与服务类型。便利样本不代表全国质量。
+2. 若评价干预，明确随机化或政策分配单位；机构层分配不能把每次访问当作独立随机单位。
+3. 记录医生、机构、扮演者、剧本、访问时间与重复访问关系。角色和案例尽量在比较组平衡；同一医生重复访问及跨机构SP可形成多层或交叉结构。
+4. 事先做功效规划：主要结局、预期差异、机构数、每机构访问数、ICC、病例构成与不可完成比例。增加同一机构访问数不能无限替代增加机构数。
+5. 在许可范围内尽快填写结构化访问记录；若使用音频等材料，必须与批准方案、访问授权和保存期限一致。
+
+## 4. 伦理与安全是设计条件
+
+未预先告知不等于不需伦理审查。医务人员同意的取得方式或豁免、事后说明、隐私与声誉保护、对正常服务的干扰，须由相应伦理审查与机构安排明确。授权或豁免只能由适用程序认定，不能由本工具自动决定。[S1–S3]
+
+预设不得接受的侵入性检查、真实用药与危险情境及退出流程；出现超出模拟范围的情况应中止并按批准的安全流程处理。保护SP的身体与情绪安全，安排训练、支持和复盘。公开结果以适当聚合形式呈现，不发布可识别的个人访问记录。
+
+## 5. 数据字典与质量核查
+
+[下载SP字段模板](../data/standardized-patient-data-dictionary.csv)。模板是空白字段说明，不含患者或医务人员记录。
+
+核心字段：匿名机构/医生/访问/扮演者/案例ID，组别与实际分配，访问时间，各评分项目及分母，主要处置结局，费用，是否被识别，剧本偏离，不完整访问及缺失原因。
+
+保留访视失败和识别记录。识别可能与机构、剧本或干预有关；仅删除“被识别”样本可能引入选择偏倚。主分析与敏感性分析的对象、分母和排除标准均提前规定，并报告各阶段数量。[S2]
+
+## 6. 分析如何排布
+
+- 先描述抽样、完成率、案例分布、识别比例和评分缺失。
+- 二元结局报告比例与区间，并明确风险差、风险比或OR；不把OR直接解释成风险比。
+- 机构随机研究按分配单位处理相关性。脚本/演员固定或随机、平衡程度与目标总体决定采用机构汇总、多层或交叉模型。
+- 横断面USP比较主要支持描述与关联；只有满足随机或准实验识别条件才能作相应因果解释。
+- 观察真实患者资料与SP资料回答不同问题：病例标准化有利于比较，却不代表实际患者疾病谱与长期结局。[S2–S3]
+
+下方例子为36个随机分组机构，每机构3个案例×4位扮演者，共432次模拟访问。案例和扮演者在机构间完全平衡，采用等机构权重的组间比较；推断限于这组案例和扮演者。R脚本已在R 4.6.1运行；Stata为未执行教学模板。模拟结果不保证显著，也不是任何真实政策效果。
+
+## 7. 与实施科学怎样联用
+
+例如评估基层指南落实：同一临床服务对应两种实施支持策略，机构分组，USP评估处置过程质量，另用实施数据衡量采纳、忠实度、成本与维持。SP评分属于服务过程质量，不能替代全部实施结局或患者健康结局。明确盲法、识别风险、策略污染及机构聚类，再判断是否适合 hybrid 设计。[实施科学路线](implementation-science-skill.md)
+
+## 8. 最终交付清单
+
+研究问题与估计目标、剧本版本、评分依据、抽样与功效方案、伦理与安全文件、训练及一致性记录、字段字典、访问流程图、分析计划、可复现代码和限制说明。
+
+可复制提问：**“我想用标准化病人比较基层服务质量。请帮我定义主要结局、剧本、抽样、机构相关性、识别记录和R分析方案。”**
+
+## 核对来源
+
+- S1. Lewis KL 等，2017，ASPE Standards of Best Practice。[官方全文](https://www.aspeducators.org/assets/docs/ASPE%20SOBP%202.7.20.pdf) · [DOI](https://doi.org/10.1186/s41077-017-0043-4)。使用范围：训练、安全、情境与质量保证。
+- S2. King JJC 等，2019，How to do (or not to do)… using the standardized patient method to measure clinical quality of care in LMIC health facilities。[PubMed](https://pubmed.ncbi.nlm.nih.gov/31424494/) · [DOI](https://doi.org/10.1093/heapol/czz078)。使用范围：USP方法与测量边界。
+- S3. Assessing the quality of primary healthcare in seven Chinese provinces with unannounced standardised patients: protocol of a cross-sectional survey，2019。[BMJ Open](https://bmjopen.bmj.com/content/9/2/e023997)。这是研究方案，不能当作研究结果。
+
+题名、DOI、期刊与作者核对日期：2026-10-24。[来源登记](../data/sp-implementation-sources.json)。本站为原创方法导读，不复制论文全文。
+
+<!-- BEGIN TEACHING CODE -->
+
+## 教学代码：可以单独下载，也可展开复制
+
+### 机构层级分析 · R
+
+[下载脚本](scripts/standardized_patient_demo.R)
+
+```r
+# Original teaching simulation. No patient data and no clinical recommendations.
+# Balanced cases/actors at every clinic; inference is conditional on this set.
+set.seed(20261024)
+clinics <- data.frame(clinic_id=1:36, arm=sample(rep(0:1, each=18)))
+visits <- merge(clinics, expand.grid(case_id=1:3, actor_id=1:4))
+clinic_effect <- rnorm(36, 0, 0.45)
+p <- plogis(-0.55 + 0.5*visits$arm + clinic_effect[visits$clinic_id] +
+             c(-0.2,0,0.2)[visits$case_id])
+visits$correct <- rbinom(nrow(visits), 1, p)
+visits$detected <- rbinom(nrow(visits), 1, 0.07)
+stopifnot(nrow(visits)==432, all(table(visits$clinic_id)==12))
+clinic_scores <- aggregate(correct ~ clinic_id + arm, visits, mean)
+# Clinic allocation means visits are not independent trial units.
+comparison <- t.test(clinic_scores$correct[clinic_scores$arm==1],
+                     clinic_scores$correct[clinic_scores$arm==0])
+rd <- unname(diff(rev(comparison$estimate)))
+stopifnot(abs(rd - (mean(clinic_scores$correct[clinic_scores$arm==1]) -
+                   mean(clinic_scores$correct[clinic_scores$arm==0]))) < 1e-12)
+print(data.frame(estimand='Equal-clinic mean risk difference (arm 1 minus 0)',
+                 estimate=rd, lower=comparison$conf.int[1], upper=comparison$conf.int[2]))
+# Detection is reported, not silently deleted; exclusions may select on treatment.
+print(aggregate(detected ~ arm, visits, mean))
+print(aggregate(correct ~ arm + case_id, visits, mean))
+# For observational samples these contrasts are descriptive, not causal effects.
+# Unbalanced scripts/actors, few clusters, or cross-classified random actors need
+# a prespecified adjustment model and suitable uncertainty estimation.
+stopifnot(all(visits$correct %in% 0:1), all(is.finite(comparison$conf.int)))
+cat('PASS: 432 visits; 36 randomized clinics; balanced scripts; finite clinic-level interval\n')
+```
+
+### 机构层级分析 · STATA
+
+[下载脚本](scripts/standardized_patient_demo.do)
+
+```stata
+* Original teaching simulation; not run in Stata in this release.
+clear all
+set seed 20261024
+set obs 36
+gen clinic_id = _n
+gen allocation_order = runiform()
+sort allocation_order
+gen arm = (_n > 18)
+gen clinic_effect = rnormal(0, .45)
+expand 12
+bysort clinic_id: gen visit = _n
+gen case_id = mod(visit-1,3)+1
+gen actor_id = ceil(visit/3)
+gen p = invlogit(-.55 + .5*arm + clinic_effect + .2*(case_id-2))
+gen correct = (runiform() < p)
+gen detected = (runiform() < .07)
+assert inlist(correct,0,1)
+assert _N == 432
+tabstat detected, by(arm) stat(mean n)
+* Equal clinic weighting; case and actor assignments are balanced by construction.
+preserve
+collapse (mean) correct, by(clinic_id arm)
+assert _N == 36
+regress correct i.arm, vce(robust)
+lincom 1.arm
+restore
+* The individual-visit model is an alternative, not an independent replication.
+regress correct i.arm i.case_id i.actor_id, vce(cluster clinic_id)
+lincom 1.arm
+* Few clusters, unbalanced case mixes and observational allocation require
+* separate design-based decisions. Do not delete detected visits without a plan.
+```
+",guides/standardized-patient-skill.html
+F12,实施科学：从框架到研究设计,F,"**适用**：区分服务干预与实施策略，把障碍、策略、实施结局、健康结局和持续使用连接到具体设计。
+
+**准备**：先明确服务证据、策略执行者、主要结局、层级、分母与时间窗；框架不能代替识别设计。
+
+**代码**与完整说明：
+
+---
+name: implementation-science
+description: 实施科学完整路线：临床/服务干预与实施策略分离，CFIR、RE-AIM、Proctor实施结局、ERIC、hybrid 1/2/3、混合方法、分母与层级、R/Stata教学分析和StaRI报告。
+---
+
+# 实施科学：让有证据的服务在真实场景中被采用和持续使用
+
+先区分**要落实的服务/干预**（innovation/intervention）与**帮助它落实的实施策略**（strategy）。例如，“规范的慢病随访服务”与“为实施该服务提供培训、反馈和促进支持”是两条不同的线。研究应同时明确谁采用、如何交付、为何受阻、产生何种结果。[I1–I4]
+
+## 1. 把研究问题写成可执行句子
+
+在【场景与机构】中，为【人群】落实【已有证据的服务】时，针对【已识别障碍】，由【执行者】实施【策略及剂量】，相对于【比较条件】，在【时间窗】内改善【主要实施结局】，并观察【服务或健康结局】。
+
+先评估服务本身的证据与可实施性，不把“有效性未知”隐藏成单纯推广问题。研究不是将多个框架名词拼接；框架服务于具体问题、构念和数据。
+
+## 2. 框架按任务分工
+
+| 任务 | 候选工具 | 用法与边界 |
+|---|---|---|
+| 解释障碍与促进因素 | 更新版CFIR（2022）；2025使用指南 | 按问题选构念，建立访谈/观察与分析对应；不是全部条目强制打分 |
+| 规划和评价真实世界覆盖 | RE-AIM | 分开触达、效果、采纳、实施、维持；逐维指定层级、分母与时间 |
+| 定义实施成效 | Proctor实施结局 | 区分实施、服务与健康结局；不把患者满意度当所有实施成功 |
+| 具体说明实施支持措施 | ERIC策略术语 | 明确谁对谁做什么、何时、多频繁及预期机制；不是看到障碍就机械配策略 |
+| 组织结果报告 | StaRI | 服务干预与实施策略分两条线报告；另按具体研究设计核对报告规范 |
+
+CFIR常用于解释决定因素，RE-AIM常用于规划与评价；两者可互补，但不是同一套量表。构念名称本身不会产生因果识别。[I1–I3、I6–I8]
+
+## 3. 结局、分母与时间窗
+
+Proctor等区分可接受性、采纳、适切性、可行性、忠实度、实施成本、渗透/整合和可持续性。分别定义测量对象与操作化指标；临床效果和服务系统结果单独记录。[I4]
+
+| 指标例子 | 分子 | 分母 | 注意 |
+|---|---|---|---|
+| 触达 | 实际接受服务的符合条件者 | 目标范围内全部符合条件者 | 说明招募、拒绝和排除；还要看代表性 |
+| 机构采纳 | 开始采用服务的机构 | 纳入目标的符合条件机构 | 机构层和工作人员层不要混算 |
+| 忠实度 | 按规定完成核心环节的服务次数 | 应执行这些环节的服务次数 | 区分适应性调整与偏离；不适用不是未完成 |
+| 维持 | 规定随访时点仍运行的机构 | 按方案定义的初始或已采纳机构 | 明确时点和分母，不能临时替换 |
+| 单位实施成本 | 明确视角下的实施资源成本 | 对应触达者/采纳机构数 | 分开服务成本与实施支持成本，注明币种和价格年 |
+
+分母为0时显示缺失并说明原因，不能直接记为0%。机构平均比例与“总分子/总分母”是不同估计目标；两者不能混报。可接受性等潜变量如使用量表，需核对授权、译本、测量性质及本场景适用性，不能把自编问题标成已验证量表。
+
+## 4. 选择设计与hybrid类型
+
+| 类型 | 主要关注 | 同时关注 |
+|---|---|---|
+| Hybrid 1 | 检验服务干预有效性 | 探索实施条件与障碍 |
+| Hybrid 2 | 服务干预与实施策略的双重研究目标 | 两类目标的样本量、结局和比较均须说明 |
+| Hybrid 3 | 检验实施策略对实施结局的作用 | 观察服务/健康效果 |
+
+类型描述研究目标的侧重，不能替代具体的随机、准实验或观察设计。根据已有服务证据、场景差异、污染和可行性选择个体/整群随机、分阶段推行或适当准实验；阶梯楔形设计仍要处理日历时间和机构相关性，不能等同简单前后比较。[I5]
+
+样本量以主要目标和分配层级计算，考虑ICC、机构大小差异、双重主要结局与缺失；不能把个体数当成独立机构数。
+
+## 5. 实施策略与机制表
+
+一行一个策略：执行者 → 具体行动 → 对象 → 频率/时长 → 对应障碍 → 预期机制 → 近端实施结局 → 远端服务/健康结局。区分计划剂量与实际执行，记录适应性修改的时间、理由和决定者。[I6]
+
+访谈可按选定CFIR构念设计，同时保留开放编码与反例。建立联合展示：构念、定性证据、量化指标、相符/不符、替代解释。不能用访谈提及次数直接估计人群比例，也不能仅凭显著路径判定机制成立。
+
+## 6. 数据与分析
+
+[下载实施研究字段模板](../data/implementation-science-data-dictionary.csv)。至少包括机构/工作人员/服务对象层级ID，策略分配，服务定义，实施阶段，时间，分母，采纳与执行记录，适应性修改，成本及相关群体特征。公开模板不含任何个体记录。
+
+下方教学例子把40个机构随机分配至两种实施策略，对同一种临床服务计算采纳、触达、执行忠实度和单位实施成本。主示例比较等机构权重的触达率；重复时间点需另建纵向模型。
+
+忠实度在实际接受服务者中计算，条件于一个分组后的变量；组间忠实度差不能自动解释为随机策略对所有符合条件者的因果效应。R脚本已运行并检查分母与缺失逻辑；Stata未执行。模拟数据只演示计算，不提供效果证据。
+
+## 7. 公平与标准化病人联用
+
+按预先定义的群体查看谁未被触达、谁承担更大负担、机构是否代表目标场景。平均改善不排除差距扩大。[公平性补充](implementation-equity-skill.md)
+
+[标准化病人](standardized-patient-skill.md)可提供统一情境的服务过程评价，帮助比较策略实施前后或不同组的实际处置；仍需单独收集实施策略执行、采纳和成本，不能把USP处置合格率直接改名为全部实施成功。
+
+## 8. 按StaRI交付
+
+分别报告服务干预、实施策略及其依据；交代情境、适应性修改、设计、比较、主要分母、过程、实施/健康结局和局限。交付研究问题表、框架—构念映射、逻辑模型、策略操作表、测量字典、混合方法联合展示、分析计划与报告核对表。[I7]
+
+可复制提问：**“我想提高基层指南采纳。请区分服务干预与实施策略，用CFIR选择障碍、RE-AIM定义分母，并比较hybrid 1/2/3的适用条件。”**
+
+## 核对来源
+
+- I1. Damschroder等，2022，更新版CFIR。[原文](https://link.springer.com/article/10.1186/s13012-022-01245-0)。
+- I2. CFIR User Guide，2025，五步使用指南。[原文](https://link.springer.com/article/10.1186/s13012-025-01450-7)。
+- I3. RE-AIM框架团队。[官方五维说明](https://re-aim.org/learn/what-is-re-aim/)。
+- I4. Proctor等，2011，实施结局概念区分。[原文](https://doi.org/10.1007/s10488-010-0319-7)。
+- I5. Curran等，2012，Effectiveness-implementation Hybrid Designs。[原文](https://pmc.ncbi.nlm.nih.gov/articles/PMC3731143/)。
+- I6. Powell等，2015，ERIC策略术语整理。[原文](https://link.springer.com/article/10.1186/s13012-015-0209-1)。
+- I7. Pinnock等，2017，StaRI。[EQUATOR登记与清单](https://www.equator-network.org/reporting-guidelines/stari-statement/)。
+- I8. [CFIR官方资源](https://cfirguide.org/)。
+
+核对日期：2026-10-24。[完整题名、DOI、作者及核验范围](../data/sp-implementation-sources.json)。本文为本站原创教学整理，未复制论文全文。
+
+<!-- BEGIN TEACHING CODE -->
+
+## 教学代码：可以单独下载，也可展开复制
+
+### 机构层级分析 · R
+
+[下载脚本](scripts/implementation_science_demo.R)
+
+```r
+# Original teaching simulation: same clinical service, two implementation strategies.
+set.seed(20261025)
+d <- data.frame(site_id=1:40, strategy=sample(rep(0:1,each=20)))
+d$eligible <- sample(50:100, 40, replace=TRUE)
+d$adopted <- rbinom(40, 1, plogis(-0.1 + 0.6*d$strategy))
+d$reached <- ifelse(d$adopted==1,
+                    rbinom(40, d$eligible, plogis(-0.3 + 0.3*d$strategy)), 0)
+d$completed <- rbinom(40, d$reached, 0.8)
+safe_ratio <- function(num,den) ifelse(den>0,num/den,NA_real_)
+d$reach <- safe_ratio(d$reached,d$eligible)
+d$fidelity <- safe_ratio(d$completed,d$reached)
+d$implementation_cost <- 500 + 15*d$reached
+summary_by_arm <- do.call(rbind,lapply(split(d,d$strategy), function(x)
+ data.frame(strategy=x$strategy[1], sites=nrow(x),
+ adoption=mean(x$adopted), reach_person_weighted=sum(x$reached)/sum(x$eligible),
+ reach_site_weighted=mean(x$reach), fidelity_among_reached=safe_ratio(sum(x$completed),sum(x$reached)),
+ cost_per_reached=safe_ratio(sum(x$implementation_cost),sum(x$reached)))))
+print(summary_by_arm)
+# Primary example: strategy effect on equal-site reach, at one prespecified time.
+fit <- t.test(d$reach[d$strategy==1],d$reach[d$strategy==0])
+print(data.frame(reach_difference=unname(fit$estimate[1]-fit$estimate[2]),
+                 lower=fit$conf.int[1],upper=fit$conf.int[2]))
+# Fidelity conditions on reach. Its between-arm contrast is not automatically
+# a causal strategy effect because reaching the service is post-allocation.
+stopifnot(all(d$completed<=d$reached),all(d$reached<=d$eligible),
+          is.na(safe_ratio(0,0)),all(is.na(d$fidelity[d$reached==0])),
+          all(is.finite(fit$conf.int)))
+cat('PASS: denominators, missing zero-denominator ratios, 40 randomized sites, finite interval\n')
+```
+
+### 机构层级分析 · STATA
+
+[下载脚本](scripts/implementation_science_demo.do)
+
+```stata
+* Teaching template. Not run in Stata in this release.
+clear all
+set seed 20261025
+set obs 40
+gen site_id = _n
+gen allocation_order = runiform()
+sort allocation_order
+gen strategy = (_n > 20)
+gen eligible = 50 + floor(51*runiform())
+gen adopted = runiform() < invlogit(-.1+.6*strategy)
+gen reached = rbinomial(eligible, invlogit(-.3+.3*strategy)) if adopted==1
+replace reached = 0 if adopted==0
+gen completed = rbinomial(reached,.8)
+gen reach = reached/eligible if eligible>0
+gen fidelity = completed/reached if reached>0
+gen implementation_cost = 500+15*reached
+assert completed<=reached & reached<=eligible
+assert missing(fidelity) if reached==0
+tabstat adopted reach fidelity, by(strategy) stat(mean n)
+* Site-weighted reach contrast. Zero reach remains in the primary analysis.
+regress reach i.strategy, vce(robust)
+lincom 1.strategy
+* Person-weighted summaries use pooled numerators AND denominators.
+preserve
+collapse (sum) reached eligible completed implementation_cost, by(strategy)
+gen pooled_reach = reached/eligible
+gen pooled_fidelity = completed/reached if reached>0
+gen cost_per_reached = implementation_cost/reached if reached>0
+list, noobs
+restore
+* These are different estimands; do not equate a conditional fidelity contrast
+* with a randomized strategy effect on everyone originally eligible.
+```
+",guides/implementation-science-skill.html

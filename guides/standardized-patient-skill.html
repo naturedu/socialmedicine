@@ -1,0 +1,166 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>模拟与标准化病人：把服务过程变成可比较的证据 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/standardized-patient-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#1">1. 先选研究用途</a></li>
+<li><a href="#2">2. 剧本与评分表怎样制作</a></li>
+<li><a href="#3">3. 抽样、分配与访视安排</a></li>
+<li><a href="#4">4. 伦理与安全是设计条件</a></li>
+<li><a href="#5">5. 数据字典与质量核查</a></li>
+<li><a href="#6">6. 分析如何排布</a></li>
+<li><a href="#7">7. 与实施科学怎样联用</a></li>
+<li><a href="#8">8. 最终交付清单</a></li>
+<li><a href="#_2">核对来源</a></li>
+<li><a href="#_3">教学代码：可以单独下载，也可展开复制</a><ul>
+<li><a href="#r">机构层级分析 · R</a></li>
+<li><a href="#stata">机构层级分析 · STATA</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside><article><h1 id="_1">模拟与标准化病人：把服务过程变成可比较的证据</h1>
+<p>标准化病人（standardized patient, SP）通常由经过训练的人按剧本稳定呈现病史、行为和反应；模拟病人（simulated patient）在文献中有时与之互用。这里强调可重复呈现和测量一致性。它不是 Markov 微观模拟，也不是让大模型生成“真实患者”。</p>
+<h2 id="1">1. 先选研究用途</h2>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>主要问题</th>
+<th>能测量什么</th>
+<th>不能直接声称什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>教学、沟通训练与OSCE</td>
+<td>学员在统一情境下如何表现</td>
+<td>问诊、沟通、决策和程序表现；按站点评分</td>
+<td>考场表现等于长期真实临床表现</td>
+</tr>
+<tr>
+<td>告知式服务评估</td>
+<td>机构在知道评估存在时怎样服务</td>
+<td>统一情境的质量与流程</td>
+<td>不存在观察反应</td>
+</tr>
+<tr>
+<td>未预先告知标准化病人 USP</td>
+<td>常规服务中的实际行为如何</td>
+<td>适当处置、询问检查、转诊、费用及沟通</td>
+<td>覆盖所有疾病、重症体征和后续健康结局</td>
+</tr>
+<tr>
+<td>标准化病例/临床情境问卷</td>
+<td>医务人员“知道该怎么做”</td>
+<td>知识或陈述决策</td>
+<td>与USP测得的实际行为完全相同</td>
+</tr>
+</tbody>
+</table>
+<p>ASPE 标准主要面向人类模拟教学与评估；USP 质量研究还需研究方案、抽样、识别与安全管理。先确定对象、场景、主要结局、比较与时间窗，再选是否适合 SP。[S1–S3]</p>
+<h2 id="2">2. 剧本与评分表怎样制作</h2>
+<p>选择可安全、可信地呈现且与研究问题相关的场景。明确开场陈述、只有被问到才提供的信息、允许的标准回答、情绪与行为、不可模拟的体征，以及何时停止访问。临床处置评分应由相应专业人员依据适用指南制定，注明指南日期与评分规则；本站不提供自行施行检查或治疗的脚本。</p>
+<p>评分表逐项定义“应询问/应检查/应处置/不适当操作”、信息来源、缺失、不适用和分母。主要结局应预先规定，例如符合预定处置标准的访问比例；不能看完结果才挑最显著条目。复杂综合分数需说明权重和测量依据，不能自动视为已验证量表。</p>
+<p>先做小规模可行性试演：对同一剧本重复训练，检查扮演者间与扮演者内一致性、评分者一致性及回忆遗漏。二分类可考虑一致率与κ，连续分数按设计考虑ICC；同时查看分布，因为高一致率与低κ可能并存。</p>
+<h2 id="3">3. 抽样、分配与访视安排</h2>
+<ol>
+<li>写清机构抽样框、纳排、地区与服务类型。便利样本不代表全国质量。</li>
+<li>若评价干预，明确随机化或政策分配单位；机构层分配不能把每次访问当作独立随机单位。</li>
+<li>记录医生、机构、扮演者、剧本、访问时间与重复访问关系。角色和案例尽量在比较组平衡；同一医生重复访问及跨机构SP可形成多层或交叉结构。</li>
+<li>事先做功效规划：主要结局、预期差异、机构数、每机构访问数、ICC、病例构成与不可完成比例。增加同一机构访问数不能无限替代增加机构数。</li>
+<li>在许可范围内尽快填写结构化访问记录；若使用音频等材料，必须与批准方案、访问授权和保存期限一致。</li>
+</ol>
+<h2 id="4">4. 伦理与安全是设计条件</h2>
+<p>未预先告知不等于不需伦理审查。医务人员同意的取得方式或豁免、事后说明、隐私与声誉保护、对正常服务的干扰，须由相应伦理审查与机构安排明确。授权或豁免只能由适用程序认定，不能由本工具自动决定。[S1–S3]</p>
+<p>预设不得接受的侵入性检查、真实用药与危险情境及退出流程；出现超出模拟范围的情况应中止并按批准的安全流程处理。保护SP的身体与情绪安全，安排训练、支持和复盘。公开结果以适当聚合形式呈现，不发布可识别的个人访问记录。</p>
+<h2 id="5">5. 数据字典与质量核查</h2>
+<p><a href="../data/standardized-patient-data-dictionary.csv" download>下载SP字段模板</a>。模板是空白字段说明，不含患者或医务人员记录。</p>
+<p>核心字段：匿名机构/医生/访问/扮演者/案例ID，组别与实际分配，访问时间，各评分项目及分母，主要处置结局，费用，是否被识别，剧本偏离，不完整访问及缺失原因。</p>
+<p>保留访视失败和识别记录。识别可能与机构、剧本或干预有关；仅删除“被识别”样本可能引入选择偏倚。主分析与敏感性分析的对象、分母和排除标准均提前规定，并报告各阶段数量。[S2]</p>
+<h2 id="6">6. 分析如何排布</h2>
+<ul>
+<li>先描述抽样、完成率、案例分布、识别比例和评分缺失。</li>
+<li>二元结局报告比例与区间，并明确风险差、风险比或OR；不把OR直接解释成风险比。</li>
+<li>机构随机研究按分配单位处理相关性。脚本/演员固定或随机、平衡程度与目标总体决定采用机构汇总、多层或交叉模型。</li>
+<li>横断面USP比较主要支持描述与关联；只有满足随机或准实验识别条件才能作相应因果解释。</li>
+<li>观察真实患者资料与SP资料回答不同问题：病例标准化有利于比较，却不代表实际患者疾病谱与长期结局。[S2–S3]</li>
+</ul>
+<p>下方例子为36个随机分组机构，每机构3个案例×4位扮演者，共432次模拟访问。案例和扮演者在机构间完全平衡，采用等机构权重的组间比较；推断限于这组案例和扮演者。R脚本已在R 4.6.1运行；Stata为未执行教学模板。模拟结果不保证显著，也不是任何真实政策效果。</p>
+<h2 id="7">7. 与实施科学怎样联用</h2>
+<p>例如评估基层指南落实：同一临床服务对应两种实施支持策略，机构分组，USP评估处置过程质量，另用实施数据衡量采纳、忠实度、成本与维持。SP评分属于服务过程质量，不能替代全部实施结局或患者健康结局。明确盲法、识别风险、策略污染及机构聚类，再判断是否适合 hybrid 设计。<a href="implementation-science-skill.html">实施科学路线</a></p>
+<h2 id="8">8. 最终交付清单</h2>
+<p>研究问题与估计目标、剧本版本、评分依据、抽样与功效方案、伦理与安全文件、训练及一致性记录、字段字典、访问流程图、分析计划、可复现代码和限制说明。</p>
+<p>可复制提问：<strong>“我想用标准化病人比较基层服务质量。请帮我定义主要结局、剧本、抽样、机构相关性、识别记录和R分析方案。”</strong></p>
+<h2 id="_2">核对来源</h2>
+<ul>
+<li>S1. Lewis KL 等，2017，ASPE Standards of Best Practice。<a href="https://www.aspeducators.org/assets/docs/ASPE%20SOBP%202.7.20.pdf">官方全文</a> · <a href="https://doi.org/10.1186/s41077-017-0043-4">DOI</a>。使用范围：训练、安全、情境与质量保证。</li>
+<li>S2. King JJC 等，2019，How to do (or not to do)… using the standardized patient method to measure clinical quality of care in LMIC health facilities。<a href="https://pubmed.ncbi.nlm.nih.gov/31424494/">PubMed</a> · <a href="https://doi.org/10.1093/heapol/czz078">DOI</a>。使用范围：USP方法与测量边界。</li>
+<li>S3. Assessing the quality of primary healthcare in seven Chinese provinces with unannounced standardised patients: protocol of a cross-sectional survey，2019。<a href="https://bmjopen.bmj.com/content/9/2/e023997">BMJ Open</a>。这是研究方案，不能当作研究结果。</li>
+</ul>
+<p>题名、DOI、期刊与作者核对日期：2026-10-24。<a href="../data/sp-implementation-sources.json">来源登记</a>。本站为原创方法导读，不复制论文全文。</p>
+<!-- BEGIN TEACHING CODE -->
+
+<h2 id="_3">教学代码：可以单独下载，也可展开复制</h2>
+<h3 id="r">机构层级分析 · R</h3>
+<p><a href="../skills/scripts/standardized_patient_demo.R" download>下载脚本</a></p>
+<pre><code class="language-r"># Original teaching simulation. No patient data and no clinical recommendations.
+# Balanced cases/actors at every clinic; inference is conditional on this set.
+set.seed(20261024)
+clinics &lt;- data.frame(clinic_id=1:36, arm=sample(rep(0:1, each=18)))
+visits &lt;- merge(clinics, expand.grid(case_id=1:3, actor_id=1:4))
+clinic_effect &lt;- rnorm(36, 0, 0.45)
+p &lt;- plogis(-0.55 + 0.5*visits$arm + clinic_effect[visits$clinic_id] +
+             c(-0.2,0,0.2)[visits$case_id])
+visits$correct &lt;- rbinom(nrow(visits), 1, p)
+visits$detected &lt;- rbinom(nrow(visits), 1, 0.07)
+stopifnot(nrow(visits)==432, all(table(visits$clinic_id)==12))
+clinic_scores &lt;- aggregate(correct ~ clinic_id + arm, visits, mean)
+# Clinic allocation means visits are not independent trial units.
+comparison &lt;- t.test(clinic_scores$correct[clinic_scores$arm==1],
+                     clinic_scores$correct[clinic_scores$arm==0])
+rd &lt;- unname(diff(rev(comparison$estimate)))
+stopifnot(abs(rd - (mean(clinic_scores$correct[clinic_scores$arm==1]) -
+                   mean(clinic_scores$correct[clinic_scores$arm==0]))) &lt; 1e-12)
+print(data.frame(estimand='Equal-clinic mean risk difference (arm 1 minus 0)',
+                 estimate=rd, lower=comparison$conf.int[1], upper=comparison$conf.int[2]))
+# Detection is reported, not silently deleted; exclusions may select on treatment.
+print(aggregate(detected ~ arm, visits, mean))
+print(aggregate(correct ~ arm + case_id, visits, mean))
+# For observational samples these contrasts are descriptive, not causal effects.
+# Unbalanced scripts/actors, few clusters, or cross-classified random actors need
+# a prespecified adjustment model and suitable uncertainty estimation.
+stopifnot(all(visits$correct %in% 0:1), all(is.finite(comparison$conf.int)))
+cat('PASS: 432 visits; 36 randomized clinics; balanced scripts; finite clinic-level interval\n')
+</code></pre>
+<h3 id="stata">机构层级分析 · STATA</h3>
+<p><a href="../skills/scripts/standardized_patient_demo.do" download>下载脚本</a></p>
+<pre><code class="language-stata">* Original teaching simulation; not run in Stata in this release.
+clear all
+set seed 20261024
+set obs 36
+gen clinic_id = _n
+gen allocation_order = runiform()
+sort allocation_order
+gen arm = (_n &gt; 18)
+gen clinic_effect = rnormal(0, .45)
+expand 12
+bysort clinic_id: gen visit = _n
+gen case_id = mod(visit-1,3)+1
+gen actor_id = ceil(visit/3)
+gen p = invlogit(-.55 + .5*arm + clinic_effect + .2*(case_id-2))
+gen correct = (runiform() &lt; p)
+gen detected = (runiform() &lt; .07)
+assert inlist(correct,0,1)
+assert _N == 432
+tabstat detected, by(arm) stat(mean n)
+* Equal clinic weighting; case and actor assignments are balanced by construction.
+preserve
+collapse (mean) correct, by(clinic_id arm)
+assert _N == 36
+regress correct i.arm, vce(robust)
+lincom 1.arm
+restore
+* The individual-visit model is an alternative, not an independent replication.
+regress correct i.arm i.case_id i.actor_id, vce(cluster clinic_id)
+lincom 1.arm
+* Few clusters, unbalanced case mixes and observational allocation require
+* separate design-based decisions. Do not delete detected visits without a plan.
+</code></pre><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main><script defer src="https://puxian-visit-statistics.greycarp257.chatgpt.site/tracker.js?v=20261024platform1"></script><script type="module" src="../skill-usage.mjs?v=20261024platform1"></script></body></html>

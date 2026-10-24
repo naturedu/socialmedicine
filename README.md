@@ -165,3 +165,13 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。独
 点击“豆包/GPT使用”后可选平台，下载Skill、生成/复制完整任务书、打开平台，并由本人主动确认已使用。目标平台操作、自报记录与服务器任务书生成分开；没有自动监控豆包/GPT内部执行、身份或离线使用。历史记录未指定的平台不倒推补填；GitHub附件下载计数继续独立保留。本地预览操作不写线上计数。
 
 统计只接收有限Skill标识、平台枚举、页面枚举和事件UUID，不接收姓名、账号、问题、对话或文件内容。`/api/skill-invoke`由服务器完成任务书生成后记调用；`/api/collect`拒绝客户端伪报调用。相同请求UUID重试不重复累计。读取失败显示不可用或上次快照，不以零冒充缺失值。
+
+
+
+## 标准化病人、实施科学与期刊检索
+
+新增 SP / USP / OSCE 与实施科学两份完整手册、两套 CSV 字段模板和四段 R / Stata 代码。R 4.6.1 模拟运行通过；Stata 未执行，详见 data/sp-implementation-validation.json。
+
+首页问答与文献工作区统一使用 data/research-knowledge.json，共 238 条去重资料，保留原题录来源及不同片段的定位。包括《管理世界》36条、Nature主刊21条、Science主刊31条；题录不等于全文或模型训练。写作工作区支持分别选择期刊论证建议。重建顺序：build_sp_implementation.py、build_research_knowledge.py、build_guides.py、build_material_index.py、build_code_bundle.py。
+
+按用户要求暂不展示具体导师条目，保留院系、培养方向与官方招生入口。

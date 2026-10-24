@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {makeReply,chooseIntent,metricSnapshot} from '../chat-core.mjs';
 const json=async name=>JSON.parse(await readFile(new URL('../data/'+name+'.json',import.meta.url),'utf8'));
-const data={methods:await json('studio-methods'),methodGuide:await json('method-guide'),schools:await json('research-schools'),datasets:await json('research-datasets'),library:await json('studio-library')};
+const data={methods:await json('studio-methods'),methodGuide:await json('method-guide'),schools:await json('research-schools'),datasets:await json('research-datasets'),library:await json('research-knowledge')};
 test('method conversation preserves method context and filters requested code language',()=>{
  const first=makeReply('DID 和断点回归怎么选择？',{},data);assert.equal(first.status,'answered');assert.equal(first.sections.length,2);
  const second=makeReply('给我 R 代码示例',first.state,data);assert.ok(second.codes.length>=2);assert.ok(second.codes.every(c=>c.lang==='r'));assert.ok(second.codes.some(c=>c.heading.includes('2×2 DID')));

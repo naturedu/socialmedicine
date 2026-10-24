@@ -1,0 +1,35 @@
+{
+  "updated": "2026-10-24",
+  "inputs": {
+    "studio-library": 200,
+    "library": 69
+  },
+  "total": 238,
+  "mergedDuplicates": 31,
+  "journals": {
+    "The Lancet. Public health": 4,
+    "JAMA health forum": 4,
+    "Nature health": 4,
+    "中国社会科学": 28,
+    "管理世界": 36,
+    "社会科学": 36,
+    "方法 Skill": 21,
+    "Science Advances": 1,
+    "经典理论": 7,
+    "数据源导航": 13,
+    "博士论文题录": 12,
+    "院系方向": 7,
+    "Nature": 21,
+    "Science": 31,
+    "npj Digital Medicine": 2,
+    "Nature Medicine": 3,
+    "The Lancet Digital Health": 1,
+    "JAMA": 7
+  },
+  "contentLevels": {
+    "摘要/许可片段": 12,
+    "题录": 165,
+    "站内导读/方法": 61
+  },
+  "scope": "公开题录、摘要/许可片段、原创导读与方法；并非全文语料。按DOI或规范题名去重，origins保留原索引与核验状态。个人聊天和本地PDF不上传；没有模型训练。"
+}

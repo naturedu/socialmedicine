@@ -15,7 +15,7 @@ export async function initMethodGuide(){
   if(!skillGrid&&!quickGrid&&!classicGrid)return;
   if(document.getElementById('method-guide-style'))return;
   try{
-    const r=await fetch(new URL('./data/method-guide.json',import.meta.url));if(!r.ok)throw new Error();const guide=await r.json();
+    const r=await fetch(new URL('./data/method-guide.json?v=20261024knowledge1',import.meta.url));if(!r.ok)throw new Error();const guide=await r.json();
     const style=el('style',styles);style.id='method-guide-style';document.head.append(style);
     const definitions=new Map([...guide.skills,...guide.quick].map(x=>[x.id,x]));
     let authorities;try{authorities=await loadAuthorities();}catch{/* Existing method content remains available. */}

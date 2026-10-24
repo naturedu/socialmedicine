@@ -36,6 +36,8 @@ def build():
         rootrel=os.path.relpath(ROOT,output.parent).replace('\\','/')
         sourcerel=os.path.relpath(path,output.parent).replace('\\','/')
         page=f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} · 普贤</title><link rel="stylesheet" href="{rootrel}/guide.css"></head><body><header><a class="back" href="{rootrel}/index.html#methods">← 方法工作台</a><a href="{rootrel}/database-skills.html">🌱 数据库</a><a href="{rootrel}/guides/method-map.html">🧭 逻辑地图</a><a href="{sourcerel}" download>下载 Markdown</a></header><main><aside aria-label="章节目录">{md.toc}</aside><article>{content}<p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main><script defer src="https://puxian-visit-statistics.greycarp257.chatgpt.site/tracker.js?v=20261024platform1"></script><script type="module" src="{rootrel}/skill-usage.mjs?v=20261024platform1"></script></body></html>'''
+        if path.stem in ['standardized-patient-skill','implementation-science-skill']:
+            page=re.sub(r'(<a href="[^"]+\.(?:R|do|csv)")>',r'\1 download>',page)
         output.write_text(page,encoding='utf-8')
     print('Built',len(list((ROOT/'skills').rglob('*.md'))),'reading pages')
 

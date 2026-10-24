@@ -16,7 +16,7 @@ R/Stata示例未逐项运行，不表示已对真实数据完成验证；变量�
 ''')
         for p in (R/'skills').rglob('*'):
             if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc':z.write(p,p.relative_to(R))
-        for name in ['code-library.json','code-library.csv']:z.write(R/'data'/name,'data/'+name)
+        for name in ['code-library.json','code-library.csv','standardized-patient-data-dictionary.csv','implementation-science-data-dictionary.csv','sp-implementation-sources.json','sp-implementation-validation.json']:z.write(R/'data'/name,'data/'+name)
         for i,c in enumerate(codes,1):
             ext={'r':'R','stata':'do','python':'py'}.get(c['language'].lower(),'txt')
             label=re.sub(r'[^A-Za-z0-9_-]','_',c['id'])

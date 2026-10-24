@@ -1,12 +1,12 @@
-import {makeReply,OUTCOMES,metricSnapshot,chooseIntent} from './chat-core.mjs';
+import {makeReply,OUTCOMES,metricSnapshot,chooseIntent} from './chat-core.mjs?v=20261024knowledge1';
 const root=document.getElementById('researchChat');
 const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
 const safeUrl=value=>{if(typeof value!=='string'||!value.trim())return null;try{const u=new URL(value,location.href);return ['http:','https:'].includes(u.protocol)?u.href:null;}catch{return null;}};
 const cache=new Map();
-async function read(name){if(!cache.has(name))cache.set(name,fetch(new URL('./data/'+name+'.json',import.meta.url),{signal:AbortSignal.timeout(15000)}).then(r=>{if(!r.ok)throw new Error('资料暂不可用');return r.json();}).catch(e=>{cache.delete(name);throw e;}));return cache.get(name);}
+async function read(name){if(!cache.has(name))cache.set(name,fetch(new URL('./data/'+name+'.json?v=20261024knowledge1',import.meta.url),{signal:AbortSignal.timeout(15000)}).then(r=>{if(!r.ok)throw new Error('资料暂不可用');return r.json();}).catch(e=>{cache.delete(name);throw e;}));return cache.get(name);}
 async function contextFor(q,state){
  const kind=chooseIntent(q,state).kind, data={};
- const paths={publicTopics:[['publicTopics','public-topic-records'],['publicAnalysis','public-topic-analysis']],methods:[['methods','studio-methods'],['methodGuide','method-guide']],schools:[['schools','research-schools']],datasets:[['datasets','research-datasets']],journals:[['journals','studio-journals']],classics:[['classics','studio-classics']],grants:[],goal:[],design:[],writing:[],search:[['library','studio-library']]};
+ const paths={publicTopics:[['publicTopics','public-topic-records'],['publicAnalysis','public-topic-analysis']],methods:[['methods','studio-methods'],['methodGuide','method-guide']],schools:[['schools','research-schools']],datasets:[['datasets','research-datasets']],journals:[['journals','studio-journals']],classics:[['classics','studio-classics']],grants:[],goal:[],design:[],writing:[],search:[['library','research-knowledge']]};
  await Promise.all((paths[kind]||[]).map(async([key,path])=>{data[key]=await read(path);}));return data;
 }
 function download(name,text){const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'})),a=node('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}

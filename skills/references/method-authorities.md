@@ -392,3 +392,19 @@
 
 - [Entropy Balancing for Causal Effects](https://doi.org/10.1093/pan/mpr025) — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。
 - [Balancing Covariates via Propensity Score Weighting](https://doi.org/10.1080/01621459.2016.1260466) — 原始方法论文。题名与链接身份；使用时仍需阅读适用条件。核对：2026-10-24，DOI登记元数据可读取。
+
+## A10 · 模拟与标准化病人 SP / USP
+
+- [The Association of Standardized Patient Educators (ASPE) Standards of Best Practice (SOBP)](https://www.aspeducators.org/assets/docs/ASPE%20SOBP%202.7.20.pdf) — 原始方法论文或官方指南。模拟病人安全、剧本、训练与质量保证。核对：2026-10-24，verified。
+- [How to do (or not to do) … using the standardized patient method to measure clinical quality of care in LMIC health facilities](https://pubmed.ncbi.nlm.nih.gov/31424494/) — 原始方法论文或官方指南。USP研究设计、可测范围与识别。核对：2026-10-24，verified。
+- [Assessing the quality of primary healthcare in seven Chinese provinces with unannounced standardised patients: protocol of a cross-sectional survey](https://bmjopen.bmj.com/content/9/2/e023997) — 原始方法论文或官方指南。中国基层USP抽样与质量测量；研究方案不等于结果。核对：2026-10-24，verified。
+
+## F12 · 实施科学：从框架到研究设计
+
+- [The updated Consolidated Framework for Implementation Research based on user feedback](https://link.springer.com/article/10.1186/s13012-022-01245-0) — 原始方法论文或官方指南。新版CFIR构念与使用边界。核对：2026-10-24，verified。
+- [The Consolidated Framework for Implementation Research (CFIR) User Guide: a five-step guide for conducting implementation research using the framework](https://link.springer.com/article/10.1186/s13012-025-01450-7) — 原始方法论文或官方指南。CFIR研究问题、构念、资料和解释步骤。核对：2026-10-24，verified。
+- [Outcomes for Implementation Research: Conceptual Distinctions, Measurement Challenges, and Research Agenda](https://doi.org/10.1007/s10488-010-0319-7) — 原始方法论文或官方指南。实施、服务与健康结局区分。核对：2026-10-24，verified。
+- [Effectiveness-implementation Hybrid Designs](https://pmc.ncbi.nlm.nih.gov/articles/PMC3731143/) — 原始方法论文或官方指南。hybrid 1/2/3的主要研究目标。核对：2026-10-24，verified。
+- [Standards for Reporting Implementation Studies (StaRI) Statement](https://www.equator-network.org/reporting-guidelines/stari-statement/) — 原始方法论文或官方指南。实施策略与服务干预双线报告。核对：2026-10-24，verified。
+- [A refined compilation of implementation strategies: results from the Expert Recommendations for Implementing Change (ERIC) project](https://link.springer.com/article/10.1186/s13012-015-0209-1) — 原始方法论文或官方指南。具体定义策略，不把CFIR直接当策略清单。核对：2026-10-24，verified。
+- [What is RE-AIM?](https://re-aim.org/learn/what-is-re-aim/) — 原始方法论文或官方指南。触达、效果、采纳、实施与维持。核对：2026-10-24，verified。

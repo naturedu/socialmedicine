@@ -1788,5 +1788,45 @@
       }
     ],
     "status": "数据库专题：版本、变量、权重和分析路线；执行状态见正文"
+  },
+  {
+    "id": "standardized-patient-skill",
+    "title": "模拟与标准化病人 SP / USP",
+    "tags": "标准化病人 模拟病人 SP USP OSCE 服务质量",
+    "use": "用训练过的扮演者在统一情境下测量服务过程，区分教学考核与未预先告知的质量研究。",
+    "url": "guides/standardized-patient-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "机构层级分析 · R",
+        "code": "# Original teaching simulation. No patient data and no clinical recommendations.\n# Balanced cases/actors at every clinic; inference is conditional on this set.\nset.seed(20261024)\nclinics <- data.frame(clinic_id=1:36, arm=sample(rep(0:1, each=18)))\nvisits <- merge(clinics, expand.grid(case_id=1:3, actor_id=1:4))\nclinic_effect <- rnorm(36, 0, 0.45)\np <- plogis(-0.55 + 0.5*visits$arm + clinic_effect[visits$clinic_id] +\n             c(-0.2,0,0.2)[visits$case_id])\nvisits$correct <- rbinom(nrow(visits), 1, p)\nvisits$detected <- rbinom(nrow(visits), 1, 0.07)\nstopifnot(nrow(visits)==432, all(table(visits$clinic_id)==12))\nclinic_scores <- aggregate(correct ~ clinic_id + arm, visits, mean)\n# Clinic allocation means visits are not independent trial units.\ncomparison <- t.test(clinic_scores$correct[clinic_scores$arm==1],\n                     clinic_scores$correct[clinic_scores$arm==0])\nrd <- unname(diff(rev(comparison$estimate)))\nstopifnot(abs(rd - (mean(clinic_scores$correct[clinic_scores$arm==1]) -\n                   mean(clinic_scores$correct[clinic_scores$arm==0]))) < 1e-12)\nprint(data.frame(estimand='Equal-clinic mean risk difference (arm 1 minus 0)',\n                 estimate=rd, lower=comparison$conf.int[1], upper=comparison$conf.int[2]))\n# Detection is reported, not silently deleted; exclusions may select on treatment.\nprint(aggregate(detected ~ arm, visits, mean))\nprint(aggregate(correct ~ arm + case_id, visits, mean))\n# For observational samples these contrasts are descriptive, not causal effects.\n# Unbalanced scripts/actors, few clusters, or cross-classified random actors need\n# a prespecified adjustment model and suitable uncertainty estimation.\nstopifnot(all(visits$correct %in% 0:1), all(is.finite(comparison$conf.int)))\ncat('PASS: 432 visits; 36 randomized clinics; balanced scripts; finite clinic-level interval\\n')"
+      },
+      {
+        "lang": "stata",
+        "heading": "机构层级分析 · STATA",
+        "code": "* Original teaching simulation; not run in Stata in this release.\nclear all\nset seed 20261024\nset obs 36\ngen clinic_id = _n\ngen allocation_order = runiform()\nsort allocation_order\ngen arm = (_n > 18)\ngen clinic_effect = rnormal(0, .45)\nexpand 12\nbysort clinic_id: gen visit = _n\ngen case_id = mod(visit-1,3)+1\ngen actor_id = ceil(visit/3)\ngen p = invlogit(-.55 + .5*arm + clinic_effect + .2*(case_id-2))\ngen correct = (runiform() < p)\ngen detected = (runiform() < .07)\nassert inlist(correct,0,1)\nassert _N == 432\ntabstat detected, by(arm) stat(mean n)\n* Equal clinic weighting; case and actor assignments are balanced by construction.\npreserve\ncollapse (mean) correct, by(clinic_id arm)\nassert _N == 36\nregress correct i.arm, vce(robust)\nlincom 1.arm\nrestore\n* The individual-visit model is an alternative, not an independent replication.\nregress correct i.arm i.case_id i.actor_id, vce(cluster clinic_id)\nlincom 1.arm\n* Few clusters, unbalanced case mixes and observational allocation require\n* separate design-based decisions. Do not delete detected visits without a plan."
+      }
+    ],
+    "status": "R 4.6.1模拟示例已运行；Stata未执行；不代表真实数据验证"
+  },
+  {
+    "id": "implementation-science-skill",
+    "title": "实施科学：从框架到研究设计",
+    "tags": "实施科学 CFIR RE-AIM Proctor ERIC hybrid StaRI",
+    "use": "区分服务干预与实施策略，把障碍、策略、实施结局、健康结局和持续使用连接到具体设计。",
+    "url": "guides/implementation-science-skill.html",
+    "codes": [
+      {
+        "lang": "r",
+        "heading": "机构层级分析 · R",
+        "code": "# Original teaching simulation: same clinical service, two implementation strategies.\nset.seed(20261025)\nd <- data.frame(site_id=1:40, strategy=sample(rep(0:1,each=20)))\nd$eligible <- sample(50:100, 40, replace=TRUE)\nd$adopted <- rbinom(40, 1, plogis(-0.1 + 0.6*d$strategy))\nd$reached <- ifelse(d$adopted==1,\n                    rbinom(40, d$eligible, plogis(-0.3 + 0.3*d$strategy)), 0)\nd$completed <- rbinom(40, d$reached, 0.8)\nsafe_ratio <- function(num,den) ifelse(den>0,num/den,NA_real_)\nd$reach <- safe_ratio(d$reached,d$eligible)\nd$fidelity <- safe_ratio(d$completed,d$reached)\nd$implementation_cost <- 500 + 15*d$reached\nsummary_by_arm <- do.call(rbind,lapply(split(d,d$strategy), function(x)\n data.frame(strategy=x$strategy[1], sites=nrow(x),\n adoption=mean(x$adopted), reach_person_weighted=sum(x$reached)/sum(x$eligible),\n reach_site_weighted=mean(x$reach), fidelity_among_reached=safe_ratio(sum(x$completed),sum(x$reached)),\n cost_per_reached=safe_ratio(sum(x$implementation_cost),sum(x$reached)))))\nprint(summary_by_arm)\n# Primary example: strategy effect on equal-site reach, at one prespecified time.\nfit <- t.test(d$reach[d$strategy==1],d$reach[d$strategy==0])\nprint(data.frame(reach_difference=unname(fit$estimate[1]-fit$estimate[2]),\n                 lower=fit$conf.int[1],upper=fit$conf.int[2]))\n# Fidelity conditions on reach. Its between-arm contrast is not automatically\n# a causal strategy effect because reaching the service is post-allocation.\nstopifnot(all(d$completed<=d$reached),all(d$reached<=d$eligible),\n          is.na(safe_ratio(0,0)),all(is.na(d$fidelity[d$reached==0])),\n          all(is.finite(fit$conf.int)))\ncat('PASS: denominators, missing zero-denominator ratios, 40 randomized sites, finite interval\\n')"
+      },
+      {
+        "lang": "stata",
+        "heading": "机构层级分析 · STATA",
+        "code": "* Teaching template. Not run in Stata in this release.\nclear all\nset seed 20261025\nset obs 40\ngen site_id = _n\ngen allocation_order = runiform()\nsort allocation_order\ngen strategy = (_n > 20)\ngen eligible = 50 + floor(51*runiform())\ngen adopted = runiform() < invlogit(-.1+.6*strategy)\ngen reached = rbinomial(eligible, invlogit(-.3+.3*strategy)) if adopted==1\nreplace reached = 0 if adopted==0\ngen completed = rbinomial(reached,.8)\ngen reach = reached/eligible if eligible>0\ngen fidelity = completed/reached if reached>0\ngen implementation_cost = 500+15*reached\nassert completed<=reached & reached<=eligible\nassert missing(fidelity) if reached==0\ntabstat adopted reach fidelity, by(strategy) stat(mean n)\n* Site-weighted reach contrast. Zero reach remains in the primary analysis.\nregress reach i.strategy, vce(robust)\nlincom 1.strategy\n* Person-weighted summaries use pooled numerators AND denominators.\npreserve\ncollapse (sum) reached eligible completed implementation_cost, by(strategy)\ngen pooled_reach = reached/eligible\ngen pooled_fidelity = completed/reached if reached>0\ngen cost_per_reached = implementation_cost/reached if reached>0\nlist, noobs\nrestore\n* These are different estimands; do not equate a conditional fidelity contrast\n* with a randomized strategy effect on everyone originally eligible."
+      }
+    ],
+    "status": "R 4.6.1模拟示例已运行；Stata未执行；不代表真实数据验证"
   }
 ]

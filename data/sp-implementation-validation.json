@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-10-24T08:35:09.606910+00:00",
+  "scripts": [
+    {
+      "script": "skills/scripts/standardized_patient_demo.R",
+      "sha256": "a2e745d1193867f22518973504870969351a3543f2ca85de17f01fa3d56a5b50",
+      "hashNormalization": "UTF-8 with LF line endings",
+      "status": "passed",
+      "runtime": "Rscript (R) version 4.6.1 (2026-06-24)",
+      "output": "estimand    estimate      lower\n1 Equal-clinic mean risk difference (arm 1 minus 0) -0.00462963 -0.1384133\n     upper\n1 0.129154\n  arm   detected\n1   0 0.07407407\n2   1 0.08796296\n  arm case_id   correct\n1   0       1 0.3472222\n2   1       1 0.3750000\n3   0       2 0.5138889\n4   1       2 0.5277778\n5   0       3 0.5277778\n6   1       3 0.4722222\nPASS: 432 visits; 36 randomized clinics; balanced scripts; finite clinic-level interval",
+      "scope": "Teaching simulation and internal assertions only; no real data validation"
+    },
+    {
+      "script": "skills/scripts/standardized_patient_demo.do",
+      "sha256": "976e03f025cf8af8e3ad36239ec03f394a8bec2a3418964702abfa1441c2085a",
+      "hashNormalization": "UTF-8 with LF line endings",
+      "status": "not_run",
+      "scope": "Stata teaching template; no Stata execution in this release"
+    },
+    {
+      "script": "skills/scripts/implementation_science_demo.R",
+      "sha256": "8269c66baa4c98ea64c5df0780d41161101b80906ab29f466f48e83546dafd7e",
+      "hashNormalization": "UTF-8 with LF line endings",
+      "status": "passed",
+      "runtime": "Rscript (R) version 4.6.1 (2026-06-24)",
+      "output": "strategy sites adoption reach_person_weighted reach_site_weighted\n0        0    20     0.70             0.2779923           0.2812729\n1        1    20     0.65             0.3494949           0.3291044\n  fidelity_among_reached cost_per_reached\n0              0.7893519         38.14815\n1              0.7861272         34.26782\n  reach_difference       lower     upper\n1       0.04783148 -0.09598059 0.1916436\nPASS: denominators, missing zero-denominator ratios, 40 randomized sites, finite interval",
+      "scope": "Teaching simulation and internal assertions only; no real data validation"
+    },
+    {
+      "script": "skills/scripts/implementation_science_demo.do",
+      "sha256": "fe37ae5d4053104463059c06647cfd4bbaa0b87735af82dd0ab7fb1c767ad11a",
+      "hashNormalization": "UTF-8 with LF line endings",
+      "status": "not_run",
+      "scope": "Stata teaching template; no Stata execution in this release"
+    }
+  ]
+}

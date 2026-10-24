@@ -1361,6 +1361,106 @@
       "resolvedTitle": "Health in all policies: Helsinki statement. Framework for country action",
       "resolvedUrl": "https://www.who.int/publications/i/item/9789241506908",
       "checkedDate": "2026-10-24"
+    },
+    "sp-impl-aspe": {
+      "id": "sp-impl-aspe",
+      "title": "The Association of Standardized Patient Educators (ASPE) Standards of Best Practice (SOBP)",
+      "url": "https://www.aspeducators.org/assets/docs/ASPE%20SOBP%202.7.20.pdf",
+      "type": "原始方法论文或官方指南",
+      "scope": "模拟病人安全、剧本、训练与质量保证",
+      "checkedDate": "2026-10-24",
+      "verification": "verified",
+      "verificationScope": "题名、DOI、期刊与作者由Crossref核对；要点另据所列官方文档或原文检索记录。不是全文入库。"
+    },
+    "sp-impl-sp-method": {
+      "id": "sp-impl-sp-method",
+      "title": "How to do (or not to do) … using the standardized patient method to measure clinical quality of care in LMIC health facilities",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31424494/",
+      "type": "原始方法论文或官方指南",
+      "scope": "USP研究设计、可测范围与识别",
+      "checkedDate": "2026-10-24",
+      "verification": "verified",
+      "verificationScope": "题名、DOI、期刊与作者由Crossref核对；要点另据所列官方文档或原文检索记录。不是全文入库。"
+    },
+    "sp-impl-sp-china": {
+      "id": "sp-impl-sp-china",
+      "title": "Assessing the quality of primary healthcare in seven Chinese provinces with unannounced standardised patients: protocol of a cross-sectional survey",
+      "url": "https://bmjopen.bmj.com/content/9/2/e023997",
+      "type": "原始方法论文或官方指南",
+      "scope": "中国基层USP抽样与质量测量；研究方案不等于结果",
+      "checkedDate": "2026-10-24",
+      "verification": "verified",
+      "verificationScope": "题名、DOI、期刊与作者由Crossref核对；要点另据所列官方文档或原文检索记录。不是全文入库。"
+    },
+    "sp-impl-cfir-update": {
+      "id": "sp-impl-cfir-update",
+      "title": "The updated Consolidated Framework for Implementation Research based on user feedback",
+      "url": "https://link.springer.com/article/10.1186/s13012-022-01245-0",
+      "type": "原始方法论文或官方指南",
+      "scope": "新版CFIR构念与使用边界",
+      "checkedDate": "2026-10-24",
+      "verification": "verified",
+      "verificationScope": "题名、DOI、期刊与作者由Crossref核对；要点另据所列官方文档或原文检索记录。不是全文入库。"
+    },
+    "sp-impl-cfir-guide": {
+      "id": "sp-impl-cfir-guide",
+      "title": "The Consolidated Framework for Implementation Research (CFIR) User Guide: a five-step guide for conducting implementation research using the framework",
+      "url": "https://link.springer.com/article/10.1186/s13012-025-01450-7",
+      "type": "原始方法论文或官方指南",
+      "scope": "CFIR研究问题、构念、资料和解释步骤",
+      "checkedDate": "2026-10-24",
+      "verification": "verified",
+      "verificationScope": "题名、DOI、期刊与作者由Crossref核对；要点另据所列官方文档或原文检索记录。不是全文入库。"
+    },
+    "sp-impl-proctor": {
+      "id": "sp-impl-proctor",
+      "title": "Outcomes for Implementation Research: Conceptual Distinctions, Measurement Challenges, and Research Agenda",
+      "url": "https://doi.org/10.1007/s10488-010-0319-7",
+      "type": "原始方法论文或官方指南",
+      "scope": "实施、服务与健康结局区分",
+      "checkedDate": "2026-10-24",
+      "verification": "verified",
+      "verificationScope": "题名、DOI、期刊与作者由Crossref核对；要点另据所列官方文档或原文检索记录。不是全文入库。"
+    },
+    "sp-impl-hybrid": {
+      "id": "sp-impl-hybrid",
+      "title": "Effectiveness-implementation Hybrid Designs",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3731143/",
+      "type": "原始方法论文或官方指南",
+      "scope": "hybrid 1/2/3的主要研究目标",
+      "checkedDate": "2026-10-24",
+      "verification": "verified",
+      "verificationScope": "题名、DOI、期刊与作者由Crossref核对；要点另据所列官方文档或原文检索记录。不是全文入库。"
+    },
+    "sp-impl-stari": {
+      "id": "sp-impl-stari",
+      "title": "Standards for Reporting Implementation Studies (StaRI) Statement",
+      "url": "https://www.equator-network.org/reporting-guidelines/stari-statement/",
+      "type": "原始方法论文或官方指南",
+      "scope": "实施策略与服务干预双线报告",
+      "checkedDate": "2026-10-24",
+      "verification": "verified",
+      "verificationScope": "题名、DOI、期刊与作者由Crossref核对；要点另据所列官方文档或原文检索记录。不是全文入库。"
+    },
+    "sp-impl-eric": {
+      "id": "sp-impl-eric",
+      "title": "A refined compilation of implementation strategies: results from the Expert Recommendations for Implementing Change (ERIC) project",
+      "url": "https://link.springer.com/article/10.1186/s13012-015-0209-1",
+      "type": "原始方法论文或官方指南",
+      "scope": "具体定义策略，不把CFIR直接当策略清单",
+      "checkedDate": "2026-10-24",
+      "verification": "verified",
+      "verificationScope": "题名、DOI、期刊与作者由Crossref核对；要点另据所列官方文档或原文检索记录。不是全文入库。"
+    },
+    "sp-impl-reaim": {
+      "id": "sp-impl-reaim",
+      "title": "What is RE-AIM?",
+      "url": "https://re-aim.org/learn/what-is-re-aim/",
+      "type": "原始方法论文或官方指南",
+      "scope": "触达、效果、采纳、实施与维持",
+      "checkedDate": "2026-10-24",
+      "verification": "verified",
+      "verificationScope": "官方网站五维定义；不包含逐条量表翻译验证"
     }
   },
   "methods": {
@@ -1663,6 +1763,20 @@
     ],
     "J4": [
       "tripod"
+    ],
+    "A10": [
+      "sp-impl-aspe",
+      "sp-impl-sp-method",
+      "sp-impl-sp-china"
+    ],
+    "F12": [
+      "sp-impl-cfir-update",
+      "sp-impl-cfir-guide",
+      "sp-impl-proctor",
+      "sp-impl-hybrid",
+      "sp-impl-stari",
+      "sp-impl-eric",
+      "sp-impl-reaim"
     ]
   },
   "skills": {
@@ -1782,6 +1896,20 @@
       "glm",
       "panel",
       "twopart"
+    ],
+    "standardized-patient-skill": [
+      "sp-impl-aspe",
+      "sp-impl-sp-method",
+      "sp-impl-sp-china"
+    ],
+    "implementation-science-skill": [
+      "sp-impl-cfir-update",
+      "sp-impl-cfir-guide",
+      "sp-impl-proctor",
+      "sp-impl-hybrid",
+      "sp-impl-stari",
+      "sp-impl-eric",
+      "sp-impl-reaim"
     ]
   }
 }

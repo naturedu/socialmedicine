@@ -348,5 +348,25 @@
     "keywords": "entropy balancing overlap weights ATO ATT ATE",
     "pitfall": "只看平衡不看权重集中，或把ATO结果仍称原总体ATE。",
     "report": "目标、约束/权重公式、重叠、有效样本量与推断。"
+  },
+  {
+    "id": "A10",
+    "cat": "A",
+    "name": "模拟与标准化病人 SP / USP",
+    "use": "用训练过的扮演者在统一情境下测量服务过程，区分教学考核与未预先告知的质量研究。",
+    "guide": "standardized-patient-skill",
+    "keywords": "标准化病人 模拟病人 SP USP OSCE 服务质量",
+    "pitfall": "先明确场景、剧本、评分依据、伦理安全、机构抽样、重复访问与识别记录。",
+    "report": "报告设计、分母、层级、执行状态与证据边界。"
+  },
+  {
+    "id": "F12",
+    "cat": "F",
+    "name": "实施科学：从框架到研究设计",
+    "use": "区分服务干预与实施策略，把障碍、策略、实施结局、健康结局和持续使用连接到具体设计。",
+    "guide": "implementation-science-skill",
+    "keywords": "实施科学 CFIR RE-AIM Proctor ERIC hybrid StaRI",
+    "pitfall": "先明确服务证据、策略执行者、主要结局、层级、分母与时间窗；框架不能代替识别设计。",
+    "report": "报告设计、分母、层级、执行状态与证据边界。"
   }
 ]

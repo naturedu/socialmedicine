@@ -1,0 +1,229 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>实施科学：让有证据的服务在真实场景中被采用和持续使用 · 普贤</title><link rel="stylesheet" href="../guide.css"></head><body><header><a class="back" href="../index.html#methods">← 方法工作台</a><a href="../database-skills.html">🌱 数据库</a><a href="../guides/method-map.html">🧭 逻辑地图</a><a href="../skills/implementation-science-skill.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#1">1. 把研究问题写成可执行句子</a></li>
+<li><a href="#2">2. 框架按任务分工</a></li>
+<li><a href="#3">3. 结局、分母与时间窗</a></li>
+<li><a href="#4-hybrid">4. 选择设计与hybrid类型</a></li>
+<li><a href="#5">5. 实施策略与机制表</a></li>
+<li><a href="#6">6. 数据与分析</a></li>
+<li><a href="#7">7. 公平与标准化病人联用</a></li>
+<li><a href="#8-stari">8. 按StaRI交付</a></li>
+<li><a href="#_2">核对来源</a></li>
+<li><a href="#_3">教学代码：可以单独下载，也可展开复制</a><ul>
+<li><a href="#r">机构层级分析 · R</a></li>
+<li><a href="#stata">机构层级分析 · STATA</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside><article><h1 id="_1">实施科学：让有证据的服务在真实场景中被采用和持续使用</h1>
+<p>先区分<strong>要落实的服务/干预</strong>（innovation/intervention）与<strong>帮助它落实的实施策略</strong>（strategy）。例如，“规范的慢病随访服务”与“为实施该服务提供培训、反馈和促进支持”是两条不同的线。研究应同时明确谁采用、如何交付、为何受阻、产生何种结果。[I1–I4]</p>
+<h2 id="1">1. 把研究问题写成可执行句子</h2>
+<p>在【场景与机构】中，为【人群】落实【已有证据的服务】时，针对【已识别障碍】，由【执行者】实施【策略及剂量】，相对于【比较条件】，在【时间窗】内改善【主要实施结局】，并观察【服务或健康结局】。</p>
+<p>先评估服务本身的证据与可实施性，不把“有效性未知”隐藏成单纯推广问题。研究不是将多个框架名词拼接；框架服务于具体问题、构念和数据。</p>
+<h2 id="2">2. 框架按任务分工</h2>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>候选工具</th>
+<th>用法与边界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>解释障碍与促进因素</td>
+<td>更新版CFIR（2022）；2025使用指南</td>
+<td>按问题选构念，建立访谈/观察与分析对应；不是全部条目强制打分</td>
+</tr>
+<tr>
+<td>规划和评价真实世界覆盖</td>
+<td>RE-AIM</td>
+<td>分开触达、效果、采纳、实施、维持；逐维指定层级、分母与时间</td>
+</tr>
+<tr>
+<td>定义实施成效</td>
+<td>Proctor实施结局</td>
+<td>区分实施、服务与健康结局；不把患者满意度当所有实施成功</td>
+</tr>
+<tr>
+<td>具体说明实施支持措施</td>
+<td>ERIC策略术语</td>
+<td>明确谁对谁做什么、何时、多频繁及预期机制；不是看到障碍就机械配策略</td>
+</tr>
+<tr>
+<td>组织结果报告</td>
+<td>StaRI</td>
+<td>服务干预与实施策略分两条线报告；另按具体研究设计核对报告规范</td>
+</tr>
+</tbody>
+</table>
+<p>CFIR常用于解释决定因素，RE-AIM常用于规划与评价；两者可互补，但不是同一套量表。构念名称本身不会产生因果识别。[I1–I3、I6–I8]</p>
+<h2 id="3">3. 结局、分母与时间窗</h2>
+<p>Proctor等区分可接受性、采纳、适切性、可行性、忠实度、实施成本、渗透/整合和可持续性。分别定义测量对象与操作化指标；临床效果和服务系统结果单独记录。[I4]</p>
+<table>
+<thead>
+<tr>
+<th>指标例子</th>
+<th>分子</th>
+<th>分母</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>触达</td>
+<td>实际接受服务的符合条件者</td>
+<td>目标范围内全部符合条件者</td>
+<td>说明招募、拒绝和排除；还要看代表性</td>
+</tr>
+<tr>
+<td>机构采纳</td>
+<td>开始采用服务的机构</td>
+<td>纳入目标的符合条件机构</td>
+<td>机构层和工作人员层不要混算</td>
+</tr>
+<tr>
+<td>忠实度</td>
+<td>按规定完成核心环节的服务次数</td>
+<td>应执行这些环节的服务次数</td>
+<td>区分适应性调整与偏离；不适用不是未完成</td>
+</tr>
+<tr>
+<td>维持</td>
+<td>规定随访时点仍运行的机构</td>
+<td>按方案定义的初始或已采纳机构</td>
+<td>明确时点和分母，不能临时替换</td>
+</tr>
+<tr>
+<td>单位实施成本</td>
+<td>明确视角下的实施资源成本</td>
+<td>对应触达者/采纳机构数</td>
+<td>分开服务成本与实施支持成本，注明币种和价格年</td>
+</tr>
+</tbody>
+</table>
+<p>分母为0时显示缺失并说明原因，不能直接记为0%。机构平均比例与“总分子/总分母”是不同估计目标；两者不能混报。可接受性等潜变量如使用量表，需核对授权、译本、测量性质及本场景适用性，不能把自编问题标成已验证量表。</p>
+<h2 id="4-hybrid">4. 选择设计与hybrid类型</h2>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>主要关注</th>
+<th>同时关注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hybrid 1</td>
+<td>检验服务干预有效性</td>
+<td>探索实施条件与障碍</td>
+</tr>
+<tr>
+<td>Hybrid 2</td>
+<td>服务干预与实施策略的双重研究目标</td>
+<td>两类目标的样本量、结局和比较均须说明</td>
+</tr>
+<tr>
+<td>Hybrid 3</td>
+<td>检验实施策略对实施结局的作用</td>
+<td>观察服务/健康效果</td>
+</tr>
+</tbody>
+</table>
+<p>类型描述研究目标的侧重，不能替代具体的随机、准实验或观察设计。根据已有服务证据、场景差异、污染和可行性选择个体/整群随机、分阶段推行或适当准实验；阶梯楔形设计仍要处理日历时间和机构相关性，不能等同简单前后比较。[I5]</p>
+<p>样本量以主要目标和分配层级计算，考虑ICC、机构大小差异、双重主要结局与缺失；不能把个体数当成独立机构数。</p>
+<h2 id="5">5. 实施策略与机制表</h2>
+<p>一行一个策略：执行者 → 具体行动 → 对象 → 频率/时长 → 对应障碍 → 预期机制 → 近端实施结局 → 远端服务/健康结局。区分计划剂量与实际执行，记录适应性修改的时间、理由和决定者。[I6]</p>
+<p>访谈可按选定CFIR构念设计，同时保留开放编码与反例。建立联合展示：构念、定性证据、量化指标、相符/不符、替代解释。不能用访谈提及次数直接估计人群比例，也不能仅凭显著路径判定机制成立。</p>
+<h2 id="6">6. 数据与分析</h2>
+<p><a href="../data/implementation-science-data-dictionary.csv" download>下载实施研究字段模板</a>。至少包括机构/工作人员/服务对象层级ID，策略分配，服务定义，实施阶段，时间，分母，采纳与执行记录，适应性修改，成本及相关群体特征。公开模板不含任何个体记录。</p>
+<p>下方教学例子把40个机构随机分配至两种实施策略，对同一种临床服务计算采纳、触达、执行忠实度和单位实施成本。主示例比较等机构权重的触达率；重复时间点需另建纵向模型。</p>
+<p>忠实度在实际接受服务者中计算，条件于一个分组后的变量；组间忠实度差不能自动解释为随机策略对所有符合条件者的因果效应。R脚本已运行并检查分母与缺失逻辑；Stata未执行。模拟数据只演示计算，不提供效果证据。</p>
+<h2 id="7">7. 公平与标准化病人联用</h2>
+<p>按预先定义的群体查看谁未被触达、谁承担更大负担、机构是否代表目标场景。平均改善不排除差距扩大。<a href="implementation-equity-skill.html">公平性补充</a></p>
+<p><a href="standardized-patient-skill.html">标准化病人</a>可提供统一情境的服务过程评价，帮助比较策略实施前后或不同组的实际处置；仍需单独收集实施策略执行、采纳和成本，不能把USP处置合格率直接改名为全部实施成功。</p>
+<h2 id="8-stari">8. 按StaRI交付</h2>
+<p>分别报告服务干预、实施策略及其依据；交代情境、适应性修改、设计、比较、主要分母、过程、实施/健康结局和局限。交付研究问题表、框架—构念映射、逻辑模型、策略操作表、测量字典、混合方法联合展示、分析计划与报告核对表。[I7]</p>
+<p>可复制提问：<strong>“我想提高基层指南采纳。请区分服务干预与实施策略，用CFIR选择障碍、RE-AIM定义分母，并比较hybrid 1/2/3的适用条件。”</strong></p>
+<h2 id="_2">核对来源</h2>
+<ul>
+<li>I1. Damschroder等，2022，更新版CFIR。<a href="https://link.springer.com/article/10.1186/s13012-022-01245-0">原文</a>。</li>
+<li>I2. CFIR User Guide，2025，五步使用指南。<a href="https://link.springer.com/article/10.1186/s13012-025-01450-7">原文</a>。</li>
+<li>I3. RE-AIM框架团队。<a href="https://re-aim.org/learn/what-is-re-aim/">官方五维说明</a>。</li>
+<li>I4. Proctor等，2011，实施结局概念区分。<a href="https://doi.org/10.1007/s10488-010-0319-7">原文</a>。</li>
+<li>I5. Curran等，2012，Effectiveness-implementation Hybrid Designs。<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3731143/">原文</a>。</li>
+<li>I6. Powell等，2015，ERIC策略术语整理。<a href="https://link.springer.com/article/10.1186/s13012-015-0209-1">原文</a>。</li>
+<li>I7. Pinnock等，2017，StaRI。<a href="https://www.equator-network.org/reporting-guidelines/stari-statement/">EQUATOR登记与清单</a>。</li>
+<li>I8. <a href="https://cfirguide.org/">CFIR官方资源</a>。</li>
+</ul>
+<p>核对日期：2026-10-24。<a href="../data/sp-implementation-sources.json">完整题名、DOI、作者及核验范围</a>。本文为本站原创教学整理，未复制论文全文。</p>
+<!-- BEGIN TEACHING CODE -->
+
+<h2 id="_3">教学代码：可以单独下载，也可展开复制</h2>
+<h3 id="r">机构层级分析 · R</h3>
+<p><a href="../skills/scripts/implementation_science_demo.R" download>下载脚本</a></p>
+<pre><code class="language-r"># Original teaching simulation: same clinical service, two implementation strategies.
+set.seed(20261025)
+d &lt;- data.frame(site_id=1:40, strategy=sample(rep(0:1,each=20)))
+d$eligible &lt;- sample(50:100, 40, replace=TRUE)
+d$adopted &lt;- rbinom(40, 1, plogis(-0.1 + 0.6*d$strategy))
+d$reached &lt;- ifelse(d$adopted==1,
+                    rbinom(40, d$eligible, plogis(-0.3 + 0.3*d$strategy)), 0)
+d$completed &lt;- rbinom(40, d$reached, 0.8)
+safe_ratio &lt;- function(num,den) ifelse(den&gt;0,num/den,NA_real_)
+d$reach &lt;- safe_ratio(d$reached,d$eligible)
+d$fidelity &lt;- safe_ratio(d$completed,d$reached)
+d$implementation_cost &lt;- 500 + 15*d$reached
+summary_by_arm &lt;- do.call(rbind,lapply(split(d,d$strategy), function(x)
+ data.frame(strategy=x$strategy[1], sites=nrow(x),
+ adoption=mean(x$adopted), reach_person_weighted=sum(x$reached)/sum(x$eligible),
+ reach_site_weighted=mean(x$reach), fidelity_among_reached=safe_ratio(sum(x$completed),sum(x$reached)),
+ cost_per_reached=safe_ratio(sum(x$implementation_cost),sum(x$reached)))))
+print(summary_by_arm)
+# Primary example: strategy effect on equal-site reach, at one prespecified time.
+fit &lt;- t.test(d$reach[d$strategy==1],d$reach[d$strategy==0])
+print(data.frame(reach_difference=unname(fit$estimate[1]-fit$estimate[2]),
+                 lower=fit$conf.int[1],upper=fit$conf.int[2]))
+# Fidelity conditions on reach. Its between-arm contrast is not automatically
+# a causal strategy effect because reaching the service is post-allocation.
+stopifnot(all(d$completed&lt;=d$reached),all(d$reached&lt;=d$eligible),
+          is.na(safe_ratio(0,0)),all(is.na(d$fidelity[d$reached==0])),
+          all(is.finite(fit$conf.int)))
+cat('PASS: denominators, missing zero-denominator ratios, 40 randomized sites, finite interval\n')
+</code></pre>
+<h3 id="stata">机构层级分析 · STATA</h3>
+<p><a href="../skills/scripts/implementation_science_demo.do" download>下载脚本</a></p>
+<pre><code class="language-stata">* Teaching template. Not run in Stata in this release.
+clear all
+set seed 20261025
+set obs 40
+gen site_id = _n
+gen allocation_order = runiform()
+sort allocation_order
+gen strategy = (_n &gt; 20)
+gen eligible = 50 + floor(51*runiform())
+gen adopted = runiform() &lt; invlogit(-.1+.6*strategy)
+gen reached = rbinomial(eligible, invlogit(-.3+.3*strategy)) if adopted==1
+replace reached = 0 if adopted==0
+gen completed = rbinomial(reached,.8)
+gen reach = reached/eligible if eligible&gt;0
+gen fidelity = completed/reached if reached&gt;0
+gen implementation_cost = 500+15*reached
+assert completed&lt;=reached &amp; reached&lt;=eligible
+assert missing(fidelity) if reached==0
+tabstat adopted reach fidelity, by(strategy) stat(mean n)
+* Site-weighted reach contrast. Zero reach remains in the primary analysis.
+regress reach i.strategy, vce(robust)
+lincom 1.strategy
+* Person-weighted summaries use pooled numerators AND denominators.
+preserve
+collapse (sum) reached eligible completed implementation_cost, by(strategy)
+gen pooled_reach = reached/eligible
+gen pooled_fidelity = completed/reached if reached&gt;0
+gen cost_per_reached = implementation_cost/reached if reached&gt;0
+list, noobs
+restore
+* These are different estimands; do not equate a conditional fidelity contrast
+* with a randomized strategy effect on everyone originally eligible.
+</code></pre><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main><script defer src="https://puxian-visit-statistics.greycarp257.chatgpt.site/tracker.js?v=20261024platform1"></script><script type="module" src="../skill-usage.mjs?v=20261024platform1"></script></body></html>
