@@ -175,3 +175,10 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。独
 首页问答与文献工作区统一使用 data/research-knowledge.json，共 238 条去重资料，保留原题录来源及不同片段的定位。包括《管理世界》36条、Nature主刊21条、Science主刊31条；题录不等于全文或模型训练。写作工作区支持分别选择期刊论证建议。重建顺序：build_sp_implementation.py、build_research_knowledge.py、build_guides.py、build_material_index.py、build_code_bundle.py。
 
 按用户要求暂不展示具体导师条目，保留院系、培养方向与官方招生入口。
+
+
+## 2026-10-28 国自然健康治理专题与基金图谱 Skill
+
+[新增专题](nsfc-governance.html)使用 `data/nsfc-governance-summary.json` 的纯聚合数据：748 条 G0405/G0406 结题档案样本，实际有记录2016—2023年，尚未逐项官方门户核验，2024—2026年缺档。代码为平台现行代码回溯归并，主题为题名规则与模型语义补充；不是全国完整立项库。旧1,934条汇编保留，不相加。
+
+[基金图谱 Skill](guides/funding-landscape-skill.html)补充来源状态、代码沿革、缺失年份、LLM复核、地图精度和获批概率的分析边界。[公众号宣传HTML](nsfc-wechat.html)正文14px、左右10px，附学习入口二维码；由读者自行在公众号编辑器排版发布。只新增汇总与通用方法，不发布逐条项目、人员、私稿或对话。

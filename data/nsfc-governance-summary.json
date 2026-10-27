@@ -1,0 +1,80 @@
+{
+  "title": "G0405/G0406健康治理样本汇总",
+  "updated_on": "2026-10-28",
+  "data_cutoff": "2026-10-25",
+  "sample_n": 748,
+  "observed_years": "2016—2023",
+  "source_note": "基于已整理的国自然结题档案样本；原件已留存，尚未逐项通过官方门户核验。",
+  "scope_note": "G0405/G0406为文件所报平台现行代码的回溯归并，不等于批准当年的原申请代码。",
+  "code_counts": {
+    "G0405": 624,
+    "G0406": 124
+  },
+  "topic_counts": [
+    {
+      "id": "services",
+      "name": "服务供给与资源配置",
+      "n": 230,
+      "percent": 30.75
+    },
+    {
+      "id": "behavior",
+      "name": "健康行为与慢病管理",
+      "n": 226,
+      "percent": 30.21
+    },
+    {
+      "id": "aging",
+      "name": "老龄照护与医养结合",
+      "n": 125,
+      "percent": 16.71
+    },
+    {
+      "id": "digital",
+      "name": "数字健康与信息治理",
+      "n": 104,
+      "percent": 13.9
+    },
+    {
+      "id": "finance",
+      "name": "医保筹资与卫生经济",
+      "n": 89,
+      "percent": 11.9
+    },
+    {
+      "id": "population",
+      "name": "重点人群与健康公平",
+      "n": 89,
+      "percent": 11.9
+    },
+    {
+      "id": "publichealth",
+      "name": "公共卫生与应急防控",
+      "n": 81,
+      "percent": 10.83
+    },
+    {
+      "id": "pharma",
+      "name": "医药供给与药事治理",
+      "n": 68,
+      "percent": 9.09
+    },
+    {
+      "id": "environment",
+      "name": "环境营养与生活方式",
+      "n": 49,
+      "percent": 6.55
+    },
+    {
+      "id": "governance",
+      "name": "健康治理与制度政策",
+      "n": 42,
+      "percent": 5.61
+    }
+  ],
+  "classification_note": "按项目题名进行规则分类与模型语义补充，一项可对应多个主题；比例分母为748，多主题比例不相加。分类并非基金委官方主题分类，未完成独立人工金标准验证。",
+  "coverage_note": "实际有记录2016—2023年，其中2023年仅1条；2024—2026年未观测，不补零，不用于描述近期全国资助走势。",
+  "relation_to_existing_overview": "与网站原有1934条健康相关汇编属于不同范围与分类口径，尚未核对跨库重叠，分别展示，不相加。",
+  "interpretation_note": "主题频次用于了解本样本的研究关注，不代表资助优先级、机构质量或项目获批概率。",
+  "official_lookup": "https://www.nsfc.gov.cn/"
+}

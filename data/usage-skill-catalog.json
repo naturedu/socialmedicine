@@ -139,6 +139,13 @@
     "file": "skills/figure-ppt-quality-skill.md",
     "guide": "guides/figure-ppt-quality-skill.html"
   },
+  "funding-landscape-skill": {
+    "id": "funding-landscape-skill",
+    "label": "公开科研资助结构与热点分析",
+    "category": "method",
+    "file": "skills/funding-landscape-skill.md",
+    "guide": "guides/funding-landscape-skill.html"
+  },
   "grant-roadmap-figure-skill": {
     "id": "grant-roadmap-figure-skill",
     "label": "基金申报与研究技术路线图",
@@ -194,6 +201,13 @@
     "category": "method",
     "file": "skills/implementation-equity-skill.md",
     "guide": "guides/implementation-equity-skill.html"
+  },
+  "implementation-science-skill": {
+    "id": "implementation-science-skill",
+    "label": "实施科学：让有证据的服务在真实场景中被采用和持续使用",
+    "category": "method",
+    "file": "skills/implementation-science-skill.md",
+    "guide": "guides/implementation-science-skill.html"
   },
   "its-skill": {
     "id": "its-skill",
@@ -404,6 +418,13 @@
     "category": "method",
     "file": "skills/staggered-did-skill.md",
     "guide": "guides/staggered-did-skill.html"
+  },
+  "standardized-patient-skill": {
+    "id": "standardized-patient-skill",
+    "label": "模拟与标准化病人：把服务过程变成可比较的证据",
+    "category": "method",
+    "file": "skills/standardized-patient-skill.md",
+    "guide": "guides/standardized-patient-skill.html"
   },
   "survival-studio": {
     "id": "survival-studio",
