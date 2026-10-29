@@ -1,8 +1,8 @@
 import {readReleaseCounts,mergeLiveCounts} from './release-download-counts.mjs';
-import {socialmedicineSkillUsage} from './usage-core.mjs?v=20261024skills1';
+import {fetchUsageStats,formatCount} from './usage-client.mjs?v=20261029complete1';
 
 const packageName='socialmedicineskills.zip';
-const format=n=>n===null?'—':n.toLocaleString('zh-CN');
+const format=formatCount;
 const date=value=>new Date(value).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'});
 const packageStatus=document.querySelector('[data-socialmedicine-package-status]');
 const usageStatus=document.querySelector('[data-socialmedicine-usage-status]');
@@ -49,13 +49,16 @@ async function readPackages(){
   for(const node of document.querySelectorAll('[data-socialmedicine-downloads]'))node.title=description;
  }finally{packageBusy=false;}
 }
-async function readUsage(){
+async function readUsage({force=false}={}){
  if(usageBusy)return;usageBusy=true;
  try{
-  const r=await fetch('https://puxian-visit-statistics.dusixian16.chatgpt.site/api/stats',{credentials:'omit',cache:'no-store',signal:AbortSignal.timeout(10000)});
-  if(!r.ok)throw new Error();const raw=await r.json(),data=socialmedicineSkillUsage(raw);
-  if(data.opens===null||!Number.isFinite(Date.parse(raw.updatedAt)))throw new Error();
-  const description=`网页打开与下载点击；${date(raw.updatedAt)} 更新。`;
+  const raw=await fetchUsageStats({force});
+  if(!Number.isFinite(Date.parse(raw.updatedAt)))throw new Error();
+  const row=raw.usage?.bySkill?.find(x=>x.id==='socialmedicineskills')||raw.skills?.find(x=>x.id==='socialmedicineskills');
+  const data={opens:row?.opens,downloadClicks:row?.downloads};
+  const description=raw.clientMeta?.state==='cached'
+   ?`统计服务暂不可读；网页打开与下载点击显示 ${date(raw.updatedAt)} 的历史快照，不是最新数据。`
+   :`网页打开与下载点击；${date(raw.updatedAt)} 更新。`;
   lastUsage={...data,description};render('[data-socialmedicine-opens]',data.opens,description);
   render('[data-socialmedicine-clicks]',data.downloadClicks,description);
   if(usageStatus)usageStatus.textContent=description;
@@ -63,13 +66,13 @@ async function readUsage(){
   if(usageStatus)usageStatus.textContent=lastUsage?`本次刷新失败，保留上次值。${lastUsage.description}`:'网页使用计数暂不可用，未以 0 代替。';
  }finally{usageBusy=false;}
 }
-async function refreshAll(){
+async function refreshAll({force=false}={}){
  if(refresh)refresh.disabled=true;
- try{await Promise.allSettled([readPackages(),readUsage()]);}
+ try{await Promise.allSettled([readPackages(),readUsage({force})]);}
  finally{if(refresh)refresh.disabled=false;}
 }
 if(document.querySelector('[data-socialmedicine-downloads]')){
- void refreshAll();refresh?.addEventListener('click',refreshAll);
+ void refreshAll();refresh?.addEventListener('click',()=>refreshAll({force:true}));
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)void refreshAll();});
- window.addEventListener('puxian:tracked',()=>{clearTimeout(timer);timer=setTimeout(readUsage,1800);});
+ window.addEventListener('puxian:tracked',()=>{clearTimeout(timer);timer=setTimeout(()=>readUsage(),1800);});
 }

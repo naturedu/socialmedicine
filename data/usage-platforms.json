@@ -1,0 +1,12 @@
+{
+  "unspecified": {"label": "未指定平台", "url": null},
+  "doubao": {"label": "豆包", "url": "https://www.doubao.com/"},
+  "chatgpt": {"label": "ChatGPT / GPT", "url": "https://chatgpt.com/"},
+  "codex": {"label": "Codex", "url": "https://chatgpt.com/codex"},
+  "claude": {"label": "Claude", "url": "https://claude.ai/"},
+  "deepseek": {"label": "DeepSeek", "url": "https://chat.deepseek.com/"},
+  "gemini": {"label": "Gemini", "url": "https://gemini.google.com/"},
+  "qwen": {"label": "千问", "url": "https://www.qianwen.com/"},
+  "kimi": {"label": "Kimi", "url": "https://www.kimi.com/"},
+  "other": {"label": "其他平台", "url": null}
+}

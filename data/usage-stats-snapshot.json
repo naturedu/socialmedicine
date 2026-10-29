@@ -1,0 +1,2016 @@
+{
+  "updatedAt": "2026-10-29T11:03:21.376Z",
+  "today": "2026-10-29",
+  "totals": {
+    "visits": 247,
+    "clicks": 239,
+    "started": "2026-10-23"
+  },
+  "daily": [
+    {
+      "day": "2026-09-30",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-01",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-02",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-03",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-04",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-05",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-06",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-07",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-08",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-09",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-10",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-11",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-12",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-13",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-14",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-15",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-16",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-17",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-18",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-19",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-20",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-21",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-22",
+      "visits": 0,
+      "clicks": 0
+    },
+    {
+      "day": "2026-10-23",
+      "visits": 78,
+      "clicks": 57
+    },
+    {
+      "day": "2026-10-24",
+      "visits": 65,
+      "clicks": 93
+    },
+    {
+      "day": "2026-10-25",
+      "visits": 39,
+      "clicks": 35
+    },
+    {
+      "day": "2026-10-26",
+      "visits": 5,
+      "clicks": 5
+    },
+    {
+      "day": "2026-10-27",
+      "visits": 22,
+      "clicks": 21
+    },
+    {
+      "day": "2026-10-28",
+      "visits": 6,
+      "clicks": 1
+    },
+    {
+      "day": "2026-10-29",
+      "visits": 32,
+      "clicks": 27
+    }
+  ],
+  "pages": [
+    {
+      "page": "home",
+      "count": 111,
+      "label": "科研助手首页"
+    },
+    {
+      "page": "journalmatch",
+      "count": 21,
+      "label": "选刊匹配"
+    },
+    {
+      "page": "guide",
+      "count": 19,
+      "label": "资料阅读页"
+    },
+    {
+      "page": "methods",
+      "count": 18,
+      "label": "方法手册"
+    },
+    {
+      "page": "usagestatistics",
+      "count": 12,
+      "label": "分类与平台使用统计"
+    },
+    {
+      "page": "grants",
+      "count": 11,
+      "label": "项目与基金"
+    },
+    {
+      "page": "insurance",
+      "count": 8,
+      "label": "医保制度时间线"
+    },
+    {
+      "page": "studio",
+      "count": 7,
+      "label": "研究工作室"
+    },
+    {
+      "page": "library",
+      "count": 7,
+      "label": "专题文献库"
+    },
+    {
+      "page": "institutions",
+      "count": 7,
+      "label": "全球院校"
+    },
+    {
+      "page": "journals",
+      "count": 5,
+      "label": "期刊目录"
+    },
+    {
+      "page": "visuals",
+      "count": 4,
+      "label": "画图与PPT工作坊"
+    },
+    {
+      "page": "skilldownloads",
+      "count": 4,
+      "label": "Skill安装包下载"
+    },
+    {
+      "page": "figures",
+      "count": 4,
+      "label": "论文图表"
+    },
+    {
+      "page": "policies",
+      "count": 3,
+      "label": "政策主题库"
+    },
+    {
+      "page": "tools",
+      "count": 2,
+      "label": "工具目录"
+    },
+    {
+      "page": "classic",
+      "count": 2,
+      "label": "经典工具页"
+    },
+    {
+      "page": "nssfc",
+      "count": 1,
+      "label": "国社科项目分析"
+    },
+    {
+      "page": "databases",
+      "count": 1,
+      "label": "数据库小花园"
+    }
+  ],
+  "actions": [
+    {
+      "action": "journals_open",
+      "count": 42,
+      "label": "查看期刊"
+    },
+    {
+      "action": "schools_open",
+      "count": 40,
+      "label": "查看院校"
+    },
+    {
+      "action": "methods_open",
+      "count": 35,
+      "label": "查看方法"
+    },
+    {
+      "action": "stats_open",
+      "count": 22,
+      "label": "查看访问统计"
+    },
+    {
+      "action": "polishing_open",
+      "count": 18,
+      "label": "查看学术润色"
+    },
+    {
+      "action": "datasets_open",
+      "count": 18,
+      "label": "查看数据库"
+    },
+    {
+      "action": "newsletter_open",
+      "count": 7,
+      "label": "查看月报订阅"
+    },
+    {
+      "action": "conferences_open",
+      "count": 7,
+      "label": "查看国际会议"
+    },
+    {
+      "action": "careers_open",
+      "count": 7,
+      "label": "查看招聘与职业发展"
+    },
+    {
+      "action": "research_start",
+      "count": 3,
+      "label": "开始研究规划"
+    },
+    {
+      "action": "plan_export",
+      "count": 3,
+      "label": "导出研究计划"
+    },
+    {
+      "action": "theses_open",
+      "count": 2,
+      "label": "查看博士论文"
+    }
+  ],
+  "skills": [
+    {
+      "id": "socialmedicineskills",
+      "label": "社医卫管 · 方法与证据工作台",
+      "category": "general",
+      "opens": 6,
+      "downloads": 4,
+      "copies": 5,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 5
+    },
+    {
+      "id": "policy-text-analysis-skill",
+      "label": "卫生政策文本：把文件读成有出处的变量",
+      "category": "policy",
+      "opens": 2,
+      "downloads": 5,
+      "copies": 1,
+      "platformOpens": 1,
+      "reported": 2,
+      "tasks": 2
+    },
+    {
+      "id": "method-map",
+      "label": "方法框架：四类分析主线与定性支撑",
+      "category": "method",
+      "opens": 4,
+      "downloads": 1,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "charls-database-skill",
+      "label": "CHARLS · 中国健康与养老追踪调查",
+      "category": "database",
+      "opens": 2,
+      "downloads": 0,
+      "copies": 2,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 1
+    },
+    {
+      "id": "academic-copyediting-skill",
+      "label": "Skill：学术写作规范润色（中文学术文本）",
+      "category": "writing",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 2
+    },
+    {
+      "id": "claims-clinical-database-skill",
+      "label": "医保结算、临床登记与MEPS · 费用和事件数据",
+      "category": "database",
+      "opens": 1,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "home-hospital-bed-policy-skill",
+      "label": "家庭病床：把连续医疗服务送到居住场所",
+      "category": "policy",
+      "opens": 1,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "network-meta-analysis-skill",
+      "label": "网状 Meta：让没有直接交手的干预，也能谨慎比较",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 1
+    },
+    {
+      "id": "active-health-hiap-skill",
+      "label": "Skill：主动健康与健康融入万策（Health in All Policies，总纲旗舰）",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "advanced-causal-inference-skill",
+      "label": "因果方法进阶：让设计带路，让算法帮忙",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "aging-family-extension-skill",
+      "label": "HRS家族扩展 · JSTAR、TILDA、CRELES、SPS、MARS与HCAP",
+      "category": "database",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "binary-studio",
+      "label": "二元结局与边际效应",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "cfps-chns-database-skill",
+      "label": "CFPS、CHNS与NHIS · 扩展调查选型",
+      "category": "database",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "clhls-database-skill",
+      "label": "CLHLS / CLHLS-HF · 老年健康与家庭追踪",
+      "category": "database",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "clinical-statistical-figures-skill",
+      "label": "JAMA八类图表阅读与绘制",
+      "category": "figure",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "clustering-analysis-skill",
+      "label": "聚类分析：把相似放在一起，也检查它们是否真的像",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "conceptual-mechanism-figure-skill",
+      "label": "理论框架、机制图与DAG",
+      "category": "figure",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "cross-cohort-harmonization-skill",
+      "label": "HRS家族 · 跨国协调与外部验证",
+      "category": "database",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "dce-design-assistant-skill",
+      "label": "Skill：DCE 设计助手（离散选择实验设计与分析，Stata / R）",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "ddd-skill",
+      "label": "Skill：三重差分助手（DDD 政策效果评估，Stata / R）",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "did-skill",
+      "label": "Skill：DID 双重差分助手（卫生政策效果评估，Stata / R）",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "econometric-modeling-skill",
+      "label": "卫生计量模型：先看问题和数据，再打开工具箱",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "elsa-database-skill",
+      "label": "ELSA · English Longitudinal Study of Ageing",
+      "category": "database",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "event-study-studio",
+      "label": "交错 DID 与多时点事件研究",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "figure-ppt-quality-skill",
+      "label": "科研图与PPT质量检查",
+      "category": "slides",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "funding-landscape-skill",
+      "label": "公开科研资助结构与热点分析",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "grant-roadmap-figure-skill",
+      "label": "基金申报与研究技术路线图",
+      "category": "figure",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "graphical-abstract-skill",
+      "label": "图形摘要与AI辅助示意图",
+      "category": "figure",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "health-economics-tutorial-skill",
+      "label": "Skill：卫生经济学评价教程（CEA/CUA 总纲，Stata / R）",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "hrs-database-skill",
+      "label": "HRS · Health and Retirement Study",
+      "category": "database",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "image-based-slides-skill",
+      "label": "统一视觉的图片型PPT",
+      "category": "slides",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "image-to-editable-slides-skill",
+      "label": "图片、扫描PDF转可编辑PPT",
+      "category": "slides",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "implementation-equity-skill",
+      "label": "实施与公平：有效的服务，也要有人能用上",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "implementation-science-skill",
+      "label": "实施科学：让有证据的服务在真实场景中被采用和持续使用",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "its-skill",
+      "label": "Skill：间断时间序列助手（ITS 政策效果评估，Stata / R）",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "klosa-database-skill",
+      "label": "KLoSA · Korean Longitudinal Study of Aging",
+      "category": "database",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "lasi-database-skill",
+      "label": "LASI / LASI-DAD · Longitudinal Ageing Study in India",
+      "category": "database",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "long-term-care-policy-skill",
+      "label": "长期护理保险：从失能照护问题，走到制度与数据",
+      "category": "policy",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "longitudinal-public-data-skill",
+      "label": "公共数据库与纵向研究：让同一个人，在时间里对得上",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "longitudinal-studio",
+      "label": "纵向轨迹、混合模型与多时点作图",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "machine-learning-skill",
+      "label": "Skill：机器学习助手（卫生经济与社会医学预测建模，Stata / R）",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "markov-model-skill",
+      "label": "Skill：Markov 模型助手（卫生经济学成本-效果分析，Stata / R）",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "medical-ai-evaluation-skill",
+      "label": "医疗AI评价：答得像、答得对、用起来有益，分别检查",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "meta-analysis-skill",
+      "label": "Skill：Meta 分析助手（系统评价效应合并，Stata / R）",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "mhas-database-skill",
+      "label": "MHAS / ENASEM · Mexican Health and Aging Study",
+      "category": "database",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "microsimulation-studio",
+      "label": "个体微观模拟 · Microsimulation",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "monte-carlo-simulation-skill",
+      "label": "蒙特卡洛模拟：让方法先在“知道答案的小世界”里练习",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "nhanes-database-skill",
+      "label": "NHANES · 复杂抽样与健康检查实操",
+      "category": "database",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "paper-to-ppt-skill",
+      "label": "论文精读与中文文献汇报PPT",
+      "category": "slides",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "policy-evaluation-figures-skill",
+      "label": "政策评估与卫生经济图表",
+      "category": "figure",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "propensity-score-skill",
+      "label": "PSM与加权：先让比较对象站到合适的位置",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "rdd-studio",
+      "label": "断点回归 · RDD",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "research-figure-skill",
+      "label": "科研数据图与多面板排版",
+      "category": "figure",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "research-public-posts-skill",
+      "label": "科研公众号图文",
+      "category": "writing",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "research-workflow-skill",
+      "label": "从一个问题到一篇论文：给研究留一条能走回去的路",
+      "category": "writing",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "sdid-studio",
+      "label": "合成双重差分 · Synthetic DID",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "sem-qca-qualitative-skill",
+      "label": "Skill：定性方法与结构方程专题（扎根理论 / SEM / 多层SEM / fsQCA，R / Stata）",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "share-database-skill",
+      "label": "SHARE · Survey of Health, Ageing and Retirement in Europe",
+      "category": "database",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "simulation-models-skill",
+      "label": "模拟模型选型：先描述世界怎样运转",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "staggered-did-skill",
+      "label": "交错DID：每一批政策，都找对它的参照",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "standardized-patient-skill",
+      "label": "模拟与标准化病人：把服务过程变成可比较的证据",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "survival-studio",
+      "label": "生存分析与竞争风险",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "target-trial-emulation-skill",
+      "label": "目标试验模拟：先写想做的试验，再看数据够不够",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "teaching-storyboard-ppt-skill",
+      "label": "科研教学、方法科普与分镜PPT",
+      "category": "slides",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "thesis-defense-ppt-skill",
+      "label": "开题、中期与答辩PPT",
+      "category": "slides",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    },
+    {
+      "id": "umbrella-review-skill",
+      "label": "meta-meta / 伞状综述：先看伞下有没有重复的人",
+      "category": "method",
+      "opens": 0,
+      "downloads": 0,
+      "copies": 0,
+      "platformOpens": 0,
+      "reported": 0,
+      "tasks": 0
+    }
+  ],
+  "skillTotals": {
+    "opens": 16,
+    "downloads": 10
+  },
+  "downloadTotals": {
+    "total": 10,
+    "skills": 10,
+    "bundles": 0,
+    "files": 0,
+    "unit": "下载点击，不代表下载完成"
+  },
+  "chatTotals": {
+    "questions": 1,
+    "answered": 1,
+    "clarifications": 0,
+    "unmatched": 0,
+    "errors": 0,
+    "followups": 0,
+    "helpful": 0,
+    "unhelpful": 0,
+    "exports": 0
+  },
+  "chatStarted": "2026-10-24",
+  "citationTotals": {
+    "copies": 0,
+    "downloads": 0,
+    "started": "2026-10-29",
+    "unit": "引用操作次数，不是论文被引次数"
+  },
+  "usage": {
+    "totals": {
+      "opens": 16,
+      "downloads": 10,
+      "copies": 8,
+      "platformOpens": 1,
+      "reported": 2,
+      "tasks": 11
+    },
+    "bySkill": [
+      {
+        "id": "socialmedicineskills",
+        "label": "社医卫管 · 方法与证据工作台",
+        "category": "general",
+        "opens": 6,
+        "downloads": 4,
+        "copies": 5,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 5
+      },
+      {
+        "id": "policy-text-analysis-skill",
+        "label": "卫生政策文本：把文件读成有出处的变量",
+        "category": "policy",
+        "opens": 2,
+        "downloads": 5,
+        "copies": 1,
+        "platformOpens": 1,
+        "reported": 2,
+        "tasks": 2
+      },
+      {
+        "id": "method-map",
+        "label": "方法框架：四类分析主线与定性支撑",
+        "category": "method",
+        "opens": 4,
+        "downloads": 1,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "charls-database-skill",
+        "label": "CHARLS · 中国健康与养老追踪调查",
+        "category": "database",
+        "opens": 2,
+        "downloads": 0,
+        "copies": 2,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 1
+      },
+      {
+        "id": "academic-copyediting-skill",
+        "label": "Skill：学术写作规范润色（中文学术文本）",
+        "category": "writing",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 2
+      },
+      {
+        "id": "claims-clinical-database-skill",
+        "label": "医保结算、临床登记与MEPS · 费用和事件数据",
+        "category": "database",
+        "opens": 1,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "home-hospital-bed-policy-skill",
+        "label": "家庭病床：把连续医疗服务送到居住场所",
+        "category": "policy",
+        "opens": 1,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "network-meta-analysis-skill",
+        "label": "网状 Meta：让没有直接交手的干预，也能谨慎比较",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 1
+      },
+      {
+        "id": "active-health-hiap-skill",
+        "label": "Skill：主动健康与健康融入万策（Health in All Policies，总纲旗舰）",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "advanced-causal-inference-skill",
+        "label": "因果方法进阶：让设计带路，让算法帮忙",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "aging-family-extension-skill",
+        "label": "HRS家族扩展 · JSTAR、TILDA、CRELES、SPS、MARS与HCAP",
+        "category": "database",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "binary-studio",
+        "label": "二元结局与边际效应",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "cfps-chns-database-skill",
+        "label": "CFPS、CHNS与NHIS · 扩展调查选型",
+        "category": "database",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "clhls-database-skill",
+        "label": "CLHLS / CLHLS-HF · 老年健康与家庭追踪",
+        "category": "database",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "clinical-statistical-figures-skill",
+        "label": "JAMA八类图表阅读与绘制",
+        "category": "figure",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "clustering-analysis-skill",
+        "label": "聚类分析：把相似放在一起，也检查它们是否真的像",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "conceptual-mechanism-figure-skill",
+        "label": "理论框架、机制图与DAG",
+        "category": "figure",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "cross-cohort-harmonization-skill",
+        "label": "HRS家族 · 跨国协调与外部验证",
+        "category": "database",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "dce-design-assistant-skill",
+        "label": "Skill：DCE 设计助手（离散选择实验设计与分析，Stata / R）",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "ddd-skill",
+        "label": "Skill：三重差分助手（DDD 政策效果评估，Stata / R）",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "did-skill",
+        "label": "Skill：DID 双重差分助手（卫生政策效果评估，Stata / R）",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "econometric-modeling-skill",
+        "label": "卫生计量模型：先看问题和数据，再打开工具箱",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "elsa-database-skill",
+        "label": "ELSA · English Longitudinal Study of Ageing",
+        "category": "database",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "event-study-studio",
+        "label": "交错 DID 与多时点事件研究",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "figure-ppt-quality-skill",
+        "label": "科研图与PPT质量检查",
+        "category": "slides",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "funding-landscape-skill",
+        "label": "公开科研资助结构与热点分析",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "grant-roadmap-figure-skill",
+        "label": "基金申报与研究技术路线图",
+        "category": "figure",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "graphical-abstract-skill",
+        "label": "图形摘要与AI辅助示意图",
+        "category": "figure",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "health-economics-tutorial-skill",
+        "label": "Skill：卫生经济学评价教程（CEA/CUA 总纲，Stata / R）",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "hrs-database-skill",
+        "label": "HRS · Health and Retirement Study",
+        "category": "database",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "image-based-slides-skill",
+        "label": "统一视觉的图片型PPT",
+        "category": "slides",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "image-to-editable-slides-skill",
+        "label": "图片、扫描PDF转可编辑PPT",
+        "category": "slides",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "implementation-equity-skill",
+        "label": "实施与公平：有效的服务，也要有人能用上",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "implementation-science-skill",
+        "label": "实施科学：让有证据的服务在真实场景中被采用和持续使用",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "its-skill",
+        "label": "Skill：间断时间序列助手（ITS 政策效果评估，Stata / R）",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "klosa-database-skill",
+        "label": "KLoSA · Korean Longitudinal Study of Aging",
+        "category": "database",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "lasi-database-skill",
+        "label": "LASI / LASI-DAD · Longitudinal Ageing Study in India",
+        "category": "database",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "long-term-care-policy-skill",
+        "label": "长期护理保险：从失能照护问题，走到制度与数据",
+        "category": "policy",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "longitudinal-public-data-skill",
+        "label": "公共数据库与纵向研究：让同一个人，在时间里对得上",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "longitudinal-studio",
+        "label": "纵向轨迹、混合模型与多时点作图",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "machine-learning-skill",
+        "label": "Skill：机器学习助手（卫生经济与社会医学预测建模，Stata / R）",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "markov-model-skill",
+        "label": "Skill：Markov 模型助手（卫生经济学成本-效果分析，Stata / R）",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "medical-ai-evaluation-skill",
+        "label": "医疗AI评价：答得像、答得对、用起来有益，分别检查",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "meta-analysis-skill",
+        "label": "Skill：Meta 分析助手（系统评价效应合并，Stata / R）",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "mhas-database-skill",
+        "label": "MHAS / ENASEM · Mexican Health and Aging Study",
+        "category": "database",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "microsimulation-studio",
+        "label": "个体微观模拟 · Microsimulation",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "monte-carlo-simulation-skill",
+        "label": "蒙特卡洛模拟：让方法先在“知道答案的小世界”里练习",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "nhanes-database-skill",
+        "label": "NHANES · 复杂抽样与健康检查实操",
+        "category": "database",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "paper-to-ppt-skill",
+        "label": "论文精读与中文文献汇报PPT",
+        "category": "slides",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "policy-evaluation-figures-skill",
+        "label": "政策评估与卫生经济图表",
+        "category": "figure",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "propensity-score-skill",
+        "label": "PSM与加权：先让比较对象站到合适的位置",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "rdd-studio",
+        "label": "断点回归 · RDD",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "research-figure-skill",
+        "label": "科研数据图与多面板排版",
+        "category": "figure",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "research-public-posts-skill",
+        "label": "科研公众号图文",
+        "category": "writing",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "research-workflow-skill",
+        "label": "从一个问题到一篇论文：给研究留一条能走回去的路",
+        "category": "writing",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "sdid-studio",
+        "label": "合成双重差分 · Synthetic DID",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "sem-qca-qualitative-skill",
+        "label": "Skill：定性方法与结构方程专题（扎根理论 / SEM / 多层SEM / fsQCA，R / Stata）",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "share-database-skill",
+        "label": "SHARE · Survey of Health, Ageing and Retirement in Europe",
+        "category": "database",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "simulation-models-skill",
+        "label": "模拟模型选型：先描述世界怎样运转",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "staggered-did-skill",
+        "label": "交错DID：每一批政策，都找对它的参照",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "standardized-patient-skill",
+        "label": "模拟与标准化病人：把服务过程变成可比较的证据",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "survival-studio",
+        "label": "生存分析与竞争风险",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "target-trial-emulation-skill",
+        "label": "目标试验模拟：先写想做的试验，再看数据够不够",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "teaching-storyboard-ppt-skill",
+        "label": "科研教学、方法科普与分镜PPT",
+        "category": "slides",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "thesis-defense-ppt-skill",
+        "label": "开题、中期与答辩PPT",
+        "category": "slides",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "umbrella-review-skill",
+        "label": "meta-meta / 伞状综述：先看伞下有没有重复的人",
+        "category": "method",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      }
+    ],
+    "byPlatform": [
+      {
+        "id": "unspecified",
+        "label": "未指定平台",
+        "opens": 16,
+        "downloads": 4,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 3
+      },
+      {
+        "id": "doubao",
+        "label": "豆包",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "chatgpt",
+        "label": "ChatGPT / GPT",
+        "opens": 0,
+        "downloads": 2,
+        "copies": 3,
+        "platformOpens": 0,
+        "reported": 1,
+        "tasks": 2
+      },
+      {
+        "id": "codex",
+        "label": "Codex",
+        "opens": 0,
+        "downloads": 4,
+        "copies": 5,
+        "platformOpens": 1,
+        "reported": 1,
+        "tasks": 6
+      },
+      {
+        "id": "claude",
+        "label": "Claude",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "deepseek",
+        "label": "DeepSeek",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "gemini",
+        "label": "Gemini",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "qwen",
+        "label": "千问",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "kimi",
+        "label": "Kimi",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "other",
+        "label": "其他平台",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      }
+    ],
+    "byCategory": [
+      {
+        "id": "method",
+        "label": "研究方法",
+        "opens": 4,
+        "downloads": 1,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 1
+      },
+      {
+        "id": "database",
+        "label": "数据库",
+        "opens": 3,
+        "downloads": 0,
+        "copies": 2,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 1
+      },
+      {
+        "id": "policy",
+        "label": "政策文本",
+        "opens": 3,
+        "downloads": 5,
+        "copies": 1,
+        "platformOpens": 1,
+        "reported": 2,
+        "tasks": 2
+      },
+      {
+        "id": "writing",
+        "label": "写作与研究流程",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 2
+      },
+      {
+        "id": "general",
+        "label": "总纲与导航",
+        "opens": 6,
+        "downloads": 4,
+        "copies": 5,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 5
+      },
+      {
+        "id": "figure",
+        "label": "科研画图",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      },
+      {
+        "id": "slides",
+        "label": "PPT与汇报",
+        "opens": 0,
+        "downloads": 0,
+        "copies": 0,
+        "platformOpens": 0,
+        "reported": 0,
+        "tasks": 0
+      }
+    ],
+    "sources": [
+      {
+        "page": "databases",
+        "count": 1
+      },
+      {
+        "page": "guide",
+        "count": 7
+      },
+      {
+        "page": "home",
+        "count": 2
+      },
+      {
+        "page": "skilldownloads",
+        "count": 1
+      }
+    ],
+    "measurement": {
+      "visits": "页面访问PV，刷新会增加；不是独立人数",
+      "clicks": "阅读、下载、复制和入口操作按各类计数，子项不可重复相加",
+      "tasks": "服务器成功生成并返回指定Skill任务书；不代表外部模型执行",
+      "platform": "下载/复制/打开的目标平台，由使用者选择；不是平台内部遥测",
+      "reported": "使用者主动确认，属于自报记录；不是平台验证",
+      "identity": "现有记录没有登录身份，无法识别真实姓名或跨设备独立人数",
+      "externalExecutions": null
+    }
+  }
+}

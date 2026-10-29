@@ -281,7 +281,7 @@
   },
   "method-map": {
     "id": "method-map",
-    "label": "方法逻辑地图：从问题走到模型",
+    "label": "方法框架：四类分析主线与定性支撑",
     "category": "method",
     "file": "skills/method-map.md",
     "guide": "guides/method-map.html"
@@ -366,7 +366,7 @@
   "research-public-posts-skill": {
     "id": "research-public-posts-skill",
     "label": "科研公众号图文",
-    "category": "method",
+    "category": "writing",
     "file": "skills/research-public-posts-skill.md",
     "guide": "guides/research-public-posts-skill.html"
   },
