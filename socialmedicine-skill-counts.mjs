@@ -52,7 +52,7 @@ async function readPackages(){
 async function readUsage(){
  if(usageBusy)return;usageBusy=true;
  try{
-  const r=await fetch('https://puxian-visit-statistics.greycarp257.chatgpt.site/api/stats',{credentials:'omit',cache:'no-store',signal:AbortSignal.timeout(10000)});
+  const r=await fetch('https://puxian-visit-statistics.dusixian16.chatgpt.site/api/stats',{credentials:'omit',cache:'no-store',signal:AbortSignal.timeout(10000)});
   if(!r.ok)throw new Error();const raw=await r.json(),data=socialmedicineSkillUsage(raw);
   if(data.opens===null||!Number.isFinite(Date.parse(raw.updatedAt)))throw new Error();
   const description=`网页打开与下载点击；${date(raw.updatedAt)} 更新。`;

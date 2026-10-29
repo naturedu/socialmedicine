@@ -1,7 +1,7 @@
 (()=>{
  if(window.__puxianAnalyticsLoaded||navigator.doNotTrack==='1')return;
  const src=document.currentScript?.src;if(!src)return;
- const endpoint='https://puxian-visit-statistics.greycarp257.chatgpt.site/api/collect';
+ const endpoint='https://puxian-visit-statistics.dusixian16.chatgpt.site/api/collect';
  if(location.hostname!=='naturedu.github.io'||!location.pathname.startsWith('/socialmedicine/'))return;
  const paths={'/socialmedicine/':'home','/socialmedicine/index.html':'home','/socialmedicine/classic.html':'classic','/socialmedicine/research-resources.html':'resources','/socialmedicine/research-studio.html':'studio'};
  for(const [file,id] of Object.entries({'code':'code','figures':'figures','grants':'grants','institutions':'institutions','insurance-timeline':'insurance','journal-match':'journalmatch','journals':'journals','library':'library','methods':'methods','papers':'papers','sources':'sources','tools':'tools','wechat':'wechat'}))paths['/socialmedicine/'+file+'.html']=id;

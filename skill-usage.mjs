@@ -1,4 +1,4 @@
-const SERVICE='https://puxian-visit-statistics.greycarp257.chatgpt.site';
+const SERVICE='https://puxian-visit-statistics.dusixian16.chatgpt.site';
 const ROOT=new URL('./',import.meta.url),local=['localhost','127.0.0.1'].includes(location.hostname);
 const PLATFORMS={unspecified:'未指定平台',doubao:'豆包',chatgpt:'ChatGPT / GPT',codex:'Codex',claude:'Claude',other:'其他平台'};
 const URLS={doubao:'https://www.doubao.com/',chatgpt:'https://chatgpt.com/',codex:'https://chatgpt.com/codex',claude:'https://claude.ai/'};

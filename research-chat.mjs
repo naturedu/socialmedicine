@@ -53,7 +53,7 @@ initChat();
 const metrics=document.getElementById('headerMetrics'),activity=document.getElementById('chatActivity');let loading=false,lastSuccessful=null,refreshTimer;
 async function refreshMetrics(){
  if(!metrics||loading)return;loading=true;
- try{const r=await fetch('https://puxian-visit-statistics.greycarp257.chatgpt.site/api/stats',{credentials:'omit',cache:'no-store',signal:AbortSignal.timeout(10000)});if(!r.ok)throw new Error();const raw=await r.json(),m=metricSnapshot(raw);lastSuccessful=m;
+ try{const r=await fetch('https://puxian-visit-statistics.dusixian16.chatgpt.site/api/stats',{credentials:'omit',cache:'no-store',signal:AbortSignal.timeout(10000)});if(!r.ok)throw new Error();const raw=await r.json(),m=metricSnapshot(raw);lastSuccessful=m;
   for(const key of ['visits','clicks','downloads'])metrics.querySelector(`[data-metric="${key}"]`).textContent=m[key]===null?'—':m[key].toLocaleString('zh-CN');
   const date=new Date(m.updatedAt);metrics.title=`全站累计 · ${date.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'})} 更新。访问不是独立人数；下载为点击次数。`;
   metrics.dataset.state='ready';

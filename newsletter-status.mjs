@@ -1,6 +1,6 @@
 const status=document.getElementById('newsletterStatus'),entry=document.getElementById('newsletterEntry');
 if(status&&entry){
- const endpoint='https://puxian-visit-statistics.greycarp257.chatgpt.site';
+ const endpoint='https://puxian-visit-statistics.dusixian16.chatgpt.site';
  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),6000);
  try{
   const response=await fetch(endpoint+'/api/newsletter/status',{credentials:'omit',signal:controller.signal});if(!response.ok)throw new Error();
