@@ -33,7 +33,7 @@ const collection={
 export function chooseIntent(q,previous={}){
  const methodIds=aliases.filter(([,re])=>re.test(q)).map(([id])=>id);
  const profiles=detectJournals(q);
- if(isResearchQuestion(q)||previous.kind==='design'&&/继续|进一步|具体|详细|只有|已有|我有|变量|下一步|分析方案/.test(q))return {kind:'design',methodIds:[]};
+ if(isResearchQuestion(q)||previous.kind==='design'&&/继续|进一步|具体|详细|只有|已有|我有|变量|下一步|分析方案|请整理|纳排|编码/.test(q))return {kind:'design',methodIds:[]};
  if(/润色|英文|摘要|写作|翻译|论证结构|审读/.test(q)&&(!methodIds.length||profiles.length))return {kind:'writing',profiles:profiles.length?profiles:previous.kind==='writing'?previous.profiles||[]:[],methodIds:[]};
  if(profiles.length&&/审稿|周期|分区|jcr|影响因子|发表时间/i.test(q))return {kind:'journals',profiles,methodIds:[]};
  if(/研究主题|主题分析/.test(q)&&profiles.length)return {kind:'publicTopics',methodIds:[]};

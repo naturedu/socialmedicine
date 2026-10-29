@@ -33,7 +33,7 @@ export async function initChat(){
   if(reply.suggestions?.length){const follow=node('div',undefined,'chat-followups');for(const q of reply.suggestions){const b=node('button',q);b.type='button';b.onclick=()=>{if(!busy){input.value=q;form.requestSubmit();}};follow.append(b);}row.append(follow);}
   log.append(row);
  }
- function clear(){generation++;state={};turns=[];log.replaceChildren();intro.hidden=false;busy=false;send.disabled=false;input.value='';status.textContent='已开始新对话。';try{localStorage.removeItem(storageKey);}catch{}input.focus();}
+ function clear(){generation++;state={};turns=[];log.replaceChildren();intro.hidden=false;busy=false;send.disabled=false;input.value='';root.querySelectorAll('[data-research-field]').forEach(x=>x.value='');status.textContent='已开始新对话。';try{localStorage.removeItem(storageKey);}catch{}input.focus();}
  root.querySelector('#newChat').onclick=clear;
  root.addEventListener('click',e=>{const a=e.target.closest?.('a');if(a?.getAttribute('href')===new URL('#learn',location.href).href&&a.textContent==='完整阶段路线'){e.preventDefault();const route=document.querySelector('.route-fallback');if(route){route.open=true;route.scrollIntoView({behavior:'smooth',block:'start'});}}});
  root.querySelector('#exportChat').onclick=()=>{if(!turns.length){status.textContent='还没有可导出的对话。';return;}download('普贤-科研问答.txt',turns.map(t=>'问：'+t.q+'\n\n答：'+replyText(t.reply)).join('\n\n————\n\n'));track('chat_export');window.puxianTrack?.('file_download');};
