@@ -11,8 +11,8 @@ test('method conversation preserves method context and filters requested code la
  const different=makeReply('中山大学有哪些研究方向？',second.state,data);assert.equal(different.state.kind,'schools');assert.ok(different.sections.every(s=>s.heading.includes('中山大学')));
 });
 test('research advice does not turn cross-sectional data into causal evidence',()=>{
- const r=makeReply('我只有横断面数据，想评估政策因果效果',{},data);assert.match(r.title,/关联/);assert.ok(r.sections[0].items.some(s=>s.includes('不能识别')));
- const follow=makeReply('我有多期面板数据',r.state,data);assert.match(follow.title,/DID/);assert.ok(follow.sections[0].items.some(s=>s.includes('若无对照')));
+ const r=makeReply('我只有横断面数据，想评估政策因果效果',{},data);assert.match(r.title,/关联/);assert.ok(r.sections.flatMap(x=>x.items).some(s=>s.includes('不能识别')));
+ const follow=makeReply('我有多期面板数据',r.state,data);assert.match(follow.title,/DID/);assert.ok(follow.sections.flatMap(x=>x.items).some(s=>s.includes('若无对照')));
 });
 test('unmatched questions produce no invented answer or citation',()=>{const r=makeReply('火星上的咖啡店今天营业吗？',{},data);assert.equal(r.status,'unmatched');assert.equal(r.sources.length,0);});
 test('named school and project answers retain original sources and status',()=>{

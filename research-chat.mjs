@@ -1,12 +1,12 @@
-import {makeReply,OUTCOMES,metricSnapshot,chooseIntent} from './chat-core.mjs?v=20261024knowledge1';
+import {makeReply,OUTCOMES,metricSnapshot,chooseIntent} from './chat-core.mjs?v=20261029research1';
 const root=document.getElementById('researchChat');
 const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
 const safeUrl=value=>{if(typeof value!=='string'||!value.trim())return null;try{const u=new URL(value,location.href);return ['http:','https:'].includes(u.protocol)?u.href:null;}catch{return null;}};
 const cache=new Map();
-async function read(name){if(!cache.has(name))cache.set(name,fetch(new URL('./data/'+name+'.json?v=20261024knowledge1',import.meta.url),{signal:AbortSignal.timeout(15000)}).then(r=>{if(!r.ok)throw new Error('资料暂不可用');return r.json();}).catch(e=>{cache.delete(name);throw e;}));return cache.get(name);}
+async function read(name){if(!cache.has(name))cache.set(name,fetch(new URL('./data/'+name+'.json?v=20261029research1',import.meta.url),{signal:AbortSignal.timeout(15000)}).then(r=>{if(!r.ok)throw new Error('资料暂不可用');return r.json();}).catch(e=>{cache.delete(name);throw e;}));return cache.get(name);}
 async function contextFor(q,state){
  const kind=chooseIntent(q,state).kind, data={};
- const paths={publicTopics:[['publicTopics','public-topic-records'],['publicAnalysis','public-topic-analysis']],methods:[['methods','studio-methods'],['methodGuide','method-guide']],schools:[['schools','research-schools']],datasets:[['datasets','research-datasets']],journals:[['journals','studio-journals']],classics:[['classics','studio-classics']],grants:[],goal:[],design:[],writing:[],search:[['library','research-knowledge']]};
+ const paths={publicTopics:[['publicTopics','public-topic-records'],['publicAnalysis','public-topic-analysis']],methods:[['methods','studio-methods'],['methodGuide','method-guide']],schools:[['schools','research-schools']],datasets:[['datasets','research-datasets']],journals:[['journals','studio-journals']],classics:[['classics','studio-classics']],grants:[],goal:[],design:[['datasets','research-datasets']],writing:[],search:[['library','research-knowledge']]};
  await Promise.all((paths[kind]||[]).map(async([key,path])=>{data[key]=await read(path);}));return data;
 }
 function download(name,text){const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'})),a=node('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}
@@ -24,12 +24,12 @@ export async function initChat(){
  function addReply(reply,restored=false){
   const row=node('article',undefined,'chat-message chat-assistant');row.append(node('span','普贤 · 站内资料问答','chat-who'),node('h3',reply.title));
   reply.paragraphs.forEach(p=>row.append(node('p',p)));
-  for(const section of reply.sections||[]){row.append(node('h4',section.heading));const list=node('ul');for(const text of section.items||[])list.append(node('li',text));row.append(list);}
+  for(const [i,section] of (reply.sections||[]).entries()){const container=reply.detailed?node('details',undefined,'research-analysis-section'):row;if(reply.detailed){container.open=i<2;container.append(node('summary',section.heading));row.append(container);}else container.append(node('h4',section.heading));const list=node('ul');for(const text of section.items||[])list.append(node('li',text));container.append(list);}
   for(const c of reply.codes||[]){const details=node('details',undefined,'chat-code');details.append(node('summary',`${c.lang.toUpperCase()} · ${c.heading}`));const pre=node('pre'),code=node('code',c.code);pre.append(code);details.append(pre);const copyCode=node('button','复制代码','chat-text-action');copyCode.type='button';copyCode.onclick=()=>copy(c.code);details.append(copyCode);row.append(details);}
   if(reply.question)row.append(node('p',reply.question,'chat-question'));
   if(reply.sources?.length){const list=node('div',undefined,'chat-sources');list.append(node('span','资料与出处','chat-source-label'));for(const s of reply.sources){const url=safeUrl(s.url);if(!url)continue;const a=node('a',s.title);a.href=url;a.title=s.note||s.title;if(new URL(url).origin!==location.origin){a.target='_blank';a.rel='noopener';}list.append(a);}row.append(list);}
   const actions=node('div',undefined,'chat-answer-actions'),copyBtn=node('button','复制回答'),helpful=node('button','有帮助'),notHelpful=node('button','还没解决');
-  copyBtn.onclick=()=>copy(replyText(reply));for(const [b,event]of [[helpful,'chat_helpful'],[notHelpful,'chat_unhelpful']]){b.type='button';b.disabled=restored;b.onclick=()=>{track(event);helpful.disabled=notHelpful.disabled=true;b.setAttribute('aria-pressed','true');b.textContent='谢谢反馈';};}actions.append(copyBtn,helpful,notHelpful);row.append(actions);
+  copyBtn.onclick=()=>copy(replyText(reply));if(reply.detailed){const task=node('button','复制完整研究任务书');task.type='button';task.onclick=()=>copy('请按以下研究问题和方案初稿继续完成详实分析。先核对信息缺口与原始证据，比较方法成立条件，不编造文献、数据、结果或创新性。输出修订方案、变量表、执行步骤、诊断、图表计划及待核事项。\n\n'+replyText(reply));actions.append(task);}for(const [b,event]of [[helpful,'chat_helpful'],[notHelpful,'chat_unhelpful']]){b.type='button';b.disabled=restored;b.onclick=()=>{track(event);helpful.disabled=notHelpful.disabled=true;b.setAttribute('aria-pressed','true');b.textContent='谢谢反馈';};}actions.append(copyBtn,helpful,notHelpful);row.append(actions);
   if(reply.suggestions?.length){const follow=node('div',undefined,'chat-followups');for(const q of reply.suggestions){const b=node('button',q);b.type='button';b.onclick=()=>{if(!busy){input.value=q;form.requestSubmit();}};follow.append(b);}row.append(follow);}
   log.append(row);
  }
@@ -39,7 +39,7 @@ export async function initChat(){
  root.querySelector('#exportChat').onclick=()=>{if(!turns.length){status.textContent='还没有可导出的对话。';return;}download('普贤-科研问答.txt',turns.map(t=>'问：'+t.q+'\n\n答：'+replyText(t.reply)).join('\n\n————\n\n'));track('chat_export');window.puxianTrack?.('file_download');};
  root.querySelectorAll('[data-chat-prompt]').forEach(b=>b.onclick=()=>{input.value=b.dataset.chatPrompt;form.requestSubmit();});
  form.addEventListener('submit',async e=>{
-  e.preventDefault();const q=input.value.trim();if(busy||!q)return;if(q.length>2000){status.textContent='请将单次问题缩短到 2,000 字以内。';return;}
+  e.preventDefault();let q=input.value.trim();if(busy||!q)return;const fields=[...root.querySelectorAll('[data-research-field]')].filter(x=>x.value.trim());if(fields.length)q+='\n'+fields.map(x=>x.dataset.researchField+'：'+x.value.trim()).join('；')+'；请生成详细研究方案';if(q.length>2000){status.textContent='请将单次问题缩短到 2,000 字以内。';return;}
   const thisGeneration=generation;busy=true;send.disabled=true;track('chat_question');if(turns.length)track('chat_followup');addUser(q);input.value='';status.textContent='正在查找站内资料…';
   try{const data=await contextFor(q,state);if(generation!==thisGeneration)return;const reply=makeReply(q,state,data);state=reply.state;addReply(reply);turns.push({q,reply});persist();track(OUTCOMES[reply.status]);status.textContent=reply.status==='answered'?'已整理回答。可以继续追问。':reply.status==='clarify'?'需要补充信息，可以继续回答。':'未找到足够依据，可以换个问法。';}
   catch{if(generation!==thisGeneration)return;const reply={status:'error',title:'资料暂时没有载入。',paragraphs:['这次没有生成回答。请检查网络后重新发送；你的问题没有上传到模型。'],suggestions:[q],sources:[]};addReply(reply);turns.push({q,reply});persist();track('chat_error');status.textContent='回答失败，可点下方原问题重试。';}

@@ -1,3 +1,4 @@
+import {aboutContent} from './about-content.mjs?v=20261029';
 import {JOURNALS,search,buildPlan,matchSchools,writingAudit,planText} from './studio-core.mjs?v=20261024knowledge1';
 import {buildGoal,goalText} from './studio-goals.mjs';
 const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -13,7 +14,7 @@ function tab(id){if(!document.getElementById('panel-'+id))id='learn';document.bo
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>tab(b.dataset.tab));window.addEventListener('hashchange',()=>tab(location.hash.slice(1)));tab(location.hash.slice(1));
 $('.hero').setAttribute('aria-label','普贤研究工作台');
 document.querySelectorAll('.journalSelect').forEach(s=>s.innerHTML=Object.entries(JOURNALS).map(([id,j])=>`<option value="${id}">${j.name}</option>`).join(''));
-$('#aboutBtn').onclick=()=>dialog(`<p class="eyebrow">HOW IT WORKS</p><h3>你的资料，与你的研究路径。</h3><div class="dialog-body"><p>本站当前没有连接大语言模型 API。研究设计为条件规则，文献检索为双语关键词匹配；生成的任务书可以复制给 ChatGPT／Claude 继续推敲。这不等于模型微调或自动训练。</p><p>公开期刊库包含题录、摘要与授权允许的全文片段，逐条标注出处及授权。本地 PDF 在浏览器内解析，文字保存在当前浏览器，不上传到服务器；点击“清除本机 PDF 索引”可删除。模型只会收到你主动复制和粘贴的内容。</p><p>院校资料来自公开机构页面。方向匹配仅供查阅，不推测招生名额或录取概率。</p><p>经典书架提供原创导读和原文入口，不重新发布受版权保护的书籍全文。新增代码为教学模板；须核对真实数据和依赖。</p></div>`);
+$('#aboutBtn').onclick=()=>dialog(aboutContent);document.getElementById('beginnerIntro')?.addEventListener('click',()=>dialog(aboutContent));
 const allRecords=()=>[...library,...localPages];
 const link=(url,text)=>`<a href="${esc(safeUrl(url))}" target="_blank" rel="noopener">${esc(text)} ↗</a>`;
 const list=items=>'<ul>'+items.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';

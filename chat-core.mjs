@@ -1,3 +1,4 @@
+import {isResearchQuestion,detailedResearchReply} from './research-analysis.mjs?v=20261029';
 import {search,terms,buildPlan,matchSchools,writingAudit} from './studio-core.mjs?v=20261024knowledge1';
 import {buildGoal} from './studio-goals.mjs';
 import {detectJournals,journalMatches,writingGuidance,WRITING_PROFILES} from './journal-profiles.mjs';
@@ -32,6 +33,7 @@ const collection={
 export function chooseIntent(q,previous={}){
  const methodIds=aliases.filter(([,re])=>re.test(q)).map(([id])=>id);
  const profiles=detectJournals(q);
+ if(isResearchQuestion(q)||previous.kind==='design'&&/继续|进一步|具体|详细|只有|已有|我有|变量|下一步|分析方案/.test(q))return {kind:'design',methodIds:[]};
  if(/润色|英文|摘要|写作|翻译|论证结构|审读/.test(q)&&(!methodIds.length||profiles.length))return {kind:'writing',profiles:profiles.length?profiles:previous.kind==='writing'?previous.profiles||[]:[],methodIds:[]};
  if(profiles.length&&/审稿|周期|分区|jcr|影响因子|发表时间/i.test(q))return {kind:'journals',profiles,methodIds:[]};
  if(/研究主题|主题分析/.test(q)&&profiles.length)return {kind:'publicTopics',methodIds:[]};
@@ -54,7 +56,7 @@ export function chooseIntent(q,previous={}){
 }
 export function makeReply(question,previous={},data={}){
  const q=String(question).trim().slice(0,2000),intent=chooseIntent(q,previous);
- const followup=intent.kind===previous.kind&&intent.kind!=='search';
+ const followup=intent.kind===previous.kind&&intent.kind!=='search'&&!/我(?:想|计划|准备|要).{0,35}研究|换个问题|新的研究/.test(q);
  const context=followup?[previous.topic,q].filter(Boolean).join('；').slice(-3500):q;
  const state={...intent,topic:context};
  const finish=r=>({...r,state});
@@ -113,12 +115,7 @@ export function makeReply(question,previous={},data={}){
   const plan=buildGoal({target:context,type:intent.goal,background:'',weeks:12},data.library||[]);
   return finish(answer(plan.title+'：先把路径拆成可交付的步骤。',[`以下是本站的准备路线，需根据你的学校要求、已有基础和时间进一步调整。`],{sections:plan.phases.slice(0,3).map(p=>({heading:p.title,items:[p.task,'交付物：'+p.deliverable]})),sources:[source('完整阶段路线','#learn'),source('研究设计工作区','#research')],question:plan.questions[0],suggestions:intent.goal==='thesis'?['我想研究医保支付改革，怎么设计？','有哪些公共数据库？']:['中山大学和南方医科大学有哪些方向？','我想写一份研究计划']}));
  }
- if(intent.kind==='design'){
-  const type=/横断面|只有一年|只有一次/.test(q)?'cross':/面板|多轮|追踪|随访/.test(context)?'panel':/月度|季度|时间序列/.test(context)?'series':'cross';
-  const goal=/成本效果|经济评价|成本效用/.test(context)?'economic':/预测|机器学习/.test(context)?'prediction':/机制|访谈/.test(context)?'mechanism':/政策|改革|因果|影响|效果/.test(context)?'causal':'descriptive';
-  const plan=buildPlan({question:context,goal,data:type,journal:'lancet'},data.library||[]);
-  return finish(answer(plan.design,[plan.theory],{sections:[{heading:'成立条件',items:plan.assumptions},{heading:'需要收集的数据',items:plan.collect}],sources:[source('配套方法手册','skills/'+plan.skill),source('继续填写结构化研究方案','#research')],question:type==='cross'?'你目前有横断面、连续月度数据，还是能追踪同一对象的多期数据？':'政策或干预何时实施，是否有未受影响的对照？',suggestions:['我只有横断面数据','我有多期面板数据','我有连续月度数据']}));
- }
+ if(intent.kind==='design')return finish(detailedResearchReply(context,data));
  if(intent.kind==='writing'){
   const profiles=writingGuidance(q,intent.profiles||[]);
   return finish(answer(profiles.length?profiles.map(p=>p.name).join(' / ')+'：按对应论证逻辑审读。':'先写清问题，再让每句话承担一个任务。',['当前提供期刊分流的结构建议、检查与可复制任务书；没有调用通用模型改写全文。','尽量每句话表达一个主要判断，保留数字、引用、限制条件与不确定性；不能靠润色改变证据强度。'],{sections:[...profiles.map(p=>({heading:p.name+' · '+p.focus,items:[...p.checks,p.basis]})),{heading:'当前文本的检查线索',items:writingAudit(q)},{heading:'可复制到模型的审读要求',items:['按上述目标期刊建议审读我的原稿。先指出论证缺口，再给修改稿、修改理由及待核事实；冻结数字、引用、设计、效应方向与不确定性。缺证处标记待补，不编造研究结论。']}],sources:[...profiles.map(p=>source(p.name+' · 依据与指南',p.url,p.basis)),source('学术润色工作区','#polishing'),source('完整期刊写作手册','guides/references/journal-writing.html')],suggestions:['按管理世界检查论证结构','按 Nature 和 Science 审读论文','找 Nature 和 Science 的健康政策论文']}));
