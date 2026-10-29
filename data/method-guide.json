@@ -1,60 +1,47 @@
 {
-  "updated": "2026-10-24",
-  "note": "阅读顺序用于导航，不是所有研究必须依次执行的步骤；理论框架、样本量和数据准备应前置考虑。介绍整理自本站公开手册，不改变原代码的未执行状态。",
+  "updated": "2026-10-29",
+  "note": "四类分析主线按研究目标导航；定性、共识、组态、设计与综合评价作为跨类支撑，原A—J专业分类保留。",
   "groups": [
     {
-      "id": "start",
-      "title": "先看方法全景",
-      "intro": "先确定研究问题、估计目标和数据结构，再进入对应专题。",
-      "order": 0
+      "id": "descriptive",
+      "title": "描述性分析",
+      "intro": "回答多少、分布与变化；明确人群、分母、时间和抽样。",
+      "order": 1,
+      "kind": "analysis"
     },
     {
-      "id": "A",
-      "title": "研究设计与证据汇总",
-      "intro": "先决定观察谁、如何比较、何时测量；已有研究的证据可通过系统评价汇总。",
-      "order": 1
+      "id": "association",
+      "title": "相关性分析",
+      "intro": "描述特征与结局的关联；调整模型不自动建立因果。",
+      "order": 2,
+      "kind": "analysis"
     },
     {
-      "id": "B",
-      "title": "统计分析与结果解释",
-      "intro": "根据结局类型、重复测量和层级结构选择模型，解释效应大小与不确定性。",
-      "order": 2
+      "id": "causal",
+      "title": "因果推断",
+      "intro": "比较干预或政策的反事实结局；先确定设计与识别条件。",
+      "order": 3,
+      "kind": "analysis"
     },
     {
-      "id": "D",
-      "title": "因果推断与政策评价",
-      "intro": "围绕可信的对照与识别假设，判断政策或干预可能带来的变化。",
-      "order": 3
+      "id": "predictive",
+      "title": "预测分析",
+      "intro": "判断新对象的未知或未来结局；关注验证、校准和实际用途。",
+      "order": 4,
+      "kind": "analysis"
     },
     {
-      "id": "C",
-      "title": "卫生经济与偏好评价",
-      "intro": "从资源、成本、健康产出、预算和偏好出发，支持卫生决策。",
-      "order": 4
-    },
-    {
-      "id": "E",
-      "title": "数据准备与预测建模",
-      "intro": "处理缺失、规划样本、发现模式或预测风险；预测表现不能代替因果证据。",
-      "order": 5
-    },
-    {
-      "id": "F",
-      "title": "理论框架与机制解释",
-      "intro": "用理论界定概念、关系和可测指标。这一组也应在选题初期阅读，位置不表示工作先后。",
-      "order": 6
-    },
-    {
-      "id": "G",
-      "title": "定性、组态与结构模型",
-      "intro": "理解经验与机制、检验潜变量关系，或比较多种条件组合。",
-      "order": 7
+      "id": "support",
+      "title": "定性、共识与跨类支撑",
+      "intro": "定性、德尔菲、fsQCA及理论、测量、证据综合、经济评价保留各自属性，服务不同研究问题。",
+      "order": 5,
+      "kind": "support"
     }
   ],
   "skills": [
     {
       "id": "socialmedicineskills",
-      "group": "start",
+      "group": "support",
       "order": 0,
       "title": "社医卫管方法全景",
       "intro": "快速比较研究设计、统计、经济评价和理论框架，找到适合问题的入口。",
@@ -63,7 +50,7 @@
     },
     {
       "id": "meta-analysis-skill",
-      "group": "A",
+      "group": "support",
       "order": 9,
       "title": "系统评价与 Meta 分析",
       "intro": "按明确的纳入标准汇总已有研究；在效应量可比时进行合并，并评估异质性与偏倚。",
@@ -72,7 +59,7 @@
     },
     {
       "id": "binary-studio",
-      "group": "B",
+      "group": "association",
       "order": 5,
       "title": "二元结局与边际效应",
       "intro": "分析“是否患病、是否就医”等二分类结局，同时用预测概率或边际效应帮助解释结果。",
@@ -81,7 +68,7 @@
     },
     {
       "id": "survival-studio",
-      "group": "B",
+      "group": "association",
       "order": 8,
       "title": "生存分析与竞争风险",
       "intro": "分析从起点到死亡、再入院等事件的时间，处理随访未结束或未发生事件的情况。",
@@ -90,7 +77,7 @@
     },
     {
       "id": "longitudinal-studio",
-      "group": "B",
+      "group": "association",
       "order": 9,
       "title": "纵向轨迹与重复测量",
       "intro": "描述同一对象随时间的变化，用混合模型或 GEE 等处理个体内相关。",
@@ -99,7 +86,7 @@
     },
     {
       "id": "did-skill",
-      "group": "D",
+      "group": "causal",
       "order": 1,
       "title": "双重差分 DID",
       "intro": "比较政策组与对照组在实施前后的变化之差，用于有适当对照的政策评价。",
@@ -108,7 +95,7 @@
     },
     {
       "id": "event-study-studio",
-      "group": "D",
+      "group": "causal",
       "order": 2,
       "title": "交错 DID 与事件研究",
       "intro": "追踪政策前后不同时间的效果；分批实施时区分处理批次与日历时间。",
@@ -117,7 +104,7 @@
     },
     {
       "id": "ddd-skill",
-      "group": "D",
+      "group": "causal",
       "order": 3,
       "title": "三重差分 DDD",
       "intro": "在 DID 的基础上引入第三个可解释维度，比较两套变化差异。",
@@ -126,7 +113,7 @@
     },
     {
       "id": "its-skill",
-      "group": "D",
+      "group": "causal",
       "order": 4,
       "title": "间断时间序列 ITS",
       "intro": "用多期时间序列评估干预前后的水平变化与趋势变化。",
@@ -135,7 +122,7 @@
     },
     {
       "id": "rdd-studio",
-      "group": "D",
+      "group": "causal",
       "order": 5,
       "title": "断点回归 RDD",
       "intro": "利用明确的资格阈值，比较阈值两侧相近对象的结局差异。",
@@ -144,7 +131,7 @@
     },
     {
       "id": "sdid-studio",
-      "group": "D",
+      "group": "causal",
       "order": 6,
       "title": "合成双重差分 SDID",
       "intro": "通过单位和时间权重构造比较，结合合成控制与差分思想估计政策效果。",
@@ -153,7 +140,7 @@
     },
     {
       "id": "health-economics-tutorial-skill",
-      "group": "C",
+      "group": "support",
       "order": 1,
       "title": "卫生经济评价 CEA / CUA",
       "intro": "同时比较不同方案的成本与健康产出，帮助解释增加的健康收益是否值得增加的资源投入。",
@@ -162,7 +149,7 @@
     },
     {
       "id": "markov-model-skill",
-      "group": "C",
+      "group": "support",
       "order": 2,
       "title": "Markov 队列模型",
       "intro": "将疾病过程表示为健康状态与周期转移，推演长期成本和健康结果。",
@@ -171,7 +158,7 @@
     },
     {
       "id": "microsimulation-studio",
-      "group": "C",
+      "group": "support",
       "order": 3,
       "title": "个体微观模拟",
       "intro": "逐个模拟个体经历，保留年龄、风险和既往经历等差异，适合路径较复杂的问题。",
@@ -180,7 +167,7 @@
     },
     {
       "id": "dce-design-assistant-skill",
-      "group": "C",
+      "group": "support",
       "order": 4,
       "title": "离散选择实验 DCE",
       "intro": "让受访者在不同属性组合的方案之间选择，估计偏好与属性间的权衡。",
@@ -189,7 +176,7 @@
     },
     {
       "id": "machine-learning-skill",
-      "group": "E",
+      "group": "predictive",
       "order": 4,
       "title": "机器学习与风险预测",
       "intro": "用正则化、随机森林等模型预测风险，比较区分度、校准和适用性。",
@@ -198,7 +185,7 @@
     },
     {
       "id": "active-health-hiap-skill",
-      "group": "F",
+      "group": "support",
       "order": 1,
       "title": "主动健康与健康融入万策",
       "intro": "将健康目标放进跨部门政策分析，梳理健康影响、作用路径与公平性。",
@@ -207,7 +194,7 @@
     },
     {
       "id": "sem-qca-qualitative-skill",
-      "group": "G",
+      "group": "support",
       "order": 1,
       "title": "定性、SEM 与 fsQCA 专题",
       "intro": "比较扎根理论、潜变量结构模型与组态分析三种不同的研究路线。",
@@ -217,7 +204,7 @@
     {
       "id": "standardized-patient-skill",
       "title": "模拟与标准化病人 SP / USP",
-      "group": "A",
+      "group": "descriptive",
       "order": 6,
       "intro": "用训练过的扮演者在统一情境下测量服务过程，区分教学考核与未预先告知的质量研究。",
       "prepare": "先明确场景、剧本、评分依据、伦理安全、机构抽样、重复访问与识别记录。",
@@ -226,7 +213,7 @@
     {
       "id": "implementation-science-skill",
       "title": "实施科学：从框架到研究设计",
-      "group": "F",
+      "group": "support",
       "order": 1,
       "intro": "区分服务干预与实施策略，把障碍、策略、实施结局、健康结局和持续使用连接到具体设计。",
       "prepare": "先明确服务证据、策略执行者、主要结局、层级、分母与时间窗；框架不能代替识别设计。",
@@ -236,509 +223,1305 @@
   "quick": [
     {
       "id": "A1",
-      "group": "A",
+      "group": "descriptive",
       "order": 1,
       "title": "横断面研究",
       "intro": "在某一时点同时测量暴露与结局，描述疾病分布或探索暴露-结局关联（如国家卫生服务调查、体检数据、居民健康素养调查）。",
       "prepare": "明确调查时点、目标人群、抽样权重和暴露/结局口径。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "研究设计"
     },
     {
       "id": "A2",
-      "group": "A",
+      "group": "association",
       "order": 2,
       "title": "病例对照研究",
       "intro": "结局已发生、回顾比较病例与对照的既往暴露，适合罕见病、长潜伏期结局的病因探索（如肿瘤、罕见不良反应）。",
       "prepare": "病例与对照应来自同一源人群；核对暴露测量和匹配设计。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "研究设计"
     },
     {
       "id": "A3",
-      "group": "A",
+      "group": "association",
       "order": 3,
       "title": "队列研究",
       "intro": "按暴露状态分组、随访观察结局，用于验证病因或评估暴露效应，可直接计算发病率、同时观察多个结局（如出生队列、职业队列）。",
       "prepare": "明确随访起点、人时、失访和混杂控制；先后关系不自动证明因果。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "研究设计"
     },
     {
       "id": "A4",
-      "group": "A",
+      "group": "causal",
       "order": 4,
       "title": "随机对照试验 RCT",
       "intro": "通过随机分配比较干预方案，用于药物、诊疗和卫生服务的效果评价；仍需关注实施、失访与分析质量。",
       "prepare": "明确随机分配、分配隐藏、结局与分析人群，按设计处理整群或重复测量。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "研究设计"
     },
     {
       "id": "A5",
-      "group": "A",
+      "group": "causal",
       "order": 5,
       "title": "准实验设计",
       "intro": "无法随机分配时，利用政策时点、资格阈值或地区差异构造可信比较，常见路线包括DID、ITS与RDD。",
       "prepare": "先说明政策如何分配、何时实施，以及对照为何可信。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "研究设计"
     },
     {
       "id": "A6",
-      "group": "A",
+      "group": "association",
       "order": 6,
       "title": "生态学研究",
       "intro": "以群体（国家/地区/年份）为分析单位探索宏观暴露与结局关联，用于跨国比较、政策环境因素分析与假说生成，数据易得、成本低。",
       "prepare": "以地区等群体为分析单位；群体关联不能直接推论个体。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "研究设计"
     },
     {
       "id": "A7",
-      "group": "A",
+      "group": "support",
       "order": 7,
       "title": "混合方法研究（定性+定量）",
       "intro": "单一方法不足以回答研究问题时，定性（机制、体验、实施障碍）与定量（测量、检验）互补，常见于卫生服务研究、实施科学与量表开发。",
       "prepare": "说明两种证据在何时、如何整合，而非分别做完后简单并列。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "混合方法"
     },
     {
       "id": "A8",
-      "group": "A",
+      "group": "support",
       "order": 8,
       "title": "德尔菲法（Delphi）",
-      "intro": "证据不足或意见分歧时，通过多轮匿名专家咨询收敛共识，用于指标筛选、指南推荐、评价体系构建（如卫生管理指标体系）。",
-      "prepare": "预先规定专家遴选、轮次、反馈与共识判定规则。",
-      "source": "skills/references/methods-54.md"
+      "intro": "证据不充分时，如何形成可追溯的专家判断或指标共识？",
+      "prepare": "明确遴选标准的专家组、各轮匿名评分/理由、反馈及退出记录。",
+      "source": "skills/references/methods-54.md",
+      "role": "专家共识",
+      "example": "共识不是客观真值或疗效证据；专家权威系数、Kendall W和统一分数阈值不是所有Delphi研究的必需品。"
     },
     {
       "id": "B1",
-      "group": "B",
+      "group": "descriptive",
       "order": 1,
       "title": "描述统计与正态性检验",
       "intro": "任何连续型变量的分布描述与正态性判断，是选择后续参数或非参数方法的起点。",
       "prepare": "先看分布、极端值和缺失，不能只凭正态性检验选方法。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "统计模型与检验"
     },
     {
       "id": "B2",
-      "group": "B",
+      "group": "association",
       "order": 2,
       "title": "t 检验与方差分析",
       "intro": "两组（t 检验）或三组及以上（方差分析）连续结局的组间比较。",
       "prepare": "核对独立或配对设计、方差结构；同时报告差异及置信区间。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "统计模型与检验"
     },
     {
       "id": "B3",
-      "group": "B",
+      "group": "association",
       "order": 3,
       "title": "卡方检验与非参数检验",
       "intro": "分类结局的组间比较，以及不满足正态/方差齐性条件的连续或等级资料的组间比较。",
       "prepare": "先确定变量类型、独立性与列联表期望频数。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "统计模型与检验"
     },
     {
       "id": "B4",
-      "group": "B",
+      "group": "association",
       "order": 4,
       "title": "相关与简单线性回归",
       "intro": "两个连续变量间线性关联的方向与强度描述（相关），及一个变量预测另一个变量的简单线性回归。",
       "prepare": "检查关系形式与异常值；相关不等于因果。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "统计模型与检验"
     },
     {
       "id": "B5",
-      "group": "B",
+      "group": "association",
       "order": 5,
       "title": "二元 logistic 回归",
       "intro": "二分类结局（患病与否、是否就诊、是否满意）的影响因素分析，结果以比值比 OR 解释。",
       "prepare": "明确事件编码与协变量，区分OR、风险比和绝对概率。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "统计模型与检验"
     },
     {
       "id": "B6",
-      "group": "B",
+      "group": "association",
       "order": 6,
       "title": "有序/多项 logistic 回归",
       "intro": "等级结局（Likert 量表、疾病分期等有序分类）与无序多分类结局（就医机构类型、职业类别等）的影响因素分析。",
       "prepare": "区分有序与无序类别；有序模型需核对比例优势假设。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "统计模型与检验"
     },
     {
       "id": "B7",
-      "group": "B",
+      "group": "association",
       "order": 7,
       "title": "Poisson 与负二项回归",
       "intro": "计数结局（就诊次数、住院天数、跌倒次数、处方数等）的回归建模。",
       "prepare": "明确观察时长、零值和过度离散，必要时使用暴露量偏置项。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "统计模型与检验"
     },
     {
       "id": "B8",
-      "group": "B",
+      "group": "association",
       "order": 8,
       "title": "生存分析（Kaplan-Meier 与 Cox）",
       "intro": "事件发生时间结局（再入院时间、死亡时间、并发症出现时间等），数据含删失。",
       "prepare": "统一时间起点、事件、删失和竞争事件定义。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "生存与事件分析"
     },
     {
       "id": "B9",
-      "group": "B",
+      "group": "association",
       "order": 9,
       "title": "重复测量与混合效应模型",
       "intro": "同一对象多次随访的重复测量数据，或患者嵌套于医院/村等层级（聚类）数据的建模。",
       "prepare": "标明个体ID、时间和层级，选择符合估计目标的相关结构。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "统计模型与检验"
     },
     {
       "id": "B10",
-      "group": "B",
+      "group": "descriptive",
       "order": 10,
       "title": "主成分分析与因子分析",
       "intro": "多个指标降维合成综合得分（主成分分析），或探索量表/问卷的潜在结构（探索性因子分析）。",
       "prepare": "区分降维与潜在结构；核对量表理论和适用的相关矩阵。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "统计模型与检验"
     },
     {
       "id": "C1",
-      "group": "C",
+      "group": "descriptive",
       "order": 1,
       "title": "成本测算",
       "intro": "测算某一疾病、干预或服务在特定视角与时间段内消耗的资源总量（货币化成本），为成本分析、CEA/BIA 提供成本输入。",
       "prepare": "先定分析视角、资源范围、数量、单价和价格年份。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "卫生经济与管理评价"
     },
     {
       "id": "C2",
-      "group": "C",
+      "group": "support",
       "order": 2,
       "title": "成本-效果分析 CEA 与成本-效用分析 CUA",
       "intro": "比较两种及以上干预的成本与健康产出，产出为自然单位（CEA）或 QALY（CUA）。",
       "prepare": "明确比较方案、时间范围、成本和健康产出；处理不确定性。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "卫生经济与管理评价"
     },
     {
       "id": "C3",
-      "group": "C",
+      "group": "descriptive",
       "order": 3,
       "title": "QALY 与 DALY 计算",
       "intro": "把生存时间与生命质量合成为单一健康产出（QALY），或按死亡与伤残损失合成疾病负担（DALY），用于 CUA 与负担比较。",
       "prepare": "核对效用或伤残权重来源及时间，QALY与DALY不可直接混用。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "卫生经济与管理评价"
     },
     {
       "id": "C4",
-      "group": "C",
+      "group": "support",
       "order": 4,
       "title": "预算影响分析 BIA",
       "intro": "从预算持有人（医保基金、医院或政府）视角，估计采纳新干预后 3–5 年内逐年及累计的财务影响。",
       "prepare": "明确预算持有人、目标人群、采纳率及逐年费用变化。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "卫生经济与管理评价"
     },
     {
       "id": "C5",
-      "group": "C",
+      "group": "support",
       "order": 5,
       "title": "卫生技术评估 HTA 流程",
       "intro": "为新技术（药品、器械、诊断、服务包）的准入、定价与报销决策整合临床与经济证据的规范化评估。",
       "prepare": "明确决策问题、比较技术、证据质量和适用场景。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "卫生经济与管理评价"
     },
     {
       "id": "C6",
-      "group": "C",
+      "group": "support",
       "order": 6,
       "title": "随机前沿分析 SFA 与数据包络分析 DEA（效率评价）",
       "intro": "评价医院、科室、疾控机构等决策单元（DMU）的技术效率及其影响因素。",
       "prepare": "统一决策单元、投入产出与效率假设；DEA与SFA误差处理不同。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "卫生经济与管理评价"
     },
     {
       "id": "C7",
-      "group": "C",
+      "group": "descriptive",
       "order": 7,
       "title": "医保支付标准测算（DRG/DIP 权重与点值测算思路）",
       "intro": "为 DRG/DIP 付费改革测算病组权重、费率与病种分值、点值，作为医保基金按病种结算的支付标准。",
       "prepare": "核对当地政策、分组规则、病例组合和基金预算口径。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "卫生经济与管理评价"
     },
     {
       "id": "C8",
-      "group": "C",
+      "group": "descriptive",
       "order": 8,
       "title": "卫生服务利用公平性（集中指数 CI 与不平等分解）",
       "intro": "量化卫生服务利用（或健康结局、费用）随经济状况分布的不平等程度及其来源。",
       "prepare": "明确经济排序、健康或利用指标，以及指标有界性与需要调整。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "卫生经济与管理评价"
     },
     {
       "id": "D1",
-      "group": "D",
+      "group": "causal",
       "order": 7,
       "title": "倾向得分匹配（PSM）",
       "intro": "观察性数据中处理（治疗/政策暴露）分配非随机、但可观测混杂充分时，用倾向得分匹配估计平均处理效应（ATT/ATE）。",
       "prepare": "先选估计目标和处理前协变量；检查共同支持与匹配后平衡。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "因果设计与估计"
     },
     {
       "id": "D2",
-      "group": "D",
+      "group": "causal",
       "order": 8,
       "title": "工具变量（IV）",
       "intro": "处理变量存在内生性（遗漏变量、反向因果、测量误差）且能找到有效工具变量 Z 时，用工具变量法估计因果效应（2SLS）。",
       "prepare": "对相关性、排除限制等有效性条件提供实质论证。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "因果设计与估计"
     },
     {
       "id": "D3",
-      "group": "D",
+      "group": "causal",
       "order": 5,
       "title": "断点回归（RDD）",
       "intro": "处理由连续运行变量是否越过临界值决定（如分数线录取、年龄阈值报销）时，估计断点附近的局部因果效应。",
       "prepare": "核对阈值规则、运行变量操纵、带宽和局部解释范围。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "因果设计与估计"
     },
     {
       "id": "D4",
-      "group": "D",
+      "group": "causal",
       "order": 6,
       "title": "合成控制法（SCM）",
       "intro": "政策只影响一个（或少数）处理单元、且有较长政策前后面板与多个未处理对照单元时，估计政策对处理单元的效应。",
       "prepare": "需要合适的供体库与充分政策前信息，检查拟合和安慰剂结果。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "因果设计与估计"
     },
     {
       "id": "D5",
-      "group": "D",
+      "group": "causal",
       "order": 2,
       "title": "事件研究法",
       "intro": "政策冲击时点明确、需考察效应随时间的动态变化（事前趋势与事后轨迹）时使用，适用于面板或重复截面数据。",
       "prepare": "明确处理时间、参照期和对照组；分批处理需考虑异质效应。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "因果设计与估计"
     },
     {
       "id": "D6",
-      "group": "D",
+      "group": "causal",
       "order": 1,
       "title": "双重差分（DID）",
       "intro": "政策在某时点只冲击处理组、且有政策前后数据时，比较两组变化之差估计处理效应。",
       "prepare": "需要处理/对照与前后观测，并论证平行趋势等识别条件。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "因果设计与估计"
     },
     {
       "id": "D7",
-      "group": "D",
+      "group": "causal",
       "order": 4,
       "title": "间断时间序列（ITS）",
       "intro": "单一单元（或合并总体）有政策前后多期连续时间序列时，检验政策的水平与斜率改变。",
       "prepare": "核对干预时点、自相关、季节性与同期政策变化。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "因果设计与估计"
     },
     {
       "id": "D8",
-      "group": "D",
+      "group": "causal",
       "order": 3,
       "title": "三重差分（DDD）",
       "intro": "在双重差分中加入第三个具有实质含义的维度，比较不同人群或情境的政策变化。",
       "prepare": "第三个比较维度需有理论依据，不能自动修复DID中的识别问题。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "因果设计与估计"
     },
     {
       "id": "E1",
-      "group": "E",
+      "group": "support",
       "order": 1,
       "title": "缺失数据与多重插补",
       "intro": "数据存在缺失值但需完整数据集进行回归/模型分析时，用多重插补替代删除法以减少偏倚与效能损失（如问卷调查、纵向随访、电子病历数据）。",
       "prepare": "先分析缺失机制，并使插补模型与分析目标一致。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "数据科学与质量控制"
     },
     {
       "id": "E2",
-      "group": "E",
+      "group": "support",
       "order": 2,
       "title": "样本量与统计效能计算",
       "intro": "研究设计阶段确定所需样本量、或评估既有样本的检验效能，保证结果可解释（RCT、两率比较、抽样调查、预测模型开发）。",
       "prepare": "先定主要结局、目标效应、变异、失访和设计效应。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "数据科学与质量控制"
     },
     {
       "id": "E3",
-      "group": "E",
+      "group": "predictive",
       "order": 3,
       "title": "LASSO/弹性网与正则化",
       "intro": "高维数据（变量数接近或超过样本量）下的变量筛选与惩罚回归，防止过拟合。",
       "prepare": "规范化与调参放在训练流程内，防止数据泄漏。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "数据科学与质量控制"
     },
     {
       "id": "E4",
-      "group": "E",
+      "group": "predictive",
       "order": 4,
       "title": "随机森林与 XGBoost",
       "intro": "非线性、含复杂交互或高维的分类/回归预测任务，作为灵活强基线模型（风险预测、结局分类）。",
       "prepare": "保留独立验证，报告校准与区分度，防止只追求训练精度。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "数据科学与质量控制"
     },
     {
       "id": "E5",
-      "group": "E",
+      "group": "descriptive",
       "order": 5,
       "title": "聚类分析（K-means/层次聚类）",
       "intro": "无监督地将个体或变量分成同质组，用于人群分型（患者亚组、健康素养/就医行为类型）、变量降维与问卷条目归类。",
       "prepare": "核对变量尺度、距离和类数，并评估聚类稳定性。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "数据科学与质量控制"
     },
     {
       "id": "E6",
-      "group": "E",
+      "group": "support",
       "order": 6,
       "title": "贝叶斯统计入门",
       "intro": "需要结合先验知识、小样本推断、或输出参数完整后验分布与不确定性区间的分析（网状 meta 分析、卫生经济学评价、适应性设计、层次模型）。",
       "prepare": "说明先验依据，检查计算收敛、模型拟合和先验敏感性。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "数据科学与质量控制"
     },
     {
       "id": "F1",
-      "group": "F",
+      "group": "support",
       "order": 1,
       "title": "Andersen 卫生服务利用行为模型",
       "intro": "解释与预测个体卫生服务利用（是否就诊、就诊次数、慢病服务利用），为就医行为与卫生服务研究提供变量选择框架。",
       "prepare": "区分倾向、使能和需要因素，结合具体场景定义变量。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "理论与实施框架"
     },
     {
       "id": "F2",
-      "group": "F",
+      "group": "support",
       "order": 2,
       "title": "Grossman 健康需求模型",
       "intro": "把健康视为人力资本，分析健康投资的决定因素及健康与教育、收入、年龄的关系，用于健康不平等与老年健康研究。",
       "prepare": "区分健康存量、健康投资及消费需求，并提出可检验假设。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "理论与实施框架"
     },
     {
       "id": "F3",
-      "group": "F",
+      "group": "support",
       "order": 3,
       "title": "健康信念模型 HBM",
       "intro": "解释与干预个体预防性健康行为（疫苗接种、筛查、体检、遵医服药），为问卷维度设计与干预设计提供依据。",
       "prepare": "将易感性、严重性、收益、障碍等构念落实为测量。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "理论与实施框架"
     },
     {
       "id": "F4",
-      "group": "F",
+      "group": "support",
       "order": 4,
       "title": "计划行为理论 TPB",
       "intro": "解释由行为意向驱动的健康行为（锻炼、戒烟、手卫生、用药依从），用于问卷编制与行为干预研究。",
       "prepare": "区分态度、主观规范、感知行为控制与意向。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "理论与实施框架"
     },
     {
       "id": "F5",
-      "group": "F",
+      "group": "support",
       "order": 5,
       "title": "社会生态学模型",
       "intro": "识别个体、人际、社区/组织、政策多层影响因素，为多水平干预设计（慢病管理、控烟、体力活动促进）提供框架。",
       "prepare": "先明确个体、人际、组织、社区与政策层级之间的关系。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "理论与实施框架"
     },
     {
       "id": "F6",
-      "group": "F",
+      "group": "support",
       "order": 6,
       "title": "健康公平与正义理论（Rawls / Sen 可行能力）",
       "intro": "为健康公平测量与卫生政策评价提供规范基础，用于健康不平等测量、医保待遇公平性与政策伦理分析。",
       "prepare": "先说明公平判断标准，再选相应测量与政策比较。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "理论与实施框架"
     },
     {
       "id": "F7",
-      "group": "F",
+      "group": "support",
       "order": 7,
       "title": "健康社会决定因素框架（CSDH）",
       "intro": "分析结构性/中间决定因素如何沿社会经济梯度造成健康不平等，用于健康不平等机制与「将健康融入所有政策」研究。",
       "prepare": "区分结构性因素和中间机制，并说明可观测指标。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "理论与实施框架"
     },
     {
       "id": "F8",
-      "group": "F",
+      "group": "support",
       "order": 8,
       "title": "委托代理与供方诱导需求（SID）",
       "intro": "解释医患信息不对称下供方诱导过度需求，用于卫生服务利用、过度医疗与医保控费研究。",
       "prepare": "先界定委托方、代理方、信息差与激励机制。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "理论与实施框架"
     },
     {
       "id": "F9",
-      "group": "F",
+      "group": "support",
       "order": 9,
       "title": "市场失灵与政府干预（公共品 / 外部性 / 信息不对称）",
       "intro": "论证政府干预卫生领域的必要性与方式选择，用于卫生政策分析、医保制度设计与公共卫生筹资研究。",
       "prepare": "区分公共品、外部性和信息不对称，说明政策工具的作用路径。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "理论与实施框架"
     },
     {
       "id": "F10",
-      "group": "F",
+      "group": "support",
       "order": 10,
       "title": "制度变迁与路径依赖（医改分析）",
       "intro": "解释医改政策演进、制度为何难以变革及政策扩散规律，用于卫生体制改革与医保制度变迁研究。",
       "prepare": "梳理制度时点、行动者和既有安排，而非只描述时间线。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "理论与实施框架"
     },
     {
       "id": "G1",
-      "group": "G",
+      "group": "support",
       "order": 1,
       "title": "扎根理论（Grounded Theory）",
-      "intro": "从访谈/观察/文本材料中归纳建构理论（医患体验、政策执行过程、患者旅程）。",
-      "prepare": "结合理论抽样、持续比较和备忘录逐步形成概念与理论。",
-      "source": "skills/references/methods-54.md"
+      "intro": "某一社会过程如何发生，哪些概念及关系能解释它？",
+      "prepare": "随理论发展迭代抽样的访谈、观察或文件，持续比较记录和分析备忘录。",
+      "source": "skills/references/methods-54.md",
+      "role": "定性研究",
+      "example": "三级编码标签本身不等于扎根理论；不能先把现成理论硬套到全部资料后仍声称纯粹由资料生成。"
     },
     {
       "id": "G2",
-      "group": "G",
+      "group": "association",
       "order": 2,
       "title": "结构方程模型（SEM）",
       "intro": "多个潜变量（如健康素养、自我效能）与其测量条目、结构路径的联合检验。",
       "prepare": "先明确测量模型与结构模型；路径拟合不能单独证明因果。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "定性与结构分析"
     },
     {
       "id": "G3",
-      "group": "G",
+      "group": "association",
       "order": 3,
       "title": "多层 / 多重嵌套 SEM（Multilevel SEM）",
       "intro": "嵌套数据（患者—科室—医院、居民—社区）的潜变量与结构关系，区分组内与组间效应。",
       "prepare": "需要足够的组与组内信息，区分组内和组间关系。",
-      "source": "skills/references/methods-54.md"
+      "source": "skills/references/methods-54.md",
+      "role": "定性与结构分析"
     },
     {
       "id": "G4",
-      "group": "G",
+      "group": "support",
       "order": 4,
       "title": "fsQCA 模糊集定性比较分析",
-      "intro": "中小样本、多条路径达到同一结果（组态视角），如「基层能力建设成效」的条件组合：资源投入、人员配置、激励机制、信息化。",
-      "prepare": "明确案例选择、集合校准与真值表规则，检验稳健性。",
-      "source": "skills/references/methods-54.md"
+      "intro": "哪些条件组合与结果的必要性或充分性关系相一致？",
+      "prepare": "可比较案例、理论定义的条件与结果、用于校准隶属度的原始证据。",
+      "source": "skills/references/methods-54.md",
+      "role": "组态比较",
+      "example": "校准不是随意标准化；一致性和覆盖率不是回归系数或概率，组态充分性结果不自动识别干预因果。"
     },
     {
       "id": "A10",
       "title": "模拟与标准化病人 SP / USP",
-      "group": "A",
+      "group": "descriptive",
       "order": 6,
       "intro": "用训练过的扮演者在统一情境下测量服务过程，区分教学考核与未预先告知的质量研究。",
       "prepare": "先明确场景、剧本、评分依据、伦理安全、机构抽样、重复访问与识别记录。",
       "example": "例如：按机构比较基层规范处置率，再检查扮演一致性与识别风险。",
-      "source": "skills/standardized-patient-skill.md"
+      "source": "skills/standardized-patient-skill.md",
+      "role": "研究设计"
     },
     {
       "id": "F12",
       "title": "实施科学：从框架到研究设计",
-      "group": "F",
+      "group": "support",
       "order": 1,
       "intro": "区分服务干预与实施策略，把障碍、策略、实施结局、健康结局和持续使用连接到具体设计。",
       "prepare": "先明确服务证据、策略执行者、主要结局、层级、分母与时间窗；框架不能代替识别设计。",
       "example": "例如：评价培训与反馈策略是否提高机构采纳和目标人群触达，同时观察服务质量。",
-      "source": "skills/implementation-science-skill.md"
+      "source": "skills/implementation-science-skill.md",
+      "role": "理论与实施框架"
+    },
+    {
+      "id": "A11",
+      "title": "病例交叉设计（Case-crossover）",
+      "group": "causal",
+      "role": "研究设计",
+      "order": 100,
+      "intro": "短暂暴露是否触发急性事件？",
+      "prepare": "病例的精确事件时间、危险窗与参照窗暴露；可含天气、用药等时变因素。",
+      "example": "个体自身对照不能消除时变混杂；暴露趋势、持续暴露或事件后行为改变可能产生偏倚。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "A12",
+      "title": "自身对照病例系列（SCCS）",
+      "group": "causal",
+      "role": "研究设计",
+      "order": 101,
+      "intro": "暴露风险期内事件发生率是否高于同一个体其他观察期？",
+      "prepare": "发生过事件者的观察起止、各暴露风险期、事件日期、年龄及日历时间。",
+      "example": "事件影响后续暴露或结束随访时，标准SCCS可能偏倚；不能只删除事件后观察时间。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "A13",
+      "title": "队列内抽样：嵌套病例对照与病例队列",
+      "group": "association",
+      "role": "研究设计",
+      "order": 102,
+      "intro": "昂贵生物标志物或病历核验能否通过队列内抽样高效分析？",
+      "prepare": "明确的原始队列、发生时间、风险集或基线子队列抽样概率及测量资料。",
+      "example": "风险集抽样不能当普通病例对照；病例队列不能忽略子队列抽样权重。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "A14",
+      "title": "非劣效性与等效性试验",
+      "group": "causal",
+      "role": "研究设计",
+      "order": 103,
+      "intro": "新方案能否在预设临床可接受界值内保留疗效？",
+      "prepare": "随机分组、事先确定的界值、活性对照依据、依从性、失访及预定义结局。",
+      "example": "优势检验不显著不等于非劣效或等效；不能事后按结果挑选界值。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "A15",
+      "title": "阶梯楔形整群随机试验",
+      "group": "causal",
+      "role": "研究设计",
+      "order": 104,
+      "intro": "分批推行服务改革时，随机推广顺序能否识别干预效果？",
+      "prepare": "医院/社区×时期结局、随机切换顺序、周期、过渡期及患者重复测量标识。",
+      "example": "并非所有逐步推广都属于随机试验；干预与日历时间相关，忽略时间趋势会混淆效应。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "A16",
+      "title": "诊断准确性研究：敏感度、特异度与似然比",
+      "group": "descriptive",
+      "role": "诊断评价",
+      "order": 105,
+      "intro": "某项检查在目标临床人群中能否正确识别当前疾病？",
+      "prepare": "按预定流程取得的待评价检查和参考标准、阈值、抽样途径、盲法及未定结果。",
+      "example": "极端健康对照会造成谱偏倚；部分验证、差异参考标准、事后最佳阈值均可夸大表现。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B19",
+      "title": "广义估计方程（GEE）",
+      "group": "association",
+      "role": "统计分析",
+      "order": 106,
+      "intro": "重复或聚类资料中，平均人群结局与因素如何关联？",
+      "prepare": "个体/机构重复测量，结局分布、聚类编号、时间和可用协变量。",
+      "example": "GEE给出人群平均关联，不等于混合模型的个体条件效应；少量聚类或信息性失访需额外处理。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B20",
+      "title": "非线性关联：回归样条与广义可加模型（GAM）",
+      "group": "association",
+      "role": "统计分析",
+      "order": 107,
+      "intro": "剂量、年龄或环境暴露与结局是否呈非线性关系？",
+      "prepare": "足够覆盖连续变量范围的资料、潜在混杂及结局；关注边缘区间样本支持。",
+      "example": "不能根据局部起伏宣布生物学阈值；数据稀疏区域不宜外推或反复搜索最佳切点。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B21",
+      "title": "连续测量一致性：Bland–Altman分析",
+      "group": "descriptive",
+      "role": "统计分析",
+      "order": 108,
+      "intro": "两种测量方法的差异在临床上是否可以接受？",
+      "prepare": "同一对象、同一条件下的成对连续测量；重复测量需保留对象标识。",
+      "example": "相关很高不等于一致；标准单次测量公式不能直接用于一人多次记录。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B22",
+      "title": "项目反应理论与Rasch测量模型",
+      "group": "support",
+      "role": "测量学",
+      "order": 109,
+      "intro": "量表条目如何反映潜在构念，并在不同能力水平提供信息？",
+      "prepare": "逐人逐条的有序或二元作答、分组变量及量表设计。",
+      "example": "高Cronbach α不能证明IRT假设；不能仅凭总分相同认定跨群体测量等价。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B23",
+      "title": "年龄—时期—队列（APC）分析",
+      "group": "association",
+      "role": "统计分析",
+      "order": 110,
+      "intro": "疾病率变化与年龄、日历时期及出生队列结构有何关系？",
+      "prepare": "统一年龄/时期分组的事件数与人口或人时，长期登记或重复调查资料。",
+      "example": "年龄=时期−队列导致线性依赖；任意约束所得系数不能当作三个独立因果效应。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B24",
+      "title": "Joinpoint趋势与分段年变化率",
+      "group": "descriptive",
+      "role": "统计分析",
+      "order": 111,
+      "intro": "疾病率、死亡率或服务指标的长期变化是否出现转折？",
+      "prepare": "各年份同口径率、标准误或事件数/人口，必要时按年龄标化。",
+      "example": "从数据发现的转折年份不能直接认定政策生效；短序列和多次搜索易过拟合。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B25",
+      "title": "寿命表与Sullivan健康预期寿命",
+      "group": "descriptive",
+      "role": "统计分析",
+      "order": 112,
+      "intro": "在当前年龄别死亡和健康状态条件下，人群可期望多少健康生存年？",
+      "prepare": "年龄别死亡率/寿命表、年龄别健康状态患病率或健康损失权重。",
+      "example": "健康预期寿命不是个人寿命预测；横断面健康状态不能代表个体转移史。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B26",
+      "title": "纵向指标与生存结局联合模型",
+      "group": "association",
+      "role": "统计分析",
+      "order": 113,
+      "intro": "反复测量的生物标志物轨迹与事件风险如何相联系？",
+      "prepare": "个体纵向测量时点和数值、事件/删失时间、两部分协变量。",
+      "example": "把有测量误差的当前值直接当无误差时变协变量可能偏倚；联合建模也依赖结构假设。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B27",
+      "title": "复发事件分析",
+      "group": "association",
+      "role": "统计分析",
+      "order": 114,
+      "intro": "多次住院、急性加重或感染如何随时间反复发生？",
+      "prepare": "每人每次事件时间、风险间隔、事件顺序、终止事件及协变量。",
+      "example": "只分析首次事件丢失复发负担；直接把每次事件当独立个体会低估不确定性。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B28",
+      "title": "限制平均生存时间（RMST）",
+      "group": "descriptive",
+      "role": "统计分析",
+      "order": 115,
+      "intro": "在预先指定时间窗内，两组平均无事件生存时间相差多少？",
+      "prepare": "事件时间、删失标识、组别，确保选定截点有足够随访支持。",
+      "example": "不能事后选择使差异最大的截点；非比例风险下也不能忽略删失和混杂。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B29",
+      "title": "统计过程控制（SPC）",
+      "group": "descriptive",
+      "role": "卫生质量管理",
+      "order": 116,
+      "intro": "感染率、等待时间或差错指标是否偏离稳定过程？",
+      "prepare": "按时间连续记录的同口径过程指标、分母与业务注释。",
+      "example": "控制限不是临床容许限，也不是效应置信区间；出现变化信号不能独立证明干预因果。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "B30",
+      "title": "机构风险调整与绩效漏斗图",
+      "group": "association",
+      "role": "卫生质量管理",
+      "order": 117,
+      "intro": "考虑病例组合与样本量后，机构结局是否偏离共同基准？",
+      "prepare": "患者基线风险、机构标识、结局及样本量；避免使用干预后的风险变量。",
+      "example": "粗死亡率排名混入病例组合差异；漏斗图异常点不等于已经证明机构医疗质量差。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "C9",
+      "title": "两步移动搜索法（2SFCA）与空间可达性",
+      "group": "descriptive",
+      "role": "卫生资源配置",
+      "order": 118,
+      "intro": "居民在旅行成本约束下能够获得多少卫生服务供给？",
+      "prepare": "机构位置和容量、人口需求位置、路网旅行时间及服务区参数。",
+      "example": "空间可达不等于实际利用；单纯距离不能代表经济可负担性或服务质量。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "C10",
+      "title": "工作量指标法（WISN）卫生人力测算",
+      "group": "descriptive",
+      "role": "卫生资源配置",
+      "order": 119,
+      "intro": "在现有服务量与规范工时下，机构需要多少卫生人员？",
+      "prepare": "可用工作时间、各服务工作量、活动时间标准及支持/附加工作。",
+      "example": "历史服务量可能已受供给不足压低；测算结果不是没有条件的最优编制数。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "D17",
+      "title": "因果中介分析",
+      "group": "causal",
+      "role": "统计分析",
+      "order": 120,
+      "intro": "干预效果有多少通过某一中介过程传递？",
+      "prepare": "干预、先于结局的中介、结局，以及暴露—中介—结局各路径的混杂因素。",
+      "example": "普通回归系数乘积或SEM路径显著，不足以识别因果中介；暴露诱导的中介—结局混杂需专门处理。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "D18",
+      "title": "交互作用与效应修饰分析",
+      "group": "association",
+      "role": "统计分析",
+      "order": 121,
+      "intro": "某项暴露或干预的效应是否因另一条件而改变？",
+      "prepare": "暴露或干预、预设修饰因素、结局及与目标相匹配的混杂因素；各组合有足够样本。",
+      "example": "一组显著另一组不显著不等于交互；统计乘积项不自动代表生物学协同或因果机制。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "D19",
+      "title": "干扰与溢出效应的因果分析",
+      "group": "causal",
+      "role": "统计分析",
+      "order": 122,
+      "intro": "一人的干预能否改变同群体其他人的结局？",
+      "prepare": "个体/群体处理、分配机制、群组或网络关系、邻近暴露与结局。",
+      "example": "空间相关模型本身不能识别溢出因果；把群内外传播混在一起会改变估计目标。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "E9",
+      "title": "时间序列预测：ARIMA与指数平滑",
+      "group": "predictive",
+      "role": "统计分析",
+      "order": 123,
+      "intro": "未来一段时间门诊量、床位需求或疾病报告数可能是多少？",
+      "prepare": "等间隔时间序列、季节结构、缺口及预测时点已经可获得的外生信息。",
+      "example": "随机切分时间点会泄漏未来；把预测偏差直接归于某政策不是因果评价。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "E10",
+      "title": "地标分析（Landmarking）动态风险预测",
+      "group": "predictive",
+      "role": "临床预测",
+      "order": 124,
+      "intro": "患者已经随访到某时点后，利用当时信息能否更新后续风险？",
+      "prepare": "地标时仍处风险者、截至该时点已获得的标志物/病史及后续固定预测窗。",
+      "example": "不能使用地标之后的检测值；只纳入存活至地标者改变目标人群，不能与基线模型直接混比。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "G5",
+      "title": "半结构式深度访谈",
+      "group": "support",
+      "role": "定性研究",
+      "order": 125,
+      "intro": "患者、医务人员或管理者如何理解某一经验或过程？",
+      "prepare": "目的抽样参与者、灵活访谈提纲、录音/逐字稿、场景记录及反思备忘录。",
+      "example": "访谈是资料生成方式，不是自动完成分析；不要用引导式问题强迫受访者验证既定观点。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "G6",
+      "title": "焦点小组",
+      "group": "support",
+      "role": "定性研究",
+      "order": 126,
+      "intro": "群体互动如何呈现共同规范、分歧与服务体验？",
+      "prepare": "按研究目的组织的讨论组、主持提纲、录音、互动和非语言观察记录。",
+      "example": "不能当成同时做多个人的一对一访谈；群内意见数量不能外推总体比例。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "G7",
+      "title": "主题分析（含反思性主题分析）",
+      "group": "support",
+      "role": "定性研究",
+      "order": 127,
+      "intro": "跨个体资料中有哪些有意义的经验模式？",
+      "prepare": "访谈、文本或开放回答，以及研究者的编码与反思记录。",
+      "example": "反思性主题分析不能机械套用双人独立编码一致率；主题不是直接复制访谈题目。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "G8",
+      "title": "框架分析（Framework Method）",
+      "group": "support",
+      "role": "定性研究",
+      "order": 128,
+      "intro": "不同群体或案例对同一服务问题的经验有哪些共同点与差异？",
+      "prepare": "可比较的访谈/文本，案例标识、编码框架和案例×主题矩阵。",
+      "example": "矩阵不是把发言简化成频次表；预设框架不能排除新主题和反例。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "G9",
+      "title": "定性内容分析",
+      "group": "support",
+      "role": "定性研究",
+      "order": 129,
+      "intro": "政策、记录或访谈文本怎样表达某类意义与概念？",
+      "prepare": "明确语料范围、分析单位、上下文单位、编码规则及文本证据。",
+      "example": "词频高不等于重要性高；定向编码容易只寻找支持既有理论的文本。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "G10",
+      "title": "民族志与参与观察",
+      "group": "support",
+      "role": "定性研究",
+      "order": 130,
+      "intro": "医疗组织的日常实践、文化和权力关系如何实际运作？",
+      "prepare": "自然场景中的持续或聚焦观察、田野笔记、非正式访谈、文件和研究者反思。",
+      "example": "一次参观不能自动称民族志；观察到的行为受研究者位置和可进入场景影响。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "G11",
+      "title": "案例研究（单案例/多案例）",
+      "group": "support",
+      "role": "定性研究",
+      "order": 131,
+      "intro": "特定制度或服务在真实情境中如何运行，为什么出现不同过程？",
+      "prepare": "界定边界的案例、访谈、观察、文件和可用定量资料，保留证据链。",
+      "example": "不能把一个方便取得的案例直接推广为普遍因果规律；病例报告不等于组织案例研究。",
+      "source": "skills/references/clinical-methods.md"
+    },
+    {
+      "id": "A9",
+      "title": "复杂抽样与调查权重",
+      "group": "descriptive",
+      "role": "研究设计",
+      "order": 288,
+      "intro": "分层整群调查的总体估计；区分横断面与纵向权重。",
+      "prepare": "抽样层级、PSU、分层、权重版本、目标总体和方差估计。",
+      "example": "直接把全国调查当简单随机样本，或把调查权重与因果权重混用。",
+      "source": "guides/longitudinal-public-data-skill.html"
+    },
+    {
+      "id": "B11",
+      "title": "一致性评价：Kappa / ICC",
+      "group": "support",
+      "role": "测量与一致性",
+      "order": 289,
+      "intro": "名义、等级或连续评分的评审者一致性；与准确性分开。",
+      "prepare": "评分者结构、量表类型、Kappa/ICC定义、区间及类别分布。",
+      "example": "用相关性代替一致性，或将高一致性等同于高准确性。",
+      "source": "guides/medical-ai-evaluation-skill.html"
+    },
+    {
+      "id": "B12",
+      "title": "竞争风险与累积发生率",
+      "group": "association",
+      "role": "生存与事件分析",
+      "order": 290,
+      "intro": "死亡等事件阻止目标结局发生时，估计原因别风险或实际累积风险。",
+      "prepare": "事件定义、竞争事件、估计目标、时间点与绝对风险。",
+      "example": "把竞争死亡作为无信息删失，直接用1-KM解释实际发生风险。",
+      "source": "guides/longitudinal-public-data-skill.html"
+    },
+    {
+      "id": "D9",
+      "title": "目标试验模拟 TTE",
+      "group": "causal",
+      "role": "因果设计与估计",
+      "order": 291,
+      "intro": "把观察性数据分析对应到明确的假想试验协议。",
+      "prepare": "七要素协议、time zero、estimand、识别假设、诊断及TARGET。",
+      "example": "资格、治疗分配和随访起点错位，或用未来依从性定义基线治疗组。",
+      "source": "guides/target-trial-emulation-skill.html"
+    },
+    {
+      "id": "D10",
+      "title": "IPW与边际结构模型 MSM",
+      "group": "causal",
+      "role": "因果设计与估计",
+      "order": 292,
+      "intro": "基线或时间变化治疗的加权因果估计。",
+      "prepare": "概率模型、稳定化、截尾、平衡、有效样本量与删失机制。",
+      "example": "忽略极端权重、正值性或受既往治疗影响的时间变化混杂。",
+      "source": "guides/advanced-causal-inference-skill.html"
+    },
+    {
+      "id": "D11",
+      "title": "g-formula与双稳健估计",
+      "group": "causal",
+      "role": "因果设计与估计",
+      "order": 293,
+      "intro": "按指定干预标准化结局，或结合治疗和结局模型估计目标效应。",
+      "prepare": "目标人群、干预策略、模型设定、标准化流程和推断方法。",
+      "example": "把双稳健误解为对未测量混杂也稳健；不核对两模型的假设。",
+      "source": "guides/advanced-causal-inference-skill.html"
+    },
+    {
+      "id": "D12",
+      "title": "双重机器学习 DML",
+      "group": "causal",
+      "role": "因果设计与估计",
+      "order": 294,
+      "intro": "高维或非线性混杂下，利用正交得分与交叉拟合估计因果参数。",
+      "prepare": "得分/模型、估计目标、折分单位、学习器、调参与聚类推断。",
+      "example": "把高预测准确率视为因果识别，或在测试折调参导致信息泄漏。",
+      "source": "guides/advanced-causal-inference-skill.html"
+    },
+    {
+      "id": "D13",
+      "title": "合成双重差分 SDID",
+      "group": "causal",
+      "role": "因果设计与估计",
+      "order": 295,
+      "intro": "政策面板中同时构造单位权重与时间权重。",
+      "prepare": "供体池、处理日期、政策前拟合、权重、溢出及少簇推断。",
+      "example": "忽略供体受政策影响，或把交错处理直接套入同时处理的块状实现。",
+      "source": "guides/advanced-causal-inference-skill.html"
+    },
+    {
+      "id": "D14",
+      "title": "定量偏倚与敏感性分析",
+      "group": "causal",
+      "role": "因果设计与估计",
+      "order": 296,
+      "intro": "评估未测量混杂、误分类和选择机制对主要结论的影响。",
+      "prepare": "偏倚机制、参数来源、情景范围、效应变化及剩余局限。",
+      "example": "把敏感性摘要当作不存在偏倚的证据，或随意选择参数范围。",
+      "source": "guides/advanced-causal-inference-skill.html"
+    },
+    {
+      "id": "E7",
+      "title": "纵向轨迹与潜类别",
+      "group": "descriptive",
+      "role": "数据科学与质量控制",
+      "order": 297,
+      "intro": "识别重复测量数据中的不同变化模式。",
+      "prepare": "时间编码、模型/类数选择、类别大小、后验概率及失访处理。",
+      "example": "把统计类别当自然人群，忽略后验分类不确定性和类数稳定性。",
+      "source": "guides/longitudinal-public-data-skill.html"
+    },
+    {
+      "id": "E8",
+      "title": "预测验证、校准与净获益",
+      "group": "predictive",
+      "role": "数据科学与质量控制",
+      "order": 298,
+      "intro": "从内部/外部验证判断模型判别、风险准确性和决策价值。",
+      "prepare": "独立验证设计、校准截距/斜率、区间、阈值及净获益比较。",
+      "example": "仅凭训练集AUC或SHAP图宣称模型临床可用。",
+      "source": "guides/medical-ai-evaluation-skill.html"
+    },
+    {
+      "id": "F11",
+      "title": "实施科学：CFIR / RE-AIM",
+      "group": "support",
+      "role": "理论与实施框架",
+      "order": 299,
+      "intro": "解释干预为何难落地，并评价触达、实施与维持。",
+      "prepare": "框架版本、构念定义、分母、层级、时间窗与弱势群体触达。",
+      "example": "堆叠框架名称而没有构念测量，把实施结局与健康结局混为一谈。",
+      "source": "guides/implementation-equity-skill.html"
+    },
+    {
+      "id": "H1",
+      "title": "系统评价与证据分级",
+      "group": "support",
+      "role": "证据综合",
+      "order": 300,
+      "intro": "对明确研究问题系统检索、筛选、评价并综合证据。",
+      "prepare": "方案、检索式/日期、双人流程、排除原因、偏倚与确定性。",
+      "example": "只有检索和文章汇总，没有预设标准、偏倚评价或排除记录。",
+      "source": "guides/research-workflow-skill.html"
+    },
+    {
+      "id": "H2",
+      "title": "成对 Meta 分析",
+      "group": "support",
+      "role": "证据综合",
+      "order": 301,
+      "intro": "对可合并的同类比较与结局估计综合效应。",
+      "prepare": "效应方向、模型、τ²、区间、研究设计与异质性解释。",
+      "example": "混合不相容效应尺度，按I²阈值机械选择模型。",
+      "source": "guides/meta-analysis-skill.html"
+    },
+    {
+      "id": "H3",
+      "title": "网状 Meta 分析 NMA",
+      "group": "support",
+      "role": "证据综合",
+      "order": 302,
+      "intro": "在连通且可比的研究网络中比较三个及以上干预。",
+      "prepare": "节点、网络、多臂相关、直接间接证据、诊断与CINeMA。",
+      "example": "缺少传递性论证，仅凭排序宣布最佳干预。",
+      "source": "guides/network-meta-analysis-skill.html"
+    },
+    {
+      "id": "H4",
+      "title": "meta-meta / 伞状综述",
+      "group": "support",
+      "role": "证据综合",
+      "order": 303,
+      "intro": "以系统综述为单位绘制证据版图并解释结论差异。",
+      "prepare": "综述家族、研究重叠矩阵、CCA、方法质量与重叠处理。",
+      "example": "忽略原始研究重复，直接将多个Meta合并效应再次独立加权。",
+      "source": "guides/umbrella-review-skill.html"
+    },
+    {
+      "id": "H5",
+      "title": "范围综述 Scoping review",
+      "group": "support",
+      "role": "证据综合",
+      "order": 304,
+      "intro": "梳理概念、研究类型、测量方法和证据缺口。",
+      "prepare": "问题框架、检索范围、筛选、资料制图与PRISMA-ScR。",
+      "example": "把非系统的文献罗列称范围综述，或据研究数量断言干预有效。",
+      "source": "guides/research-workflow-skill.html"
+    },
+    {
+      "id": "I1",
+      "title": "蒙特卡洛方法学模拟",
+      "group": "support",
+      "role": "模拟与决策",
+      "order": 305,
+      "intro": "在已知真值下评估估计方法的偏倚、覆盖与效能。",
+      "prepare": "ADEMP、场景、种子、重复次数依据、性能及MC误差。",
+      "example": "不报告MCSE与失败率，或只选择对方法有利的数据生成机制。",
+      "source": "guides/monte-carlo-simulation-skill.html"
+    },
+    {
+      "id": "I2",
+      "title": "概率敏感性分析 PSA",
+      "group": "support",
+      "role": "模拟与决策",
+      "order": 306,
+      "intro": "传播模型参数不确定性，估计成本效果决策的不确定性。",
+      "prepare": "联合分布、参数依据、相关性、阈值、INMB与CEAC。",
+      "example": "破坏参数相关性，把成本效果概率当临床有效概率。",
+      "source": "guides/monte-carlo-simulation-skill.html"
+    },
+    {
+      "id": "I3",
+      "title": "个体微观模拟",
+      "group": "support",
+      "role": "模拟与决策",
+      "order": 307,
+      "intro": "模拟具有异质风险和历史依赖的个体路径。",
+      "prepare": "个体属性、事件风险、路径记忆、校准、验证与随机数。",
+      "example": "混淆个体随机变异与参数不确定性，忽略模拟噪声收敛。",
+      "source": "guides/microsimulation-studio.html"
+    },
+    {
+      "id": "I4",
+      "title": "离散事件模拟 DES",
+      "group": "support",
+      "role": "模拟与决策",
+      "order": 308,
+      "intro": "分析到达、排队、床位与转诊等资源受限系统。",
+      "prepare": "实体、事件、队列纪律、分布、容量、重复与验证。",
+      "example": "忽略到达率、容量、暖机期或重复运行，仅展示单次输出。",
+      "source": "guides/simulation-models-skill.html"
+    },
+    {
+      "id": "I5",
+      "title": "系统动力学 SD",
+      "group": "support",
+      "role": "模拟与决策",
+      "order": 309,
+      "intro": "刻画存量、流量、反馈与延迟驱动的系统变化。",
+      "prepare": "边界、存量流量方程、延迟、参数、校准与情景。",
+      "example": "仅画因果回路图便声称完成定量模拟，或忽视量纲一致。",
+      "source": "guides/simulation-models-skill.html"
+    },
+    {
+      "id": "I6",
+      "title": "多主体模型 ABM",
+      "group": "support",
+      "role": "模拟与决策",
+      "order": 310,
+      "intro": "通过异质主体互动和适应解释系统涌现。",
+      "prepare": "主体、环境、决策与互动、调度、参数来源及验证。",
+      "example": "把AI助手称为仿真主体，或用无依据行为规则预设政策效果。",
+      "source": "guides/simulation-models-skill.html"
+    },
+    {
+      "id": "J1",
+      "title": "三维政策框架与 PMC",
+      "group": "descriptive",
+      "role": "政策文本与AI评价",
+      "order": 311,
+      "intro": "按可复核codebook整理政策工具、对象、目标和内容覆盖。",
+      "prepare": "政策范围、单位、指标依据、编码规则、权重与原文定位。",
+      "example": "把文件得分直接解释为政策执行或健康改善。",
+      "source": "guides/policy-text-analysis-skill.html"
+    },
+    {
+      "id": "J2",
+      "title": "LDA / BERTopic 主题分析",
+      "group": "descriptive",
+      "role": "政策文本与AI评价",
+      "order": 312,
+      "intro": "探索政策语料中的主题及其变化。",
+      "prepare": "语料、预处理、词典/嵌入、参数、主题稳定性及代表文本。",
+      "example": "只看主题词命名，不回读原文或检验参数/主题数稳定性。",
+      "source": "guides/policy-text-analysis-skill.html"
+    },
+    {
+      "id": "J3",
+      "title": "LLM辅助编码与关系抽取",
+      "group": "descriptive",
+      "role": "政策文本与AI评价",
+      "order": 313,
+      "intro": "把政策或病历条款转成有证据定位的结构化变量。",
+      "prepare": "codebook、人工仲裁、模型/prompt版本、测试、错误与修订率。",
+      "example": "无人工金标准、无独立测试，用模型自报信心代替评价。",
+      "source": "guides/policy-text-analysis-skill.html"
+    },
+    {
+      "id": "J4",
+      "title": "医疗大模型配对评价",
+      "group": "association",
+      "role": "政策文本与AI评价",
+      "order": 314,
+      "intro": "比较模型与人工的准确性、安全性、时间和实际决策表现。",
+      "prepare": "病例与参考标准、盲评、配对/聚类、区间、失败及亚组。",
+      "example": "把同一病例多轮回答当独立样本，忽略拒答或严重错误。",
+      "source": "guides/medical-ai-evaluation-skill.html"
+    },
+    {
+      "id": "B13",
+      "title": "广义线性模型 GLM",
+      "group": "association",
+      "role": "统计模型与检验",
+      "order": 315,
+      "intro": "依据结局支持集与均值-方差关系选择分布和链接。",
+      "prepare": "分布、链接、支持集、方差、诊断、边际预测与区间。",
+      "example": "对含零费用直接用Gamma，或把链接尺度系数当原尺度差异。",
+      "source": "guides/econometric-modeling-skill.html"
+    },
+    {
+      "id": "B14",
+      "title": "费用两部模型",
+      "group": "association",
+      "role": "统计模型与检验",
+      "order": 316,
+      "intro": "分别估计发生费用概率与正费用均值，再合成人群费用。",
+      "prepare": "两部分样本/模型、合成预测、区间及因果假设。",
+      "example": "只报告正费用模型，忽略使用概率和整个估计流程的不确定性。",
+      "source": "guides/econometric-modeling-skill.html"
+    },
+    {
+      "id": "B15",
+      "title": "面板 FE / RE / CRE",
+      "group": "association",
+      "role": "统计模型与检验",
+      "order": 317,
+      "intro": "区分组内变化、组间差异及个体效应与协变量的关系。",
+      "prepare": "单位/时间效应、组内变异、假设、聚类层级与动态偏误。",
+      "example": "把FE当作全部内生性的解决方案，或仅凭Hausman选择模型。",
+      "source": "guides/econometric-modeling-skill.html"
+    },
+    {
+      "id": "B16",
+      "title": "分位数回归",
+      "group": "association",
+      "role": "统计模型与检验",
+      "order": 318,
+      "intro": "研究条件分布不同位置的费用或健康结局关联。",
+      "prepare": "条件/无条件目标、分位点、区间和模型支持。",
+      "example": "把条件分位数系数直接解释为同一群个体的因果效应。",
+      "source": "guides/econometric-modeling-skill.html"
+    },
+    {
+      "id": "B17",
+      "title": "零膨胀与 hurdle 计数模型",
+      "group": "association",
+      "role": "统计模型与检验",
+      "order": 319,
+      "intro": "依据零产生机制区分结构性零与计数过程。",
+      "prepare": "零机制、两部分模型、过度离散、拟合和边际效应。",
+      "example": "仅因零很多就选择零膨胀，不核对两过程机制与可识别性。",
+      "source": "guides/econometric-modeling-skill.html"
+    },
+    {
+      "id": "B18",
+      "title": "空间计量与溢出",
+      "group": "association",
+      "role": "统计模型与检验",
+      "order": 320,
+      "intro": "分析地区间依赖并在合适模型中解释直接/间接效应。",
+      "prepare": "空间权重、尺度、依赖结构、直接/间接效应与敏感性。",
+      "example": "把空间自相关直接当作政策溢出因果证据。",
+      "source": "guides/econometric-modeling-skill.html"
+    },
+    {
+      "id": "D15",
+      "title": "交错 DID / 分批处理",
+      "group": "causal",
+      "role": "因果设计与估计",
+      "order": 321,
+      "intro": "按首次政策批次估计ATT(g,t)并聚合动态与总体效应。",
+      "prepare": "处理批次、对照、预期、支持、聚合权重、置信带与聚类。",
+      "example": "异质效应下直接套传统TWFE，或把已处理单位当合格对照。",
+      "source": "guides/staggered-did-skill.html"
+    },
+    {
+      "id": "D16",
+      "title": "熵平衡与重叠权重",
+      "group": "causal",
+      "role": "因果设计与估计",
+      "order": 322,
+      "intro": "通过矩约束或强调重叠构建可比样本，明确新的目标总体。",
+      "prepare": "目标、约束/权重公式、重叠、有效样本量与推断。",
+      "example": "只看平衡不看权重集中，或把ATO结果仍称原总体ATE。",
+      "source": "guides/propensity-score-skill.html"
     }
   ]
 }

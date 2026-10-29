@@ -1,0 +1,31 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>医保政策时间线与公众图文 · 普贤</title><link rel="stylesheet" href="../../guide.css"></head><body><header><a class="back" href="../../index.html#methods">← 方法工作台</a><a href="../../database-skills.html">🌱 数据库</a><a href="../../guides/method-map.html">🧭 逻辑地图</a><a href="../../skills/references/policy-timeline-publishing.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">用同一条主线串起每个时期</a></li>
+<li><a href="#_3">先建立证据表，再生成图文</a></li>
+<li><a href="#_4">用机制解释成就</a></li>
+<li><a href="#_5">图表和图组</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">医保政策时间线与公众图文</h1>
+<p>用于把核验过的政策资料转为年鉴、公众号长文或静态图组。先读<a href="policy-and-grants.html">政策记录口径</a>；手机图文的通用排版与交付检查见<a href="../research-public-posts-skill.html">科研公众号图文</a>。本页只补制度史中容易混淆的组织方法。</p>
+<h2 id="_2">用同一条主线串起每个时期</h2>
+<p>每期保留四项：<strong>时期与日期范围 → 当时方针 → 关键制度变化 → 对保障或服务的影响</strong>。方针的官方原文、政策摘要和作者的机制解释分别标示。方针在一个规划期中途确立时标出年份，不把它倒填成整个时期的起始政策。</p>
+<p>以真实五年计划/规划划分时期；新中国成立后的恢复时期、规划间调整时期需要另列，不能从1949年起机械地每五年切段。面向公众可以合并相邻阶段，但写清包含哪些规划期和年月范围。精选关键阶段不称为完整逐年年鉴。</p>
+<p>医保制度建设与医疗服务、公共卫生、人口政策分轨记录；讨论它们的联系时给证据。例如，不能仅凭同年发生就把一项制度的建立归因于一场疫情。保障扩面、支付改革、药品采购、长期护理分别回答不同问题。</p>
+<h2 id="_3">先建立证据表，再生成图文</h2>
+<p>建议在现有政策表基础上增加 <code>period_id</code>、<code>track</code>、<code>claim</code>、<code>locator</code>、<code>verification_level</code>、<code>last_checked</code>、<code>effective_status</code>。一条公开来源可以支持多处叙述，使用稳定source ID去重；正文序号按首次出现自动生成，末尾集中列出，不手工维持两套编号。</p>
+<p>继承旧项目资料时保留原核验日期与范围。链接曾可访问、题名曾匹配、读过正文和核对过附件是不同证据等级。本轮没有复读就不能更新为“今日全文核验”。未施行法律、建设目标、试点计划在时间线上使用未来或进行中状态。</p>
+<h2 id="_4">用机制解释成就</h2>
+<p>把覆盖范围、风险共济、财政与缴费、医疗服务能力、购买机制和基金治理连起来；涉及效果大小时另外引用统计或评价研究。政策文件证明部署，不能单凭文件证明改革成功或因果效应。</p>
+<p>常用术语应明确区分：</p>
+<ul>
+<li>基本医保的制度覆盖与实际参保、服务可及、个人费用负担是不同指标。</li>
+<li>多层次医疗保障包含多种保障安排；不同人群的资格、支付范围和衔接规则需要分别说明。</li>
+<li>DRG按病组付费、DIP按病种分值付费用于医保与医疗机构结算，不能直接解释为个人报销比例或每名患者的统一治疗上限。</li>
+<li>长期护理保险属于保障制度，家庭病床属于服务形式；不能把服务指南等同于全国统一医保待遇。</li>
+</ul>
+<p>具体定义及现行规则仍以相应文件为准，不把本页当作待遇查询依据。</p>
+<h2 id="_5">图表和图组</h2>
+<p>功能热力图若表示制度覆盖某类功能，只编码“涉及/不涉及/有条件涉及”，不要伪造统计强度。试点地图区分城市试点与全省试点，明确批次、年度、地域单位；未覆盖地区不自动编码为零保障。</p>
+<p>一张图围绕一个问题，时间节点与机制说明分层。标题和正文用可确定输出的文字排版；品牌图作为可替换素材。颜色、字体、张数和画幅按当前任务设定，不把某次个人偏好固定为通用要求。</p>
+<p>交付保留数据/引用表、可编辑源文件、静态成品与配套文案。逐页检查实际导出尺寸和手机缩小视图；若写“800字”，说明是否含标题、标点和话题，并实际计数。公开模板不携带委托人的邮箱、原始聊天、本机绝对路径或私人品牌素材。</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main><script defer src="https://puxian-visit-statistics.greycarp257.chatgpt.site/tracker.js?v=20261024platform1"></script><script type="module" src="../../skill-usage.mjs?v=20261024platform1"></script></body></html>

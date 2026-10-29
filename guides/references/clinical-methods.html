@@ -1,0 +1,448 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>常用医学、卫生管理与定性方法补充 · 普贤</title><link rel="stylesheet" href="../../guide.css"></head><body><header><a class="back" href="../../index.html#methods">← 方法工作台</a><a href="../../database-skills.html">🌱 数据库</a><a href="../../guides/method-map.html">🧭 逻辑地图</a><a href="../../skills/references/clinical-methods.md" download>下载 Markdown</a></header><main><aside aria-label="章节目录"><div class="toc">
+<ul>
+<li><a href="#_2">四条分析主线的归类原则</a></li>
+<li><a href="#_3">当前覆盖缺口与新增依据</a></li>
+<li><a href="#_4">方法条目</a><ul>
+<li><a href="#a11-case-crossover">A11 病例交叉设计（Case-crossover）</a></li>
+<li><a href="#a12-sccs">A12 自身对照病例系列（SCCS）</a></li>
+<li><a href="#a13">A13 队列内抽样：嵌套病例对照与病例队列</a></li>
+<li><a href="#a14">A14 非劣效性与等效性试验</a></li>
+<li><a href="#a15">A15 阶梯楔形整群随机试验</a></li>
+<li><a href="#a16">A16 诊断准确性研究：敏感度、特异度与似然比</a></li>
+<li><a href="#b19-gee">B19 广义估计方程（GEE）</a></li>
+<li><a href="#b20-gam">B20 非线性关联：回归样条与广义可加模型（GAM）</a></li>
+<li><a href="#b21-blandaltman">B21 连续测量一致性：Bland–Altman分析</a></li>
+<li><a href="#b22-rasch">B22 项目反应理论与Rasch测量模型</a></li>
+<li><a href="#b23-apc">B23 年龄—时期—队列（APC）分析</a></li>
+<li><a href="#b24-joinpoint">B24 Joinpoint趋势与分段年变化率</a></li>
+<li><a href="#b25-sullivan">B25 寿命表与Sullivan健康预期寿命</a></li>
+<li><a href="#b26">B26 纵向指标与生存结局联合模型</a></li>
+<li><a href="#b27">B27 复发事件分析</a></li>
+<li><a href="#b28-rmst">B28 限制平均生存时间（RMST）</a></li>
+<li><a href="#b29-spc">B29 统计过程控制（SPC）</a></li>
+<li><a href="#b30">B30 机构风险调整与绩效漏斗图</a></li>
+<li><a href="#c9-2sfca">C9 两步移动搜索法（2SFCA）与空间可达性</a></li>
+<li><a href="#c10-wisn">C10 工作量指标法（WISN）卫生人力测算</a></li>
+<li><a href="#d17">D17 因果中介分析</a></li>
+<li><a href="#d18">D18 交互作用与效应修饰分析</a></li>
+<li><a href="#d19">D19 干扰与溢出效应的因果分析</a></li>
+<li><a href="#e9-arima">E9 时间序列预测：ARIMA与指数平滑</a></li>
+<li><a href="#e10-landmarking">E10 地标分析（Landmarking）动态风险预测</a></li>
+<li><a href="#g5">G5 半结构式深度访谈</a></li>
+<li><a href="#g6">G6 焦点小组</a></li>
+<li><a href="#g7">G7 主题分析（含反思性主题分析）</a></li>
+<li><a href="#g8-framework-method">G8 框架分析（Framework Method）</a></li>
+<li><a href="#g9">G9 定性内容分析</a></li>
+<li><a href="#g10">G10 民族志与参与观察</a></li>
+<li><a href="#g11">G11 案例研究（单案例/多案例）</a></li>
+</ul>
+</li>
+<li><a href="#_5">已有三项的更新说明</a><ul>
+<li><a href="#a8-delphi">A8 德尔菲法（Delphi）</a></li>
+<li><a href="#g1-grounded-theory">G1 扎根理论（Grounded Theory）</a></li>
+<li><a href="#g4-fsqca">G4 fsQCA 模糊集定性比较分析</a></li>
+</ul>
+</li>
+<li><a href="#_6">定性、共识与组态：如何在卫管研究中衔接</a></li>
+</ul>
+</div>
+</aside><article><h1 id="_1">常用医学、卫生管理与定性方法补充</h1>
+<p>本补充提供32个此前未作为独立操作入口的方法，并完善已有的德尔菲、扎根理论和fsQCA说明。25项为医学/卫生管理设计与分析，7项为定性研究设计、资料生成或分析；没有将这些不同层次一概称作统计模型。基于原91条方法表去重，不新增已有的DCE、ICC、KM/Cox、竞争风险、缺失数据或一般Meta分析。</p>
+<h2 id="_2">四条分析主线的归类原则</h2>
+<table>
+<thead>
+<tr>
+<th>主线</th>
+<th>先问什么</th>
+<th>典型交付</th>
+<th>解释边界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>描述性分析</td>
+<td>发生多少、如何分布、怎样变化、测量多一致？</td>
+<td>率、构成、分布、趋势、绝对负担与区间</td>
+<td>分布差异本身不提供因果效应</td>
+</tr>
+<tr>
+<td>相关性分析</td>
+<td>哪些变量共同变化，调整后关系如何？</td>
+<td>明确尺度的关联、曲线或条件比较</td>
+<td>回归调整不自动解决选择偏倚与未测混杂</td>
+</tr>
+<tr>
+<td>因果推断</td>
+<td>实施某策略相对另一策略会怎样？</td>
+<td>预设目标人群/策略/时间的效应及敏感性</td>
+<td>由设计和识别假设决定，不由算法名字决定</td>
+</tr>
+<tr>
+<td>预测分析</td>
+<td>在信息截止时点，能预测新个体或未来什么？</td>
+<td>样本外误差、校准、区分、净获益与预测区间</td>
+<td>预测变量重要不等于改变它有用</td>
+</tr>
+</tbody>
+</table>
+<p><code>primary_analysis</code>表示默认入口，<code>analysis_tags</code>表示确有意义的其他用途。以问题和估计目标为准，不把同一回归程序永久锁在某一类。定性、共识、组态比较、理论、证据综合、经济评价等使用“跨类支撑”及角色标签，不能为了排版强行标成因果推断。</p>
+<h2 id="_3">当前覆盖缺口与新增依据</h2>
+<p>已有表偏重计量政策评价和通用回归；本轮补足诊断试验、个体内药物安全设计、队列内抽样、非劣效与阶梯楔形试验、纵向与复发事件、测量学、人群健康期望、质量监测、空间可达与人力规划、动态预测，以及常用定性资料生成和分析。</p>
+<p>同方法的近缘形式合并为一个入口：回归样条/GAM、IRT/Rasch、嵌套病例对照/病例队列、ARIMA/指数平滑、非劣效/等效。边界分明的方法保留不同入口：病例交叉与SCCS比较的时间框架不同；联合模型与地标预测对纵向过程的建模不同；SPC与机构漏斗图分别处理时间内监测和机构间比较。</p>
+<p>本轮来源核对到2026-10-29。题录、摘要、官网介绍和全文分别记录；检索内容可读但正文被403/人机验证阻止的来源标为“部分核验，正文待核”。没有把链接可见或来源存在写成全部方法已完整复核，也没有把新条目写成已执行的分析代码。</p>
+<h2 id="_4">方法条目</h2>
+<p><span id="method-a11"></span></p>
+<h3 id="a11-case-crossover">A11 病例交叉设计（Case-crossover）</h3>
+<p>默认入口：因果推断；角色：研究设计；层次：研究设计。</p>
+<p><strong>研究问题</strong>：短暂暴露是否触发急性事件？</p>
+<p><strong>所需数据</strong>：病例的精确事件时间、危险窗与参照窗暴露；可含天气、用药等时变因素。</p>
+<p>比较同一个体事件发生前的暴露与参照时段暴露，适合短暂暴露与急性结局；时间分层和参照窗选择是识别的一部分。不同于按暴露风险期累计事件的SCCS。</p>
+<p><strong>报告要点</strong>：报告参照窗选取、时间分层、危险窗、滞后及条件效应量和区间。</p>
+<p><strong>常见误用</strong>：个体自身对照不能消除时变混杂；暴露趋势、持续暴露或事件后行为改变可能产生偏倚。</p>
+<p><strong>来源</strong>：<a href="https://bmjmedicine.bmj.com/content/bmjmed/1/1/e000214.full.pdf">Case-crossover and self-controlled case series: comparison of design features</a>（部分核验，正文待核；读取到期刊检索结果中的设计比较表；直接访问返回403，未核全文。）</p>
+<p><span id="method-a12"></span></p>
+<h3 id="a12-sccs">A12 自身对照病例系列（SCCS）</h3>
+<p>默认入口：因果推断；角色：研究设计；层次：研究设计。</p>
+<p><strong>研究问题</strong>：暴露风险期内事件发生率是否高于同一个体其他观察期？</p>
+<p><strong>所需数据</strong>：发生过事件者的观察起止、各暴露风险期、事件日期、年龄及日历时间。</p>
+<p>以个体内不同时段作为比较，消除时间不变的个体差异。时间变化的混杂和事件依赖的暴露/观察仍需处理；适用于疫苗或短期药物安全研究等。</p>
+<p><strong>报告要点</strong>：报告观察期、风险期与洗脱期、年龄/季节调整、相对发生率及假设诊断。</p>
+<p><strong>常见误用</strong>：事件影响后续暴露或结束随访时，标准SCCS可能偏倚；不能只删除事件后观察时间。</p>
+<p><strong>来源</strong>：<a href="https://www.bmj.com/content/354/bmj.i4515.full.txt">Self controlled case series methods: an alternative to standard epidemiological study designs</a>（部分核验，正文待核；读取期刊检索结果中的摘要与假设片段；直接访问返回403。）</p>
+<p><span id="method-a13"></span></p>
+<h3 id="a13">A13 队列内抽样：嵌套病例对照与病例队列</h3>
+<p>默认入口：相关性分析；角色：研究设计；层次：研究设计。</p>
+<p><strong>研究问题</strong>：昂贵生物标志物或病历核验能否通过队列内抽样高效分析？</p>
+<p><strong>所需数据</strong>：明确的原始队列、发生时间、风险集或基线子队列抽样概率及测量资料。</p>
+<p>嵌套病例对照通常在事件时点从风险集抽取对照；病例队列先抽取基线子队列再结合全部病例。二者共享节约测量成本的目的，但对应的似然与权重不能互换。</p>
+<p><strong>报告要点</strong>：报告抽样框、对照抽取时点、能否重复抽样、权重及方差估计。</p>
+<p><strong>常见误用</strong>：风险集抽样不能当普通病例对照；病例队列不能忽略子队列抽样权重。</p>
+<p><strong>来源</strong>：<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4374014/">A New Comparison of Nested Case-Control and Case-Cohort Designs and Methods</a>（部分核验，正文待核；读取到原始研究检索摘要；直接页面返回人机验证，未声称读过全文。）</p>
+<p><span id="method-a14"></span></p>
+<h3 id="a14">A14 非劣效性与等效性试验</h3>
+<p>默认入口：因果推断；角色：研究设计；层次：研究设计。</p>
+<p><strong>研究问题</strong>：新方案能否在预设临床可接受界值内保留疗效？</p>
+<p><strong>所需数据</strong>：随机分组、事先确定的界值、活性对照依据、依从性、失访及预定义结局。</p>
+<p>非劣效关注效应是否跨越单侧可接受损失界值；等效要求整个区间位于预设双侧范围。依赖对照有效性、研究可辨别能力和适当估计目标。</p>
+<p><strong>报告要点</strong>：报告界值的临床和历史证据、效应方向、置信区间、ITT/符合方案分析及一致性。</p>
+<p><strong>常见误用</strong>：优势检验不显著不等于非劣效或等效；不能事后按结果挑选界值。</p>
+<p><strong>来源</strong>：<a href="https://www.fda.gov/media/78504/download">Non-Inferiority Clinical Trials to Establish Effectiveness</a>（已核对页面；FDA 2016正式指南PDF可读取；核对标题、引言和方法范围，未逐页审查。）</p>
+<p><span id="method-a15"></span></p>
+<h3 id="a15">A15 阶梯楔形整群随机试验</h3>
+<p>默认入口：因果推断；角色：研究设计；层次：研究设计。</p>
+<p><strong>研究问题</strong>：分批推行服务改革时，随机推广顺序能否识别干预效果？</p>
+<p><strong>所需数据</strong>：医院/社区×时期结局、随机切换顺序、周期、过渡期及患者重复测量标识。</p>
+<p>按随机顺序使不同整群从对照转入干预，兼顾推广与评价；必须建模时间、聚类和可能的效应随暴露时长变化。它是独立研究设计，不是普通前后对照。</p>
+<p><strong>报告要点</strong>：报告设计图、随机化、时间调整、组内相关、各时期样本量和干预持续时间。</p>
+<p><strong>常见误用</strong>：并非所有逐步推广都属于随机试验；干预与日历时间相关，忽略时间趋势会混淆效应。</p>
+<p><strong>来源</strong>：<a href="https://www.bmj.com/content/363/bmj.k1614">Reporting of stepped wedge cluster randomised trials: extension of the CONSORT 2010 statement</a>（部分核验，正文待核；检索结果核对原始指南题名、年份及报告对象；直接访问403。）</p>
+<p><span id="method-a16"></span></p>
+<h3 id="a16">A16 诊断准确性研究：敏感度、特异度与似然比</h3>
+<p>默认入口：描述性分析；角色：诊断评价；层次：研究设计。</p>
+<p><strong>研究问题</strong>：某项检查在目标临床人群中能否正确识别当前疾病？</p>
+<p><strong>所需数据</strong>：按预定流程取得的待评价检查和参考标准、阈值、抽样途径、盲法及未定结果。</p>
+<p>准确性取决于病例谱、参考标准和阈值。先设计检查与验证流程，再解释性能，不能只报AUC。本条讨论检查准确性的估计；开发或验证多变量诊断预测模型时，进入预测模型路线，其目标也可以是当前未知的疾病状态。</p>
+<p><strong>报告要点</strong>：报告流程图、2×2表、敏感度/特异度与区间、似然比、预测值和目标患病率。</p>
+<p><strong>常见误用</strong>：极端健康对照会造成谱偏倚；部分验证、差异参考标准、事后最佳阈值均可夸大表现。</p>
+<p><strong>来源</strong>：<a href="https://www.bmj.com/content/351/bmj.h5527">STARD 2015: an updated list of essential items for reporting diagnostic accuracy studies</a>（部分核验，正文待核；读取期刊检索摘要及STARD解释文件片段；原页面直接访问403。）</p>
+<p><span id="method-b19"></span></p>
+<h3 id="b19-gee">B19 广义估计方程（GEE）</h3>
+<p>默认入口：相关性分析；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：重复或聚类资料中，平均人群结局与因素如何关联？</p>
+<p><strong>所需数据</strong>：个体/机构重复测量，结局分布、聚类编号、时间和可用协变量。</p>
+<p>以均值模型和工作相关结构处理组内相关，关注边际人群平均参数。工作相关结构误设下的稳健推断仍依赖均值模型、独立簇及足够聚类等条件。</p>
+<p><strong>报告要点</strong>：报告均值模型、链接函数、工作相关结构、聚类数、稳健标准误及效应尺度。</p>
+<p><strong>常见误用</strong>：GEE给出人群平均关联，不等于混合模型的个体条件效应；少量聚类或信息性失访需额外处理。</p>
+<p><strong>来源</strong>：<a href="https://www.stata.com/features/overview/generalized-estimating-equations/">Generalized estimating equations</a>（已核对页面；本轮读取官方方法介绍或原始方法页面；不代表逐页核验完整教材。）</p>
+<p><span id="method-b20"></span></p>
+<h3 id="b20-gam">B20 非线性关联：回归样条与广义可加模型（GAM）</h3>
+<p>默认入口：相关性分析；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：剂量、年龄或环境暴露与结局是否呈非线性关系？</p>
+<p><strong>所需数据</strong>：足够覆盖连续变量范围的资料、潜在混杂及结局；关注边缘区间样本支持。</p>
+<p>用分段平滑基函数或受惩罚平滑项表达非线性，在原始响应尺度展示曲线。连续变量不必任意二分；相关曲线和因果剂量反应仍需不同识别依据。</p>
+<p><strong>报告要点</strong>：报告基函数/结点或平滑惩罚、有效自由度、调整集、曲线与区间、敏感性。</p>
+<p><strong>常见误用</strong>：不能根据局部起伏宣布生物学阈值；数据稀疏区域不宜外推或反复搜索最佳切点。</p>
+<p><strong>来源</strong>：<a href="https://www.stat.ethz.ch/R-manual/R-devel/library/mgcv/html/gam.html">Generalized additive models with integrated smoothness estimation</a>（已核对页面；读取R mgcv官方帮助正文，含模型定义、参数与平滑项说明。）</p>
+<p><span id="method-b21"></span></p>
+<h3 id="b21-blandaltman">B21 连续测量一致性：Bland–Altman分析</h3>
+<p>默认入口：描述性分析；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：两种测量方法的差异在临床上是否可以接受？</p>
+<p><strong>所需数据</strong>：同一对象、同一条件下的成对连续测量；重复测量需保留对象标识。</p>
+<p>在差值对均值图中检查系统偏倚、异方差和范围依赖，再估计一致性限界。该方法回答数值可替代性，与ICC/Kappa的侧重点不同。</p>
+<p><strong>报告要点</strong>：报告平均差、一致性限界及其区间、差值图、预设临床可接受范围。</p>
+<p><strong>常见误用</strong>：相关很高不等于一致；标准单次测量公式不能直接用于一人多次记录。</p>
+<p><strong>来源</strong>：<a href="https://www-users.york.ac.uk/~mb55/meas/ba.htm">Statistical methods for assessing agreement between two methods of clinical measurement</a>（已核对页面；读取作者大学主页转载正文及出处；该版本注明包含小数值勘误。）</p>
+<p><span id="method-b22"></span></p>
+<h3 id="b22-rasch">B22 项目反应理论与Rasch测量模型</h3>
+<p>默认入口：跨类支撑；角色：测量学；层次：测量模型。</p>
+<p><strong>研究问题</strong>：量表条目如何反映潜在构念，并在不同能力水平提供信息？</p>
+<p><strong>所需数据</strong>：逐人逐条的有序或二元作答、分组变量及量表设计。</p>
+<p>建模潜在特质与作答概率之间的关系，考察条目难度、区分度和测量信息；Rasch是有明确约束的模型。可用于量表修订与测量公平性检查，不是因果识别工具。</p>
+<p><strong>报告要点</strong>：报告模型形式、维度性、局部独立、条目特征/信息、拟合与差异项目功能。</p>
+<p><strong>常见误用</strong>：高Cronbach α不能证明IRT假设；不能仅凭总分相同认定跨群体测量等价。</p>
+<p><strong>来源</strong>：<a href="https://www.stata-press.com/manuals/item-response-theory-reference-manual/">Item Response Theory Reference Manual</a>（官方目录入口已核验；核对官方手册入口与模型目录；不表示所有章节或软件命令已执行。）</p>
+<p><span id="method-b23"></span></p>
+<h3 id="b23-apc">B23 年龄—时期—队列（APC）分析</h3>
+<p>默认入口：相关性分析；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：疾病率变化与年龄、日历时期及出生队列结构有何关系？</p>
+<p><strong>所需数据</strong>：统一年龄/时期分组的事件数与人口或人时，长期登记或重复调查资料。</p>
+<p>将年龄、时期和队列模式放在同一率模型中，优先报告可识别的函数及敏感性。它帮助整理长期变化结构，不自动解释政策或代际因果。</p>
+<p><strong>报告要点</strong>：报告率矩阵、年龄时期宽度、可估计函数、约束/参数化、净漂移和局部漂移。</p>
+<p><strong>常见误用</strong>：年龄=时期−队列导致线性依赖；任意约束所得系数不能当作三个独立因果效应。</p>
+<p><strong>来源</strong>：<a href="https://dceg.cancer.gov/tools/analysis/apc">Age Period Cohort Analysis Web Tool</a>（已核对页面；本轮读取官方方法介绍或原始方法页面；不代表逐页核验完整教材。）</p>
+<p><span id="method-b24"></span></p>
+<h3 id="b24-joinpoint">B24 Joinpoint趋势与分段年变化率</h3>
+<p>默认入口：描述性分析；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：疾病率、死亡率或服务指标的长期变化是否出现转折？</p>
+<p><strong>所需数据</strong>：各年份同口径率、标准误或事件数/人口，必要时按年龄标化。</p>
+<p>用相连的分段趋势描述变化，识别可支持的转折并汇总分期变化率。与ITS不同，它本身不提供预先确定政策时点的反事实比较。</p>
+<p><strong>报告要点</strong>：报告候选转折上限、选择规则、APC/AAPC、区间和数据定义变化。</p>
+<p><strong>常见误用</strong>：从数据发现的转折年份不能直接认定政策生效；短序列和多次搜索易过拟合。</p>
+<p><strong>来源</strong>：<a href="https://surveillance.cancer.gov/joinpoint/">Joinpoint Regression Program</a>（已核对页面；本轮读取官方方法介绍或原始方法页面；不代表逐页核验完整教材。）</p>
+<p><span id="method-b25"></span></p>
+<h3 id="b25-sullivan">B25 寿命表与Sullivan健康预期寿命</h3>
+<p>默认入口：描述性分析；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：在当前年龄别死亡和健康状态条件下，人群可期望多少健康生存年？</p>
+<p><strong>所需数据</strong>：年龄别死亡率/寿命表、年龄别健康状态患病率或健康损失权重。</p>
+<p>结合期间寿命表人年与年龄别健康状态比例，计算剩余健康年。Sullivan法总结死亡与非致死健康负担，与QALY个体效用评价及多状态转移模型的目标不同。</p>
+<p><strong>报告要点</strong>：报告起始年龄、末端年龄组、健康定义、年龄合并口径及不确定性。</p>
+<p><strong>常见误用</strong>：健康预期寿命不是个人寿命预测；横断面健康状态不能代表个体转移史。</p>
+<p><strong>来源</strong>：<a href="https://www.who.int/data/gho/data/indicators/indicator-details/GHO/gho-ghe-hale-healthy-life-expectancy">Healthy life expectancy (HALE): indicator metadata</a>（已核对页面；核对WHO指标定义和Method of estimation；不复制其数据值。）</p>
+<p><span id="method-b26"></span></p>
+<h3 id="b26">B26 纵向指标与生存结局联合模型</h3>
+<p>默认入口：相关性分析；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：反复测量的生物标志物轨迹与事件风险如何相联系？</p>
+<p><strong>所需数据</strong>：个体纵向测量时点和数值、事件/删失时间、两部分协变量。</p>
+<p>同时建模纵向轨迹和事件时间，以共享参数等关联两部分；用于处理相关终止观察或预测更新时，应说明该关联结构与临床过程是否合理。</p>
+<p><strong>报告要点</strong>：报告纵向与生存子模型、关联结构、缺失/删失假设及拟合诊断。</p>
+<p><strong>常见误用</strong>：把有测量误差的当前值直接当无误差时变协变量可能偏倚；联合建模也依赖结构假设。</p>
+<p><strong>来源</strong>：<a href="https://mc-stan.org/rstanarm/articles/jm.html">Estimating Joint Models for Longitudinal and Time-to-Event Data with rstanarm</a>（已核对页面；读取维护者官方vignette的方法介绍；示例代码未在本轮执行。）</p>
+<p><span id="method-b27"></span></p>
+<h3 id="b27">B27 复发事件分析</h3>
+<p>默认入口：相关性分析；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：多次住院、急性加重或感染如何随时间反复发生？</p>
+<p><strong>所需数据</strong>：每人每次事件时间、风险间隔、事件顺序、终止事件及协变量。</p>
+<p>针对同一人可多次发生的结局，按研究问题选择计数过程、条件事件序列或脆弱性模型。区分复发强度、每次事件风险和死亡造成的终止观察。</p>
+<p><strong>报告要点</strong>：报告总时间/间隔时间、风险集定义、事件依赖、聚类处理、死亡处理及效应量。</p>
+<p><strong>常见误用</strong>：只分析首次事件丢失复发负担；直接把每次事件当独立个体会低估不确定性。</p>
+<p><strong>来源</strong>：<a href="https://www.stata.com/features/survival-analysis/">Survival analysis: Stata features</a>（已核对页面；官方功能说明确认可处理复发事件；各模型假设仍须查对应手册，不宣称本轮完整审查AG/PWP推导。）</p>
+<p><span id="method-b28"></span></p>
+<h3 id="b28-rmst">B28 限制平均生存时间（RMST）</h3>
+<p>默认入口：描述性分析；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：在预先指定时间窗内，两组平均无事件生存时间相差多少？</p>
+<p><strong>所需数据</strong>：事件时间、删失标识、组别，确保选定截点有足够随访支持。</p>
+<p>以生存曲线在指定截点前的面积表示平均生存时间，可提供时间单位的绝对差异。因果解释取决于随机化或其他识别条件，而非RMST指标本身。</p>
+<p><strong>报告要点</strong>：报告截点及理由、各组RMST、差或比与区间、调整方法及随访支持。</p>
+<p><strong>常见误用</strong>：不能事后选择使差异最大的截点；非比例风险下也不能忽略删失和混杂。</p>
+<p><strong>来源</strong>：<a href="https://pubmed.ncbi.nlm.nih.gov/32072769/">Restricted mean survival time as a summary measure of time-to-event outcome</a>（题录与摘要已核验，全文未读；核对PubMed题录和摘要；全文未读取。）</p>
+<p><span id="method-b29"></span></p>
+<h3 id="b29-spc">B29 统计过程控制（SPC）</h3>
+<p>默认入口：描述性分析；角色：卫生质量管理；层次：分析方法。</p>
+<p><strong>研究问题</strong>：感染率、等待时间或差错指标是否偏离稳定过程？</p>
+<p><strong>所需数据</strong>：按时间连续记录的同口径过程指标、分母与业务注释。</p>
+<p>根据指标类型绘制过程控制图，区分常见与特殊原因变异。适用于持续质量监测，变化解释仍需要现场过程信息和必要的对照设计。</p>
+<p><strong>报告要点</strong>：报告控制图类型、基线段、中心线/控制限、异常规则及口径变更。</p>
+<p><strong>常见误用</strong>：控制限不是临床容许限，也不是效应置信区间；出现变化信号不能独立证明干预因果。</p>
+<p><strong>来源</strong>：<a href="https://www.england.nhs.uk/statistical-process-control-tool/">Statistical process control tool</a>（部分核验，正文待核；NHS检索结果提供完整工具说明；直接页面需JavaScript验证。）</p>
+<p><span id="method-b30"></span></p>
+<h3 id="b30">B30 机构风险调整与绩效漏斗图</h3>
+<p>默认入口：相关性分析；角色：卫生质量管理；层次：分析方法。</p>
+<p><strong>研究问题</strong>：考虑病例组合与样本量后，机构结局是否偏离共同基准？</p>
+<p><strong>所需数据</strong>：患者基线风险、机构标识、结局及样本量；避免使用干预后的风险变量。</p>
+<p>先建立透明的病例组合调整，再用精度或样本量展示机构表现及变异范围。绩效漏斗图与Meta发表偏倚漏斗图用途不同；结果主要用于进一步核查。</p>
+<p><strong>报告要点</strong>：报告风险模型、观察/预期口径、机构量、控制界限、过度离散和收缩方法。</p>
+<p><strong>常见误用</strong>：粗死亡率排名混入病例组合差异；漏斗图异常点不等于已经证明机构医疗质量差。</p>
+<p><strong>来源</strong>：<a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.1970">Funnel plots for comparing institutional performance</a>（题录与摘要已核验，全文未读；读取出版者题录和摘要，全文受限；不将漏斗图解释成机构排名或因果效应。）</p>
+<p><span id="method-c9"></span></p>
+<h3 id="c9-2sfca">C9 两步移动搜索法（2SFCA）与空间可达性</h3>
+<p>默认入口：描述性分析；角色：卫生资源配置；层次：分析方法。</p>
+<p><strong>研究问题</strong>：居民在旅行成本约束下能够获得多少卫生服务供给？</p>
+<p><strong>所需数据</strong>：机构位置和容量、人口需求位置、路网旅行时间及服务区参数。</p>
+<p>先为服务点计算周边人口竞争下的供需比，再为人口点汇总可达供给。阈值和衰减反映建模假设，应检验其对区域差异判断的影响。</p>
+<p><strong>报告要点</strong>：报告供需单位、出行方式、距离衰减、服务区阈值、跨边界处理及敏感性。</p>
+<p><strong>常见误用</strong>：空间可达不等于实际利用；单纯距离不能代表经济可负担性或服务质量。</p>
+<p><strong>来源</strong>：<a href="https://journals.sagepub.com/doi/10.1068/b29120">Measures of Spatial Accessibility to Health Care in a GIS Environment: Synthesis and a Case Study in the Chicago Region</a>（题录与摘要已核验，全文未读；出版者页面可读取题录与摘要，全文受限；参数需由具体研究设定。）</p>
+<p><span id="method-c10"></span></p>
+<h3 id="c10-wisn">C10 工作量指标法（WISN）卫生人力测算</h3>
+<p>默认入口：描述性分析；角色：卫生资源配置；层次：分析方法。</p>
+<p><strong>研究问题</strong>：在现有服务量与规范工时下，机构需要多少卫生人员？</p>
+<p><strong>所需数据</strong>：可用工作时间、各服务工作量、活动时间标准及支持/附加工作。</p>
+<p>以服务工作量和活动标准换算岗位需求，并考虑支持活动。它提供可解释的人力规划基线，需结合未满足需求、任务转移和质量要求作情景分析。</p>
+<p><strong>报告要点</strong>：报告工时标准来源、缺勤与培训扣除、岗位类别、需求量和实际人员差异。</p>
+<p><strong>常见误用</strong>：历史服务量可能已受供给不足压低；测算结果不是没有条件的最优编制数。</p>
+<p><strong>来源</strong>：<a href="https://www.who.int/tools/wisn">Workload Indicators of Staffing Need (WISN)</a>（已核对页面；本轮读取官方方法介绍或原始方法页面；不代表逐页核验完整教材。）</p>
+<p><span id="method-d17"></span></p>
+<h3 id="d17">D17 因果中介分析</h3>
+<p>默认入口：因果推断；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：干预效果有多少通过某一中介过程传递？</p>
+<p><strong>所需数据</strong>：干预、先于结局的中介、结局，以及暴露—中介—结局各路径的混杂因素。</p>
+<p>先区分自然效应、控制直接效应和可干预的中介效应，再选择估计方法。要求明确时间顺序、一致性、可交换性与可得支持，不能默认所有中介都能被干预。</p>
+<p><strong>报告要点</strong>：报告总/直接/间接效应定义、尺度、交互项、识别假设和敏感性。</p>
+<p><strong>常见误用</strong>：普通回归系数乘积或SEM路径显著，不足以识别因果中介；暴露诱导的中介—结局混杂需专门处理。</p>
+<p><strong>来源</strong>：<a href="https://www.stata.com/features/overview/causal-mediation-analysis/">Causal mediation analysis</a>（已核对页面；本轮读取官方方法介绍或原始方法页面；不代表逐页核验完整教材。）；<a href="https://hsph.harvard.edu/wp-content/uploads/2024/10/InteractionTutorial_EM-1.pdf">A Tutorial on Interaction — VanderWeele &amp; Knol (2014)</a>（已核对相关章节；核对原作者公开PDF中效应异质性与因果交互的区分及报告建议（第13—16页）；未声称逐页审读全部教程。）</p>
+<p><span id="method-d18"></span></p>
+<h3 id="d18">D18 交互作用与效应修饰分析</h3>
+<p>默认入口：相关性分析；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：某项暴露或干预的效应是否因另一条件而改变？</p>
+<p><strong>所需数据</strong>：暴露或干预、预设修饰因素、结局及与目标相匹配的混杂因素；各组合有足够样本。</p>
+<p>先区分统计交互、单一干预的效应异质性与两个暴露的因果交互，并明确加法或乘法尺度。统计交互默认描述关联；估计单一干预在不同人群中的效应，需要该干预的因果识别条件，但修饰因素本身不必可干预。若解释对两个暴露联合干预的因果交互，则需定义相应反事实并处理两者相关混杂。避免无计划的大量亚组搜索。</p>
+<p><strong>报告要点</strong>：报告预设修饰因素、分层绝对/相对效应、加法/乘法尺度、交互指标及区间。</p>
+<p><strong>常见误用</strong>：一组显著另一组不显著不等于交互；统计乘积项不自动代表生物学协同或因果机制。</p>
+<p><strong>来源</strong>：<a href="https://hsph.harvard.edu/wp-content/uploads/2024/10/InteractionTutorial_EM-1.pdf">A Tutorial on Interaction — VanderWeele &amp; Knol (2014)</a>（已核对相关章节；核对原作者公开PDF中效应异质性与因果交互的区分及报告建议（第13—16页）；未声称逐页审读全部教程。）</p>
+<p><span id="method-d19"></span></p>
+<h3 id="d19">D19 干扰与溢出效应的因果分析</h3>
+<p>默认入口：因果推断；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：一人的干预能否改变同群体其他人的结局？</p>
+<p><strong>所需数据</strong>：个体/群体处理、分配机制、群组或网络关系、邻近暴露与结局。</p>
+<p>在常规无干扰假设不成立时，定义他人处理如何进入潜在结局，并依靠设计或条件可交换性估计效应。可用于疫苗、社区干预与服务转移，但对干扰结构的假设须可说明。</p>
+<p><strong>报告要点</strong>：报告干扰范围、暴露映射、直接/间接/总体效应、分配机制及敏感性。</p>
+<p><strong>常见误用</strong>：空间相关模型本身不能识别溢出因果；把群内外传播混在一起会改变估计目标。</p>
+<p><strong>来源</strong>：<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4300555/">Interference and Sensitivity Analysis</a>（已核对页面；PMC方法正文可读取，核对研究问题与设计框架。）</p>
+<p><span id="method-e9"></span></p>
+<h3 id="e9-arima">E9 时间序列预测：ARIMA与指数平滑</h3>
+<p>默认入口：预测分析；角色：统计分析；层次：分析方法。</p>
+<p><strong>研究问题</strong>：未来一段时间门诊量、床位需求或疾病报告数可能是多少？</p>
+<p><strong>所需数据</strong>：等间隔时间序列、季节结构、缺口及预测时点已经可获得的外生信息。</p>
+<p>ARIMA描述差分后序列的自相关，指数平滑描述水平/趋势/季节组成；按时间外验证比较表现。不同预测时距需分别评价，历史拟合好不保证未来稳定。</p>
+<p><strong>报告要点</strong>：报告预测起点/时距、滚动验证、朴素基线、误差指标、预测区间及结构变动。</p>
+<p><strong>常见误用</strong>：随机切分时间点会泄漏未来；把预测偏差直接归于某政策不是因果评价。</p>
+<p><strong>来源</strong>：<a href="https://otexts.com/fpp3/arima.html">Forecasting: Principles and Practice, Chapter 9 ARIMA models</a>（已核对页面；读取作者教材章节正文与导航；未执行教材代码。）</p>
+<p><span id="method-e10"></span></p>
+<h3 id="e10-landmarking">E10 地标分析（Landmarking）动态风险预测</h3>
+<p>默认入口：预测分析；角色：临床预测；层次：分析方法。</p>
+<p><strong>研究问题</strong>：患者已经随访到某时点后，利用当时信息能否更新后续风险？</p>
+<p><strong>所需数据</strong>：地标时仍处风险者、截至该时点已获得的标志物/病史及后续固定预测窗。</p>
+<p>在每个地标时点重新定义仍处风险的人群和可用信息，预测固定后续窗口。它与联合模型的结构不同，但可共用预测评价指标；模型比较应使用相同预测任务。</p>
+<p><strong>报告要点</strong>：报告地标时点、风险集、信息截止、预测窗、时间依赖校准/区分与外部验证。</p>
+<p><strong>常见误用</strong>：不能使用地标之后的检测值；只纳入存活至地标者改变目标人群，不能与基线模型直接混比。</p>
+<p><strong>来源</strong>：<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2798037/">Dynamic predicting by landmarking as an alternative for multi-state modeling</a>（部分核验，正文待核；读取原作者论文检索摘要与方法片段；直接页面人机验证未成功。）</p>
+<p><span id="method-g5"></span></p>
+<h3 id="g5">G5 半结构式深度访谈</h3>
+<p>默认入口：跨类支撑；角色：定性研究；层次：资料生成。</p>
+<p><strong>研究问题</strong>：患者、医务人员或管理者如何理解某一经验或过程？</p>
+<p><strong>所需数据</strong>：目的抽样参与者、灵活访谈提纲、录音/逐字稿、场景记录及反思备忘录。</p>
+<p>用开放问题和追问探索经验与意义。提纲可随资料与研究目标合理迭代；明确同意、隐私、研究者角色，并选择与认识论一致的后续分析。</p>
+<p><strong>报告要点</strong>：报告招募与关系、提纲形成、访谈环境、追问、转录和分析路线。</p>
+<p><strong>常见误用</strong>：访谈是资料生成方式，不是自动完成分析；不要用引导式问题强迫受访者验证既定观点。</p>
+<p><strong>来源</strong>：<a href="https://fmch.bmj.com/content/7/2/e000057">Semistructured interviewing in primary care research: a balance of relationship and rigour</a>（部分核验，正文待核；读取期刊检索结果的摘要和步骤片段；直接访问403。）</p>
+<p><span id="method-g6"></span></p>
+<h3 id="g6">G6 焦点小组</h3>
+<p>默认入口：跨类支撑；角色：定性研究；层次：资料生成。</p>
+<p><strong>研究问题</strong>：群体互动如何呈现共同规范、分歧与服务体验？</p>
+<p><strong>所需数据</strong>：按研究目的组织的讨论组、主持提纲、录音、互动和非语言观察记录。</p>
+<p>把参与者之间的回应、争论和共同建构视作资料，适合服务设计与政策可接受性探索；权力差异和敏感话题可能限制表达，应据此组织分组。</p>
+<p><strong>报告要点</strong>：报告组构成、招募、主持关系、强势/沉默参与者处理及互动分析。</p>
+<p><strong>常见误用</strong>：不能当成同时做多个人的一对一访谈；群内意见数量不能外推总体比例。</p>
+<p><strong>来源</strong>：<a href="https://www.bmj.com/content/311/7000/299.short">Qualitative Research: Introducing focus groups</a>（部分核验，正文待核；读取原作者期刊检索摘要；直接访问403。）</p>
+<p><span id="method-g7"></span></p>
+<h3 id="g7">G7 主题分析（含反思性主题分析）</h3>
+<p>默认入口：跨类支撑；角色：定性研究；层次：定性分析。</p>
+<p><strong>研究问题</strong>：跨个体资料中有哪些有意义的经验模式？</p>
+<p><strong>所需数据</strong>：访谈、文本或开放回答，以及研究者的编码与反思记录。</p>
+<p>通过熟悉资料、编码、构建并审视主题形成解释。反思性、代码本和编码可靠性路线有不同假设，应选明路线，而非混用互不一致的质量标准。</p>
+<p><strong>报告要点</strong>：报告理论立场、所用主题分析类型、编码到主题的过程、主题逻辑与支持引文。</p>
+<p><strong>常见误用</strong>：反思性主题分析不能机械套用双人独立编码一致率；主题不是直接复制访谈题目。</p>
+<p><strong>来源</strong>：<a href="https://www.thematicanalysis.net/editor-checklist/">Thematic Analysis: Editor &amp; Reviewer Guide</a>（部分核验，正文待核；读取Braun/Clarke原作者网站检索内容；直接访问502。）</p>
+<p><span id="method-g8"></span></p>
+<h3 id="g8-framework-method">G8 框架分析（Framework Method）</h3>
+<p>默认入口：跨类支撑；角色：定性研究；层次：定性分析。</p>
+<p><strong>研究问题</strong>：不同群体或案例对同一服务问题的经验有哪些共同点与差异？</p>
+<p><strong>所需数据</strong>：可比较的访谈/文本，案例标识、编码框架和案例×主题矩阵。</p>
+<p>将资料按案例与主题进行系统归纳，在保留上下文的前提下比较个案内与个案间模式，适合多专业卫生服务团队与应用政策问题。</p>
+<p><strong>报告要点</strong>：报告框架的演绎/归纳来源、试编码、矩阵摘要、原文定位和跨案例比较。</p>
+<p><strong>常见误用</strong>：矩阵不是把发言简化成频次表；预设框架不能排除新主题和反例。</p>
+<p><strong>来源</strong>：<a href="https://doi.org/10.1186/1471-2288-13-117">Using the framework method for the analysis of qualitative data in multi-disciplinary health research</a>（题录摘要及方法片段已核验，正文未完整读取；读取出版者题录、摘要与方法说明检索片段；出版者正文此次仅提供预览。）</p>
+<p><span id="method-g9"></span></p>
+<h3 id="g9">G9 定性内容分析</h3>
+<p>默认入口：跨类支撑；角色：定性研究；层次：定性分析。</p>
+<p><strong>研究问题</strong>：政策、记录或访谈文本怎样表达某类意义与概念？</p>
+<p><strong>所需数据</strong>：明确语料范围、分析单位、上下文单位、编码规则及文本证据。</p>
+<p>常规路线由资料形成类别，定向路线以理论作起点并容纳新类，总结式路线在计数后解释语境。需说明类别如何连接到研究问题。</p>
+<p><strong>报告要点</strong>：报告常规/定向/总结式路线、代码来源、迭代过程、负例和可信度措施。</p>
+<p><strong>常见误用</strong>：词频高不等于重要性高；定向编码容易只寻找支持既有理论的文本。</p>
+<p><strong>来源</strong>：<a href="https://pubmed.ncbi.nlm.nih.gov/16204405/">Three approaches to qualitative content analysis</a>（题录与摘要已核验，全文未读；读取PubMed题录与摘要；未读取出版者全文。）</p>
+<p><span id="method-g10"></span></p>
+<h3 id="g10">G10 民族志与参与观察</h3>
+<p>默认入口：跨类支撑；角色：定性研究；层次：研究设计与资料生成。</p>
+<p><strong>研究问题</strong>：医疗组织的日常实践、文化和权力关系如何实际运作？</p>
+<p><strong>所需数据</strong>：自然场景中的持续或聚焦观察、田野笔记、非正式访谈、文件和研究者反思。</p>
+<p>在具体场域中追踪行动与互动，结合成员解释理解组织惯例。参与观察是重要资料生成方式，民族志则还要求情境解释、反思和多源证据。</p>
+<p><strong>报告要点</strong>：报告进入场域、观察角色、持续时间、情境、分析轨迹及匿名化。</p>
+<p><strong>常见误用</strong>：一次参观不能自动称民族志；观察到的行为受研究者位置和可进入场景影响。</p>
+<p><strong>来源</strong>：<a href="https://pubmed.ncbi.nlm.nih.gov/18687725/">Qualitative research methodologies: ethnography</a>（部分核验，正文待核；本轮检索核对题录和DOI，直接PubMed页面未返回正文；不声称已读全文。）</p>
+<p><span id="method-g11"></span></p>
+<h3 id="g11">G11 案例研究（单案例/多案例）</h3>
+<p>默认入口：跨类支撑；角色：定性研究；层次：研究设计。</p>
+<p><strong>研究问题</strong>：特定制度或服务在真实情境中如何运行，为什么出现不同过程？</p>
+<p><strong>所需数据</strong>：界定边界的案例、访谈、观察、文件和可用定量资料，保留证据链。</p>
+<p>围绕有边界的真实情境进行深入分析，可结合多种资料。理论命题、竞争性解释和证据链决定解释力度；多案例数量不等于统计代表性。</p>
+<p><strong>报告要点</strong>：报告案例选择逻辑、边界与时期、研究者角色、跨源验证及案例间比较。</p>
+<p><strong>常见误用</strong>：不能把一个方便取得的案例直接推广为普遍因果规律；病例报告不等于组织案例研究。</p>
+<p><strong>来源</strong>：<a href="https://doi.org/10.1186/1471-2288-11-100">The case study approach</a>（已核对页面；读取开放出版者页面的题录、摘要及正文入口。）</p>
+<h2 id="_5">已有三项的更新说明</h2>
+<p><span id="method-a8"></span></p>
+<h3 id="a8-delphi">A8 德尔菲法（Delphi）</h3>
+<p>默认入口：跨类支撑；角色：专家共识；层次：共识形成。</p>
+<p><strong>研究问题</strong>：证据不充分时，如何形成可追溯的专家判断或指标共识？</p>
+<p><strong>所需数据</strong>：明确遴选标准的专家组、各轮匿名评分/理由、反馈及退出记录。</p>
+<p>德尔菲通过多轮匿名征询与受控反馈形成或识别共识。先定义共识对象与可接受标准，再设计轮次和反馈；同时保留分歧及流失影响。排序一致性可按问题评价，但不能把Lin一致性相关系数当Kendall W；无统一专家人数、轮数或筛选阈值。CREDES来自姑息照护，应用到卫管应说明适配。</p>
+<p><strong>报告要点</strong>：报告专家构成、轮次、反馈形式、预设共识和停止标准、各轮响应与少数意见。</p>
+<p><strong>常见误用</strong>：共识不是客观真值或疗效证据；专家权威系数、Kendall W和统一分数阈值不是所有Delphi研究的必需品。</p>
+<p><strong>来源</strong>：<a href="https://equator-network.org/reporting-guidelines/credes/">Guidance on Conducting and REporting DElphi Studies (CREDES) in palliative care</a>（已核对页面；读取EQUATOR指南记录；该指南源于姑息照护场景，跨学科应用需说明适配。）</p>
+<p><span id="method-g1"></span></p>
+<h3 id="g1-grounded-theory">G1 扎根理论（Grounded Theory）</h3>
+<p>默认入口：跨类支撑；角色：定性研究；层次：理论生成。</p>
+<p><strong>研究问题</strong>：某一社会过程如何发生，哪些概念及关系能解释它？</p>
+<p><strong>所需数据</strong>：随理论发展迭代抽样的访谈、观察或文件，持续比较记录和分析备忘录。</p>
+<p>核心是资料收集与分析并行、持续比较、理论抽样、备忘录和概念关系的发展。说明采用的理论立场与编码方式；本条保留经典方法的核心原则。若只有一次访谈和主题归纳，宜按实际方法命名；不把固定访谈人数当理论饱和证明。</p>
+<p><strong>报告要点</strong>：报告所选扎根理论传统、初始/后续抽样、编码与比较过程、范畴关系和理论充分性的依据。</p>
+<p><strong>常见误用</strong>：三级编码标签本身不等于扎根理论；不能先把现成理论硬套到全部资料后仍声称纯粹由资料生成。</p>
+<p><strong>来源</strong>：<a href="https://www.routledge.com/Discovery-of-Grounded-Theory-Strategies-forQualitative-Research/Glaser-Strauss/p/book/9780202302607">The Discovery of Grounded Theory: Strategies for Qualitative Research</a>（部分核验，正文待核；核对原著出版者检索页面描述；直接页面403，未读取原著全文。）</p>
+<p><span id="method-g4"></span></p>
+<h3 id="g4-fsqca">G4 fsQCA 模糊集定性比较分析</h3>
+<p>默认入口：跨类支撑；角色：组态比较；层次：集合论比较。</p>
+<p><strong>研究问题</strong>：哪些条件组合与结果的必要性或充分性关系相一致？</p>
+<p><strong>所需数据</strong>：可比较案例、理论定义的条件与结果、用于校准隶属度的原始证据。</p>
+<p>fsQCA用集合隶属关系和逻辑最小化研究组合条件、等效路径与非对称性。它可连接定性案例知识和定量指标，但不等同于传统访谈分析。锚点要有实质依据，并检查有限多样性、矛盾配置及对阈值的敏感性；因果论断还依赖案例知识、时间顺序与排除替代解释。</p>
+<p><strong>报告要点</strong>：报告校准锚点依据、必要/充分分析、真值表、频数/一致性/PRI、解类型、覆盖及稳健性。</p>
+<p><strong>常见误用</strong>：校准不是随意标准化；一致性和覆盖率不是回归系数或概率，组态充分性结果不自动识别干预因果。</p>
+<p><strong>来源</strong>：<a href="https://bookdown.org/dusadrian/QCAbook/calibration.html">QCA with R: Calibration</a>（已核对校准章节；读取校准章节的理论锚点与隶属度说明；必要性、充分性、真值表与最小化分别列出章节来源。）；<a href="https://bookdown.org/dusadrian/QCAbook/analysisofnecessity.html">QCA with R: Analysis of necessity</a>（已核对相关章节概念说明；核对本章开头的概念、集合关系或算法说明；未逐项执行章内R代码。）；<a href="https://bookdown.org/dusadrian/QCAbook/analysisofsufficiency.html">QCA with R: Analysis of sufficiency</a>（已核对相关章节概念说明；核对本章开头的概念、集合关系或算法说明；未逐项执行章内R代码。）；<a href="https://bookdown.org/dusadrian/QCAbook/truthTable.html">QCA with R: The truth table</a>（已核对相关章节概念说明；核对本章开头的概念、集合关系或算法说明；未逐项执行章内R代码。）；<a href="https://bookdown.org/dusadrian/QCAbook/minimize.html">QCA with R: The Logical Minimization</a>（已核对相关章节概念说明；核对本章开头的概念、集合关系或算法说明；未逐项执行章内R代码。）</p>
+<h2 id="_6">定性、共识与组态：如何在卫管研究中衔接</h2>
+<p>下列例子是方法选型示例，不是已经完成的实证结果。</p>
+<table>
+<thead>
+<tr>
+<th>想解决的问题</th>
+<th>可选路线</th>
+<th>实际工作顺序</th>
+<th>主要成果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>医共体绩效指标应包括哪些内容？</td>
+<td>德尔菲法</td>
+<td>文献和访谈形成候选条目 → 定义专家遴选与共识标准 → 匿名多轮咨询及反馈 → 记录删改、分歧与流失 → 独立检验指标的测量表现</td>
+<td>指标条目、共识程度、未决分歧；权重需另说明依据</td>
+</tr>
+<tr>
+<td>家庭病床服务为什么难以持续？</td>
+<td>扎根理论</td>
+<td>初始目的抽样 → 收集并同步编码 → 持续比较与备忘录 → 依据新范畴理论抽样 → 检查反例并发展概念关系</td>
+<td>解释服务形成或中断过程的理论，而非只有主题清单</td>
+</tr>
+<tr>
+<td>哪些组织与资源条件组合对应较好的基层服务？</td>
+<td>fsQCA</td>
+<td>界定案例及结果 → 用理论选择条件 → 有依据地校准 → 检查必要性与真值表 → 最小化并解释路径 → 改变合理阈值、回到案例检查稳健性</td>
+<td>配置路径、一致性、覆盖率及代表/偏离案例</td>
+</tr>
+<tr>
+<td>患者如何体验转诊流程？</td>
+<td>访谈＋主题分析或框架分析</td>
+<td>目的抽样与访谈 → 逐步熟悉、编码和比较 → 建构主题或案例×主题矩阵 → 对照原文、反例和研究者位置 → 形成解释</td>
+<td>主题、证据摘录、过程差异与改进线索</td>
+</tr>
+</tbody>
+</table>
+<p>不要为了“方法丰富”把所有路线叠加。访谈是资料生成方式，扎根理论和主题分析有不同目标；德尔菲解决共识问题，fsQCA比较条件组合。若先访谈探索、再量化检验，要交代两阶段样本如何衔接、定性发现怎样转成变量、矛盾结果怎样处理。</p><p class="note">普贤 · 社医卫管方法库 · 教学参数与代码接口需结合实际数据、软件版本和研究设计核对。</p></article></main><script defer src="https://puxian-visit-statistics.greycarp257.chatgpt.site/tracker.js?v=20261024platform1"></script><script type="module" src="../../skill-usage.mjs?v=20261024platform1"></script></body></html>

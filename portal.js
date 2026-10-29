@@ -7,13 +7,26 @@ const tags=(...v)=>v.filter(Boolean).map(t=>`<span class="tag">${esc(t)}</span>`
 const detail=(title,body)=>`<details><summary>${title}</summary>${body}</details>`;
 const dl=rows=>'<dl>'+rows.filter(x=>x[1]).map(([a,b])=>`<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join('')+'</dl>';
 const md=text=>String(text).split(/```[^\n]*\n([\s\S]*?)```/g).map((v,i)=>i%2?'<pre>'+esc(v)+'</pre>':'<p>'+esc(v).replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')+'</p>').join('');
+const analysisGroups={descriptive:'描述性分析',association:'相关性分析',causal:'因果推断',predictive:'预测分析',support:'跨类研究与支撑',unclassified:'待补充分组'};
+const groupOrder=Object.keys(analysisGroups);
+const fieldText=value=>Array.isArray(value)?value.join('；'):typeof value==='object'&&value!==null?Object.entries(value).map(([key,text])=>`${key}：${text}`).join('；'):value;
+function methodSummary(method){
+ const fields=[['研究问题',method.question],['数据要求',method.data],['报告重点',method.report],['常见误区',method.pitfall]].map(([label,value])=>[label,fieldText(value)]).filter(([,value])=>value);
+ return fields.length?dl(fields):md(String(method.content||'').split('**代码**')[0]);
+}
+function renderMethod(method){
+ const group=method.analysis_group||'unclassified',structured=['question','data','report','pitfall'].some(key=>method[key]);
+ const clinicalGuide=method.source==='skills/references/clinical-methods.md';
+ const source=clinicalGuide?'guides/references/clinical-methods.html':method.source;
+ return `<article class="entry method-card" data-method-id="${esc(method.id)}" data-analysis-group="${esc(group)}" data-method-role="${esc(method.role||'')}" data-method-summary="${structured?'structured':'legacy'}">${tags(method.id,analysisGroups[group]||group,method.role,category[method.category]||method.category)}<h2>${esc(method.name)}</h2>${methodSummary(method)}${Array.isArray(method.analysis_tags)&&method.analysis_tags.length?`<p class="meta">相关用途：${esc(method.analysis_tags.map(tag=>analysisGroups[tag]||tag).join(' · '))}</p>`:''}${link(source,clinicalGuide?'阅读方法说明':'完整方法与代码')}${detail(clinicalGuide?'展开方法要点':'展开方法说明与原有代码',md(method.content||''))}</article>`;
+}
 let rows=[],filtered=[],number=1,size=12,filters=[];
 const configs={
  library:{key:'library',filters:[['journal','期刊'],['scope','资料类型'],['year','年份']],class:'wide-grid',render:p=>`<article class="entry">${tags(p.journal,p.year,p.scope)}<h2>${esc(p.title)}</h2><p>${esc(p.authors)}</p><p class="meta">${esc(p.keywords||'主题词尚未补齐')}</p>${link(p.doi?'https://doi.org/'+p.doi:p.url,'文献来源')}${detail('引用与核验状态',`<p class="citation">${esc(p.citation)}</p>${dl([['文章类型',p.type],['来源',p.provenance],['核验',p.verification],['边界',p.screening_note]])}`)}</article>`},
  journals:{key:'journals',filters:[['language','语种'],['category','领域']],render:j=>`<article class="entry">${tags(j.language,j.category)}<h2>${esc(j.name)}</h2>${dl([['关注内容',j.focus],['研究与方法提示',j.methods]])}<p class="meta">${esc(j.issn?'ISSN '+j.issn:'ISSN 尚未核对')}</p>${link(j.url,'期刊／官方身份入口')}${detail('核对事项',`<p>${esc(j.note)}</p><p>${esc(j.submission_check||'核对当前栏目、文章类型、字数、数据共享、费用及作者指南。')}</p><p>${esc(j.scope_note)}</p>`)}</article>`},
  institutions:{key:'institutions',filters:[['region','地区']],render:i=>`<article class="entry">${tags(i.region)}<h2>${esc(i.name)}</h2>${dl([['方向入口',i.focus],['看研究',i.research_entry],['看培养',i.study_entry]])}${link(i.url,'官方机构入口')}${detail('比较与核验口径',`<p>${esc(i.comparison)}</p><p>${esc(i.status)}</p>`)}</article>`},
  figures:{key:'figures',filters:[['journal','期刊'],['kind','资料形态']],class:'figure-grid',render:f=>`<article class="entry"><a href="${esc(f.image)}" target="_blank" rel="noopener"><img class="figure-image" src="${esc(f.image)}" alt="${esc(f.title)}，${esc(f.locator)}" loading="lazy"></a><div style="margin-top:17px">${tags(f.journal,f.kind)}</div><h2>${esc(f.title)}</h2><p class="citation">${esc(f.citation)}</p><p>${esc(f.locator)}</p>${link(f.doi?'https://doi.org/'+f.doi:f.url,'原论文与图源')}${detail('处理记录与图片权利',dl([['处理',f.processing],['来源',f.provenance],['权利',f.rights],['SHA-256',f.sha256]]))}</article>`},
- methods:{key:'methods',filters:[['category','方法分类']],class:'wide-grid',render:m=>`<article class="entry">${tags(m.id,category[m.category]||m.category)}<h2>${esc(m.name)}</h2>${md(m.content.split('**代码**')[0])}${link(m.source,'完整方法与代码')}${detail('展开方法说明与原有代码',md(m.content))}</article>`},
+ methods:{key:'methods',filters:[['analysis_group','分析主线'],['role','方法类型'],['category','原始分类']],class:'wide-grid',render:renderMethod},
  code:{key:'code-library',filters:[['language','语言'],['source','工具来源']],class:'wide-grid',render:c=>`<article class="entry">${tags(c.language)}<h2>${esc(c.title)}</h2><p class="meta">${esc(c.status)} · ${esc(c.source)}:${esc(c.line)}</p>${detail('展开代码',`<pre>${esc(c.code)}</pre><button class="secondary" data-copy="${esc(c.id)}">复制片段</button>`)}${link(c.source,'查看上下文')}</article>`},
  tools:{key:'tools',filters:[['category','分类']],render:t=>`<article class="entry">${tags(...t.tags)}<h2>${esc(t.name)}</h2><p>${esc(t.description)}</p>${link(t.url,'打开工具手册')}</article>`},
  sources:{key:'sources',filters:[['category','资源类型']],render:s=>`<article class="entry">${tags(s.category)}<h2>${esc(s.name)}</h2><p>${esc(s.description||s.focus||s.note)}</p>${link(s.url,'来源入口')}${s.note?'<p class="tiny">'+esc(s.note)+'</p>':''}</article>`},
@@ -23,9 +36,17 @@ const category={A:'研究设计',B:'统计分析',C:'卫生经济评价',D:'因�
 function initList(){
  const c=configs[page];if(!c)return;
  rows=D[c.key]||[];
+ if(page==='methods'){
+  rows.forEach(row=>{if(!row.analysis_group)row.analysis_group='unclassified';});
+  document.querySelectorAll('[data-resource-count]').forEach(element=>{const collection=D[element.dataset.resourceCount];element.textContent=Array.isArray(collection)?String(collection.length):'—';});
+ }
  size=c.size||12;filters=c.filters;
  $('#results').className='grid '+(c.class||'');
- $('#toolbar').innerHTML='<label class="search">检索<input type="search" id="search" placeholder="输入名称、主题词、作者或项目号…"></label>'+filters.map(([k,label])=>`<label>${label}<select data-filter="${k}" aria-label="${label}"><option value="">全部${label}</option>${[...new Set(rows.map(x=>x[k]).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b))).map(v=>`<option value="${esc(v)}">${esc(category[v]||v)}</option>`).join('')}</select></label>`).join('');
+ $('#toolbar').innerHTML='<label class="search">检索<input type="search" id="search" placeholder="'+(page==='methods'?'输入方法名、研究问题或数据关键词…':'输入名称、主题词、作者或项目号…')+'"></label>'+filters.map(([k,label])=>`<label>${label}<select data-filter="${k}" aria-label="${label}"><option value="">全部${label}</option>${[...new Set(rows.map(x=>x[k]).filter(Boolean))].sort((a,b)=>k==='analysis_group'?groupOrder.indexOf(a)-groupOrder.indexOf(b):String(a).localeCompare(String(b))).map(v=>`<option value="${esc(v)}">${esc(k==='analysis_group'?(analysisGroups[v]||v):k==='category'?(category[v]||v):v)}</option>`).join('')}</select></label>`).join('');
+ if(page==='methods'){
+  const initial=new URLSearchParams(window.location?.search||'');
+  document.querySelectorAll('[data-filter]').forEach(select=>{const value=initial.get(select.dataset.filter);if(value&&[...select.options].some(option=>option.value===value))select.value=value;});
+ }
  $('#search').addEventListener('input',()=>{number=1;render()});
  document.querySelectorAll('[data-filter]').forEach(x=>x.addEventListener('change',()=>{number=1;render()}));
  $('#prev').addEventListener('click',()=>{number--;render();$('#count').scrollIntoView({block:'start'})});

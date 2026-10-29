@@ -1,3 +1,9 @@
+## 方法框架与记录整理
+
+[四类方法框架](guides/method-map.html)按描述性分析、相关性分析、因果推断、预测分析导航；定性、共识、组态与综合评价单列支撑。速查由91条扩展为123条，新增25项医学/卫管方法和7项定性方法，并完善德尔菲、扎根理论与fsQCA。新增项是方法与来源说明，不代表新增分析代码已执行。
+
+[政策时间线图文](guides/references/policy-timeline-publishing.html)与[研究记录整理](guides/references/research-record-curation.html)仅沉淀通用方法；本机项目索引、私稿和原始聊天未上传。
+
 # 普贤 · AI 互动与研究工作台
 
 ## 公开资料主题分析与常用入口
@@ -12,11 +18,11 @@
 
 ## Skill 安装包、下载记录与方法出处
 
-[下载与记录页面](https://naturedu.github.io/socialmedicine/skill-downloads.html) · [研究 Skill 阅读页](guides/socialmedicineskills.html) · [独立下载记录工具](https://github.com/naturedu/socialmedicine/releases/latest/download/skill-download-stats.zip) · [89个方法的原始论文与官方来源](https://naturedu.github.io/socialmedicine/method-sources.html)
+[下载与记录页面](https://naturedu.github.io/socialmedicine/skill-downloads.html) · [研究 Skill 阅读页](guides/socialmedicineskills.html) · [独立下载记录工具](https://github.com/naturedu/socialmedicine/releases/latest/download/skill-download-stats.zip) · [123个方法的原始论文与官方来源](https://naturedu.github.io/socialmedicine/method-sources.html)
 
 含项目明细的旧版完整安装包已撤下；目前以网页阅读为主。其他工具仅包含相应技能说明与原创脚本，不包含人物照片、原始对话、私人稿件、受限数据或论文全文。新增科研公众号图文流程与返修证据对应规则；已有绘图、PPT、数据库及微观模拟内容继续保留。此次整理基于可访问对话与已有公开库交叉核对，并非导出整个账号的全部历史。
 
-方法卡片标题可直达代表性原始方法或官方来源，另保留本站中文教程与代码。`data/method-authorities.json` 记录89个方法的来源对应、来源类型及核对状态；不把报告清单当作设计标准，不把链接检查当作全文或代码验证。
+方法卡片标题可直达代表性原始方法或官方来源，另保留本站中文教程与代码。`data/method-authorities.json` 记录123个方法的来源对应、来源类型及核对状态；不把报告清单当作设计标准，不把链接检查当作全文或代码验证。
 
 下载记录使用 GitHub Release 附件 `download_count`，与原有网页“下载点击”分开。按安装包和版本记录，首次观测是基线；原始文件、仓库 clone、源码 ZIP、镜像和 Skill 调用不计入，不等于独立用户或成功安装。重复下载及维护者测试可能计入。附件移除后保留最后观测值，未观测部分不可追溯。
 
@@ -61,7 +67,7 @@ GitHub 自动累计附件下载计数，网页打开或刷新时从公开 API �
 | [期刊](journals.html) | 97 个期刊／刊名入口，22 个中文入口；并入指定的 43 条清单 | 包含历史刊名，不是 97 本独立现刊；不展示未核实的当前 IF、分区或审稿时长 |
 | [文献](library.html) | 69 条：54 条领域文献、15 条方法参考 | 逐条显示继承的核验状态，不是新完成的系统综述 |
 | [图表](figures.html) | 27 张原图、截图或处理参考图 | 含完整图源与引用，处理记录可查；图片许可未逐图核定 |
-| [方法](methods.html) / [代码](code.html) / [工具](tools.html) | 89个方法、288段代码、58份完整专题工具 | Stata/R 模板未逐项执行，混合片段需拆分并核对上下文 |
+| [方法](methods.html) / [代码](code.html) / [工具](tools.html) | 123个方法、292段代码、60份完整专题工具 | Stata/R 模板未逐项执行，混合片段需拆分并核对上下文 |
 | [机构](institutions.html) | 91 个院校／机构／院系导航条目 | 部分仅核到学校主页；不是全部院校、招生目录或排名 |
 | [检索与数据](sources.html) | 40 个资源入口 | 公开入口不代表全文与微观数据可自由下载 |
 | [医保时间线](insurance-timeline.html) | 1998–2026 年 21 个国家级节点 | 成文、公布、生效分开，不是全部政策；2026 年医保法自 2027-01-01 施行 |
@@ -114,7 +120,7 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。独
 院校互动目录扩展为 53 条院系档案，新增名称检索与中山大学／南方医科大学快捷入口。保留原有来源核验边界。招聘与学术润色模块仅处理公开导航或浏览器本地文本。
 ## 方法、政策与数据库扩充
 
-[方法逻辑地图](guides/method-map.html)按问题→估计目标→数据结构→识别假设→模型→诊断选方法。完整Skill书架58份、速查89条、代码288段，保留原有12份专题；静态阅读页76个，R/Stata接口未逐项执行。
+[方法逻辑地图](guides/method-map.html)按问题→估计目标→数据结构→识别假设→模型→诊断选方法。完整Skill书架60份、速查123条、代码292段，保留原有12份专题；静态阅读页76个，R/Stata接口未逐项执行。
 
 [政策主题库](policy-topics.html)包含14个主题、27个官方文件/入口，重点展开长期护理保险、家庭病床、居家医疗和支付组织改革。发文、生效、地方规则与真实执行分开；变量和机制为研究建议。
 
@@ -128,7 +134,7 @@ Nature、Science、Nature Medicine 及数字医学资料分别标明期刊。独
 
 ## 画图与 PPT 工作坊
 
-[工作坊](visual-skills.html)新增12份公开技能：6份科研画图、5份PPT和1份质量检查；完整书架58份。支持分类检索、逐项展开、完整阅读、下载Markdown和复制任务书。原有方法、数据库、政策及历史资料保持。
+[工作坊](visual-skills.html)新增12份公开技能：6份科研画图、5份PPT和1份质量检查；完整书架60份。支持分类检索、逐项展开、完整阅读、下载Markdown和复制任务书。原有方法、数据库、政策及历史资料保持。
 
 这些手册提炼既有任务中可复用的方法；不含原始对话、未发表项目和私人素材。第三方技能为明确标注的可选上游入口，不捆绑其软件、账号或生成额度。详情见[来源与能力边界](skills/references/visual-skill-sources.md)。本次原创脚本可生成效应图、简洁可编辑PPT底稿和有限结构检查，需另外进行视觉检查。
 

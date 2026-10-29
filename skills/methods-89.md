@@ -228,8 +228,8 @@ egen mean_score = mean(score), by(item)
 egen sd_score = sd(score), by(item)
 gen cv = sd_score / mean_score
 list item mean_score cv if mean_score >= 3.5 & cv <= 0.25   // 示例筛选阈值
-ssc install concord
-concord score1-score15                       // 各专家评分变量 → 肯德尔 W
+* concord 估计 Lin 一致性相关系数，不是 Kendall W；不用于这里。
+* Kendall W 如需计算，应按条目×专家的评分矩阵另行核对实现。
 
 * ===== R =====
 library(dplyr)

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-24",
+  "updated": "2026-10-29",
   "note": "代表性原始方法、官方指南和作者文档；不作唯一权威排名。报告指南不替代设计方法，软件文档不代表本站代码已验证。",
   "sources": {
     "strobe": {
@@ -1461,6 +1461,396 @@
       "checkedDate": "2026-10-24",
       "verification": "verified",
       "verificationScope": "官方网站五维定义；不包含逐条量表翻译验证"
+    },
+    "clinical_selfcontrolled": {
+      "title": "Case-crossover and self-controlled case series: comparison of design features",
+      "url": "https://bmjmedicine.bmj.com/content/bmjmed/1/1/e000214.full.pdf",
+      "type": "原始方法论文",
+      "scope": "病例交叉与SCCS的时间锚点、比较方式和偏倚",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "读取到期刊检索结果中的设计比较表；直接访问返回403，未核全文。",
+      "id": "clinical_selfcontrolled"
+    },
+    "clinical_sccs": {
+      "title": "Self controlled case series methods: an alternative to standard epidemiological study designs",
+      "url": "https://www.bmj.com/content/354/bmj.i4515.full.txt",
+      "type": "原始方法论文",
+      "scope": "个体内比较、精确时序、事件影响后续暴露的限制",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "读取期刊检索结果中的摘要与假设片段；直接访问返回403。",
+      "id": "clinical_sccs"
+    },
+    "clinical_cohort_sampling": {
+      "title": "A New Comparison of Nested Case-Control and Case-Cohort Designs and Methods",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4374014/",
+      "type": "原始比较研究",
+      "scope": "队列内抽样设计与相应分析权重",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "读取到原始研究检索摘要；直接页面返回人机验证，未声称读过全文。",
+      "id": "clinical_cohort_sampling"
+    },
+    "clinical_ni_fda": {
+      "title": "Non-Inferiority Clinical Trials to Establish Effectiveness",
+      "url": "https://www.fda.gov/media/78504/download",
+      "type": "官方方法说明",
+      "scope": "非劣效设计、界值、活性对照与解释边界",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "FDA 2016正式指南PDF可读取；核对标题、引言和方法范围，未逐页审查。",
+      "id": "clinical_ni_fda"
+    },
+    "clinical_sw_consort": {
+      "title": "Reporting of stepped wedge cluster randomised trials: extension of the CONSORT 2010 statement",
+      "url": "https://www.bmj.com/content/363/bmj.k1614",
+      "type": "原始报告指南",
+      "scope": "阶梯楔形随机试验报告、时期与聚类结构",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "检索结果核对原始指南题名、年份及报告对象；直接访问403。",
+      "id": "clinical_sw_consort"
+    },
+    "clinical_stard": {
+      "title": "STARD 2015: an updated list of essential items for reporting diagnostic accuracy studies",
+      "url": "https://www.bmj.com/content/351/bmj.h5527",
+      "type": "原始报告指南",
+      "scope": "诊断准确性研究设计、参考标准与报告",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "读取期刊检索摘要及STARD解释文件片段；原页面直接访问403。",
+      "id": "clinical_stard"
+    },
+    "clinical_gee": {
+      "title": "Generalized estimating equations",
+      "url": "https://www.stata.com/features/overview/generalized-estimating-equations/",
+      "type": "官方方法说明",
+      "scope": "GEE、边际模型、工作相关结构与分布链接",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "本轮读取官方方法介绍或原始方法页面；不代表逐页核验完整教材。",
+      "id": "clinical_gee"
+    },
+    "clinical_gam": {
+      "title": "Generalized additive models with integrated smoothness estimation",
+      "url": "https://www.stat.ethz.ch/R-manual/R-devel/library/mgcv/html/gam.html",
+      "type": "官方方法说明",
+      "scope": "平滑项、惩罚、平滑度选择与GAM诊断",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "读取R mgcv官方帮助正文，含模型定义、参数与平滑项说明。",
+      "id": "clinical_gam"
+    },
+    "clinical_bland_altman": {
+      "title": "Statistical methods for assessing agreement between two methods of clinical measurement",
+      "url": "https://www-users.york.ac.uk/~mb55/meas/ba.htm",
+      "type": "作者授权公开的原始方法论文",
+      "scope": "差值、偏倚、一致性限界及相关系数的局限",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "读取作者大学主页转载正文及出处；该版本注明包含小数值勘误。",
+      "id": "clinical_bland_altman"
+    },
+    "clinical_irt": {
+      "title": "Item Response Theory Reference Manual",
+      "url": "https://www.stata-press.com/manuals/item-response-theory-reference-manual/",
+      "type": "官方方法说明",
+      "scope": "IRT模型、条目参数、测量模型入口",
+      "checkedDate": "2026-10-29",
+      "verification": "官方目录入口已核验",
+      "verificationScope": "核对官方手册入口与模型目录；不表示所有章节或软件命令已执行。",
+      "id": "clinical_irt"
+    },
+    "clinical_apc": {
+      "title": "Age Period Cohort Analysis Web Tool",
+      "url": "https://dceg.cancer.gov/tools/analysis/apc",
+      "type": "官方方法说明",
+      "scope": "年龄-时期-队列可估计函数、率矩阵与识别限制",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "本轮读取官方方法介绍或原始方法页面；不代表逐页核验完整教材。",
+      "id": "clinical_apc"
+    },
+    "clinical_joinpoint": {
+      "title": "Joinpoint Regression Program",
+      "url": "https://surveillance.cancer.gov/joinpoint/",
+      "type": "官方方法说明",
+      "scope": "趋势转折、分段变化率与率估计的不确定性",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "本轮读取官方方法介绍或原始方法页面；不代表逐页核验完整教材。",
+      "id": "clinical_joinpoint"
+    },
+    "clinical_hale": {
+      "title": "Healthy life expectancy (HALE): indicator metadata",
+      "url": "https://www.who.int/data/gho/data/indicators/indicator-details/GHO/gho-ghe-hale-healthy-life-expectancy",
+      "type": "官方方法说明",
+      "scope": "Sullivan方法、寿命表与年龄别健康损失权重",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "核对WHO指标定义和Method of estimation；不复制其数据值。",
+      "id": "clinical_hale"
+    },
+    "clinical_joint": {
+      "title": "Estimating Joint Models for Longitudinal and Time-to-Event Data with rstanarm",
+      "url": "https://mc-stan.org/rstanarm/articles/jm.html",
+      "type": "官方方法说明",
+      "scope": "共享参数联合模型、纵向与事件子模型、关联结构",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "读取维护者官方vignette的方法介绍；示例代码未在本轮执行。",
+      "id": "clinical_joint"
+    },
+    "clinical_survival": {
+      "title": "Survival analysis: Stata features",
+      "url": "https://www.stata.com/features/survival-analysis/",
+      "type": "官方方法说明",
+      "scope": "多次失败、start-stop格式、复发事件与删失",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "官方功能说明确认可处理复发事件；各模型假设仍须查对应手册，不宣称本轮完整审查AG/PWP推导。",
+      "id": "clinical_survival"
+    },
+    "clinical_rmst": {
+      "title": "Restricted mean survival time as a summary measure of time-to-event outcome",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32072769/",
+      "type": "原始方法说明论文",
+      "scope": "RMST定义、截点、调整分析与解释",
+      "checkedDate": "2026-10-29",
+      "verification": "题录与摘要已核验，全文未读",
+      "verificationScope": "核对PubMed题录和摘要；全文未读取。",
+      "id": "clinical_rmst"
+    },
+    "clinical_spc": {
+      "title": "Statistical process control tool",
+      "url": "https://www.england.nhs.uk/statistical-process-control-tool/",
+      "type": "官方方法说明",
+      "scope": "卫生服务过程变异监测和控制图",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "NHS检索结果提供完整工具说明；直接页面需JavaScript验证。",
+      "id": "clinical_spc"
+    },
+    "clinical_funnel": {
+      "title": "Funnel plots for comparing institutional performance",
+      "url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.1970",
+      "type": "原始方法论文",
+      "scope": "机构比较、精度、过度离散与控制界限",
+      "checkedDate": "2026-10-29",
+      "verification": "题录与摘要已核验，全文未读",
+      "verificationScope": "读取出版者题录和摘要，全文受限；不将漏斗图解释成机构排名或因果效应。",
+      "id": "clinical_funnel"
+    },
+    "clinical_sfca": {
+      "title": "Measures of Spatial Accessibility to Health Care in a GIS Environment: Synthesis and a Case Study in the Chicago Region",
+      "url": "https://journals.sagepub.com/doi/10.1068/b29120",
+      "type": "原始方法研究",
+      "scope": "供需、旅行时间与浮动服务区可达性",
+      "checkedDate": "2026-10-29",
+      "verification": "题录与摘要已核验，全文未读",
+      "verificationScope": "出版者页面可读取题录与摘要，全文受限；参数需由具体研究设定。",
+      "id": "clinical_sfca"
+    },
+    "clinical_wisn": {
+      "title": "Workload Indicators of Staffing Need (WISN)",
+      "url": "https://www.who.int/tools/wisn",
+      "type": "官方方法说明",
+      "scope": "工作量、活动时间标准与卫生人力需求",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "本轮读取官方方法介绍或原始方法页面；不代表逐页核验完整教材。",
+      "id": "clinical_wisn"
+    },
+    "clinical_mediate": {
+      "title": "Causal mediation analysis",
+      "url": "https://www.stata.com/features/overview/causal-mediation-analysis/",
+      "type": "官方方法说明",
+      "scope": "自然/控制直接效应、间接效应及模型组合",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "本轮读取官方方法介绍或原始方法页面；不代表逐页核验完整教材。",
+      "id": "clinical_mediate"
+    },
+    "clinical_interaction": {
+      "title": "A Tutorial on Interaction — VanderWeele & Knol (2014)",
+      "url": "https://hsph.harvard.edu/wp-content/uploads/2024/10/InteractionTutorial_EM-1.pdf",
+      "type": "原作者方法教程",
+      "scope": "统计交互、效应修饰与双暴露因果交互的区别",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对相关章节",
+      "verificationScope": "核对原作者公开PDF中效应异质性与因果交互的区分及报告建议（第13—16页）；未声称逐页审读全部教程。",
+      "id": "clinical_interaction"
+    },
+    "clinical_interference": {
+      "title": "Interference and Sensitivity Analysis",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4300555/",
+      "type": "原始方法论文",
+      "scope": "干扰、组内溢出、直接/间接/总体效应",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "PMC方法正文可读取，核对研究问题与设计框架。",
+      "id": "clinical_interference"
+    },
+    "clinical_forecast": {
+      "title": "Forecasting: Principles and Practice, Chapter 9 ARIMA models",
+      "url": "https://otexts.com/fpp3/arima.html",
+      "type": "原作者开放教材",
+      "scope": "ARIMA时间序列预测及与指数平滑的区别",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "读取作者教材章节正文与导航；未执行教材代码。",
+      "id": "clinical_forecast"
+    },
+    "clinical_landmark": {
+      "title": "Dynamic predicting by landmarking as an alternative for multi-state modeling",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2798037/",
+      "type": "原始方法论文",
+      "scope": "随访中地标时点条件风险预测",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "读取原作者论文检索摘要与方法片段；直接页面人机验证未成功。",
+      "id": "clinical_landmark"
+    },
+    "clinical_interview": {
+      "title": "Semistructured interviewing in primary care research: a balance of relationship and rigour",
+      "url": "https://fmch.bmj.com/content/7/2/e000057",
+      "type": "原始方法说明论文",
+      "scope": "半结构访谈的目的、抽样、追问与反思",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "读取期刊检索结果的摘要和步骤片段；直接访问403。",
+      "id": "clinical_interview"
+    },
+    "clinical_focus": {
+      "title": "Qualitative Research: Introducing focus groups",
+      "url": "https://www.bmj.com/content/311/7000/299.short",
+      "type": "原始方法说明论文",
+      "scope": "利用参与者互动生成定性资料",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "读取原作者期刊检索摘要；直接访问403。",
+      "id": "clinical_focus"
+    },
+    "clinical_thematic": {
+      "title": "Thematic Analysis: Editor & Reviewer Guide",
+      "url": "https://www.thematicanalysis.net/editor-checklist/",
+      "type": "原作者方法资源",
+      "scope": "反思性主题分析与一致性编码路线的区别",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "读取Braun/Clarke原作者网站检索内容；直接访问502。",
+      "id": "clinical_thematic"
+    },
+    "clinical_framework": {
+      "title": "Using the framework method for the analysis of qualitative data in multi-disciplinary health research",
+      "url": "https://doi.org/10.1186/1471-2288-13-117",
+      "type": "原始方法说明论文",
+      "scope": "案例×主题矩阵与跨专业团队定性分析",
+      "checkedDate": "2026-10-29",
+      "verification": "题录摘要及方法片段已核验，正文未完整读取",
+      "verificationScope": "读取出版者题录、摘要与方法说明检索片段；出版者正文此次仅提供预览。",
+      "id": "clinical_framework"
+    },
+    "clinical_content_analysis": {
+      "title": "Three approaches to qualitative content analysis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16204405/",
+      "type": "原始方法论文",
+      "scope": "常规、定向、总结式内容分析及编码来源",
+      "checkedDate": "2026-10-29",
+      "verification": "题录与摘要已核验，全文未读",
+      "verificationScope": "读取PubMed题录与摘要；未读取出版者全文。",
+      "id": "clinical_content_analysis"
+    },
+    "clinical_ethnography": {
+      "title": "Qualitative research methodologies: ethnography",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18687725/",
+      "type": "原始方法说明论文",
+      "scope": "自然场景观察、文化与组织实践",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "本轮检索核对题录和DOI，直接PubMed页面未返回正文；不声称已读全文。",
+      "id": "clinical_ethnography"
+    },
+    "clinical_case_study": {
+      "title": "The case study approach",
+      "url": "https://doi.org/10.1186/1471-2288-11-100",
+      "type": "原始方法说明论文",
+      "scope": "真实情境中的多证据案例研究",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "读取开放出版者页面的题录、摘要及正文入口。",
+      "id": "clinical_case_study"
+    },
+    "clinical_credes": {
+      "title": "Guidance on Conducting and REporting DElphi Studies (CREDES) in palliative care",
+      "url": "https://equator-network.org/reporting-guidelines/credes/",
+      "type": "官方报告规范入口",
+      "scope": "Delphi报告透明性与共识过程",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对页面",
+      "verificationScope": "读取EQUATOR指南记录；该指南源于姑息照护场景，跨学科应用需说明适配。",
+      "id": "clinical_credes"
+    },
+    "clinical_qca": {
+      "title": "QCA with R: Calibration",
+      "url": "https://bookdown.org/dusadrian/QCAbook/calibration.html",
+      "type": "软件原作者开放教材",
+      "scope": "校准锚点、集合隶属度、理论依据",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对校准章节",
+      "verificationScope": "读取校准章节的理论锚点与隶属度说明；必要性、充分性、真值表与最小化分别列出章节来源。",
+      "id": "clinical_qca"
+    },
+    "clinical_grounded": {
+      "title": "The Discovery of Grounded Theory: Strategies for Qualitative Research",
+      "url": "https://www.routledge.com/Discovery-of-Grounded-Theory-Strategies-forQualitative-Research/Glaser-Strauss/p/book/9780202302607",
+      "type": "原著出版者入口",
+      "scope": "从系统收集与比较资料形成理论",
+      "checkedDate": "2026-10-29",
+      "verification": "部分核验，正文待核",
+      "verificationScope": "核对原著出版者检索页面描述；直接页面403，未读取原著全文。",
+      "id": "clinical_grounded"
+    },
+    "clinical_qca_necessity": {
+      "title": "QCA with R: Analysis of necessity",
+      "url": "https://bookdown.org/dusadrian/QCAbook/analysisofnecessity.html",
+      "type": "软件原作者开放教材",
+      "scope": "必要性集合关系与解释",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对相关章节概念说明",
+      "verificationScope": "核对本章开头的概念、集合关系或算法说明；未逐项执行章内R代码。",
+      "id": "clinical_qca_necessity"
+    },
+    "clinical_qca_sufficiency": {
+      "title": "QCA with R: Analysis of sufficiency",
+      "url": "https://bookdown.org/dusadrian/QCAbook/analysisofsufficiency.html",
+      "type": "软件原作者开放教材",
+      "scope": "充分性、必要性及非对称集合关系",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对相关章节概念说明",
+      "verificationScope": "核对本章开头的概念、集合关系或算法说明；未逐项执行章内R代码。",
+      "id": "clinical_qca_sufficiency"
+    },
+    "clinical_qca_truth": {
+      "title": "QCA with R: The truth table",
+      "url": "https://bookdown.org/dusadrian/QCAbook/truthTable.html",
+      "type": "软件原作者开放教材",
+      "scope": "真值表与条件组合",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对相关章节概念说明",
+      "verificationScope": "核对本章开头的概念、集合关系或算法说明；未逐项执行章内R代码。",
+      "id": "clinical_qca_truth"
+    },
+    "clinical_qca_minimize": {
+      "title": "QCA with R: The Logical Minimization",
+      "url": "https://bookdown.org/dusadrian/QCAbook/minimize.html",
+      "type": "软件原作者开放教材",
+      "scope": "逻辑最小化与解的含义",
+      "checkedDate": "2026-10-29",
+      "verification": "已核对相关章节概念说明",
+      "verificationScope": "核对本章开头的概念、集合关系或算法说明；未逐项执行章内R代码。",
+      "id": "clinical_qca_minimize"
     }
   },
   "methods": {
@@ -1488,7 +1878,7 @@
       "mixed"
     ],
     "A8": [
-      "accord"
+      "clinical_credes"
     ],
     "A9": [
       "svy"
@@ -1704,7 +2094,7 @@
       "reaim"
     ],
     "G1": [
-      "grounded"
+      "clinical_grounded"
     ],
     "G2": [
       "lavaan"
@@ -1713,7 +2103,11 @@
       "multilevel"
     ],
     "G4": [
-      "qca"
+      "clinical_qca",
+      "clinical_qca_necessity",
+      "clinical_qca_sufficiency",
+      "clinical_qca_truth",
+      "clinical_qca_minimize"
     ],
     "H1": [
       "cochrane"
@@ -1777,6 +2171,103 @@
       "sp-impl-stari",
       "sp-impl-eric",
       "sp-impl-reaim"
+    ],
+    "A11": [
+      "clinical_selfcontrolled"
+    ],
+    "A12": [
+      "clinical_sccs"
+    ],
+    "A13": [
+      "clinical_cohort_sampling"
+    ],
+    "A14": [
+      "clinical_ni_fda"
+    ],
+    "A15": [
+      "clinical_sw_consort"
+    ],
+    "A16": [
+      "clinical_stard"
+    ],
+    "B19": [
+      "clinical_gee"
+    ],
+    "B20": [
+      "clinical_gam"
+    ],
+    "B21": [
+      "clinical_bland_altman"
+    ],
+    "B22": [
+      "clinical_irt"
+    ],
+    "B23": [
+      "clinical_apc"
+    ],
+    "B24": [
+      "clinical_joinpoint"
+    ],
+    "B25": [
+      "clinical_hale"
+    ],
+    "B26": [
+      "clinical_joint"
+    ],
+    "B27": [
+      "clinical_survival"
+    ],
+    "B28": [
+      "clinical_rmst"
+    ],
+    "B29": [
+      "clinical_spc"
+    ],
+    "B30": [
+      "clinical_funnel"
+    ],
+    "C9": [
+      "clinical_sfca"
+    ],
+    "C10": [
+      "clinical_wisn"
+    ],
+    "D17": [
+      "clinical_mediate",
+      "clinical_interaction"
+    ],
+    "D18": [
+      "clinical_interaction"
+    ],
+    "D19": [
+      "clinical_interference"
+    ],
+    "E9": [
+      "clinical_forecast"
+    ],
+    "E10": [
+      "clinical_landmark"
+    ],
+    "G5": [
+      "clinical_interview"
+    ],
+    "G6": [
+      "clinical_focus"
+    ],
+    "G7": [
+      "clinical_thematic"
+    ],
+    "G8": [
+      "clinical_framework"
+    ],
+    "G9": [
+      "clinical_content_analysis"
+    ],
+    "G10": [
+      "clinical_ethnography"
+    ],
+    "G11": [
+      "clinical_case_study"
     ]
   },
   "skills": {

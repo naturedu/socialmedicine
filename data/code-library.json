@@ -66,9 +66,9 @@
     "id": "methods-54-8",
     "title": "A8 德尔菲法（Delphi）",
     "language": "Stata + R（混合片段）",
-    "code": "* ===== Stata =====\negen mean_score = mean(score), by(item)\negen sd_score = sd(score), by(item)\ngen cv = sd_score / mean_score\nlist item mean_score cv if mean_score >= 3.5 & cv <= 0.25   // 示例筛选阈值\nssc install concord\nconcord score1-score15                       // 各专家评分变量 → 肯德尔 W\n\n* ===== R =====\nlibrary(dplyr)\nd |> group_by(item) |>\n  summarise(m = mean(score), cv = sd(score)/mean(score)) |>\n  filter(m >= 3.5 & cv <= 0.25)              # 示例筛选阈值\nlibrary(irr)\nw <- kendall(t(as.matrix(xtabs(score ~ expert + item, data = d))))   # 行为条目、列为专家\nw$value                                      # 肯德尔和谐系数 W",
+    "code": "* ===== Stata =====\negen mean_score = mean(score), by(item)\negen sd_score = sd(score), by(item)\ngen cv = sd_score / mean_score\nlist item mean_score cv if mean_score >= 3.5 & cv <= 0.25   // 示例筛选阈值\n* concord 估计 Lin 一致性相关系数，不是 Kendall W；不用于这里。\n* Kendall W 如需计算，应按条目×专家的评分矩阵另行核对实现。\n\n* ===== R =====\nlibrary(dplyr)\nd |> group_by(item) |>\n  summarise(m = mean(score), cv = sd(score)/mean(score)) |>\n  filter(m >= 3.5 & cv <= 0.25)              # 示例筛选阈值\nlibrary(irr)\nw <- kendall(t(as.matrix(xtabs(score ~ expert + item, data = d))))   # 行为条目、列为专家\nw$value                                      # 肯德尔和谐系数 W",
     "source": "skills/references/methods-54.md",
-    "status": "模板；未逐项执行",
+    "status": "教学模板；已删除把concord误作Kendall W的调用；R片段未执行",
     "line": 225
   },
   {
