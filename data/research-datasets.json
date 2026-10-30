@@ -1,5 +1,38 @@
 [
   {
+    "acronym": "CDRIP2026",
+    "name": "中国 DRGs/DIP 支付方式改革政策文本数据库（CDRIP2026）",
+    "institution": "杜思娴 · 华中科技大学医药卫生管理学院",
+    "category": "宏观与卫生服务",
+    "design": "政策文本数据库；记录来源、主题、成文/公开/施行日期和核验状态。",
+    "population": "中国 DRG/DIP 医保支付方式改革政策；时间范围自 2009 年至 2026-10-01。",
+    "questions": [
+      "政策文本、政策工具与改革演进",
+      "地方实施机制和政策主题比较",
+      "政策时点梳理与研究设计"
+    ],
+    "methods": [
+      "方法建议：先明确版本与文本范围，再建立内容编码或主题分析方案。",
+      "方法建议：用于 DID/ITS 时另行核实实际结算切换日，并匹配结局数据、比较组和识别假设。"
+    ],
+    "limitations": [
+      "本网站仅公开宣传介绍、地图与数据库级引用信息，具体数据须申请获取。",
+      "学术研究免费申请；未经许可不得整体发布、转让或提供第三方。",
+      "杜思娴｜华中科技大学医药卫生管理学院｜dusixian@hust.edu.cn｜18217878646",
+      "引用：Du, S. (2026, October 28). China DRG/DIP Reform Insurance Policy database (CDRIP2026) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23720911."
+    ],
+    "sourceUrl": "https://naturedu.github.io/socialmedicine/cdrip2026.html",
+    "accessUrl": "https://naturedu.github.io/socialmedicine/cdrip2026.html#contact",
+    "factsVerifiedAt": "2026-10-30",
+    "notes": "由杜思娴主持编制的中国 DRG/DIP 医保支付方式改革政策文本数据库。查看数据库介绍、试点城市分布图、引用和数据申请方式；具体数据须联系主理人申请。",
+    "sourceEvidence": [
+      {
+        "url": "https://doi.org/10.5281/zenodo.23720911",
+        "supports": "登记作者、发布日期、DOI 和受限访问状态"
+      }
+    ]
+  },
+{
     "acronym": "CHARLS",
     "name": "中国健康与养老追踪调查",
     "institution": "武汉大学与北京大学共同执行（官网当前项目介绍）",

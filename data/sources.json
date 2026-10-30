@@ -1,5 +1,12 @@
 [
   {
+    "name": "中国 DRGs/DIP 支付方式改革政策文本数据库（CDRIP2026）",
+    "category": "政策数据库",
+    "description": "由杜思娴主持编制的中国 DRG/DIP 医保支付方式改革政策文本数据库。查看数据库介绍、试点城市分布图、引用和数据申请方式；具体数据须联系主理人申请。 杜思娴｜华中科技大学医药卫生管理学院｜dusixian@hust.edu.cn｜18217878646 引用：Du, S. (2026, October 28). China DRG/DIP Reform Insurance Policy database (CDRIP2026) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23720911.",
+    "url": "https://naturedu.github.io/socialmedicine/cdrip2026.html",
+    "access": "宣传介绍与引用公开；具体数据按申请获取。"
+  },
+  {
     "name": "GBD 全球疾病负担结果工具（IHME）",
     "category": "健康数据",
     "description": "疾病、伤害与危险因素的负担、DALY/YLD 可视化与下载",

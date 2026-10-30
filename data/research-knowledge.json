@@ -1,5 +1,15 @@
 [
   {
+    "id": "CDRIP2026",
+    "title": "中国 DRGs/DIP 支付方式改革政策文本数据库（CDRIP2026）",
+    "journal": "数据库介绍与引用",
+    "year": "2026",
+    "doi": "10.5281/zenodo.23720911",
+    "url": "https://naturedu.github.io/socialmedicine/cdrip2026.html",
+    "text": "由杜思娴主持编制的中国 DRG/DIP 医保支付方式改革政策文本数据库。查看数据库介绍、试点城市分布图、引用和数据申请方式；具体数据须联系主理人申请。 杜思娴｜华中科技大学医药卫生管理学院｜dusixian@hust.edu.cn｜18217878646 引用：Du, S. (2026, October 28). China DRG/DIP Reform Insurance Policy database (CDRIP2026) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23720911.",
+    "sourceType": "数据库级公开介绍"
+  },
+  {
     "id": "PMC13630716",
     "title": "Causes of death across the life course in the Association of Southeast Asian Nations (ASEAN): a systematic analysis for the Global Burden of Disease Study 2023.",
     "journal": "The Lancet. Public health",

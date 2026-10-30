@@ -1,3 +1,4 @@
+import {isCDRIPQuery,cdripReply} from './cdrip-catalogue.mjs';
 import {isResearchQuestion,detailedResearchReply} from './research-analysis.mjs?v=20261029';
 import {search,terms,buildPlan,matchSchools,writingAudit} from './studio-core.mjs?v=20261024knowledge1';
 import {buildGoal} from './studio-goals.mjs';
@@ -31,6 +32,7 @@ const collection={
  'machine-learning-skill':['预测时点、预测窗口、结局标签、预测时点之前已可获得的特征及样本 ID。','按个体、机构或时间安排训练验证集；记录缺失、标签来源，避免信息泄漏。']
 };
 export function chooseIntent(q,previous={}){
+ if(isCDRIPQuery(q,previous))return {kind:'cdrip',methodIds:[]};
  const methodIds=aliases.filter(([,re])=>re.test(q)).map(([id])=>id);
  const profiles=detectJournals(q);
  if(isResearchQuestion(q)||previous.kind==='design'&&/继续|进一步|具体|详细|只有|已有|我有|变量|下一步|分析方案|请整理|纳排|编码/.test(q))return {kind:'design',methodIds:[]};
@@ -60,6 +62,7 @@ export function makeReply(question,previous={},data={}){
  const context=followup?[previous.topic,q].filter(Boolean).join('；').slice(-3500):q;
  const state={...intent,topic:context};
  const finish=r=>({...r,state});
+ if(intent.kind==='cdrip')return finish(cdripReply());
  if(/^(你好|您好|hello|hi|你能做什么)[！!。?？\s]*$/i.test(q))return finish(answer('你好，我是普贤。',['你可以问研究设计、方法与代码、院校方向、数据库、经典著作或项目题目。我会从站内资料整理回答，并给出出处。','当前是资料检索与规则问答，没有接入通用大语言模型。你可以继续补充背景，我会沿着这次问题查找。'],{suggestions:['DID 和断点回归怎么选？','中山大学和南方医科大学有哪些方向？','博士毕业设计从哪里开始？']}));
  if(intent.kind==='methods'){
   const methods=(data.methods||[]).filter(m=>intent.methodIds.includes(m.id));

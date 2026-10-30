@@ -1,4 +1,4 @@
-import {makeReply,OUTCOMES,metricSnapshot,chooseIntent} from './chat-core.mjs?v=20261029research1';
+import {makeReply,OUTCOMES,metricSnapshot,chooseIntent} from './chat-core.mjs?v=20261030cdrip1';
 const root=document.getElementById('researchChat');
 const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
 const safeUrl=value=>{if(typeof value!=='string'||!value.trim())return null;try{const u=new URL(value,location.href);return ['http:','https:'].includes(u.protocol)?u.href:null;}catch{return null;}};

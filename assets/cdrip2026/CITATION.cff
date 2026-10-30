@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "Please cite the CDRIP2026 database using the metadata below."
+type: dataset
+title: "China DRG/DIP Reform Insurance Policy database (CDRIP2026)"
+authors:
+  - family-names: Du
+    given-names: Sixian
+    affiliation: "School of Medicine and Health Management, Huazhong University of Science and Technology"
+    orcid: "https://orcid.org/0009-0009-9804-4645"
+doi: "10.5281/zenodo.23720911"
+date-released: 2026-10-28
+url: "https://doi.org/10.5281/zenodo.23720911"
+abstract: "A database of policy texts on China's DRG/DIP payment reform. Data access is by application; the website publishes project information, a pilot-city overview map, and citation metadata."

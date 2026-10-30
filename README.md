@@ -1,3 +1,16 @@
+
+## CDRIP2026 政策文本数据库
+
+[独立介绍页](https://naturedu.github.io/socialmedicine/cdrip2026.html) · [试点地图](https://naturedu.github.io/socialmedicine/cdrip2026.html#map) · [引用](https://naturedu.github.io/socialmedicine/cdrip2026.html#citation)
+
+主理人：**杜思娴（Du Sixian）**，华中科技大学医药卫生管理学院。联系：**dusixian@hust.edu.cn** / **18217878646**。
+
+本仓库仅发布数据库宣传介绍、原宣传材料的试点城市概览图、作者联系方式和数据库级引用，不包含政策条目、全文、数据表或交付压缩包。数据按申请获取，原数据库的使用约定不受本仓库代码许可证影响。
+
+引用：Du, S. (2026, October 28). *China DRG/DIP Reform Insurance Policy database (CDRIP2026)* [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23720911.
+
+在主页问答输入“CDRIP2026”或“政策文本数据库”，可直接查看介绍、引用和联系方式；数据目录和全部资料柜也提供入口。
+
 ## 方法框架与记录整理
 
 [四类方法框架](guides/method-map.html)按描述性分析、相关性分析、因果推断、预测分析导航；定性、共识、组态与综合评价单列支撑。速查由91条扩展为123条，新增25项医学/卫管方法和7项定性方法，并完善德尔菲、扎根理论与fsQCA。新增项是方法与来源说明，不代表新增分析代码已执行。

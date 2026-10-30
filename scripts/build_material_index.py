@@ -5,6 +5,7 @@ R=Path(__file__).resolve().parents[1]
 def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))
 def build():
     specs=[
+      ('cdrip-public','CDRIP2026 政策文本数据库介绍与引用','数据','cdrip2026.html'),
       ('visual-skills','科研画图与PPT工作流','画图与PPT','visual-skills.html'),
       ('database-skills','数据库卡片与操作路线','数据','database-skills.html'),
       ('database-sources','数据库官方文档与出处','数据','database-skills.html'),

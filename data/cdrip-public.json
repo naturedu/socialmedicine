@@ -1,0 +1,21 @@
+[
+  {
+    "id": "cdrip2026",
+    "title": "中国 DRGs/DIP 支付方式改革政策文本数据库（CDRIP2026）",
+    "description": "由杜思娴主持编制的中国 DRG/DIP 医保支付方式改革政策文本数据库。查看数据库介绍、试点城市分布图、引用和数据申请方式；具体数据须联系主理人申请。",
+    "author": "杜思娴",
+    "contact": "杜思娴｜华中科技大学医药卫生管理学院｜dusixian@hust.edu.cn｜18217878646",
+    "doi": "https://doi.org/10.5281/zenodo.23720911",
+    "url": "https://naturedu.github.io/socialmedicine/cdrip2026.html",
+    "citation": "Du, S. (2026, October 28). China DRG/DIP Reform Insurance Policy database (CDRIP2026) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23720911.",
+    "updated": "2026-10-30",
+    "keywords": [
+      "CDRIP2026",
+      "政策文本数据库",
+      "DRGs",
+      "DRG",
+      "DIP",
+      "医保支付方式改革"
+    ]
+  }
+]
