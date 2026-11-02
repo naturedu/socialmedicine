@@ -1,0 +1,16 @@
+[
+  "skills/README.md",
+  "skills/academic-paper-orchestrator/SKILL.md",
+  "skills/academic-research-verification/SKILL.md",
+  "skills/codex-performance-audit/SKILL.md",
+  "skills/codex-performance-audit/scripts/inventory.py",
+  "skills/lean-release-manifest.json",
+  "skills/paper-writing-workflow/SKILL.md",
+  "skills/paper-writing-workflow/references/reviewer-response.md",
+  "skills/privacy-safe-skill-distillation/SKILL.md",
+  "skills/privacy-safe-skill-distillation/scripts/scan_release.py",
+  "skills/research-state-handoff/SKILL.md",
+  "skills/research-state-handoff/references/handoff-template.md",
+  "skills/revision-control/SKILL.md",
+  "tests/test_lean_skills.py"
+]
