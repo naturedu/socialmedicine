@@ -9,6 +9,7 @@
 | [research-state-handoff](research-state-handoff/SKILL.md) | 保留权威成果、证据和未完成项的接续摘要 |
 | [academic-paper-orchestrator](academic-paper-orchestrator/SKILL.md) | 仅对跨阶段研究任务进行路由 |
 | [paper-writing-workflow](paper-writing-workflow/SKILL.md) | 证据驱动写作、普通返修和审稿回复 |
+| [academic-cover-letter](academic-cover-letter/SKILL.md) | 三段式学术投稿信、改投与返修、期刊要求与声明核对；含条件模板、证据工作表和合成案例 |
 | [academic-research-verification](academic-research-verification/SKILL.md) | 分开核验文献身份、读取深度和论断支持 |
 | [revision-control](revision-control/SKILL.md) | 正式修订的版本、对象关系和用户确认状态 |
 
@@ -17,6 +18,8 @@
 按需把某个完整技能目录安装到 Codex 的技能目录，或通过可用的 skill-installer 指定本仓库及对应路径。无需全部安装；有同名技能时先比较版本并备份，保留原有脚本/素材，不能直接覆盖整个目录。入口采用标准 `SKILL.md`，无需特定模型或新增插件。
 
 新会话可按任务自动发现，也可显式使用名称，例如 `$codex-performance-audit` 或 `$paper-writing-workflow`。本组不包含批注 UI；已有工作台应保留原本地实现和接口说明。
+
+投稿信可使用 `$academic-cover-letter`，例如：“根据我的当前稿件与目标期刊写英文 cover letter，按投稿信息、科学问题与创新、期刊适配组织，核对结果和声明，并列出待确认项。”完整技能目录包含入口、界面元数据、8 份按需参考和 2 份可复用工作材料；无需另装插件。期刊规则保存核验范围和日期，使用时仍须复查当前目标刊。
 
 框架分三层：入口仅保留任务选择和关键约束；参考资料只在相关分支读取；脚本承接可重复的确定性检查。全局指令不复制方法手册，不为普通局部修改建立整稿工作台，也不默认增加多代理或重复确认。
 
