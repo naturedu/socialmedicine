@@ -1,4 +1,4 @@
 interface:
   display_name: "学术期刊 Cover Letter"
-  short_description: "基于稿件证据写作、转投和返修投稿信，核对期刊要求与声明事实"
-  default_prompt: "请使用 $academic-cover-letter，根据我的稿件和目标期刊起草投稿信，突出科学问题、真实贡献与期刊适配，并列出待核实项。"
+  short_description: "一页三段式投稿信，附院徽占位、可编辑 Word 和逐段中文批注"
+  default_prompt: "请使用 $academic-cover-letter，根据我的稿件与目标期刊生成一页三段式 Word 投稿信，保留院徽位置，加入通用写作批注，写清科学问题、证据与期刊适配，去掉空泛套话。"

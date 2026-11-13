@@ -2,6 +2,8 @@
 
 用户要求可编辑文件、PDF、机构信头或教学展示材料时读取。本文件的排版做法属于可调整的工作建议，不构成期刊硬性要求。若任务只需要文字，直接提供完整信件即可，不额外制作一组文件。
 
+本技能已附 [一页填写版](../assets/cover-letter-one-page.docx)、[原生 Word 批注版](../assets/cover-letter-one-page-commented.docx) 和 [合成完整范例](../assets/cover-letter-one-page-example.docx)。优先使用这些现成文件，默认一页、三段连续正文、无小标题；详细句式和分页处理见 [具体范式](one-page-paradigm.md)。中文 comments 用于解释写作选择，使用通用署名，不冒充真人专家。
+
 ## 先区分读者和用途
 
 | 版本 | 读者及用途 | 可以包含 | 不应混入 |

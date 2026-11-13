@@ -9,7 +9,7 @@
 | [research-state-handoff](research-state-handoff/SKILL.md) | 保留权威成果、证据和未完成项的接续摘要 |
 | [academic-paper-orchestrator](academic-paper-orchestrator/SKILL.md) | 仅对跨阶段研究任务进行路由 |
 | [paper-writing-workflow](paper-writing-workflow/SKILL.md) | 证据驱动写作、普通返修和审稿回复 |
-| [academic-cover-letter](academic-cover-letter/SKILL.md) | 三段式学术投稿信、改投与返修、期刊要求与声明核对；含条件模板、证据工作表和合成案例 |
+| [academic-cover-letter](academic-cover-letter/SKILL.md) | 一页三段式学术投稿信，含院徽占位、可编辑 Word、中文原生批注与完整范例；覆盖首投、改投、返修和自然表达润色 |
 | [academic-research-verification](academic-research-verification/SKILL.md) | 分开核验文献身份、读取深度和论断支持 |
 | [revision-control](revision-control/SKILL.md) | 正式修订的版本、对象关系和用户确认状态 |
 
@@ -19,7 +19,7 @@
 
 新会话可按任务自动发现，也可显式使用名称，例如 `$codex-performance-audit` 或 `$paper-writing-workflow`。本组不包含批注 UI；已有工作台应保留原本地实现和接口说明。
 
-投稿信可使用 `$academic-cover-letter`，例如：“根据我的当前稿件与目标期刊写英文 cover letter，按投稿信息、科学问题与创新、期刊适配组织，核对结果和声明，并列出待确认项。”完整技能目录包含入口、界面元数据、8 份按需参考和 2 份可复用工作材料；无需另装插件。期刊规则保存核验范围和日期，使用时仍须复查当前目标刊。
+投稿信可使用 `$academic-cover-letter`，例如：“根据我的当前稿件与目标期刊写一页三段式英文 cover letter，说明投稿信息、科学问题与证据支持的增量、期刊读者适配；去掉空泛套话，直接给可编辑 Word 并加通用中文写作批注。”完整技能目录包含入口、界面元数据、10 份按需参考、2 份工作材料和 3 份 Word 文件（填写版、批注版、完整合成范例）；无需另装插件。默认 A4、11 pt、连续三段正文，无分块小标题；期刊规则使用时仍须复查，必要披露优先于一页偏好。
 
 框架分三层：入口仅保留任务选择和关键约束；参考资料只在相关分支读取；脚本承接可重复的确定性检查。全局指令不复制方法手册，不为普通局部修改建立整稿工作台，也不默认增加多代理或重复确认。
 
