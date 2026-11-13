@@ -24,9 +24,11 @@ description: 按五步完成期刊论文项目：目标期刊抓文、顶刊范�
 | 2 顶刊临摹与带图表框架 | 拆解科学问题、论证次序和真实原图；转化为本研究段落与图表位置 | 带原图出处的范式对照、正文提纲、逐图逐表计划及占位框架 | [02 范文与框架](references/02-benchmark-framework.md) |
 | 3 图表制作 | 从本研究数据制作图表，解释每图回答什么问题 | 可编辑图源、绘图数据和代码、投稿导出、图题图注、质量检查 | [03 图表](references/03-figures-tables.md) |
 | 4 去模板化文字 | 把“去人味／去 AI 味”落实为具体、自然、证据约束的学术表达 | 完整清稿、必要的标红稿、重要措辞变化和未决事实 | [04 文字](references/04-evidence-led-prose.md) |
-| 5 投稿前审核 | 核对科学证据、期刊要求、全包一致性和渲染效果 | 00—04完整包、审核结论、缺项与上传文件映射 | [05 投稿审核](references/05-submission-preflight.md) |
+| 5 投稿前审核 | 核对科学证据、期刊要求、声明与全包一致性，复查已修正问题 | 00—04完整包、声明台账、问题闭环与上传文件映射 | [05 投稿审核](references/05-submission-preflight.md) |
 
 每步应产出文件或可直接使用的内容，不能仅介绍“如何做”。没有数据时可交付设计稿和待填表；明确标记，不画虚构结果。
+
+处理声明时读取[07 声明逐项核对](references/07-declarations.md)，分开记录事实来源、作者确认、实际落文和跨文件同步；收到技术核查、版本出入或问题复发反馈时读取[06 反复核查与闭环](references/06-recurring-checks.md)。同一项目已提供且无冲突的信息直接复用，不重复索取。
 
 ## 固定的交付主目录
 
@@ -58,6 +60,8 @@ python scripts/paper_package.py inventory --root /path/to/paper-project
 ```
 
 在实际运行时把脚本和项目参数替换为真实路径。清单输出在 `_checks/package_inventory.json`，只证明结构、文件大小和哈希，不证明科学正确、文献已核验或投稿就绪。`_checks/submission_checklist.csv` 的初始状态均为 `NOT_CHECKED`，必须根据真实检查更新。
+
+随包九份模板还包含 `_checks/declarations_register.csv` 与 `_checks/issue_log.csv`。在旧项目重复初始化会补这两张新表，但不会替换已填写的旧表；新增检查项按当前要求并入已有台账，保留历史状态，不以重新初始化重置审核结果。
 
 ## 工具选择与证据边界
 
