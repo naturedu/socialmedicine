@@ -7,6 +7,7 @@
 | [codex-performance-audit](codex-performance-audit/SKILL.md) | 区分客户端卡顿、推理延迟与指令负担；只读规模审计 |
 | [privacy-safe-skill-distillation](privacy-safe-skill-distillation/SKILL.md) | 提炼通用方法、白名单隐私扫描和有范围的 GitHub 同步 |
 | [research-state-handoff](research-state-handoff/SKILL.md) | 保留权威成果、证据和未完成项的接续摘要 |
+| [skills-paper](skills-paper/SKILL.md) | 论文五步工作流：目标期刊抓文、顶刊范文与带图表框架、图表制作、去模板化文字、00—04完整投稿包审核；附初始化工具和七份工作台账 |
 | [academic-paper-orchestrator](academic-paper-orchestrator/SKILL.md) | 仅对跨阶段研究任务进行路由 |
 | [paper-writing-workflow](paper-writing-workflow/SKILL.md) | 证据驱动写作、普通返修和审稿回复 |
 | [academic-cover-letter](academic-cover-letter/SKILL.md) | 一页三段式学术投稿信，含院徽占位、可编辑 Word、中文原生批注与完整范例；覆盖首投、改投、返修和自然表达润色 |
@@ -20,6 +21,8 @@
 新会话可按任务自动发现，也可显式使用名称，例如 `$codex-performance-audit` 或 `$paper-writing-workflow`。本组不包含批注 UI；已有工作台应保留原本地实现和接口说明。
 
 投稿信可使用 `$academic-cover-letter`，例如：“根据我的当前稿件与目标期刊写一页三段式英文 cover letter，说明投稿信息、科学问题与证据支持的增量、期刊读者适配；去掉空泛套话，直接给可编辑 Word 并加通用中文写作批注。”完整技能目录包含入口、界面元数据、10 份按需参考、2 份工作材料和 3 份 Word 文件（填写版、批注版、完整合成范例）；无需另装插件。默认 A4、11 pt、连续三段正文，无分块小标题；期刊规则使用时仍须复查，必要披露优先于一页偏好。
+
+完整论文项目可使用 `$skills-paper`。它按需读取五步说明，先核对当前材料与目标期刊，再产出范文库、带图表框架、可编辑图表和完整稿件，最终按 `00_原始数据 / 01_CoverLetter / 02_TitlePage / 03_Manuscript / 04_Supplementary` 整理审核。随包 Python 标准库脚本可初始化目录和七份台账，也可生成文件哈希清单；清单不替代科学审核。原始数据默认内部留存，上传对象由明确的文件清单决定。
 
 框架分三层：入口仅保留任务选择和关键约束；参考资料只在相关分支读取；脚本承接可重复的确定性检查。全局指令不复制方法手册，不为普通局部修改建立整稿工作台，也不默认增加多代理或重复确认。
 

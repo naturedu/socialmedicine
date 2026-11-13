@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skills Paper · 论文五步工作流"
+  short_description: "从目标期刊抓文、范文图表框架到图表与文字，交付完整投稿包并逐项核查"
+  default_prompt: "请用 $skills-paper 接续我的论文项目，先核对当前材料与目标期刊，按五步推进并交付含图表的 00—04 投稿包。"
